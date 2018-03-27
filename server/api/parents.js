@@ -7,16 +7,15 @@ router.get('/', (req, res, next) => {
   .catch(next);
 })
 
-//Creates new entries for kitties
+//Creates new entries for parents
 router.post('/', (req, res, next) => {
-  const name = req.body.parentName;
-  const address = req.body.parentAddress;
-  Parents.create({ name, address })
+  console.log('you are giving me ', req.body)
+  Parents.create(req.body)
   .then(newParents => res.json(newParents))
   .catch(next);
 })
 
-//Update existing cats
+//Update existing parents
 router.put("/:parentId", (req, res, next) => {
   const id = req.params.parentId;
   const { name, address, kittens } = req.body;
@@ -28,7 +27,7 @@ router.put("/:parentId", (req, res, next) => {
   .catch(next);
 })
 
-//Delete cats
+//Delete parents
 router.delete("/:parentId", (req, res, next) => {
   let id = req.params.parentId;
   Parents.destroy({ where: { id } })
