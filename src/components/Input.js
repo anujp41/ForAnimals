@@ -28,7 +28,9 @@ class Input extends Component {
   }
 
   render() {
-    const {kittenName, kittenBreed, parentName, parentAddress} = this.state
+    const {kittenName, kittenBreed, parentName, parentAddress} = this.state;
+    console.log('furbabies ', this.props.furbabies);
+    console.log('parents ', this.props.parents);
     return (
       <div>
         <div className='kittens'>
@@ -49,7 +51,7 @@ class Input extends Component {
 
         <div className='parents'>
           <form onSubmit={this.handleSubmit}>
-            <h1>Enter kittens:</h1>
+            <h1>Enter parents:</h1>
 
             <label>
               Name:
@@ -70,18 +72,24 @@ class Input extends Component {
   }
 }
 
+const mapState = state => {
+  console.log('i am map state ', state)
+  return {
+    furbabies: state.furbabies,
+    parents: state.parents
+  }
+}
+
 const mapDispatch = dispatch => {
   return {
     submit(info) {
       var { kittenName: name, kittenBreed: breed } = info;
       dispatch(createFurbabyThunk({name, breed}))
-      // .then(() => {
       var { parentName: name, parentAddress: address } = info;
       dispatch(createParentThunk({name, address}));
-      // })
     }
   }
 }
 
-const InputContainer = connect(null, mapDispatch)(Input);
+const InputContainer = connect(mapState, mapDispatch)(Input);
 export default InputContainer;

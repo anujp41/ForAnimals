@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './Main.css';
 import Input from './Input';
+import { getFurbabiesThunk, getParentsThunk } from '../store';
 
 class Main extends Component {
+
+  componentDidMount() {
+    console.log('i am mounted');
+    this.props.getData();
+  }
+
   render() {
     return (
       <div className="Main">
@@ -17,4 +25,14 @@ class Main extends Component {
   }
 }
 
-export default Main;
+const mapDispatch = dispatch => {
+  return {
+    getData() {
+      dispatch(getFurbabiesThunk())
+      .then(() => dispatch(getParentsThunk()));
+    }
+  }
+}
+
+const MainContainer = connect(null, mapDispatch)(Main);
+export default MainContainer;

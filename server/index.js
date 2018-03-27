@@ -34,7 +34,7 @@ app.use((err, req, res, next) => {
 const port = 8080;
 app.listen(port, () => {
   console.log(`Starting the db now in port ${port}!`);
-  db.sync({force: true})
+  db.sync()
   .then(() => console.log('Database is synched!'))
   .catch((err) => console.error('Trouble in flavor town!', err, err.stack));
 });
