@@ -28,9 +28,7 @@ class Input extends Component {
   }
 
   render() {
-    const {kittenName, kittenBreed, parentName, parentAddress} = this.state;
-    console.log('furbabies ', this.props.furbabies);
-    console.log('parents ', this.props.parents);
+    const { kittenName, kittenBreed, parentName, parentAddress } = this.state;
     return (
       <div>
         <div className='kittens'>
@@ -67,13 +65,14 @@ class Input extends Component {
           </form>
         </div>
 
+        
+
       </div>
     )
   }
 }
 
 const mapState = state => {
-  console.log('i am map state ', state)
   return {
     furbabies: state.furbabies,
     parents: state.parents

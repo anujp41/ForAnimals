@@ -7,7 +7,6 @@ import { getFurbabiesThunk, getParentsThunk } from '../store';
 class Main extends Component {
 
   componentDidMount() {
-    console.log('i am mounted');
     this.props.getData();
   }
 

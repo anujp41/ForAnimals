@@ -1,8 +1,11 @@
 const router = require('express').Router();
-const { FurBabies } = require('../models');
+const { FurBabies, Parents } = require('../models');
 
 router.get('/', (req, res, next) => {
-  FurBabies.findAll()
+  FurBabies.findAll({
+    include: [Parents],
+    order: ['id']
+  })
   .then(newBabies => res.json(newBabies))
   .catch(next);
 })

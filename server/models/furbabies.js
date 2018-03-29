@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
+const Parents = require('./parents');
 
 const FurBabies = db.define('furbabies', {
   name: {
@@ -10,6 +11,6 @@ const FurBabies = db.define('furbabies', {
     type: Sequelize.STRING,
     allowNull: false
   }
-})
+});
 
 module.exports = FurBabies;
