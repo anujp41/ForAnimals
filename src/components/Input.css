@@ -1,0 +1,13 @@
+.container {
+  margin: auto;
+  background-color: pink;
+  width: 70vw
+}
+
+ul {
+  list-style: none
+}
+
+li {
+  padding: 10px
+}
