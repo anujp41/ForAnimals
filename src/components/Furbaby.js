@@ -8,8 +8,8 @@ class Furbaby extends Component {
   constructor() {
     super();
     this.state = {
-      kittenName: '',
-      kittenBreed: ''
+      name: '',
+      breed: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,7 +27,7 @@ class Furbaby extends Component {
   }
 
   render() {
-    const { kittenName, kittenBreed } = this.state;
+    const { name, breed } = this.state;
     return (
       <div className='container'>
         <form onSubmit={this.handleSubmit}>
@@ -35,11 +35,11 @@ class Furbaby extends Component {
           <ul>
             <li>
               <label>Name:</label>
-              <input type="text" name="kittenName" value={kittenName} onChange={this.handleChange}/>
+              <input type="text" name="name" value={name} onChange={this.handleChange}/>
             </li>
             <li>
               <label>Breed:</label>
-              <input type="text" name="kittenBreed" value={kittenBreed} onChange={this.handleChange}/>
+              <input type="text" name="breed" value={breed} onChange={this.handleChange}/>
             </li>
             <li>
               <input type="submit" value="submit" />
@@ -60,8 +60,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     submit(info) {
-      const { kittenName: name, kittenBreed: breed } = info;
-      dispatch(createFurbabyThunk({name, breed}))
+      dispatch(createFurbabyThunk(info))
     }
   }
 }

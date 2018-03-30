@@ -24,8 +24,7 @@ const furbabies = [
   },
   {
     name: "Mr. Wobbles",
-    breed: "Wobbly",
-    parentId: 3
+    breed: "Wobbly"
   },
   {
     name: "Sylvester",

@@ -20,9 +20,9 @@ router.post('/', (req, res, next) => {
 //Update existing cats
 router.put("/:catId", (req, res, next) => {
   const id = req.params.catId;
-  const { name, breed } = req.body;
-  return FurBabies.update({ name, breed },{
-    where: { id }
+  return FurBabies.update(req.body,{
+    where: { id },
+    individualHooks: true
   })
   .then((updatedInfo) => {
     res.status(200).json(updatedInfo).end()})

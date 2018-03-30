@@ -9,7 +9,6 @@ router.get('/', (req, res, next) => {
 
 //Creates new entries for parents
 router.post('/', (req, res, next) => {
-  console.log('you are giving me ', req.body)
   Parents.create(req.body)
   .then(newParents => res.json(newParents))
   .catch(next);
@@ -18,8 +17,7 @@ router.post('/', (req, res, next) => {
 //Update existing parents
 router.put("/:parentId", (req, res, next) => {
   const id = req.params.parentId;
-  const { name, address, kittens } = req.body;
-  return Parents.update({ name, address, kittens },{
+  return Parents.update(req.body,{
     where: { id }
   })
   .then((updatedInfo) => {

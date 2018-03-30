@@ -14,11 +14,20 @@ const FurBabies = db.define('furbaby', {
 }, 
 {
   hooks: {
+    afterUpdate: function(furbaby, option) {
+      const id = furbaby.parentId;
+      const hasFoster = id ? true : false;
+      console.log('will now be updating ', id, hasFoster)
+      console.log('model is ', furbaby)
+      this.associations.parent.target.update({hasFoster}, {where: {id}})
+    },
     afterCreate: function(furbaby, option) {
-      const parentId = furbaby.parentId;
-      this.associations.parent.target.update({hasFoster: true}, {where: {id: parentId}})
+      const id = furbaby.parentId;
+      const hasFoster = id ? true : false;
+      this.associations.parent.target.update({hasFoster}, {where: {id}})
     }
   }
 });
+
 
 module.exports = FurBabies;

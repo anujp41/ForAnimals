@@ -8,8 +8,8 @@ class Parent extends Component {
   constructor() {
     super();
     this.state = {
-      parentName: '',
-      parentAddress: ''
+      name: '',
+      address: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,7 +27,7 @@ class Parent extends Component {
   }
 
   render() {
-    const { parentName, parentAddress } = this.state;
+    const { name, address } = this.state;
     return (
       <div className='container'>
         <form onSubmit={this.handleSubmit}>
@@ -35,11 +35,11 @@ class Parent extends Component {
           <ul>
             <li>
               <label>Name:</label>
-              <input type="text" name="parentName" value={parentName} onChange={this.handleChange}/>
+              <input type="text" name="name" value={name} onChange={this.handleChange}/>
             </li>
             <li>
               <label>Address:</label>
-              <input type="text" name="parentAddress" value={parentAddress} onChange={this.handleChange}/>
+              <input type="text" name="address" value={address} onChange={this.handleChange}/>
             </li>
             <li>
               <input type="submit" value="submit" />
@@ -60,8 +60,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     submit(info) {
-      const { parentName: name, parentAddress: address } = info;
-      dispatch(createParentThunk({name, address}));
+      dispatch(createParentThunk(info));
     }
   }
 }
