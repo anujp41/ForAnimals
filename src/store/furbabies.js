@@ -21,7 +21,7 @@ export const getFurbabiesThunk = () => dispatch =>
   .catch(err => console.log(err));
 
 export const updateFosterThunk = furbaby => dispatch => 
-  axios.put('http://localhost:8080/api/furbabies')
+  axios.put('http://localhost:8080/api/furbabies', furbaby)
   .then(furbaby => dispatch(updateFoster(furbaby)))
   .catch(err => console.log(err));
 
@@ -32,11 +32,12 @@ export default function (state = initialState, action) {
     case GET_FURBABIES:
       return action.furbabies;
     case UPDATE_FOSTER:
-      return state.forEach(item => {
+      state.forEach(item => {
         if (item.id === action.furbaby.id) {
           item.parentId = action.furbaby.parentId;
         }
-      })
+      });
+      return state;
     default:
       return state;
   }

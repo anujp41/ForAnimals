@@ -17,8 +17,6 @@ const FurBabies = db.define('furbaby', {
     afterUpdate: function(furbaby, option) {
       const id = furbaby.parentId;
       const hasFoster = id ? true : false;
-      console.log('will now be updating ', id, hasFoster)
-      console.log('model is ', furbaby)
       this.associations.parent.target.update({hasFoster}, {where: {id}})
     },
     afterCreate: function(furbaby, option) {

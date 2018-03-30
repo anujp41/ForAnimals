@@ -18,14 +18,14 @@ router.post('/', (req, res, next) => {
 })
 
 //Update existing cats
-router.put("/:catId", (req, res, next) => {
-  const id = req.params.catId;
-  return FurBabies.update(req.body,{
+router.put('/', (req, res, next) => {
+  const {furbaby: id, parent: parentId} = req.body;
+  return FurBabies.update({id, parentId},{
     where: { id },
     individualHooks: true
   })
   .then((updatedInfo) => {
-    res.status(200).json(updatedInfo).end()})
+    res.json(updatedInfo)})
   .catch(next);
 })
 
