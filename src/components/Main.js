@@ -17,7 +17,6 @@ class Main extends Component {
           <h1 className="Main-title">Welcome to For Animals Inc.</h1>
         </header>
         <div className="Main-intro">
-          <Input />
         </div>
       </div>
     );
