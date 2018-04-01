@@ -15,3 +15,8 @@ li {
 li>label {
   padding-right: 25px
 }
+
+li img {
+  height: 100px;
+  width: 100px
+}
