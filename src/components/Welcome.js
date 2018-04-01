@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class Welcome extends Component {
 
@@ -8,6 +8,10 @@ class Welcome extends Component {
       <div>
         <Link to={'/input'}>
           <h1>Let's visit this site!</h1>
+        </Link>
+
+        <Link to={'/furbabies'}>
+          <h1>Let's go see the furbabies!</h1>
         </Link>
       </div>
     );

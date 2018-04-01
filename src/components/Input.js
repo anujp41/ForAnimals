@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import './Input.css';
-import Furbaby from './Furbaby';
-import Parent from './Parent';
-import Match from './Match';
+import { Furbaby, Parent, Match} from './index';
 
 class Input extends Component {
   render() {
     return (
-      <div>
+      <div style={{textAlign: 'center'}}>
         <Furbaby />
         <Parent />
         <Match />

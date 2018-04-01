@@ -61,7 +61,6 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     submit(info) {
-      console.log('dispatching')
       dispatch(updateFosterThunk(info))
     }
   }

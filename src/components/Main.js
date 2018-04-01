@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Main.css';
-import Input from './Input';
 import { getFurbabiesThunk, getParentsThunk } from '../store';
+import { Link } from 'react-router-dom';
 
 class Main extends Component {
 
@@ -17,6 +17,7 @@ class Main extends Component {
           <h1 className="Main-title">Welcome to For Animals Inc.</h1>
         </header>
         <div className="Main-intro">
+        <Link to='/'>Go Home</Link>
         </div>
       </div>
     );

@@ -20,6 +20,7 @@ router.post('/', (req, res, next) => {
 //Update existing cats
 router.put('/', (req, res, next) => {
   const {furbaby: id, parent: parentId} = req.body;
+  console.log('i am giving ', id, parentId)
   return FurBabies.update({id, parentId},{
     where: { id },
     individualHooks: true
