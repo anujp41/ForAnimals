@@ -2,15 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import './FurbabiesList.css';
 
-//Random Cat Photo => http://thecatapi.com/api/images/get?format=src&type=jpg
-//Random User Photo => https://randomuser.me/api/?inc=picture
-
 class FurbabiesList extends Component {
 
   render() {
     const { furbabies } = this.props;
-    const furbaby = furbabies[0];
-    const {id, name, breed } = furbaby;
     const imgSrc = 'http://thecatapi.com/api/images/get?format=src&type=jpg';
     return (
       <div className='mainContainer'>

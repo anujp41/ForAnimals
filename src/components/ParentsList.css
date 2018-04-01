@@ -1,37 +1,42 @@
-.mainContainer {
+.mainParentContainer {
   text-align: center
 }
 
-.furbabyImage {
+.parentImage {
   grid-area: image;
 }
 
-.furbabyName {
+.parentName {
   grid-area: name;
 }
 
-.furbabyBreed {
-  grid-area: breed;
+.parentAddress {
+  grid-area: address;
 }
 
-.furbabyContainer {
+.parentHasFoster {
+  grid-area: hasFoster;
+}
+
+.parentContainer {
   width: 51%;
   display: inline-grid;
   grid-template-areas: 
     'image name'
-    'image breed';
+    'image address'
+    'image hasFoster';
   grid-gap: 10px;
   background-color: #b7d7e8;
-  margin: 25px 0 25px 0;
   padding: 10px 0 10px 0;
+  margin: 25px 0 25px 0;
 }
 
-.furbabyImage {
+.parentImage {
   margin: auto;
   width: 10vw;
   height: 10vh;
 }
 
-.furbabyContainer div {
+.parentContainer div {
   margin-left: -100%
 }

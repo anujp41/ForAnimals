@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Router } from "react-router";
 import { Route, Switch } from "react-router-dom";
 import history from "./history";
-import { Main, Input, Welcome, FurbabiesList } from './components';
+import { Main, Input, Welcome, FurbabiesList, ParentsList } from './components';
 
 class Routes extends Component {
   
@@ -15,6 +15,7 @@ class Routes extends Component {
             <Route exact path='/' component={Welcome} />
             <Route path='/input' component={Input} />
             <Route path='/furbabies' component={FurbabiesList} />
+            <Route path='/parents' component={ParentsList} />
           </Switch>
         </div>
       </Router>

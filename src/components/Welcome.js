@@ -13,6 +13,10 @@ class Welcome extends Component {
         <Link to={'/furbabies'}>
           <h1>Let's go see the furbabies!</h1>
         </Link>
+
+        <Link to={'/parents'}>
+          <h1>Let's go see the parents!</h1>
+        </Link>
       </div>
     );
   }
