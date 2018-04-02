@@ -4,6 +4,8 @@ import { createFurbabyThunk } from '../store';
 import './Input.css';
 import Dropzone from 'react-dropzone';
 import request from 'superagent';
+import firebase from '../firebase';
+
 
 class Furbaby extends Component {
 
@@ -17,11 +19,18 @@ class Furbaby extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onImageDrop = this.onImageDrop.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.submit(this.state);
+    // this.props.submit(this.state);
+    const storage = firebase.storage();
+    const storageRef = storage.ref();
+    const image = this.state.photo.preview;
+    storageRef.put(image)
+    .then(snapshot => console.log('i uploaded the photo ', snapshot))
+    .catch(err => console.log('there was an error ', err))
   }
 
   handleChange(event) {
@@ -30,14 +39,27 @@ class Furbaby extends Component {
     this.setState({ [name] : value });
   }
 
+  onChange(event) {
+    console.log('uploaded files ', event.target.files)
+  }
+
   onImageDrop(files) {
+    console.log('uploaded ', files)
     const photo = files[0];
-    this.setState({ photo });
+    this.setState({ photo })
+    console.log( 'and photo is ', photo.name)
+
+    const storage = firebase.storage();
+    const storageRef = storage.ref('images');
+    // const image = this.state.photo.preview;
+
+    storageRef.put(photo)
+    .then(snapshot => console.log('i uploaded the photo ', snapshot))
+    .catch(err => console.log('there was an error ', err))
   }
 
   render() {
     const { name, breed } = this.state;
-    console.log('photo is ', this.state.photo && this.state.photo.preview);
     return (
       <div className='container'>
         <form onSubmit={this.handleSubmit}>
@@ -61,6 +83,8 @@ class Furbaby extends Component {
                 <img src={this.state.photo && this.state.photo.preview}/>
               </Dropzone>
             </li>
+
+            <input type='file' onChange={this.onChange} />
 
             <li>
               <input type="submit" value="submit" />
