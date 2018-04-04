@@ -6,8 +6,6 @@ class FurbabiesList extends Component {
 
   render() {
     const { furbabies } = this.props;
-    console.log('firbabies area ', furbabies)
-    const imgSrc = 'http://thecatapi.com/api/images/get?format=src&type=jpg';
     return (
       <div className='mainContainer'>
         {furbabies.map(furbaby =>
