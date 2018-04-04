@@ -10,10 +10,11 @@ const createFurbaby = furbaby => ({ type: CREATE_FURBABY, furbaby });
 const getFurbabies = furbabies => ({ type: GET_FURBABIES, furbabies});
 const updateFoster = furbaby => ({ type: UPDATE_FOSTER, furbaby });
 
-export const createFurbabyThunk = furbaby => dispatch =>
+export const createFurbabyThunk = furbaby => dispatch => {
   axios.post('http://localhost:8080/api/furbabies', furbaby)
   .then(newFurbaby => dispatch(createFurbaby(newFurbaby.data)))
   .catch(err => console.log(err));
+}
 
 export const getFurbabiesThunk = () => dispatch =>
   axios.get('http://localhost:8080/api/furbabies')

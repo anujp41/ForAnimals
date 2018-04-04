@@ -10,6 +10,13 @@ const FurBabies = db.define('furbaby', {
   breed: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+  photoUrl: {
+    type: Sequelize.STRING,
+    defaultValue: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Cute-kittens-12929201-1600-1200.jpg/640px-Cute-kittens-12929201-1600-1200.jpg',
+    validate: {
+      isUrl: true
+    }
   }
 }, 
 {
