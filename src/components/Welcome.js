@@ -5,7 +5,7 @@ class Welcome extends Component {
 
   render() {
     return (
-      <div>
+      <div style={divStyle}>
         <Link to={'/input'}>
           <h1>Let's visit this site!</h1>
         </Link>
@@ -23,3 +23,11 @@ class Welcome extends Component {
 }
 
 export default Welcome;
+
+const divStyle = {
+  fontFamily: 'Eczar, sans-serif',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+}

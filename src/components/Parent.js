@@ -35,11 +35,11 @@ class Parent extends Component {
           <ul>
             <li>
               <label>Name:</label>
-              <input type="text" name="name" value={name} onChange={this.handleChange}/>
+              <input required type="text" name="name" value={name} onChange={this.handleChange}/>
             </li>
             <li>
               <label>Address:</label>
-              <input type="text" name="address" value={address} onChange={this.handleChange}/>
+              <input required type="text" name="address" value={address} onChange={this.handleChange}/>
             </li>
             <li>
               <input type="submit" value="submit" />

@@ -2,13 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import './ParentsList.css';
 
-//Random User Photo => https://randomuser.me/api/?inc=picture
-
 class ParentsList extends Component {
 
   render() {
     const { parents } = this.props;
-    const imgSrc = 'https://randomuser.me/api/?inc=picture';
     return (
       <div className='mainParentContainer'>
         {parents.map(parent =>

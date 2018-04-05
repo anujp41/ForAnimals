@@ -1,7 +1,24 @@
 .container {
   margin: auto;
-  background-color: pink;
+  background-color: #E3AFBC;
+  font-family: 'Eczar', serif;
   width: 70vw
+}
+
+input {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid;
+  color: white;
+  font-size: 36px;
+  padding: 5px 20px;
+  text-align: center;
+  transition: all 0.3s;
+  width: 50%
+}
+
+::-webkit-input-placeholder {
+  color: #e26161;
 }
 
 ul {
@@ -19,4 +36,17 @@ li>label {
 div>img {
   height: 100px;
   width: 100px
+}
+
+button {
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 27px;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 20px;
+  padding: 15px 30px;
+  text-transform: uppercase;
+  transition: all 200ms;
 }

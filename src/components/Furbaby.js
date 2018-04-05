@@ -57,27 +57,25 @@ class Furbaby extends Component {
         <h1>Details for kitten:</h1>
           <ul>
             <li>
-              <label>Name:</label>
-              <input type="text" name="name" value={name} onChange={this.handleChange}/>
+              <input required type="text" name="name" placeholder="Name" value={name} onChange={this.handleChange}/>
             </li>
             <li>
-              <label>Breed:</label>
-              <input type="text" name="breed" value={breed} onChange={this.handleChange}/>
+              <input required type="text" name="breed" placeholder="Breed" value={breed} onChange={this.handleChange}/>
             </li>
+          </ul>
 
             <div>
               <Dropzone
                 multiple={false}
                 accept="image/*" 
                 onDrop={this.onImageDrop.bind(this)}>
-                <p>Drop an image or click to select a file to upload.</p>
+                <p>Click to select a picture.</p>
                 <img alt="" src={this.state.photo && this.state.photo.preview}/>
               </Dropzone>
             </div>
 
-              <input type="submit" value="submit" />
+            <button type="submit" value="submit">Submit</button>
             
-          </ul>
         </form>
       </div>
     )

@@ -10,7 +10,7 @@ class FurbabiesList extends Component {
       <div className='mainContainer'>
         {furbabies.map(furbaby =>
           <div key={furbaby.id} className='furbabyContainer'>
-            <img className='furbabyImage' src={furbaby.photoUrl} />
+            <img alt="" className='furbabyImage' src={furbaby.photoUrl} />
             <div className='furbabyName'><b>Name:</b>{furbaby.name}</div>
             <div className='furbabyBreed'><b>Breed:</b>{furbaby.breed}</div>
           </div>
