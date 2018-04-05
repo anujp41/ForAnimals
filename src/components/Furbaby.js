@@ -37,6 +37,8 @@ class Furbaby extends Component {
   saveToDB() {
     const {name, breed, photoUrl} = this.state;
     this.props.submit({name, breed, photoUrl});
+    this.setState({name: '', breed: '', photo: null, photoUrl: ''});
+    alert('Furbaby saved to database!');
   }
 
   handleChange(event) {

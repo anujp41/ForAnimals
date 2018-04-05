@@ -1,37 +1,17 @@
 .mainContainer {
-  text-align: center
+  border-color: '#667c6c';
+  border-style: ridge;
+  width: 25%;
+  height: 275px;
+  margin-left: 150px 
 }
 
-.furbabyImage {
-  grid-area: image;
-}
+.furbabyImage {}
 
 .furbabyName {
-  grid-area: name;
+  float: right
 }
 
 .furbabyBreed {
-  grid-area: breed;
-}
-
-.furbabyContainer {
-  width: 51%;
-  display: inline-grid;
-  grid-template-areas: 
-    'image name'
-    'image breed';
-  grid-gap: 10px;
-  background-color: #b7d7e8;
-  margin: 25px 0 25px 0;
-  padding: 10px 0 10px 0;
-}
-
-.furbabyImage {
-  margin: auto;
-  width: 10vw;
-  height: 10vh;
-}
-
-.furbabyContainer div {
-  margin-left: -100%
+  float: right
 }

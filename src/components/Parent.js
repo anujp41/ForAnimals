@@ -37,6 +37,8 @@ class Parent extends Component {
   saveToDB() {
     const {name, address, photoUrl} = this.state;
     this.props.submit({name, address, photoUrl});
+    this.setState({name: '', address: '', photo: null, photoUrl: ''});
+    alert('Parent saved to database!');
   }
 
   handleChange(event) {

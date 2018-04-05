@@ -68,7 +68,7 @@ button {
   margin-bottom: 15px
 }
 
-button:hover, button:focus {
+button:hover {
   background-color: white;
   color: #61e887;
   outline: 0
