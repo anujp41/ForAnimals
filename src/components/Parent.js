@@ -30,21 +30,17 @@ class Parent extends Component {
     const { name, address } = this.state;
     return (
       <div className='container'>
-        <form onSubmit={this.handleSubmit}>
-        <h1>Details for parents:</h1>
-          <ul>
-            <li>
-              <label>Name:</label>
-              <input required type="text" name="name" value={name} onChange={this.handleChange}/>
-            </li>
-            <li>
-              <label>Address:</label>
-              <input required type="text" name="address" value={address} onChange={this.handleChange}/>
-            </li>
-            <li>
-              <input type="submit" value="submit" />
-            </li>
-          </ul>
+        <form autoComplete="off" onSubmit={this.handleSubmit}>
+        <div className="title">Enter details for our new fosters:</div>
+
+          <input required type="text" name="name" value={name} onChange={this.handleChange}/>
+          <div className="label-text">Name</div>
+
+          <input required type="text" name="address" value={address} onChange={this.handleChange}/>
+          <div className="label-text">Address</div>
+
+          <button type="submit" value="submit">Submit</button>
+            
         </form>
       </div>
     )

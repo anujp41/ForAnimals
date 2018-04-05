@@ -3,7 +3,13 @@
   background-color: #6d6969;
   font-family: 'Eczar', serif;
   width: 70vw;
-  color: white
+  color: white;
+  margin-bottom: 15px
+}
+
+.title {
+  font-size: 2.5em;
+  padding-top: 15px;
 }
 
 input {
@@ -14,45 +20,38 @@ input {
   font-size: 20px;
   padding: 5px 50px;
   text-align: center;
+  height: 30px;
   width: 50%;
+  margin-top: 35px;
   margin-bottom: 75px;
   font-family: 'Roboto', sans-serif;
 }
 
 input:focus + .label-text {
-  transform: translateY(-25px);
-  transform-style: preserve-3d
+  transform: translateY(-35px);
+  color: #61e887;
 }
 
 input:valid + .label-text {
-  transform: translateY(-25px);
-  transform-style: preserve-3d
-}
-
-.title {
-  font-size: 2.5em;
-  padding-top: 15px;
+  transform: translateY(-35px);
+  color: #61e887;
 }
 
 .label-text {
   cursor: text;
   font-size: 20px;
-  line-height: 40px;
   margin-top: -110px;
   transition: all 0.5s;
-}
-
-ul {
-  list-style: none
-}
-
-li {
-  padding: 10px
 }
 
 div>img {
   height: 100px;
   width: 100px
+}
+
+.dropzone {
+  border-radius: 25%;
+  text-align: center
 }
 
 button {
@@ -66,4 +65,11 @@ button {
   padding: 15px 30px;
   text-transform: uppercase;
   transition: all 200ms;
+  margin-bottom: 15px
+}
+
+button:hover, button:focus {
+  background-color: white;
+  color: #61e887;
+  outline: 0
 }

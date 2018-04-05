@@ -53,30 +53,27 @@ class Furbaby extends Component {
     const { name, breed } = this.state;
     return (
       <div className='container'>
-        <form onSubmit={this.handleSubmit}>
+        <form autoComplete="off" onSubmit={this.handleSubmit}>
         <div className="title">Enter details for our new furbaby:</div>
-          <ul>
-            <li>
-              <input required type="text" name="name" value={name} onChange={this.handleChange}/>
-              <div className="label-text">Name</div>
-            </li>
-            <li>
-              <input required type="text" name="breed" value={breed} onChange={this.handleChange}/>
-              <div className="label-text">Breed</div>
-            </li>
-          </ul>
 
-            <div>
-              <Dropzone
-                multiple={false}
-                accept="image/*" 
-                onDrop={this.onImageDrop.bind(this)}>
-                <p>Click to select a picture.</p>
-                <img alt="" src={this.state.photo && this.state.photo.preview}/>
-              </Dropzone>
-            </div>
+          <input required type="text" name="name" value={name} onChange={this.handleChange}/>
+          <div className="label-text">Name</div>
 
-            <button type="submit" value="submit">Submit</button>
+          <input required type="text" name="breed" value={breed} onChange={this.handleChange}/>
+          <div className="label-text">Breed</div>
+
+          <div className="dropzone">
+            <Dropzone
+              multiple={false}
+              accept="image/*"
+              style={dropzoneStyle} 
+              onDrop={this.onImageDrop.bind(this)}>
+              <p>Click to select a picture.</p>
+              <img alt="" src={this.state.photo && this.state.photo.preview}/>
+            </Dropzone>
+          </div>
+
+          <button type="submit" value="submit">Submit</button>
             
         </form>
       </div>
@@ -100,3 +97,11 @@ const mapDispatch = dispatch => {
 
 const FurbabyContainer = connect(mapState, mapDispatch)(Furbaby);
 export default FurbabyContainer;
+
+const dropzoneStyle = {
+  display: 'flexbox',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height : '20%',
+  border : 'none'
+};
