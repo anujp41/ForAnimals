@@ -1,8 +1,9 @@
 .container {
   margin: auto;
-  background-color: #E3AFBC;
+  background-color: #6d6969;
   font-family: 'Eczar', serif;
-  width: 70vw
+  width: 70vw;
+  color: white
 }
 
 input {
@@ -10,15 +11,29 @@ input {
   border: 0;
   border-bottom: 2px solid;
   color: white;
-  font-size: 36px;
-  padding: 5px 20px;
+  font-size: 25px;
+  padding: 5px 50px;
   text-align: center;
-  transition: all 0.3s;
-  width: 50%
+  width: 50%;
+  margin-bottom: 75px;
+  font-family: 'Roboto', sans-serif;
 }
 
-::-webkit-input-placeholder {
-  color: #e26161;
+input:focus + .label-text {
+  transform: translateY(-25px)
+}
+
+.title {
+  font-size: 2.5em;
+  padding-top: 15px;
+}
+
+.label-text {
+  cursor: text;
+  font-size: 20px;
+  line-height: 40px;
+  margin-top: -110px;
+  transition: all 0.5s;
 }
 
 ul {
@@ -27,10 +42,6 @@ ul {
 
 li {
   padding: 10px
-}
-
-li>label {
-  padding-right: 25px
 }
 
 div>img {

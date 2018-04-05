@@ -54,13 +54,15 @@ class Furbaby extends Component {
     return (
       <div className='container'>
         <form onSubmit={this.handleSubmit}>
-        <h1>Details for kitten:</h1>
+        <div className="title">Enter details for our new furbaby:</div>
           <ul>
             <li>
-              <input required type="text" name="name" placeholder="Name" value={name} onChange={this.handleChange}/>
+              <input required type="text" name="name" value={name} onChange={this.handleChange}/>
+              <div className="label-text">Name</div>
             </li>
             <li>
-              <input required type="text" name="breed" placeholder="Breed" value={breed} onChange={this.handleChange}/>
+              <input required type="text" name="breed" value={breed} onChange={this.handleChange}/>
+              <div className="label-text">Breed</div>
             </li>
           </ul>
 
