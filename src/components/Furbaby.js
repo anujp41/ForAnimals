@@ -24,7 +24,8 @@ class Furbaby extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const storage = firebase.storage();
-    const storageRef = storage.ref('images/kitten');
+    const name = this.state.name.replace(/[\W]/g, '').toLowerCase();
+    const storageRef = storage.ref(`furbabies/${name}`);
     const photo = this.state.photo;
 
     await storageRef.put(photo)
