@@ -11,7 +11,7 @@ input {
   border: 0;
   border-bottom: 2px solid;
   color: white;
-  font-size: 25px;
+  font-size: 20px;
   padding: 5px 50px;
   text-align: center;
   width: 50%;
@@ -20,7 +20,13 @@ input {
 }
 
 input:focus + .label-text {
-  transform: translateY(-25px)
+  transform: translateY(-25px);
+  transform-style: preserve-3d
+}
+
+input:valid + .label-text {
+  transform: translateY(-25px);
+  transform-style: preserve-3d
 }
 
 .title {
