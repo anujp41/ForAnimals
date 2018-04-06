@@ -1,7 +1,8 @@
 .container {
   margin: auto;
+  text-align: center;
   background-color: #6d6969;
-  font-family: 'Eczar', serif;
+  font-family: 'Open Sans', sans-serif;
   width: 70vw;
   color: white;
   margin-bottom: 15px
@@ -10,6 +11,36 @@
 .title {
   font-size: 2.5em;
   padding-top: 15px;
+}
+
+.general {
+  border: darkorange;
+  border-width: 5px
+}
+
+.health {
+  background-color: orange;
+}
+
+.healthTitle {
+  padding: 10px 0 10px 0;
+  font-size: x-large;
+  font-weight: bolder;
+}
+
+.flexContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  /* align-items: center */
+}
+
+.flexItem {
+  margin: 0 35px;
+}
+
+.flexQ {
+  margin-bottom: -20px;
 }
 
 input {
@@ -24,7 +55,7 @@ input {
   width: 50%;
   margin-top: 35px;
   margin-bottom: 75px;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 input:focus + .label-text {
@@ -72,4 +103,67 @@ button:hover {
   background-color: white;
   color: #61e887;
   outline: 0
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 34px;
+}
+
+.switch input {
+  display:none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #2ab934;
+  -webkit-transition: .4s;
+  transition: .4s;
+   border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #ca2222;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(55px);
+}
+
+.slider:after {
+ content:'No';
+ color: white;
+ display: block;
+ position: absolute;
+ transform: translate(-50%,-50%);
+ top: 50%;
+ left: 50%;
+ font-size: 15px;
+ font-family: 'Roboto', sans-serif;
+}
+
+input:checked + .slider:after {  
+  content:'Yes';
 }

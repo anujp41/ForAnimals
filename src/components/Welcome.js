@@ -10,6 +10,14 @@ class Welcome extends Component {
           <h1>Let's visit this site!</h1>
         </Link>
 
+        <Link to={'/furbaby'}>
+          <h1>Add furbabies!</h1>
+        </Link>
+
+        <Link to={'/parent'}>
+          <h1>Add parents!</h1>
+        </Link>
+
         <Link to={'/furbabies'}>
           <h1>Let's go see the furbabies!</h1>
         </Link>

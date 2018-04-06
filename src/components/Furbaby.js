@@ -57,23 +57,49 @@ class Furbaby extends Component {
     return (
       <div className='container'>
         <form autoComplete="off" onSubmit={this.handleSubmit}>
-        <div className="title">Enter details for our new furbaby:</div>
 
-          <input required type="text" name="name" value={name} onChange={this.handleChange}/>
-          <div className="label-text">Name</div>
+          <div className="general">
+            <div className="title">Enter details for our new furbaby:</div>
 
-          <input required type="text" name="breed" value={breed} onChange={this.handleChange}/>
-          <div className="label-text">Breed</div>
+            <input required type="text" name="name" value={name} onChange={this.handleChange}/>
+            <div className="label-text">Name</div>
 
-          <div className="dropzone">
-            <Dropzone
-              multiple={false}
-              accept="image/*"
-              style={dropzoneStyle} 
-              onDrop={this.onImageDrop.bind(this)}>
-              <p>Click to select a picture.</p>
-              <img alt="" src={this.state.photo && this.state.photo.preview}/>
-            </Dropzone>
+            <input required type="text" name="breed" value={breed} onChange={this.handleChange}/>
+            <div className="label-text">Breed</div>
+
+            <div className="dropzone">
+              <Dropzone
+                multiple={false}
+                accept="image/*"
+                style={dropzoneStyle} 
+                onDrop={this.onImageDrop.bind(this)}>
+                <p>Click to select a picture.</p>
+                <img alt="" src={this.state.photo && this.state.photo.preview}/>
+              </Dropzone>
+            </div>
+          </div>
+
+          <div className='health'>
+              <div className='healthTitle'>Health Info for furbaby</div>
+              <div className='flexContainer'>
+
+              <div className='flexItem'>
+                <div className='flexQ'>Is the furbaby spayed?</div><br/>
+                <label class="switch">
+                  <input type="checkbox"/>
+                  <div class="slider"></div>
+                </label>
+              </div>
+
+              <div className='flexItem'>
+                <div className='flexQ'>Does the furbaby have FIV?</div><br/>
+                <label class="switch">
+                  <input type="checkbox"/>
+                  <div class="slider"/>
+                </label>
+              </div>
+              
+            </div>
           </div>
 
           <button type="submit" value="submit">Submit</button>
