@@ -1,17 +1,43 @@
 .mainContainer {
-  border-color: '#667c6c';
-  border-style: ridge;
-  width: 25%;
-  height: 275px;
-  margin-left: 150px 
+  max-width: 900px;
+  margin: 50px auto 0;
+  font-family: 'Open Sans', sans-serif;
 }
 
-.furbabyImage {}
+.furbabyCard {
+  float: left;
+  padding: 0 1.7rem;
+  width: 50%;
+}
+
+.wrapper {
+  background-color: white;
+  min-height: 540px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 19px 38px rgba(black, 0.3), 0 15px 12px rgba(black, 0.2);
+}
+
+.wrapper>img {
+  max-width: 100%;
+  max-height: 100%
+}
+
+.furbaby {
+  position: absolute;
+  background-color: white
+}
+
+.furbabyDetails {
+  padding: 1em;
+  position: relative;
+  z-index: 1;
+}
 
 .furbabyName {
-  float: right
+  font-size: 30px
 }
 
 .furbabyBreed {
-  float: right
+  font-size: 20px
 }

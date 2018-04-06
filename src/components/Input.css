@@ -44,7 +44,7 @@ input:valid + .label-text {
   transition: all 0.5s;
 }
 
-div>img {
+.dropzone img {
   height: 100px;
   width: 100px
 }

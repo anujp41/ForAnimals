@@ -7,22 +7,22 @@ class FurbabiesList extends Component {
   render() {
     const { furbabies } = this.props;
     const furbaby = furbabies[0];
-    console.log('baby is ', furbaby);
     return (
-      <div className="mainContainer">
-        <img alt="" className='furbabyImage' src={furbaby.photoUrl} />
-        <div className='furbabyName'><b>Name:</b>{furbaby.name}</div>
-        <div className='furbabyBreed'><b>Breed:</b>{furbaby.breed}</div>
+      <div className='mainContainer'>
+      {furbabies.map(furbaby => (
+        <div className='furbabyCard'>
+          <div className='wrapper'>
+            <img alt="" src={furbaby.photoUrl} />
+            <div className='furbaby'>
+              <div className='furbabyDetails'>
+                <div className='furbabyName'><b>Name: </b>{furbaby.name}</div>
+                <div className='furbabyBreed'><b>Breed: </b>{furbaby.breed}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        ))}
       </div>
-      // <div className='mainContainer'>
-      //   {furbabies.map(furbaby =>
-      //     <div key={furbaby.id} className='furbabyContainer'>
-      //       <img alt="" className='furbabyImage' src={furbaby.photoUrl} />
-      //       <div className='furbabyName'><b>Name:</b>{furbaby.name}</div>
-      //       <div className='furbabyBreed'><b>Breed:</b>{furbaby.breed}</div>
-      //     </div>
-      //   )}
-      // </div>
     )
   }
 }
