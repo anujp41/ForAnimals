@@ -4,6 +4,8 @@ import { createFurbabyThunk } from '../store';
 import './Input.css';
 import Dropzone from 'react-dropzone';
 import firebase from '../firebase';
+import { Parent } from './index';
+import $ from 'jquery';
 
 class Furbaby extends Component {
 
@@ -50,6 +52,10 @@ class Furbaby extends Component {
   onImageDrop(files) {
     const photo = files[0];
     this.setState({ photo });
+  }
+
+  componentDidMount() {
+    $('.fostercheck').on('click',() => $('.parentForm').toggle(1500));
   }
 
   render() {
@@ -103,13 +109,21 @@ class Furbaby extends Component {
           </div>
 
           <div className='foster'>
-            <div className='fosterQ'>Does the furbaby have a foster?</div>
-            <input className='fostercheck' type='checkbox' style={{margin: 0, width: '0px', paddingLeft: 0}}/>
+            <div className='fosterdiv'>
+              <div className='fosterQ'>Does the furbaby have a foster?</div>
+              <input className='fostercheck' type='checkbox' style={{margin: 0, width: '0px', paddingLeft: 0}}/>
+            </div>
+
           </div>
 
           <button type="submit" value="submit">Submit</button>
             
         </form>
+
+        <div hidden className='parentForm'>
+          <Parent button='hidden'/>
+        </div>
+
       </div>
     )
   }

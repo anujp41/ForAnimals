@@ -54,6 +54,7 @@ class Parent extends Component {
 
   render() {
     const { name, address } = this.state;
+    console.log('parent prop ', this.props.button)
     return (
       <div className='container'>
         <form autoComplete="off" onSubmit={this.handleSubmit}>
@@ -76,7 +77,7 @@ class Parent extends Component {
             </Dropzone>
           </div>
 
-          <button type="submit" value="submit">Submit</button>
+          <button hidden={this.props.button} type="submit" value="submit">Submit</button>
             
         </form>
       </div>

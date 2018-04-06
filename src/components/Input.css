@@ -173,6 +173,13 @@ input:checked + .slider:after {
 
 .foster {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+}
+
+.fosterdiv {
+  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center
