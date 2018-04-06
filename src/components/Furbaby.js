@@ -85,21 +85,26 @@ class Furbaby extends Component {
 
               <div className='flexItem'>
                 <div className='flexQ'>Is the furbaby spayed?</div><br/>
-                <label class="switch">
+                <label className="switch">
                   <input type="checkbox"/>
-                  <div class="slider"></div>
+                  <div className="slider"></div>
                 </label>
               </div>
 
               <div className='flexItem'>
                 <div className='flexQ'>Does the furbaby have FIV?</div><br/>
-                <label class="switch">
+                <label className="switch">
                   <input type="checkbox"/>
-                  <div class="slider"/>
+                  <div className="slider"/>
                 </label>
               </div>
               
             </div>
+          </div>
+
+          <div className='foster'>
+            <div className='fosterQ'>Does the furbaby have a foster?</div>
+            <input className='fostercheck' type='checkbox' style={{margin: 0, width: '0px', paddingLeft: 0}}/>
           </div>
 
           <button type="submit" value="submit">Submit</button>
