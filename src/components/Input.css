@@ -11,12 +11,20 @@
 .title {
   font-size: 2.5em;
   padding-top: 15px;
+  text-align: center;
 }
 
 .general {
-  border: darkorange;
-  border-width: 5px;
-  margin-bottom: 15px
+  margin: auto;
+  width: 80%;
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap
+}
+
+.formfield {
+  margin: auto;
+  width: 45%
 }
 
 .health {
@@ -85,6 +93,7 @@ input:valid + .label-text {
 
 .dropzone {
   border-radius: 25%;
+  text-align: center;
   text-align: center
 }
 

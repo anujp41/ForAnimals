@@ -15,7 +15,9 @@ class Furbaby extends Component {
       name: '',
       breed: '',
       photoUrl: '',
-      photo: null
+      photo: null,
+      age: '',
+      sex: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -59,30 +61,46 @@ class Furbaby extends Component {
   }
 
   render() {
-    const { name, breed } = this.state;
+    const { name, breed, age, sex } = this.state;
     return (
       <div className='container'>
         <form autoComplete="off" onSubmit={this.handleSubmit}>
 
+          <div className="title">Enter details for our new furbaby:</div>
+
           <div className="general">
-            <div className="title">Enter details for our new furbaby:</div>
 
-            <input required type="text" name="name" value={name} onChange={this.handleChange}/>
-            <div className="label-text">Name</div>
-
-            <input required type="text" name="breed" value={breed} onChange={this.handleChange}/>
-            <div className="label-text">Breed</div>
-
-            <div className="dropzone">
-              <Dropzone
-                multiple={false}
-                accept="image/*"
-                style={dropzoneStyle} 
-                onDrop={this.onImageDrop.bind(this)}>
-                <p>Click to select a picture.</p>
-                <img alt="" src={this.state.photo && this.state.photo.preview}/>
-              </Dropzone>
+            <div className='formfield'>
+              <input required type="text" name="name" value={name} onChange={this.handleChange}/>
+              <div className="label-text">Name</div>
             </div>
+
+            <div className='formfield'>
+              <input required type="text" name="breed" value={breed} onChange={this.handleChange}/>
+              <div className="label-text">Breed</div>
+            </div>
+
+            <div className='formfield'>
+              <input required type="text" name="age" value={age} onChange={this.handleChange}/>
+              <div className="label-text">Age</div>
+            </div>
+
+            <div className='formfield'>
+              <input required type="text" name="sex" value={sex} onChange={this.handleChange}/>
+              <div className="label-text">Sex</div>
+            </div>
+
+          </div>
+
+          <div className="dropzone">
+            <Dropzone
+              multiple={false}
+              accept="image/*"
+              style={dropzoneStyle} 
+              onDrop={this.onImageDrop.bind(this)}>
+              <p>Click to select a picture.</p>
+              <img alt="" src={this.state.photo && this.state.photo.preview}/>
+            </Dropzone>
           </div>
 
           <div className='health'>

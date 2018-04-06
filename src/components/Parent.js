@@ -54,7 +54,6 @@ class Parent extends Component {
 
   render() {
     const { name, address } = this.state;
-    console.log('parent prop ', this.props.button)
     return (
       <div className='container'>
         <form autoComplete="off" onSubmit={this.handleSubmit}>
