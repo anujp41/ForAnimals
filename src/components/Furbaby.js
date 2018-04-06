@@ -129,9 +129,8 @@ class Furbaby extends Component {
           <div className='foster'>
             <div className='fosterdiv'>
               <div className='fosterQ'>Does the furbaby have a foster?</div>
-              <input className='fostercheck' type='checkbox' style={{margin: 0, width: '0px', paddingLeft: 0}}/>
+              <input className='fostercheck' type='checkbox' style={{margin: 0, width: '0px', height: '25px', paddingLeft: 0}}/>
             </div>
-
           </div>
 
           <button type="submit" value="submit">Submit</button>

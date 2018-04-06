@@ -27,6 +27,19 @@
   width: 45%
 }
 
+.dropzone {
+  border-radius: 25%;
+  text-align: center;
+  text-align: center;
+  margin: auto;
+  margin-bottom: 15px
+}
+
+.dropzone img {
+  height: 100px;
+  width: 100px
+}
+
 .health {
   background-color: orange;
   padding: 10px 0 20px 0;
@@ -84,17 +97,6 @@ input:valid + .label-text {
   font-size: 20px;
   margin-top: -110px;
   transition: all 0.5s;
-}
-
-.dropzone img {
-  height: 100px;
-  width: 100px
-}
-
-.dropzone {
-  border-radius: 25%;
-  text-align: center;
-  text-align: center
 }
 
 button {
