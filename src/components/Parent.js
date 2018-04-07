@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createParentThunk } from '../store';
 import './Input.css';
-import Dropzone from 'react-dropzone';
+// import Dropzone from 'react-dropzone';
 import firebase from '../firebase';
 
 class Parent extends Component {
@@ -57,15 +57,15 @@ class Parent extends Component {
     return (
       <div className='container'>
         <form autoComplete="off" onSubmit={this.handleSubmit}>
-        <div className="title">Enter details for our new fosters:</div>
+        <div className="title">Enter details for our new parents:</div>
 
           <input required type="text" name="name" value={name} onChange={this.handleChange}/>
           <div className="label-text">Name</div>
 
           <input required type="text" name="address" value={address} onChange={this.handleChange}/>
-          <div className="label-text">Address</div>
+          <div style={{paddingBottom: '75px'}} className="label-text">Address</div>
 
-          <div className="dropzone">
+          {/* <div className="dropzone">
             <Dropzone
               multiple={false}
               accept="image/*"
@@ -74,7 +74,7 @@ class Parent extends Component {
               <p>Click to select a picture.</p>
               <img alt="" src={this.state.photo && this.state.photo.preview}/>
             </Dropzone>
-          </div>
+          </div> */}
 
           <button hidden={this.props.button} type="submit" value="submit">Submit</button>
             

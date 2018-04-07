@@ -57,7 +57,7 @@ class Furbaby extends Component {
   }
 
   componentDidMount() {
-    $('.fostercheck').on('click',() => $('.parentForm').toggle(1500));
+    $('.fostercheck').on('click',() => $('.parentForm').toggle(1000));
   }
 
   render() {
