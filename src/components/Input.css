@@ -34,14 +34,14 @@
 }
 
 .commentInput {
-  height: 60px;
+  height: 65px;
   font-size: 15px;
 }
 
 .label-comment {
   cursor: text;
   font-size: 20px;
-  margin-top: -130px;
+  margin-top: -135px;
   transition: all 0.5s;
   /* margin-bottom: 50px */
 }
@@ -99,21 +99,22 @@ input {
   margin-top: 35px;
   margin-bottom: 75px;
   font-family: 'Open Sans', sans-serif;
+  outline: none;
 }
 
 textarea {
   background-color: transparent;
   border: 2px solid;
-  /* border-bottom: 2px solid; */
   color: white;
   font-size: 20px;
-  padding: 5px 50px;
+  padding: 5px 5px;
   text-align: center;
-  height: 30px;
-  width: 50%;
+  width: 80%;
   margin-top: 35px;
   margin-bottom: 75px;
   font-family: 'Open Sans', sans-serif;
+  outline: none;
+  resize: none
 }
 
 .label-text {
@@ -134,14 +135,14 @@ input:valid + .label-text {
 }
 
 textarea:focus + .label-comment {
-  transform: translateY(-50px);
+  transform: translateY(-52px);
   color: #61e887;
 }
 
 textarea:valid + .label-comment {
-  transform: translateY(-50px);
+  transform: translateY(-52px);
   color: #61e887;
-}
+ }
 
 button {
   background-color: transparent;
@@ -160,7 +161,7 @@ button {
 button:hover {
   background-color: white;
   color: #61e887;
-  outline: 0
+  outline: none
 }
 
 .switch {
