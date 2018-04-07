@@ -27,6 +27,25 @@
   width: 45%
 }
 
+.comment {
+  width: 100%;
+  height: 90px;
+  margin-bottom: 45px;
+}
+
+.commentInput {
+  height: 60px;
+  font-size: 15px;
+}
+
+.label-comment {
+  cursor: text;
+  font-size: 20px;
+  margin-top: -130px;
+  transition: all 0.5s;
+  /* margin-bottom: 50px */
+}
+
 .dropzone {
   border-radius: 25%;
   text-align: center;
@@ -82,6 +101,28 @@ input {
   font-family: 'Open Sans', sans-serif;
 }
 
+textarea {
+  background-color: transparent;
+  border: 2px solid;
+  /* border-bottom: 2px solid; */
+  color: white;
+  font-size: 20px;
+  padding: 5px 50px;
+  text-align: center;
+  height: 30px;
+  width: 50%;
+  margin-top: 35px;
+  margin-bottom: 75px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.label-text {
+  cursor: text;
+  font-size: 20px;
+  margin-top: -110px;
+  transition: all 0.5s;
+}
+
 input:focus + .label-text {
   transform: translateY(-35px);
   color: #61e887;
@@ -92,11 +133,14 @@ input:valid + .label-text {
   color: #61e887;
 }
 
-.label-text {
-  cursor: text;
-  font-size: 20px;
-  margin-top: -110px;
-  transition: all 0.5s;
+textarea:focus + .label-comment {
+  transform: translateY(-50px);
+  color: #61e887;
+}
+
+textarea:valid + .label-comment {
+  transform: translateY(-50px);
+  color: #61e887;
 }
 
 button {

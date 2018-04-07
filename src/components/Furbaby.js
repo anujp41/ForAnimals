@@ -92,6 +92,11 @@ class Furbaby extends Component {
 
           </div>
 
+          <div className='comment'>
+              <textarea className='commentInput' type="text" name="comments" onChange={this.handleChange}/>
+              <div className="label-comment">Comments</div>
+            </div>
+
           <div className="dropzone">
             <Dropzone
               multiple={false}
