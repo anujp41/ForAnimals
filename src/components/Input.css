@@ -34,29 +34,18 @@
 }
 
 .commentInput {
-  height: 65px;
+  height: 90px;
   font-size: 15px;
 }
 
-.label-comment {
-  cursor: text;
-  font-size: 20px;
-  margin-top: -135px;
-  transition: all 0.5s;
-}
-
 .charactersLeft {
-  float: right;
-  margin-top: 30px;
-  margin-right: 75px;
-  font-size: 10px
+  font-size: 10px;
+  margin-left: 72%
 }
 
 .dropzone {
-  border-radius: 25%;
   text-align: center;
-  text-align: center;
-  margin: auto;
+  padding-top: 20px;
   margin-bottom: 15px
 }
 
@@ -117,10 +106,13 @@ textarea {
   text-align: center;
   width: 80%;
   margin-top: 35px;
-  margin-bottom: 75px;
   font-family: 'Open Sans', sans-serif;
   outline: none;
-  resize: none
+  resize: none;
+}
+
+textarea::-webkit-input-placeholder {
+  color: #89d63b;
 }
 
 .label-text {
@@ -139,16 +131,6 @@ input:valid + .label-text {
   transform: translateY(-35px);
   color: #61e887;
 }
-
-textarea:focus + .label-comment {
-  transform: translateY(-52px);
-  color: #61e887;
-}
-
-textarea:valid + .label-comment {
-  transform: translateY(-52px);
-  color: #61e887;
- }
 
 button {
   background-color: transparent;
