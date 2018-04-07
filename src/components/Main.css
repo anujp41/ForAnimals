@@ -4,13 +4,21 @@
 }
 
 .Main-header {
+  display: flex;
+  flex-direction: row;
   background-color: #222;
   height: 150px;
   padding: 20px;
   color: white;
 }
 
+.Main-logo {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .Main-title {
+  margin-left: 25px;
   font-size: 3.5em;
 }
 
