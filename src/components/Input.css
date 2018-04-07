@@ -43,7 +43,13 @@
   font-size: 20px;
   margin-top: -135px;
   transition: all 0.5s;
-  /* margin-bottom: 50px */
+}
+
+.charactersLeft {
+  float: right;
+  margin-top: 30px;
+  margin-right: 75px;
+  font-size: 10px
 }
 
 .dropzone {

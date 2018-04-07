@@ -58,6 +58,14 @@ class Furbaby extends Component {
 
   componentDidMount() {
     $('.fostercheck').on('click',() => $('.parentForm').toggle(1000));
+    $('textarea').on('keyup', () => {
+      const num = $('.commentInput')[0].maxLength - $('textarea').val().length;
+      const text = num + ' characters remaining!';
+      // console.log('here ', num, $('.charactersLeft').html());
+      // console.log('here ', $('.commentInput')[0].maxLength);
+      // console.log('typed ', $('textarea').val(), $('textarea').val().length)
+      $('.charactersLeft').text(text);
+    });
   }
 
   render() {
@@ -93,8 +101,9 @@ class Furbaby extends Component {
           </div>
 
           <div className='comment'>
-              <textarea className='commentInput' maxlength='200' type="text" row='3' name="comments" onChange={this.handleChange}/>
+              <textarea className='commentInput' maxLength='200' type="text" row='3' name="comments" onChange={this.handleChange}/>
               <div className="label-comment">Comments</div>
+              <div className='charactersLeft'>200 characters remaining</div>
             </div>
 
           <div className="dropzone">
