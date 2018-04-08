@@ -5,35 +5,68 @@ const furbabies = [
   {
     name: "Bevo",
     breed: "Tabby Diva",
+    age: 3,
+    sex: "F",
+    comments: "Super sassy",
+    spayed: true,
+    fivpositive: false,
     parentId: 1
   },
   {
     name: "Mama",
     breed: "Scaredy Tabby",
+    age: 6,
+    sex: "F",
+    comments: "Kind-looking, good health",
+    spayed: true,
+    fivpositive: false,
     parentId: 5
   },
   {
     name: "Smokey",
     breed: "Grey moro",
+    age: 2,
+    sex: "M",
+    comments: "Always scared of everything",
+    spayed: true,
+    fivpositive: false,
     parentId: 2
   },
   {
     name: "Remington",
     breed: "Orange Tabby",
+    age: 4,
+    sex: "M",
+    comments: "",
+    spayed: false,
+    fivpositive: true,
     parentId: 3
   },
   {
     name: "Mr. Wobbles",
-    breed: "Wobbly"
+    breed: "Wobbly",
+    sex: "M",
+    comments: "walks a little bit wobbly",
+    spayed: true,
+    fivpositive: true,
+    age: 8,
   },
   {
     name: "Sylvester",
     breed: "Kale",
+    age: 0.7,
+    sex: "M",
+    comments: "Always hungry and sleepy and chaluwa",
+    spayed: true,
+    fivpositive: false,
     parentId: 1
   },
   {
     name: "Pizzazz",
     breed: "Bombay",
+    age: 6,
+    sex: "F",
+    comments: "",
     parentId: 2
   }
 ];

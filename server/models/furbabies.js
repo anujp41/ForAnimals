@@ -11,12 +11,34 @@ const FurBabies = db.define('furbaby', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  age: {
+    type: Sequelize.FLOAT,
+    allowNull: false
+  },
+  sex: {
+    type: Sequelize.STRING,
+    values: ['M', 'F'],
+    allowNull: false
+  },
   photoUrl: {
     type: Sequelize.STRING,
     defaultValue: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Cute-kittens-12929201-1600-1200.jpg/640px-Cute-kittens-12929201-1600-1200.jpg',
     validate: {
       isUrl: true
     }
+  },
+  comments: {
+    type: Sequelize.TEXT,
+    allowNull: true,
+    defaultValue: ''
+  },
+  spayed: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: null
+  },
+  fivpositive: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 }, 
 {
