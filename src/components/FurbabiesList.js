@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import './FurbabiesList.css';
 import $ from 'jquery';
+import sort from './SortFunc';
 
 class FurbabiesList extends Component {
 
   constructor() {
     super();
     this.state = {
-      sort: false,
+      sort: true,
       sorting: 'available'
     }
   }
@@ -26,14 +27,7 @@ class FurbabiesList extends Component {
     let { furbabies } = this.props;
     // const furbaby = furbabies[7];
     if (this.state.sort) {
-      const sorting = this.state.sorting;
-      if (sorting === 'available') {
-        furbabies = furbabies.filter(furbaby => !furbaby.spayed && !furbaby.fivpositive);
-      } else if (sorting === 'fostered') {
-        furbabies = furbabies.filter(furbaby => furbaby.spayed && !furbaby.fivpositive);
-      } else if (sorting === 'adopted') {
-        furbabies = furbabies.filter(furbaby => !furbaby.spayed && furbaby.fivpositive);
-      }
+      furbabies = sort(furbabies, this.state.sorting);
     }
     return (
       <div className='mainContainer'>
