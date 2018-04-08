@@ -8,16 +8,16 @@
   float: left;
   padding: 0 1.7rem;
   width: 45%;
+  height: 550px;
   margin: 10px; 
   padding: 0 0 10px 0; 
 }
 
 .wrapper {
   background-color: white;
-  min-height: 540px;
+  /* min-height: 540px; */
   position: relative;
   overflow: hidden;
-  box-shadow: 0 19px 38px rgba(black, 0.3), 0 15px 12px rgba(black, 0.2);
 }
 
 .good, .spayed, .fivpositive {
@@ -49,8 +49,9 @@
 
 .furbabyDetails {
   position: absolute;
-  background-color: white;
+  /* background-color: white; */
   transition: all 0.5s;
+  height: 175px
 }
 
 .furbabyCard:hover .furbabyDetails {

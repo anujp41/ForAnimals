@@ -17,7 +17,6 @@ class FurbabiesList extends Component {
   render() {
     const { furbabies } = this.props;
     const furbaby = furbabies[7];
-    console.log('this is  ', furbaby)
     return (
       <div className='mainContainer'>
       {furbabies.map(furbaby => (
@@ -47,7 +46,7 @@ class FurbabiesList extends Component {
               <div className='furbabySex'><b>Sex: </b>{furbaby.sex}</div>
               <div className='furbabySpayed'><b>Spayed: </b>{furbaby.spayed ? 'Yes' : 'No'}</div>
               <div className='furbabyFivpositive'><b>FIV Positive: </b>{furbaby.fivpositive ? 'Yes' : 'No'}</div>
-              <div className='furbabyComments'><b>Comments: </b>{furbaby.comments}</div>
+              <div hidden={!furbaby.comments.length}className='furbabyComments'><b>Comments: </b>{furbaby.comments}</div>
             </div>
           </div>
         </div>
