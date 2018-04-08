@@ -1,0 +1,49 @@
+.backdrop {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: rgba(84, 80, 83, 0.6);
+  padding: 50px;
+  color: greenyellow
+}
+
+.cancelbtn {
+  color: goldenrod;
+  background-color: fuchsia;
+  margin-left: 71%
+}
+
+.containerModal {
+  margin: auto;
+  text-align: center;
+  background-color: #4fb6e2;
+  font-family: 'Open Sans', sans-serif;
+  width: 70vw;
+  color: white;
+  margin-bottom: 15px
+}
+
+.titleModal {
+  font-size: 2.5em;
+  padding-top: 15px;
+  text-align: center;
+}
+
+.modal-text {
+  cursor: text;
+  font-size: 20px;
+  margin-top: -110px;
+  transition: all 0.5s;
+}
+
+input:focus + .modal-text {
+  transform: translateY(-35px);
+  color: #ea5b0e;
+}
+
+input:valid + .modal-text {
+  transform: translateY(-35px);
+  color: #ea5b0e;
+}

@@ -9,7 +9,7 @@ class FurbabiesList extends Component {
   constructor() {
     super();
     this.state = {
-      sort: true,
+      sort: false,
       sorting: 'available'
     }
   }

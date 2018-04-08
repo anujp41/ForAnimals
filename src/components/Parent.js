@@ -76,7 +76,7 @@ class Parent extends Component {
             </Dropzone>
           </div> */}
 
-          <button hidden={this.props.button} type="submit" value="submit">Submit</button>
+          <button className='button' hidden={this.props.button} type="submit" value="submit">Submit</button>
             
         </form>
       </div>

@@ -4,7 +4,7 @@ import { createFurbabyThunk } from '../store';
 import './Input.css';
 import Dropzone from 'react-dropzone';
 import firebase from '../firebase';
-import { Modal } from './index';
+import { ParentModal } from './index';
 import $ from 'jquery';
 
 class Furbaby extends Component {
@@ -23,7 +23,8 @@ class Furbaby extends Component {
       fivpositive: false,
       fostered: false,
       adopted: false,
-      showModal: false
+      showModal: false,
+      parent: null
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -90,7 +91,6 @@ class Furbaby extends Component {
 
   toggleModal() {
     const showModal = !this.state.showModal;
-    console.log('touched', showModal)
     this.setState({showModal});
   }
 
@@ -166,7 +166,7 @@ class Furbaby extends Component {
             </div>
           </div>
 
-          <Modal show={this.state.showModal} toggleModal={this.toggleModal}/>
+          <ParentModal show={this.state.showModal} toggleModal={this.toggleModal} parent={this}/>
 
           <div className='foster'>
             <div className='fosterdiv'>

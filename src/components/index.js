@@ -6,4 +6,4 @@ export { default as Parent } from './Parent';
 export { default as Welcome } from './Welcome';
 export { default as FurbabiesList } from './FurbabiesList';
 export { default as ParentsList } from './ParentsList';
-export { default as Modal } from './Modal';
+export { default as ParentModal } from './ParentModal';
