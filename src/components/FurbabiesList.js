@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import './FurbabiesList.css';
-import $ from 'jquery';
+// import $ from 'jquery';
 import sort from './SortFunc';
 
 class FurbabiesList extends Component {

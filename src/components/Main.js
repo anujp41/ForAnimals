@@ -15,7 +15,7 @@ class Main extends Component {
     return (
       <div className="Main">
         <header className="Main-header">
-          <img className="Main-logo" src={logo}/>
+          <img alt='' className="Main-logo" src={logo}/>
           <h1 className="Main-title">Welcome to For Animals Inc Database</h1>
         </header>
         <div className="Main-intro">

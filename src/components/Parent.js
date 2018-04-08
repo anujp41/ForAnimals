@@ -101,10 +101,10 @@ const mapDispatch = dispatch => {
 const ParentContainer = connect(mapState, mapDispatch)(Parent);
 export default ParentContainer;
 
-const dropzoneStyle = {
-  display: 'flexbox',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height : '20%',
-  border : 'none'
-};
+// const dropzoneStyle = {
+//   display: 'flexbox',
+//   justifyContent: 'center',
+//   alignItems: 'center',
+//   height : '20%',
+//   border : 'none'
+// };

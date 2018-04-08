@@ -1,8 +1,7 @@
 import React from 'react';
 import './ParentModal.css';
-import { ParentModal } from './index';
 
-class Modal extends React.Component {
+class ParentModal extends React.Component {
 
   constructor() {
     super();
@@ -14,26 +13,27 @@ class Modal extends React.Component {
 
   render() {
     const { name, address } = this.state;
+    const furbaby = this.props.furbaby;
     if(!this.props.show) {
       return null;
     }
 
-  return (
+    return (
       <div className='backdrop'>
         <button className='cancelbtn' onClick={this.props.toggleModal}>
           Cancel
         </button>
         <div className='containerModal'>
           <form autoComplete="off" onSubmit={this.handleSubmit}>
-          <div className="titleModal">New parent information for :</div>
+          <div className="titleModal">Parent information for {furbaby}:</div>
 
           <input required type="text" name="name" value={name} onChange={this.handleChange}/>
           <div className="modal-text">Name</div>
 
           <input required type="text" name="address" value={address} onChange={this.handleChange}/>
-          <div style={{paddingBottom: '75px'}} className="modal-text">Address</div>
+          <div className="modal-text">Address</div>
 
-          <button className='button' hidden={this.props.button} type="submit" value="submit">Submit</button>
+          <button className='button' type="submit" value="submit">Submit</button>
                 
           </form>
         </div>
@@ -42,4 +42,4 @@ class Modal extends React.Component {
   }
 }
 
-export default Modal;
+export default ParentModal;

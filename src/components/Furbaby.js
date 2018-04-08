@@ -59,7 +59,8 @@ class Furbaby extends Component {
       fivpositive: false,
       fostered: false,
       adopted: false,
-      showModal: false
+      showModal: false,
+      parent: null
     };
     const { name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
     this.props.submit({name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted});
@@ -95,7 +96,7 @@ class Furbaby extends Component {
   }
 
   render() {
-    const { name, breed, age, sex, comments, spayed, fivpositive, fostered, adopted } = this.state;
+    const { name, breed, age, sex, comments, spayed, fivpositive, fostered, adopted, parent } = this.state;
     return (
       <div className='container'>
 
@@ -128,7 +129,7 @@ class Furbaby extends Component {
           </div>
 
           <div className='comment'>
-              <textarea className='commentInput' maxLength='200' type="text" row='3' name="comments" placeholder='Additional comments on health/appearance etc.' onChange={this.handleChange}/>
+              <textarea className='commentInput' maxLength='200' type="text" row='3' name="comments" value={comments} placeholder='Additional comments on health/appearance etc.' onChange={this.handleChange}/>
               <div className='charactersLeft'>200 character(s) remaining</div>
             </div>
 
@@ -166,7 +167,7 @@ class Furbaby extends Component {
             </div>
           </div>
 
-          <ParentModal show={this.state.showModal} toggleModal={this.toggleModal} parent={this}/>
+          <ParentModal furbaby={name} show={this.state.showModal} toggleModal={this.toggleModal} parent={parent}/>
 
           <div className='foster'>
             <div className='fosterdiv'>
