@@ -20,6 +20,24 @@
   overflow: hidden;
 }
 
+.sort {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.12); 
+  border-width: 0 0 1px 0;
+  color: rgba(0, 0, 0, 0.73);
+  cursor: default;
+  display: block;
+  line-height: 48px;
+  padding: 2px 0 1px 16px;
+  position: relative;
+  text-align: left;
+  text-shadow: none;
+  width: 100%;
+  z-index: 1;
+  outline: none;
+  overflow: hidden;
+}
+
 .good, .spayed, .fivpositive {
   position: absolute;
   top: 0;

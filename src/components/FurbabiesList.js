@@ -5,6 +5,14 @@ import $ from 'jquery';
 
 class FurbabiesList extends Component {
 
+  constructor() {
+    super();
+    this.state = {
+      sort: false,
+      sorting: 'available'
+    }
+  }
+
   // componentDidMount() {
   //   $('.furbabyCard').mouseenter(function(event) {
   //     $(event.currentTarget).find('.furbaby').css('transform', 'translateY(-25px)');
@@ -15,10 +23,21 @@ class FurbabiesList extends Component {
   // }
 
   render() {
-    const { furbabies } = this.props;
-    const furbaby = furbabies[7];
+    let { furbabies } = this.props;
+    // const furbaby = furbabies[7];
+    if (this.state.sort) {
+      const sorting = this.state.sorting;
+      if (sorting === 'available') {
+        furbabies = furbabies.filter(furbaby => !furbaby.spayed && !furbaby.fivpositive);
+      } else if (sorting === 'fostered') {
+        furbabies = furbabies.filter(furbaby => furbaby.spayed && !furbaby.fivpositive);
+      } else if (sorting === 'adopted') {
+        furbabies = furbabies.filter(furbaby => !furbaby.spayed && furbaby.fivpositive);
+      }
+    }
     return (
       <div className='mainContainer'>
+        <button className='sort'>Sort by:</button>
       {furbabies.map(furbaby => (
         <div key={furbaby.id} className='furbabyCard'>
           <div className='wrapper'>
