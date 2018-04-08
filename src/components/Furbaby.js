@@ -57,8 +57,8 @@ class Furbaby extends Component {
       fostered: false,
       adopted: false
     };
-    const { name, breed, age, sex, photoUrl, comments, spayed, fivpositive } = this.state;
-    this.props.submit({name, breed, age, sex, photoUrl, comments, spayed, fivpositive});
+    const { name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
+    this.props.submit({name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted});
     this.setState({...defaultState});
     alert('Furbaby saved to database!');
   }
@@ -82,6 +82,7 @@ class Furbaby extends Component {
       const text = num + ' character(s) remaining!';
       $('.charactersLeft').text(text);
     });
+    $('.fostercheck, .adoptcheck').on('click', (event) => console.log('clicked ', event.currentTarget.name, event.currentTarget.checked))
   }
 
   render() {
@@ -158,14 +159,14 @@ class Furbaby extends Component {
           <div className='foster'>
             <div className='fosterdiv'>
               <div className='fosterQ'>Furbaby fostered?</div>
-              <input className='fostercheck' type='checkbox' checked={fostered} style={{margin: 0, width: '0px', height: '25px', paddingLeft: 0}}/>
+              <input className='fostercheck' type='checkbox' name='fostered' checked={fostered} onChange={this.handleChange}/>
             </div>
           </div>
 
-          <div className='foster'>
-            <div className='fosterdiv'>
-              <div className='fosterQ'>Furbaby adopted?</div>
-              <input className='fostercheck' type='checkbox' checked={adopted} style={{margin: 0, width: '0px', height: '25px', paddingLeft: 0}}/>
+          <div className='adopt'>
+            <div className='adoptdiv'>
+              <div className='adoptQ'>Furbaby adopted?</div>
+              <input className='adoptcheck' type='checkbox' name='adopted' checked={adopted} onChange={this.handleChange}/>
             </div>
           </div>
 

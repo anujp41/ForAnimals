@@ -110,9 +110,13 @@ textarea {
   outline: none;
   resize: none;
 }
-
+/* 6d6969 */
 textarea::-webkit-input-placeholder {
   color: #89d63b;
+}
+
+textarea:focus::-webkit-input-placeholder {
+  color: #6d6969;
 }
 
 .label-text {
@@ -215,20 +219,27 @@ input:checked + .slider:after {
   content:'Yes';
 }
 
-.foster {
+.foster, .adopt {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center
 }
 
-.fosterdiv {
+.fosterdiv, .adoptdiv {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center
 }
 
-.fosterQ {
+.fosterQ, adoptQ {
   transform: translateY(-2px);
+}
+
+.fostercheck, .adoptcheck {
+  margin: 0;
+  width: 0px;
+  height: 25px;
+  padding-left: 0
 }
