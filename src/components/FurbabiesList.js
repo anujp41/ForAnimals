@@ -20,9 +20,25 @@ class FurbabiesList extends Component {
     console.log('this is  ', furbaby)
     return (
       <div className='mainContainer'>
-      {/* {furbabies.map(furbaby => ( */}
+      {furbabies.map(furbaby => (
         <div key={furbaby.id} className='furbabyCard'>
           <div className='wrapper'>
+            {!furbaby.spayed && !furbaby.fivpositive
+            ?
+            <div className='good'>
+              Available
+            </div>
+            :
+            furbaby.spayed 
+            ?
+            <div className='spayed'>
+              Fostered
+            </div>
+            :
+            <div className='fivpositive'>
+              Adopted
+            </div>
+            }
             <img alt="" src={furbaby.photoUrl} />
             <div className='furbabyDetails'>
               <div className='furbabyName'><b>Name: </b>{furbaby.name}</div>
@@ -35,7 +51,7 @@ class FurbabiesList extends Component {
             </div>
           </div>
         </div>
-        {/* ))} */}
+        ))}
       </div>
     )
   }
