@@ -42,9 +42,20 @@ class Furbaby extends Component {
   }
 
   saveToDB() {
-    const {name, breed, photoUrl} = this.state;
-    this.props.submit({name, breed, photoUrl});
-    this.setState({name: '', breed: '', photo: null, photoUrl: ''});
+    const defaultState = {
+      name: '',
+      breed: '',
+      photoUrl: '',
+      photo: null,
+      age: '',
+      sex: '',
+      commments: '',
+      spayed: false,
+      fivpositive: false
+    };
+    const { name, breed, age, sex, photoUrl, comments, spayed, fivpositive } = this.state;
+    this.props.submit({name, breed, age, sex, photoUrl, comments, spayed, fivpositive});
+    this.setState({...defaultState});
     alert('Furbaby saved to database!');
   }
 
@@ -52,7 +63,6 @@ class Furbaby extends Component {
     const target = event.target;
     const name = target.name;
     const value = target.type === 'checkbox' ? target.checked : target.value;
-    console.log(name, value)
     this.setState({ [name] : value });
   }
 

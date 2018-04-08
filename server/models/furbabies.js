@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
-// const Parents = require('./parents');
 
 const FurBabies = db.define('furbaby', {
   name: {
