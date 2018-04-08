@@ -12,19 +12,32 @@ class Furbaby extends Component {
   constructor() {
     super();
     this.state = {
-      name: '',
-      breed: '',
-      photoUrl: '',
+      // name: '',
+      // breed: '',
+      // photoUrl: '',
+      // photo: null,
+      // age: '',
+      // sex: '',
+      // comments: '',
+      // spayed: false,
+      // fivpositive: false,
+      // fostered: false,
+      // adopted: false,
+      // showModal: false,
+      // parent: null
+      name: 'Mr Mister',
+      breed: 'Orange tabby',
+      photoUrl: 'https://www.thehappycatsite.com/wp-content/uploads/2017/10/red-maine-coon.jpg',
       photo: null,
-      age: '',
-      sex: '',
-      commments: '',
-      spayed: false,
+      age: 6,
+      sex: 'F',
+      comments: 'Very Orange',
+      spayed: true,
       fivpositive: false,
       fostered: false,
-      adopted: false,
+      adopted: true,
       showModal: false,
-      parent: null
+      parent: {name: 'Anuj', address: 'Queens, NY'}
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -55,7 +68,7 @@ class Furbaby extends Component {
       photo: null,
       age: '',
       sex: '',
-      commments: '',
+      comments: '',
       spayed: false,
       fivpositive: false,
       fostered: false,
@@ -145,7 +158,7 @@ class Furbaby extends Component {
               style={dropzoneStyle} 
               onDrop={this.onImageDrop.bind(this)}>
               <p>Click to select a picture.</p>
-              <img alt="" src={this.state.photo && this.state.photo.preview}/>
+              <img alt="" src={this.state.photoUrl || this.state.photo && this.state.photo.preview}/>
             </Dropzone>
           </div>
 
