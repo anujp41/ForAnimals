@@ -20,7 +20,9 @@ class Furbaby extends Component {
       sex: '',
       commments: '',
       spayed: false,
-      fivpositive: false
+      fivpositive: false,
+      fostered: false,
+      adopted: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -51,7 +53,9 @@ class Furbaby extends Component {
       sex: '',
       commments: '',
       spayed: false,
-      fivpositive: false
+      fivpositive: false,
+      fostered: false,
+      adopted: false
     };
     const { name, breed, age, sex, photoUrl, comments, spayed, fivpositive } = this.state;
     this.props.submit({name, breed, age, sex, photoUrl, comments, spayed, fivpositive});
@@ -81,7 +85,7 @@ class Furbaby extends Component {
   }
 
   render() {
-    const { name, breed, age, sex, comments, spayed, fivpositive } = this.state;
+    const { name, breed, age, sex, comments, spayed, fivpositive, fostered, adopted } = this.state;
     return (
       <div className='container'>
         <form autoComplete="off" onSubmit={this.handleSubmit}>
@@ -154,14 +158,14 @@ class Furbaby extends Component {
           <div className='foster'>
             <div className='fosterdiv'>
               <div className='fosterQ'>Furbaby fostered?</div>
-              <input className='fostercheck' type='checkbox' style={{margin: 0, width: '0px', height: '25px', paddingLeft: 0}}/>
+              <input className='fostercheck' type='checkbox' checked={fostered} style={{margin: 0, width: '0px', height: '25px', paddingLeft: 0}}/>
             </div>
           </div>
 
           <div className='foster'>
             <div className='fosterdiv'>
               <div className='fosterQ'>Furbaby adopted?</div>
-              <input className='fostercheck' type='checkbox' style={{margin: 0, width: '0px', height: '25px', paddingLeft: 0}}/>
+              <input className='fostercheck' type='checkbox' checked={adopted} style={{margin: 0, width: '0px', height: '25px', paddingLeft: 0}}/>
             </div>
           </div>
 

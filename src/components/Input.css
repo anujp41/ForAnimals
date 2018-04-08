@@ -61,7 +61,7 @@
 }
 
 .healthTitle {
-  padding: 10px 0 10px 0;
+  padding: 5px 0 10px 0;
   font-size: x-large;
   font-weight: bolder;
 }
@@ -74,7 +74,7 @@
 }
 
 .flexItem {
-  margin: 0 35px;
+  margin: 0 15%;
 }
 
 .flexQ {
