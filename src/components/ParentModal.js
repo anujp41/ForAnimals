@@ -9,6 +9,21 @@ class ParentModal extends React.Component {
       name: '',
       address: ''
     }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+    this.setState({ [name] : value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.setParent(this.state);
+    this.props.toggleModal();
   }
 
   render() {

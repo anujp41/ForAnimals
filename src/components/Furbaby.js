@@ -31,6 +31,7 @@ class Furbaby extends Component {
     this.onImageDrop = this.onImageDrop.bind(this);
     this.saveToDB = this.saveToDB.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
+    this.setParent = this.setParent.bind(this);
   }
 
   async handleSubmit(event) {
@@ -87,16 +88,20 @@ class Furbaby extends Component {
       const text = num + ' character(s) remaining!';
       $('.charactersLeft').text(text);
     });
-    // $('.fostercheck, .adoptcheck').on('click', (event) => console.log('clicked ', event.currentTarget.name, event.currentTarget.checked))
   }
 
   toggleModal() {
     const showModal = !this.state.showModal;
-    this.setState({showModal});
+    this.setState({ showModal });
+  }
+
+  setParent(parent) {
+    this.setState({ parent });
   }
 
   render() {
     const { name, breed, age, sex, comments, spayed, fivpositive, fostered, adopted, parent } = this.state;
+    console.log('parent is ', parent);
     return (
       <div className='container'>
 
@@ -167,8 +172,6 @@ class Furbaby extends Component {
             </div>
           </div>
 
-          <ParentModal furbaby={name} show={this.state.showModal} toggleModal={this.toggleModal} parent={parent}/>
-
           <div className='foster'>
             <div className='fosterdiv'>
               <div className='fosterQ'>Furbaby fostered?</div>
@@ -187,6 +190,7 @@ class Furbaby extends Component {
             
         </form>
 
+        <ParentModal furbaby={name} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent}/>
       </div>
     )
   }
