@@ -4,7 +4,7 @@ import { createFurbabyThunk } from '../store';
 import './Input.css';
 import Dropzone from 'react-dropzone';
 import firebase from '../firebase';
-import { Parent, Modal } from './index';
+import { Modal } from './index';
 import $ from 'jquery';
 
 class Furbaby extends Component {
@@ -80,7 +80,6 @@ class Furbaby extends Component {
   }
 
   componentDidMount() {
-    // $('.fostercheck').on('click',() => $('.parentForm').toggle(1000));
     $('textarea').on('keyup', () => {
       const num = $('.commentInput')[0].maxLength - $('textarea').val().length;
       const text = num + ' character(s) remaining!';
@@ -183,13 +182,9 @@ class Furbaby extends Component {
             </div>
           </div>
 
-          <button type="submit" value="submit">Submit</button>
+          <button className='button' type="submit" value="submit">Submit</button>
             
         </form>
-
-        <div hidden className='parentForm'>
-          <Parent button='hidden'/>
-        </div>
 
       </div>
     )

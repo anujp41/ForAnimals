@@ -135,7 +135,7 @@ input:valid + .label-text {
   color: #61e887;
 }
 
-button {
+.button {
   background-color: transparent;
   border: 2px solid white;
   border-radius: 27px;
@@ -149,7 +149,7 @@ button {
   margin-bottom: 15px
 }
 
-button:hover {
+.button:hover {
   background-color: white;
   color: #61e887;
   outline: none
