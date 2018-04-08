@@ -17,7 +17,10 @@ class Furbaby extends Component {
       photoUrl: '',
       photo: null,
       age: '',
-      sex: ''
+      sex: '',
+      commments: '',
+      spayed: false,
+      fivpositive: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,8 +49,10 @@ class Furbaby extends Component {
   }
 
   handleChange(event) {
-    const name = event.target.name;
-    const value = event.target.value;
+    const target = event.target;
+    const name = target.name;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    console.log(name, value)
     this.setState({ [name] : value });
   }
 
@@ -66,7 +71,7 @@ class Furbaby extends Component {
   }
 
   render() {
-    const { name, breed, age, sex } = this.state;
+    const { name, breed, age, sex, comments, spayed, fivpositive } = this.state;
     return (
       <div className='container'>
         <form autoComplete="off" onSubmit={this.handleSubmit}>
@@ -120,7 +125,7 @@ class Furbaby extends Component {
               <div className='flexItem'>
                 <div className='flexQ'>Is the furbaby spayed?</div><br/>
                 <label className="switch">
-                  <input type="checkbox"/>
+                  <input type="checkbox" checked={spayed} name='spayed' onChange={this.handleChange}/>
                   <div className="slider"></div>
                 </label>
               </div>
@@ -128,7 +133,7 @@ class Furbaby extends Component {
               <div className='flexItem'>
                 <div className='flexQ'>FIV Positive?</div><br/>
                 <label className="switch">
-                  <input type="checkbox"/>
+                  <input type="checkbox" checked={fivpositive} name='fivpositive' onChange={this.handleChange}/>
                   <div className="slider"/>
                 </label>
               </div>

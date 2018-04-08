@@ -34,11 +34,13 @@ const FurBabies = db.define('furbaby', {
   },
   spayed: {
     type: Sequelize.BOOLEAN,
-    defaultValue: null
+    defaultValue: false,
+    allowNull: false
   },
   fivpositive: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false
+    defaultValue: false,
+    allowNull: false
   }
 }, 
 {
