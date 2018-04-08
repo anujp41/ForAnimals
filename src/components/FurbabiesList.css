@@ -25,9 +25,14 @@
   max-width: 100%
 }
 
-.furbaby {
+.furbabyDetails {
   position: absolute;
-  background-color: white
+  background-color: white;
+  transition: all 0.5s;
+}
+
+.furbabyCard:hover .furbabyDetails {
+  transform: translateY(-35px);
 }
 
 .furbabyDetails {
