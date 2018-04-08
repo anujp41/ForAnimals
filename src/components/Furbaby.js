@@ -4,7 +4,7 @@ import { createFurbabyThunk } from '../store';
 import './Input.css';
 import Dropzone from 'react-dropzone';
 import firebase from '../firebase';
-import { Parent } from './index';
+import { Parent, Modal } from './index';
 import $ from 'jquery';
 
 class Furbaby extends Component {
@@ -22,12 +22,14 @@ class Furbaby extends Component {
       spayed: false,
       fivpositive: false,
       fostered: false,
-      adopted: false
+      adopted: false,
+      showModal: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onImageDrop = this.onImageDrop.bind(this);
     this.saveToDB = this.saveToDB.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   async handleSubmit(event) {
@@ -55,7 +57,8 @@ class Furbaby extends Component {
       spayed: false,
       fivpositive: false,
       fostered: false,
-      adopted: false
+      adopted: false,
+      showModal: false
     };
     const { name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
     this.props.submit({name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted});
@@ -66,6 +69,7 @@ class Furbaby extends Component {
   handleChange(event) {
     const target = event.target;
     const name = target.name;
+    if (name === 'fostered' || name ===  'adopted') this.toggleModal();
     const value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({ [name] : value });
   }
@@ -76,19 +80,26 @@ class Furbaby extends Component {
   }
 
   componentDidMount() {
-    $('.fostercheck').on('click',() => $('.parentForm').toggle(1000));
+    // $('.fostercheck').on('click',() => $('.parentForm').toggle(1000));
     $('textarea').on('keyup', () => {
       const num = $('.commentInput')[0].maxLength - $('textarea').val().length;
       const text = num + ' character(s) remaining!';
       $('.charactersLeft').text(text);
     });
-    $('.fostercheck, .adoptcheck').on('click', (event) => console.log('clicked ', event.currentTarget.name, event.currentTarget.checked))
+    // $('.fostercheck, .adoptcheck').on('click', (event) => console.log('clicked ', event.currentTarget.name, event.currentTarget.checked))
+  }
+
+  toggleModal() {
+    const showModal = !this.state.showModal;
+    console.log('touched', showModal)
+    this.setState({showModal});
   }
 
   render() {
     const { name, breed, age, sex, comments, spayed, fivpositive, fostered, adopted } = this.state;
     return (
       <div className='container'>
+
         <form autoComplete="off" onSubmit={this.handleSubmit}>
 
           <div className="title">Enter details for our new furbaby:</div>
@@ -155,6 +166,8 @@ class Furbaby extends Component {
               
             </div>
           </div>
+
+          <Modal show={this.state.showModal} toggleModal={this.toggleModal}/>
 
           <div className='foster'>
             <div className='fosterdiv'>

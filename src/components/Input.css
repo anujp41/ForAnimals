@@ -70,7 +70,6 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  /* align-items: center */
 }
 
 .flexItem {
@@ -78,7 +77,7 @@
 }
 
 .flexQ {
-  margin-bottom: -20px;
+  margin-bottom: -15px;
 }
 
 input {
@@ -110,7 +109,7 @@ textarea {
   outline: none;
   resize: none;
 }
-/* 6d6969 */
+
 textarea::-webkit-input-placeholder {
   color: #89d63b;
 }
@@ -230,16 +229,12 @@ input:checked + .slider:after {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center
-}
-
-.fosterQ, adoptQ {
-  transform: translateY(-2px);
+  align-items: center;
+  padding: 0 35px 20px 0;
 }
 
 .fostercheck, .adoptcheck {
   margin: 0;
   width: 0px;
   height: 25px;
-  padding-left: 0
 }
