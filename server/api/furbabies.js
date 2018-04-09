@@ -17,11 +17,10 @@ router.post('/', (req, res, next) => {
     const id = newBabies.parentId;
     Parents.findById(id)
     .then(parent => {
-      const kitten = newBabies.dataValues;
-      kitten.parent = parent.dataValues;
-      res.json(kitten);
+      const newBaby = newBabies.dataValues;
+      newBaby.parent = parent.dataValues;
+      res.json(newBaby);
     });
-    
   })
   .catch(next);
 })

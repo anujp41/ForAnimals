@@ -25,19 +25,6 @@ class Furbaby extends Component {
       adopted: false,
       showModal: false,
       parent: null
-      // name: 'Mr Clown',
-      // breed: 'Racoon',
-      // photoUrl: '',
-      // photo: null,
-      // age: 8,
-      // sex: 'F',
-      // comments: 'clownish',
-      // spayed: false,
-      // fivpositive: false,
-      // fostered: false,
-      // adopted: true,
-      // showModal: false,
-      // parent: {name: 'Sylvester Stallone', address: 'Hollywood, CA'}
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -224,7 +211,6 @@ const mapDispatch = dispatch => {
       dispatch(createParentThunk(parent))
       .then(parent => {
         furbaby.parentId = parent.parent.id;
-        console.log('after new furbaby is ', furbaby);
         dispatch(createFurbabyThunk(furbaby));
       });
     }

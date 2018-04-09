@@ -10,7 +10,9 @@ const furbabies = [
     comments: "Super sassy",
     spayed: true,
     fivpositive: false,
-    parentId: 1
+    parentId: 1,
+    fostered: true,
+    adopted: false
   },
   {
     name: "Mama",
@@ -20,7 +22,6 @@ const furbabies = [
     comments: "Kind-looking, good health",
     spayed: true,
     fivpositive: false,
-    parentId: 5
   },
   {
     name: "Smokey",
@@ -30,7 +31,9 @@ const furbabies = [
     comments: "Always scared of everything",
     spayed: true,
     fivpositive: false,
-    parentId: 2
+    parentId: 2,
+    fostered: false,
+    adopted: true
   },
   {
     name: "Remington",
@@ -40,7 +43,9 @@ const furbabies = [
     comments: "",
     spayed: false,
     fivpositive: true,
-    parentId: 3
+    parentId: 3,
+    fostered: true,
+    adopted: false
   },
   {
     name: "Mr. Wobbles",
@@ -49,7 +54,7 @@ const furbabies = [
     comments: "walks a little bit wobbly",
     spayed: true,
     fivpositive: true,
-    age: 8,
+    age: 8
   },
   {
     name: "Sylvester",
@@ -59,15 +64,16 @@ const furbabies = [
     comments: "Always hungry and sleepy and chaluwa",
     spayed: true,
     fivpositive: false,
-    parentId: 1
+    parentId: 1,
+    fostered: false,
+    adopted: true
   },
   {
     name: "Pizzazz",
     breed: "Bombay",
     age: 6,
     sex: "F",
-    comments: "",
-    parentId: 2
+    comments: ""
   }
 ];
 

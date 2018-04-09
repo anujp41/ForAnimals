@@ -10,32 +10,79 @@ class FurbabiesList extends Component {
     super();
     this.state = {
       sort: false,
-      sorting: 'available'
+      sorting: null,
+      sortOptions: {
+        'Sort': ['Age: Oldest', 'Age: Youngest', 'Date Added: Descending', 'Date Added: Ascending'],
+        'Filter By': ['Available', 'Fostered', 'Adopted']
+      }
     }
+    this.renderDropdown = this.renderDropdown.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.clear = this.clear.bind(this);
   }
 
-  // componentDidMount() {
-  //   $('.furbabyCard').mouseenter(function(event) {
-  //     $(event.currentTarget).find('.furbaby').css('transform', 'translateY(-25px)');
-  //   });
-  //   $('.furbabyCard').mouseleave(function(event) {
-  //     $(event.currentTarget).find('.furbaby').css('transform', 'translateY(25px)');
-  //   });
-  // }
+  handleClick(sortType) {
+    this.setState({
+      sort: true,
+      sorting: sortType
+    })
+  }
+
+  clear() {
+    this.setState({sort: false})
+  }
+
+  renderDropdown() {
+    const sortOptions = this.state.sortOptions;
+    const sorts = Object.keys(sortOptions);
+    return (
+      <div className='dropdown'>
+          {sorts.map((sort, idx) => (
+            <div key={idx} className='dropdown-title'>
+              <div className="menu-title">{sort}</div>
+              <div className="menu-dropdown">
+                <ul className='hList'>
+                  {sortOptions[sort].map((option, i) => (
+                      <li key={i} onClick={() => this.handleClick(option)}>{option}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+      </div>
+    )
+  }
 
   render() {
     let { furbabies } = this.props;
-    // const furbaby = furbabies[7];
     if (this.state.sort) {
       furbabies = sort(furbabies, this.state.sorting);
     }
     return (
       <div className='mainContainer'>
-        <button className='button sort'>Sort by:</button>
+        {this.state.sort && <div style={{backgroundColor: 'goldenrod', width: '75px'}} onClick={this.clear}>Clear Filter!</div>}
+        {this.renderDropdown()}
       {furbabies.map(furbaby => (
         <div key={furbaby.id} className='furbabyCard'>
           <div className='wrapper'>
-            {!furbaby.spayed && !furbaby.fivpositive
+            {furbaby.parentId 
+            ?
+              (furbaby.fostered
+              ?
+              <div className='good'>
+                Fostered
+              </div>
+              :
+              <div className='fivpositive'>
+                Adopted
+              </div>
+              )
+            :
+            <div className='spayed'>
+              Available
+            </div>
+            }
+            {/* {!furbaby.spayed && !furbaby.fivpositive
             ?
             <div className='good'>
               Available
@@ -50,7 +97,7 @@ class FurbabiesList extends Component {
             <div className='fivpositive'>
               Adopted
             </div>
-            }
+            } */}
             <img alt="" src={furbaby.photoUrl} />
             <div className='furbabyDetails'>
               <div className='furbabyName'><b>Name: </b>{furbaby.name}</div>
