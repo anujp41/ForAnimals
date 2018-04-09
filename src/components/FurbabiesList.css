@@ -73,7 +73,8 @@
 }
 
 .furbabyCard:hover .furbabyDetails {
-  transform: translateY(-35px);
+  transform: translateY(-95px);
+  /* background-color: gray */
 }
 
 .furbabyDetails {
@@ -88,4 +89,10 @@
 
 .furbabyBreed {
   font-size: 20px
+}
+
+.parentInfo {
+  /* background-color: #e4efd7; */
+  font-weight: bolder;
+  color: goldenrod
 }

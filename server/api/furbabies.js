@@ -13,14 +13,22 @@ router.get('/', (req, res, next) => {
 //Creates new entries for kitties
 router.post('/', (req, res, next) => {
   FurBabies.create(req.body)
-  .then(newBabies => res.json(newBabies))
+  .then(newBabies => {
+    const id = newBabies.parentId;
+    Parents.findById(id)
+    .then(parent => {
+      const kitten = newBabies.dataValues;
+      kitten.parent = parent.dataValues;
+      res.json(kitten);
+    });
+    
+  })
   .catch(next);
 })
 
 //Update existing cats
 router.put('/', (req, res, next) => {
   const {furbaby: id, parent: parentId} = req.body;
-  console.log('i am giving ', id, parentId)
   return FurBabies.update({id, parentId},{
     where: { id },
     individualHooks: true

@@ -12,32 +12,32 @@ class Furbaby extends Component {
   constructor() {
     super();
     this.state = {
-      // name: '',
-      // breed: '',
+      name: '',
+      breed: '',
+      photoUrl: '',
+      photo: null,
+      age: '',
+      sex: '',
+      comments: '',
+      spayed: false,
+      fivpositive: false,
+      fostered: false,
+      adopted: false,
+      showModal: false,
+      parent: null
+      // name: 'Mr Clown',
+      // breed: 'Racoon',
       // photoUrl: '',
       // photo: null,
-      // age: '',
-      // sex: '',
-      // comments: '',
+      // age: 8,
+      // sex: 'F',
+      // comments: 'clownish',
       // spayed: false,
       // fivpositive: false,
       // fostered: false,
-      // adopted: false,
+      // adopted: true,
       // showModal: false,
-      // parent: null
-      name: 'Mr Mister',
-      breed: 'Orange tabby',
-      photoUrl: 'https://www.thehappycatsite.com/wp-content/uploads/2017/10/red-maine-coon.jpg',
-      photo: null,
-      age: 6,
-      sex: 'F',
-      comments: 'Very Orange',
-      spayed: true,
-      fivpositive: false,
-      fostered: false,
-      adopted: true,
-      showModal: false,
-      parent: {name: 'Anuj', address: 'Queens, NY'}
+      // parent: {name: 'Sylvester Stallone', address: 'Hollywood, CA'}
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -72,7 +72,7 @@ class Furbaby extends Component {
       spayed: false,
       fivpositive: false,
       fostered: false,
-      adopted: false,
+      adopted: true,
       showModal: false,
       parent: null
     };
@@ -224,6 +224,7 @@ const mapDispatch = dispatch => {
       dispatch(createParentThunk(parent))
       .then(parent => {
         furbaby.parentId = parent.parent.id;
+        console.log('after new furbaby is ', furbaby);
         dispatch(createFurbabyThunk(furbaby));
       });
     }

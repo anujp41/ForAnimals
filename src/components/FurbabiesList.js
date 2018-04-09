@@ -31,7 +31,7 @@ class FurbabiesList extends Component {
     }
     return (
       <div className='mainContainer'>
-        <button className='sort'>Sort by:</button>
+        <button className='button sort'>Sort by:</button>
       {furbabies.map(furbaby => (
         <div key={furbaby.id} className='furbabyCard'>
           <div className='wrapper'>
@@ -59,7 +59,14 @@ class FurbabiesList extends Component {
               <div className='furbabySex'><b>Sex: </b>{furbaby.sex}</div>
               <div className='furbabySpayed'><b>Spayed: </b>{furbaby.spayed ? 'Yes' : 'No'}</div>
               <div className='furbabyFivpositive'><b>FIV Positive: </b>{furbaby.fivpositive ? 'Yes' : 'No'}</div>
-              <div hidden={!furbaby.comments.length}className='furbabyComments'><b>Comments: </b>{furbaby.comments}</div>
+              <div className='furbabyComments'><b>Comments: </b>{furbaby.comments.length ? furbaby.comments : 'None'}</div>
+              {furbaby.parentId && 
+                <div className='parentInfo'>
+                  <div className='parentTitle'>Parent:</div>
+                  <div className='parentName'><b>Name: </b>{furbaby.parent.name}</div>
+                  <div className='parentAddress'><b>Address: </b>{furbaby.parent.address}</div>
+                </div>
+              }
             </div>
           </div>
         </div>
