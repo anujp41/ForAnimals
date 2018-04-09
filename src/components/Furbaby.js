@@ -59,7 +59,7 @@ class Furbaby extends Component {
       spayed: false,
       fivpositive: false,
       fostered: false,
-      adopted: true,
+      adopted: false,
       showModal: false,
       parent: null
     };

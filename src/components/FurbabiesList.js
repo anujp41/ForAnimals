@@ -13,7 +13,7 @@ class FurbabiesList extends Component {
       sorting: null,
       sortOptions: {
         'Sort': ['Age: Oldest', 'Age: Youngest', 'Date Added: Descending', 'Date Added: Ascending'],
-        'Filter By': ['Available', 'Fostered', 'Adopted']
+        'Filter By': ['Available', 'Fostered', 'Adopted', 'Has FIV', 'Is Spayed']
       }
     }
     this.renderDropdown = this.renderDropdown.bind(this);
@@ -82,22 +82,6 @@ class FurbabiesList extends Component {
               Available
             </div>
             }
-            {/* {!furbaby.spayed && !furbaby.fivpositive
-            ?
-            <div className='good'>
-              Available
-            </div>
-            :
-            furbaby.spayed 
-            ?
-            <div className='spayed'>
-              Fostered
-            </div>
-            :
-            <div className='fivpositive'>
-              Adopted
-            </div>
-            } */}
             <img alt="" src={furbaby.photoUrl} />
             <div className='furbabyDetails'>
               <div className='furbabyName'><b>Name: </b>{furbaby.name}</div>
