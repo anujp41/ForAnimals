@@ -40,6 +40,16 @@ const FurBabies = db.define('furbaby', {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
     allowNull: false
+  },
+  fostered: {
+    type: Sequelize.BOOLEAN,
+    value: [true, false],
+    defaultValue: false
+  },
+  adopted: {
+    type: Sequelize.BOOLEAN,
+    value: [true, false],
+    defaultValue: false
   }
 }, 
 {

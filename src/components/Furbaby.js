@@ -49,25 +49,15 @@ class Furbaby extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    console.log('entering');
-    //TRIAL RUN
-    const { parent } = this.state;
-    this.props.submitParent(parent);
+    const storage = firebase.storage();
+    const name = this.state.name.replace(/[\W]/g, '').toLowerCase();
+    const storageRef = storage.ref(`furbabies/${name}`);
+    const photo = this.state.photo;
 
-    // const newParent = this.props.parent;
-    // console.log('new parent si ', newParent);
-
-
-
-    // const storage = firebase.storage();
-    // const name = this.state.name.replace(/[\W]/g, '').toLowerCase();
-    // const storageRef = storage.ref(`furbabies/${name}`);
-    // const photo = this.state.photo;
-
-    // await storageRef.put(photo)
-    // .then(snapshot => this.setState({photoUrl: snapshot.downloadURL}))
-    // .then(() => this.saveToDB())
-    // .catch(err => console.log('there was an error ', err))
+    await storageRef.put(photo)
+    .then(snapshot => this.setState({photoUrl: snapshot.downloadURL}))
+    .then(() => this.saveToDB())
+    .catch(err => console.log('there was an error ', err))
   }
 
   async saveToDB() {
@@ -88,15 +78,11 @@ class Furbaby extends Component {
     };
 
     const { parent } = this.state;
-    const newParent = new Promise(this.props.submitParent(parent))
-    newParent.then(
-      newParent => console.log('new parent si ', newParent),
-      err => console.log('ecountered error, ', err));
 
-    // const { name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
-    // this.props.submitFurbaby({name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted});
-    // this.setState({...defaultState});
-    // alert('Furbaby saved to database!');
+    const { name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
+    this.props.submit(parent, {name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted});
+    this.setState({...defaultState});
+    alert('Furbaby saved to database!');
   }
 
   handleChange(event) {
@@ -174,7 +160,7 @@ class Furbaby extends Component {
               style={dropzoneStyle} 
               onDrop={this.onImageDrop.bind(this)}>
               <p>Click to select a picture.</p>
-              <img alt="" src={this.state.photoUrl || (this.state.photo && this.state.photo.preview)}/>
+              <img alt="" src={this.state.photo && this.state.photo.preview}/>
             </Dropzone>
           </div>
 
@@ -234,12 +220,12 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    submitFurbaby(info) {
-      dispatch(createFurbabyThunk(info));
-    },
-    submitParent(parent) {
+    submit(parent, furbaby) {
       dispatch(createParentThunk(parent))
-      .then(parent => console.log('new parent created ', parent));
+      .then(parent => {
+        furbaby.parentId = parent.parent.id;
+        dispatch(createFurbabyThunk(furbaby));
+      });
     }
   }
 }
