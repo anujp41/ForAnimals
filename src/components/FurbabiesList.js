@@ -60,7 +60,7 @@ class FurbabiesList extends Component {
     }
     return (
       <div className='mainContainer'>
-        {this.state.sort && <div style={{backgroundColor: 'goldenrod', width: '75px'}} onClick={this.clear}>Clear Filter!</div>}
+        {this.state.sort && <div style={{backgroundColor: 'goldenrod', width: '75px'}} onClick={this.clear}>Clear!</div>}
         {this.renderDropdown()}
       {furbabies.map(furbaby => (
         <div key={furbaby.id} className='furbabyCard'>

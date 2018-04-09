@@ -5,6 +5,10 @@ const sort = function(array, sorting) {
     return array.filter(furbaby => furbaby.fostered);
   } else if (sorting === 'Adopted') {
     return array.filter(furbaby => furbaby.adopted);
+  } else if (sorting === 'Age: Youngest') {
+    return array.slice().sort((prev, furbaby) => prev.age - furbaby.age, {age: 0});
+  } else if (sorting === 'Age: Oldest') {
+    return array.slice().sort((prev, furbaby) => furbaby.age - prev.age, {age: 0});
   }
 };
 
