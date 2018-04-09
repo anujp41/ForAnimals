@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { createFurbabyThunk } from '../store';
+import { createFurbabyThunk, createParentThunk } from '../store';
 import './Input.css';
 import Dropzone from 'react-dropzone';
 import firebase from '../firebase';
@@ -49,18 +49,28 @@ class Furbaby extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const storage = firebase.storage();
-    const name = this.state.name.replace(/[\W]/g, '').toLowerCase();
-    const storageRef = storage.ref(`furbabies/${name}`);
-    const photo = this.state.photo;
+    console.log('entering');
+    //TRIAL RUN
+    const { parent } = this.state;
+    this.props.submitParent(parent);
 
-    await storageRef.put(photo)
-    .then(snapshot => this.setState({photoUrl: snapshot.downloadURL}))
-    .then(() => this.saveToDB())
-    .catch(err => console.log('there was an error ', err))
+    // const newParent = this.props.parent;
+    // console.log('new parent si ', newParent);
+
+
+
+    // const storage = firebase.storage();
+    // const name = this.state.name.replace(/[\W]/g, '').toLowerCase();
+    // const storageRef = storage.ref(`furbabies/${name}`);
+    // const photo = this.state.photo;
+
+    // await storageRef.put(photo)
+    // .then(snapshot => this.setState({photoUrl: snapshot.downloadURL}))
+    // .then(() => this.saveToDB())
+    // .catch(err => console.log('there was an error ', err))
   }
 
-  saveToDB() {
+  async saveToDB() {
     const defaultState = {
       name: '',
       breed: '',
@@ -76,10 +86,17 @@ class Furbaby extends Component {
       showModal: false,
       parent: null
     };
-    const { name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
-    this.props.submit({name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted});
-    this.setState({...defaultState});
-    alert('Furbaby saved to database!');
+
+    const { parent } = this.state;
+    const newParent = new Promise(this.props.submitParent(parent))
+    newParent.then(
+      newParent => console.log('new parent si ', newParent),
+      err => console.log('ecountered error, ', err));
+
+    // const { name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
+    // this.props.submitFurbaby({name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted});
+    // this.setState({...defaultState});
+    // alert('Furbaby saved to database!');
   }
 
   handleChange(event) {
@@ -113,8 +130,7 @@ class Furbaby extends Component {
   }
 
   render() {
-    const { name, breed, age, sex, comments, spayed, fivpositive, fostered, adopted, parent } = this.state;
-    console.log('parent is ', parent);
+    const { name, breed, age, sex, comments, spayed, fivpositive, fostered, adopted } = this.state;
     return (
       <div className='container'>
 
@@ -158,7 +174,7 @@ class Furbaby extends Component {
               style={dropzoneStyle} 
               onDrop={this.onImageDrop.bind(this)}>
               <p>Click to select a picture.</p>
-              <img alt="" src={this.state.photoUrl || this.state.photo && this.state.photo.preview}/>
+              <img alt="" src={this.state.photoUrl || (this.state.photo && this.state.photo.preview)}/>
             </Dropzone>
           </div>
 
@@ -211,14 +227,19 @@ class Furbaby extends Component {
 
 const mapState = state => {
   return {
-    furbabies: state.furbabies
+    furbabies: state.furbabies,
+    parent: state.parents
   }
 }
 
 const mapDispatch = dispatch => {
   return {
-    submit(info) {
-      dispatch(createFurbabyThunk(info))
+    submitFurbaby(info) {
+      dispatch(createFurbabyThunk(info));
+    },
+    submitParent(parent) {
+      dispatch(createParentThunk(parent))
+      .then(parent => console.log('new parent created ', parent));
     }
   }
 }

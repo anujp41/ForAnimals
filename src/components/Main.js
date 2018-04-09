@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './Main.css';
-import { getFurbabiesThunk, getParentsThunk } from '../store';
+import { getFurbabiesThunk } from '../store';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png'
 
@@ -30,7 +30,7 @@ const mapDispatch = dispatch => {
   return {
     getData() {
       dispatch(getFurbabiesThunk())
-      .then(() => dispatch(getParentsThunk()));
+      // .then(() => dispatch(getParentsThunk()));
     }
   }
 }
