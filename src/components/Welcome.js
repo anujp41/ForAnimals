@@ -6,25 +6,25 @@ class Welcome extends Component {
   render() {
     return (
       <div style={divStyle}>
-        <Link to={'/input'}>
+        {/* <Link to={'/input'}>
           <h1>Let's visit this site!</h1>
-        </Link>
+        </Link> */}
 
         <Link to={'/furbaby'}>
           <h1>Add furbabies!</h1>
         </Link>
 
-        <Link to={'/parent'}>
+        {/* <Link to={'/parent'}>
           <h1>Add parents!</h1>
-        </Link>
+        </Link> */}
 
         <Link to={'/furbabies'}>
           <h1>Let's go see the furbabies!</h1>
         </Link>
 
-        <Link to={'/parents'}>
+        {/* <Link to={'/parents'}>
           <h1>Let's go see the parents!</h1>
-        </Link>
+        </Link> */}
       </div>
     );
   }

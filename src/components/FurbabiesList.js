@@ -29,7 +29,7 @@ class FurbabiesList extends Component {
   }
 
   clear() {
-    this.setState({sort: false})
+    this.setState({sort: false, sorting: null})
   }
 
   renderDropdown() {
