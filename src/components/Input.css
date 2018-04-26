@@ -96,6 +96,11 @@ input {
   outline: none;
 }
 
+input[type=date]::-webkit-inner-spin-button,
+input[type=date]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
 textarea {
   background-color: transparent;
   border: 2px solid;
@@ -237,4 +242,18 @@ input:checked + .slider:after {
   margin: 0;
   width: 0px;
   height: 25px;
+}
+
+.date-input {
+  border: 2px solid;
+  margin-top: 50px
+}
+
+.date-input > input {
+  margin: 0 0 25px 0;
+}
+
+.date-field {
+  margin-top: -10px;
+  background-color: orange
 }

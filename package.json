@@ -33,6 +33,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "seed": "node server/db/seed.js"
+    "seed": "node server/db/seed.js",
+    "server": "node server/index.js"
   }
 }

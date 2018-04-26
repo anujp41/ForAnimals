@@ -135,9 +135,9 @@ class Furbaby extends Component {
 
           </div>
 
-          <div className='formfield'>
+          <div className='formfield date-input'>
+            <div className='date-field'>Date brought to shelter!</div>
               <input required type="date" name="arrived" onChange={this.handleChange}/>
-              {/* <div className="label-text">Date arrived at shelter!</div> */}
             </div>
 
           <div className='comment'>
