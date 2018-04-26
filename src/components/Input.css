@@ -255,5 +255,20 @@ input:checked + .slider:after {
 
 .date-field {
   margin-top: -10px;
+  padding: 5px 0;
   background-color: orange
+}
+
+.arrived:valid+.isValid:after{
+  content: '✓';
+  color: green;
+  font-size: 150%;
+  margin-left: 10px
+}
+
+.arrived:invalid+.isValid:after{
+  content: '✖';
+  color: firebrick;
+  font-size: 150%;
+  margin-left: 10px
 }

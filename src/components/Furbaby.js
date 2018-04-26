@@ -24,7 +24,8 @@ class Furbaby extends Component {
       fostered: false,
       adopted: false,
       showModal: false,
-      parent: null
+      parent: null,
+      arrived: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -61,7 +62,8 @@ class Furbaby extends Component {
       fostered: false,
       adopted: false,
       showModal: false,
-      parent: null
+      parent: null,
+      arrived: ''
     };
 
     const { parent } = this.state;
@@ -91,6 +93,9 @@ class Furbaby extends Component {
       const text = num + ' character(s) remaining!';
       $('.charactersLeft').text(text);
     });
+
+    const today = new Date().toISOString().split('T')[0];
+    this.setState({ arrived : today });
   }
 
   toggleModal() {
@@ -103,7 +108,8 @@ class Furbaby extends Component {
   }
 
   render() {
-    const { name, breed, age, sex, comments, spayed, fivpositive, fostered, adopted } = this.state;
+    const { name, breed, age, sex, comments, spayed, fivpositive, fostered, adopted, arrived } = this.state;
+    const today = new Date().toISOString().split('T')[0]
     return (
       <div className='container'>
 
@@ -137,7 +143,8 @@ class Furbaby extends Component {
 
           <div className='formfield date-input'>
             <div className='date-field'>Date brought to shelter!</div>
-              <input required type="date" name="arrived" onChange={this.handleChange}/>
+              <input required className="arrived" type="date" name="arrived" value={arrived} max={today} onChange={this.handleChange}/>
+              <span className="isValid"></span>
             </div>
 
           <div className='comment'>
