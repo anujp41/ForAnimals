@@ -87,6 +87,7 @@ class FurbabiesList extends Component {
               <div className='furbabyName'><b>Name: </b>{furbaby.name}</div>
               <div className='furbabyBreed'><b>Breed: </b>{furbaby.breed}</div>
               <div className='furbabyAge'><b>Age: </b>{furbaby.age}</div>
+              <div className='furbabyArrived'><b>Arrived at shelter: </b>{furbaby.arrived}</div>
               <div className='furbabySex'><b>Sex: </b>{furbaby.sex}</div>
               <div className='furbabySpayed'><b>Spayed: </b>{furbaby.spayed ? 'Yes' : 'No'}</div>
               <div className='furbabyFivpositive'><b>FIV Positive: </b>{furbaby.fivpositive ? 'Yes' : 'No'}</div>

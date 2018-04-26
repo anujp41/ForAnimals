@@ -143,9 +143,9 @@ class Furbaby extends Component {
 
           <div className='formfield date-input'>
             <div className='date-field'>Date brought to shelter!</div>
-              <input required className="arrived" type="date" name="arrived" value={arrived} max={today} onChange={this.handleChange}/>
-              <span className="isValid"></span>
-            </div>
+            <input required className="arrived" type="date" name="arrived" value={arrived} max={today} onChange={this.handleChange}/>
+            <span className="isValid"></span>
+          </div>
 
           <div className='comment'>
               <textarea className='commentInput' maxLength='200' type="text" row='3' name="comments" value={comments} placeholder='Additional comments on health/appearance etc.' onChange={this.handleChange}/>
