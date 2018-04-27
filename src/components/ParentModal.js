@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './ParentModal.css';
+import ReactTable from "react-table";
+import "react-table/react-table.css";
 
 class ParentModal extends React.Component {
 
@@ -7,10 +10,14 @@ class ParentModal extends React.Component {
     super();
     this.state = {
       name: '',
-      address: ''
+      address: '',
+      showParents: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.showParent = this.showParent.bind(this);
+    this.renderParents = this.renderParents.bind(this);
+    this.setParent = this.setParent.bind(this);
   }
 
   handleChange(event) {
@@ -24,6 +31,42 @@ class ParentModal extends React.Component {
     event.preventDefault();
     this.props.setParent(this.state);
     this.props.toggleModal();
+  }
+
+  showParent() {
+    const showParents = !this.state.showParents;
+    this.setState({ showParents });
+  }
+
+  setParent(parent) {
+    // event.preventDefault();
+    console.log('clicked ', parent);
+    // console.log('i clicked ', event.target)
+  }
+
+  renderParents() {
+    const parents = this.props.parents;
+    return (
+      <div>
+        <div className='parents'>Select parent from list below!</div>
+          <ReactTable
+            filterable
+            data={parents}
+            columns={[
+              {
+                Header: 'Name',
+                accessor: 'name'
+              }, {
+                Header: 'Address',
+                accessor: 'address'
+              }
+            ]}
+            defaultPageSize={4} 
+            minRows={0}
+            className='-highlight parentItem'
+          />
+      </div>
+    )
   }
 
   render() {
@@ -40,7 +83,13 @@ class ParentModal extends React.Component {
         </button>
         <div className='containerModal'>
           <form autoComplete="off" onSubmit={this.handleSubmit}>
-          <div className="titleModal">Parent information for {furbaby}:</div>
+
+          <div className="titleExisting" onClick={this.showParent}>Click here to select an existing parent</div>
+          { this.state.showParents && this.renderParents() }
+
+          <div className="titleOption">Or</div>
+
+          <div className="titleModal">Add a new parent below: {furbaby}:</div>
 
           <input required type="text" name="name" value={name} onChange={this.handleChange}/>
           <div className="modal-text">Name</div>
@@ -57,4 +106,11 @@ class ParentModal extends React.Component {
   }
 }
 
-export default ParentModal;
+const mapState = state => {
+  return {
+    parents: state.parents
+  }
+}
+
+const ParentModalContainer = connect(mapState, null)(ParentModal);
+export default ParentModalContainer;

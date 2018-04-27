@@ -11,7 +11,7 @@ const getFurbabies = furbabies => ({ type: GET_FURBABIES, furbabies});
 const updateFoster = furbaby => ({ type: UPDATE_FOSTER, furbaby });
 
 export const createFurbabyThunk = furbaby => dispatch => {
-  furbaby.arrivedDate = new Date(furbaby.arrived+'T00:00:00');
+  furbaby.arrivedDate = furbaby.arrived+'T00:00:00';
   return axios.post('http://localhost:8080/api/furbabies', furbaby)
   .then(newFurbaby => newFurbaby.data)
   .then(newKitty => {

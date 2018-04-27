@@ -10,25 +10,67 @@
 }
 
 .cancelbtn {
-  color: goldenrod;
-  background-color: fuchsia;
+  color: #d68306;
+  background-color: #ad2662;
   margin-left: 65%
 }
 
 .containerModal {
   margin: auto;
   text-align: center;
-  background-color: #4fb6e2;
+  background-color: #7dad26;
   font-family: 'Open Sans', sans-serif;
   width: 65vw;
   color: white;
   margin-bottom: 15px
 }
 
-.titleModal {
+.titleOption {
   font-size: 2.5em;
   padding-top: 15px;
   text-align: center;
+}
+
+.titleModal, .titleExisting {
+  font-size: 2em;
+  padding-top: 15px;
+  text-align: center;
+}
+
+.titleExisting {
+  margin-bottom: 20px
+}
+
+.titleExisting:hover {
+  color: #ce19ea;
+  font-weight: 200;
+  cursor: pointer;
+}
+
+.parents {
+  margin: 25px 0 20px 0
+}
+
+.parentItem {
+  cursor: pointer;
+  margin-bottom: 25px
+}
+
+.-pagination {
+  height: 40px
+}
+
+.-center {
+  display: none !important;
+}
+
+.titleOption {
+  border-style: inset 
+}
+
+.rt-th {
+  padding: 0 !important;
+  margin: 0 !important
 }
 
 .modal-text {
@@ -36,7 +78,7 @@
   font-size: 20px;
   margin-top: -110px;
   transition: all 0.5s;
-  padding-bottom: 75px
+  /* padding-bottom: 75px */
 }
 
 input:focus + .modal-text {

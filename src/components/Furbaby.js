@@ -25,7 +25,8 @@ class Furbaby extends Component {
       adopted: false,
       showModal: false,
       parent: null,
-      arrived: new Date().toISOString().split('T')[0]
+      arrived: new Date().toISOString().split('T')[0],
+      parentId: null
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { FurBabies, Parents } = require('../models');
 
+// Return all furbabies from database
 router.get('/', (req, res, next) => {
   FurBabies.findAll({
     include: [Parents],
