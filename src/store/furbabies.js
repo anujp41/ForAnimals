@@ -13,13 +13,23 @@ const updateFoster = furbaby => ({ type: UPDATE_FOSTER, furbaby });
 export const createFurbabyThunk = furbaby => dispatch => {
   furbaby.arrivedDate = new Date(furbaby.arrived+'T00:00:00');
   return axios.post('http://localhost:8080/api/furbabies', furbaby)
-  .then(newFurbaby => dispatch(createFurbaby(newFurbaby.data)))
+  .then(newFurbaby => newFurbaby.data)
+  .then(newKitty => {
+    newKitty.arrivedDate = new Date(newKitty.arrivedDate);
+    return newKitty;
+  })
+  .then(newFurbaby => dispatch(createFurbaby(newFurbaby)))
   .catch(err => console.log(err));
 }
 
 export const getFurbabiesThunk = () => dispatch =>
   axios.get('http://localhost:8080/api/furbabies')
-  .then(furbabies => dispatch(getFurbabies(furbabies.data)))
+  .then(furbabies => furbabies.data)
+  .then(furbabiesArr => furbabiesArr.map(furbaby => {
+    furbaby.arrivedDate = new Date(furbaby.arrivedDate);
+    return furbaby;
+  }))
+  .then(furbabies => dispatch(getFurbabies(furbabies)))
   .catch(err => console.log(err));
 
 export const updateFosterThunk = furbaby => dispatch => 

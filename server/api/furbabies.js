@@ -14,7 +14,6 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   FurBabies.create(req.body)
   .then(newBabies => {
-    console.log('created baby ', newBabies)
     const id = newBabies.parentId;
     if (id) {
       Parents.findById(id)
