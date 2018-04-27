@@ -117,22 +117,22 @@ class Furbaby extends Component {
           <div className="general">
 
             <div className='formfield'>
-              <input required type="text" name="name" value={name} onChange={this.handleChange}/>
+              <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
               <div className="label-text">Name</div>
             </div>
 
             <div className='formfield'>
-              <input required type="text" name="breed" value={breed} onChange={this.handleChange}/>
+              <input required className="input" type="text" name="breed" value={breed} onChange={this.handleChange}/>
               <div className="label-text">Breed</div>
             </div>
 
             <div className='formfield'>
-              <input required type="text" name="age" value={age} onChange={this.handleChange}/>
+              <input required className="input" type="text" name="age" value={age} onChange={this.handleChange}/>
               <div className="label-text">Age</div>
             </div>
 
             <div className='formfield'>
-              <input required type="text" name="sex" value={sex} onChange={this.handleChange}/>
+              <input required className="input" type="text" name="sex" value={sex} onChange={this.handleChange}/>
               <div className="label-text">Sex</div>
             </div>
 
@@ -140,7 +140,7 @@ class Furbaby extends Component {
 
           <div className='formfield date-input'>
             <div className='date-field'>Date brought to shelter!</div>
-            <input required className="arrived" type="date" name="arrived" value={arrived} max={today} onChange={this.handleChange}/>
+            <input required className="input arrived" type="date" name="arrived" value={arrived} max={today} onChange={this.handleChange}/>
             <span className="isValid"></span>
           </div>
 
@@ -167,7 +167,7 @@ class Furbaby extends Component {
               <div className='flexItem'>
                 <div className='flexQ'>Is the furbaby spayed?</div><br/>
                 <label className="switch">
-                  <input type="checkbox" checked={spayed} name='spayed' onChange={this.handleChange}/>
+                  <input className="input" type="checkbox" checked={spayed} name='spayed' onChange={this.handleChange}/>
                   <div className="slider"></div>
                 </label>
               </div>
@@ -175,7 +175,7 @@ class Furbaby extends Component {
               <div className='flexItem'>
                 <div className='flexQ'>FIV Positive?</div><br/>
                 <label className="switch">
-                  <input type="checkbox" checked={fivpositive} name='fivpositive' onChange={this.handleChange}/>
+                  <input className="input" type="checkbox" checked={fivpositive} name='fivpositive' onChange={this.handleChange}/>
                   <div className="slider"/>
                 </label>
               </div>
@@ -186,14 +186,14 @@ class Furbaby extends Component {
           <div className='foster'>
             <div className='fosterdiv'>
               <div className='fosterQ'>Furbaby fostered?</div>
-              <input className='fostercheck' type='checkbox' name='fostered' checked={fostered} onChange={this.handleChange}/>
+              <input className='input fostercheck' type='checkbox' name='fostered' checked={fostered} onChange={this.handleChange}/>
             </div>
           </div>
 
           <div className='adopt'>
             <div className='adoptdiv'>
               <div className='adoptQ'>Furbaby adopted?</div>
-              <input className='adoptcheck' type='checkbox' name='adopted' checked={adopted} onChange={this.handleChange}/>
+              <input className='input adoptcheck' type='checkbox' name='adopted' checked={adopted} onChange={this.handleChange}/>
             </div>
           </div>
 
