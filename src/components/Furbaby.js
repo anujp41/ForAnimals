@@ -25,7 +25,7 @@ class Furbaby extends Component {
       adopted: false,
       showModal: false,
       parent: null,
-      arrived: ''
+      arrived: new Date().toISOString().split('T')[0]
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -63,13 +63,12 @@ class Furbaby extends Component {
       adopted: false,
       showModal: false,
       parent: null,
-      arrived: ''
+      arrived: new Date().toISOString().split('T')[0]
     };
 
     const { parent } = this.state;
-
-    const { name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
-    this.props.submit(parent, {name, breed, age, sex, photoUrl, comments, spayed, fivpositive, fostered, adopted});
+    let { name, breed, age, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
+    this.props.submit(parent, {name, breed, age, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted});
     this.setState({...defaultState});
     alert('Furbaby saved to database!');
   }
@@ -78,7 +77,7 @@ class Furbaby extends Component {
     const target = event.target;
     const name = target.name;
     if (name === 'fostered' || name ===  'adopted') this.toggleModal();
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    let value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState({ [name] : value });
   }
 
@@ -93,9 +92,6 @@ class Furbaby extends Component {
       const text = num + ' character(s) remaining!';
       $('.charactersLeft').text(text);
     });
-
-    const today = new Date().toISOString().split('T')[0];
-    this.setState({ arrived : today });
   }
 
   toggleModal() {
@@ -109,7 +105,7 @@ class Furbaby extends Component {
 
   render() {
     const { name, breed, age, sex, comments, spayed, fivpositive, fostered, adopted, arrived } = this.state;
-    const today = new Date().toISOString().split('T')[0]
+    const today = new Date().toISOString().split('T')[0];
     return (
       <div className='container'>
 
@@ -210,26 +206,30 @@ class Furbaby extends Component {
   }
 }
 
-const mapState = state => {
-  return {
-    furbabies: state.furbabies,
-    parent: state.parents
-  }
-}
+// const mapState = state => {
+//   return {
+//     furbabies: state.furbabies,
+//     parent: state.parents
+//   }
+// }
 
 const mapDispatch = dispatch => {
   return {
     submit(parent, furbaby) {
-      dispatch(createParentThunk(parent))
-      .then(parent => {
-        furbaby.parentId = parent.parent.id;
+      if (parent) {
+        dispatch(createParentThunk(parent))
+        .then(parent => {
+          furbaby.parentId = parent.parent.id;
+          dispatch(createFurbabyThunk(furbaby));
+        });
+      } else {
         dispatch(createFurbabyThunk(furbaby));
-      });
+      }
     }
   }
 }
 
-const FurbabyContainer = connect(mapState, mapDispatch)(Furbaby);
+const FurbabyContainer = connect(null, mapDispatch)(Furbaby);
 export default FurbabyContainer;
 
 const dropzoneStyle = {

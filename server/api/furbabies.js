@@ -14,13 +14,21 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   FurBabies.create(req.body)
   .then(newBabies => {
+    console.log('created baby ', newBabies)
     const id = newBabies.parentId;
-    Parents.findById(id)
-    .then(parent => {
+    if (id) {
+      Parents.findById(id)
+      .then(parent => {
+        const newBaby = newBabies.dataValues;
+        newBaby.parent = parent.dataValues;
+        res.json(newBaby);
+      });
+    } else {
       const newBaby = newBabies.dataValues;
-      newBaby.parent = parent.dataValues;
+      newBaby.parentId = null;
+      newBaby.parent = null;
       res.json(newBaby);
-    });
+    }
   })
   .catch(next);
 })

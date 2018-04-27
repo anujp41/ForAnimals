@@ -20,7 +20,10 @@ const FurBabies = db.define('furbaby', {
     allowNull: false
   },
   arrived: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
+  },
+  arrivedDate: {
+    type: Sequelize.DATE,
     allowNull: false
   },
   photoUrl: {
@@ -55,7 +58,7 @@ const FurBabies = db.define('furbaby', {
     value: [true, false],
     defaultValue: false
   }
-}, 
+},
 {
   hooks: {
     afterUpdate: function(furbaby, option) {
