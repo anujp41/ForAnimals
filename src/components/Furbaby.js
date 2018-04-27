@@ -66,10 +66,9 @@ class Furbaby extends Component {
       parent: null,
       arrived: new Date().toISOString().split('T')[0]
     };
-
-    const { parent } = this.state;
+    const { parent, parentId } = this.state;
     let { name, breed, age, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
-    this.props.submit(parent, {name, breed, age, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted});
+    this.props.submit(parent, {name, breed, age, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted}, parentId);
     this.setState({...defaultState});
     alert('Furbaby saved to database!');
   }
@@ -101,7 +100,8 @@ class Furbaby extends Component {
   }
 
   setParent(parent) {
-    this.setState({ parent });
+    const parentId = parent.id;
+    this.setState({ parentId });
   }
 
   render() {
@@ -216,13 +216,16 @@ class Furbaby extends Component {
 
 const mapDispatch = dispatch => {
   return {
-    submit(parent, furbaby) {
+    submit(parent, furbaby, parentId) {
       if (parent) {
         dispatch(createParentThunk(parent))
         .then(parent => {
           furbaby.parentId = parent.parent.id;
           dispatch(createFurbabyThunk(furbaby));
         });
+      } else if (parentId) {
+        furbaby.parentId = parentId;
+        dispatch(createFurbabyThunk(furbaby));
       } else {
         dispatch(createFurbabyThunk(furbaby));
       }

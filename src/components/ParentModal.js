@@ -39,9 +39,8 @@ class ParentModal extends React.Component {
   }
 
   setParent(parent) {
-    // event.preventDefault();
-    console.log('clicked ', parent);
-    // console.log('i clicked ', event.target)
+    this.props.setParent(parent);
+    this.props.toggleModal();
   }
 
   renderParents() {
@@ -64,6 +63,9 @@ class ParentModal extends React.Component {
             defaultPageSize={4} 
             minRows={0}
             className='-highlight parentItem'
+            getTdProps={(state, rowInfo, column, instance) => {
+              return { onClick: (e) => this.setParent(rowInfo.original) }
+            }}
           />
       </div>
     )
