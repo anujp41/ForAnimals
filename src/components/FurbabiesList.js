@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import './FurbabiesList.css';
-// import $ from 'jquery';
 import sort from './SortFunc';
 
 class FurbabiesList extends Component {
@@ -12,7 +11,7 @@ class FurbabiesList extends Component {
       sort: false,
       sorting: null,
       sortOptions: {
-        'Sort': ['Age: Oldest', 'Age: Youngest', 'Date Added: Descending', 'Date Added: Ascending'],
+        'Sort': ['Age: Oldest', 'Age: Youngest', 'Brought to Shelter: Most Recent', 'Brought to Shelter: Most Previous'],
         'Filter By': ['Available', 'Fostered', 'Adopted', 'Has FIV', 'Is Spayed']
       }
     }

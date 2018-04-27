@@ -13,6 +13,11 @@ const sort = function(array, sorting) {
     return array.slice().sort((prev, furbaby) => prev.age - furbaby.age, {age: 0});
   } else if (sorting === 'Age: Oldest') {
     return array.slice().sort((prev, furbaby) => furbaby.age - prev.age, {age: 0});
+  } else if (sorting === 'Brought to Shelter: Most Recent') {
+    console.log('here')
+    return array.slice().sort((prev, furbaby) => new Date(furbaby.arrivedDate) - new Date(prev.arrivedDate), {arrivedDate: 0});
+  } else if (sorting === 'Brought to Shelter: Most Previous') {
+    return array.slice().sort((prev, furbaby) => new Date(prev.arrivedDate) - new Date(furbaby.arrivedDate), {arrivedDate: 0});
   }
 };
 
