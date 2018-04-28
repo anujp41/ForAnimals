@@ -39,6 +39,7 @@ class ParentModal extends React.Component {
   }
 
   setParent(parent) {
+    this.showParent();
     this.props.setParent(parent);
     this.props.toggleModal();
   }

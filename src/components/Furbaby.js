@@ -127,8 +127,14 @@ class Furbaby extends Component {
             </div>
 
             <div className='formfield'>
-              <input required className="input" type="text" name="age" value={age} onChange={this.handleChange}/>
-              <div className="label-text">Age</div>
+              <input readOnly className="input" type="text" name="age" value={age} onChange={this.handleChange}/>
+              <div className="label-text" type="age">Age</div>
+              <div className='ageEntry'>
+                <input required type="number" min="0" max="20" className="years"/>
+                <span>Years</span>
+                <input required type="number" min="0" max="12" className="months"/>
+                <span>Months</span>
+              </div>
             </div>
 
             <div className='formfield'>
@@ -206,13 +212,6 @@ class Furbaby extends Component {
     )
   }
 }
-
-// const mapState = state => {
-//   return {
-//     furbabies: state.furbabies,
-//     parent: state.parents
-//   }
-// }
 
 const mapDispatch = dispatch => {
   return {
