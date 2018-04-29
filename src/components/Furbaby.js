@@ -141,6 +141,7 @@ class Furbaby extends Component {
   render() {
     const { name, breed, ageYear, ageMonth, sexBoolean, comments, spayed, fivpositive, fostered, adopted, arrived } = this.state;
     const today = new Date().toISOString().split('T')[0];
+    console.log('date is ', arrived);
     return (
       <div className='container'>
 

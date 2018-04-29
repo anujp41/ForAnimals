@@ -22,10 +22,6 @@ const FurBabies = db.define('furbaby', {
   arrived: {
     type: Sequelize.STRING
   },
-  arrivedDate: {
-    type: Sequelize.DATE,
-    allowNull: false
-  },
   photoUrl: {
     type: Sequelize.STRING,
     defaultValue: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Cute-kittens-12929201-1600-1200.jpg/640px-Cute-kittens-12929201-1600-1200.jpg',
@@ -70,6 +66,9 @@ const FurBabies = db.define('furbaby', {
       const currMonth = Math.max(0, Math.round((ageMS%yearMS)/monthMS));
       const result = currYear + ' year(s), ' + currMonth + ' month(s)';
       return result;
+    },
+    arrivedDate() {
+      return new Date(this.arrived+'T00:00:00');
     }
   }
 }, {
