@@ -85,7 +85,7 @@ class ParentModal extends React.Component {
 
     return (
       <div className='backdrop'>
-        <button className='cancelbtn' onClick={this.props.toggleModal}>
+        <button className='cancelbtn' onClick={()=>this.props.toggleModal(false)}>
           Cancel
         </button>
         <div className='containerModal'>

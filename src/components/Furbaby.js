@@ -83,7 +83,7 @@ class Furbaby extends Component {
   handleChange(event) {
     const target = event.target;
     const name = target.name;
-    if (name === 'fostered' || name ===  'adopted') this.toggleModal();
+    if (name === 'fostered' || name ===  'adopted') this.toggleModal(target.checked);
     let value = target.type === 'checkbox' ? target.checked : target.value;
     if (name === 'sex') {
       value = value ? 'F' : 'M';
@@ -128,9 +128,14 @@ class Furbaby extends Component {
     });
   }
 
-  toggleModal() {
-    const showModal = !this.state.showModal;
+  toggleModal(showModal) {
     this.setState({ showModal });
+    if (showModal === false ) {
+      this.setState({
+        fostered: false,
+        adopted: false
+      })
+    }
   }
 
   setParent(parent) {
