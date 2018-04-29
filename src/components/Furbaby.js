@@ -16,7 +16,9 @@ class Furbaby extends Component {
       breed: '',
       photoUrl: '',
       photo: null,
-      age: '',
+      ageYear: 0,
+      ageMonth: 0,
+      birthDate: new Date().getTime(),
       sex: 'M',
       sexBoolean: false,
       comments: '',
@@ -35,6 +37,7 @@ class Furbaby extends Component {
     this.saveToDB = this.saveToDB.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.setParent = this.setParent.bind(this);
+    this.updateBirthDate = this.updateBirthDate.bind(this);
   }
 
   async handleSubmit(event) {
@@ -56,7 +59,9 @@ class Furbaby extends Component {
       breed: '',
       photoUrl: '',
       photo: null,
-      age: '',
+      ageYear: 0,
+      ageMonth: 0,
+      birthDate: new Date().getTime(),
       sex: 'M',
       sexBoolean: false,
       comments: '',
@@ -69,8 +74,8 @@ class Furbaby extends Component {
       arrived: new Date().toISOString().split('T')[0]
     };
     const { parent, parentId } = this.state;
-    let { name, breed, age, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
-    this.props.submit(parent, {name, breed, age, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted}, parentId);
+    let { name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
+    this.props.submit(parent, {name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted}, parentId);
     this.setState({...defaultState});
     alert('Furbaby saved to database!');
   }
@@ -89,6 +94,25 @@ class Furbaby extends Component {
     } else {
       this.setState({ [name] : value });
     }
+    if (name === 'ageYear' || name === 'ageMonth') this.updateBirthDate(name, value);
+  }
+
+  updateBirthDate(name, value) {
+    const ageYear = name === 'ageYear' ? +value : +this.state.ageYear;
+    const ageMonth = name === 'ageMonth' ? +value : +this.state.ageMonth;
+    
+    const currDate = new Date().getTime();
+
+    const yearMS = 3.154e+10;
+    const monthMS = 2.628e+9;
+
+    const yearInMS = ageYear * yearMS;
+    const monthInMS = ageMonth * monthMS;
+
+    const totalAge = yearInMS + monthInMS;
+    const birthDate = currDate - totalAge;
+    
+    this.setState( { birthDate })
   }
 
   onImageDrop(files) {
@@ -115,7 +139,7 @@ class Furbaby extends Component {
   }
 
   render() {
-    const { name, breed, age, sexBoolean, comments, spayed, fivpositive, fostered, adopted, arrived } = this.state;
+    const { name, breed, ageYear, ageMonth, sexBoolean, comments, spayed, fivpositive, fostered, adopted, arrived } = this.state;
     const today = new Date().toISOString().split('T')[0];
     return (
       <div className='container'>
@@ -137,12 +161,12 @@ class Furbaby extends Component {
             </div>
 
             <div className='formfield'>
-              <input readOnly className="input" name="age" value={age} onChange={this.handleChange}/>
+              <input readOnly className="input" name="age"/>
               <div className="label-text" type="age">Age</div>
               <div className='ageEntry'>
-                <input required type="number" min="0" max="20" className="years"/>
+                <input required type="number" min="0" max="20" className="years" name="ageYear" value={ageYear} onChange={this.handleChange}/>
                 <span>Years</span>
-                <input required type="number" min="0" max="12" className="months"/>
+                <input required type="number" min="0" max="12" className="months" name="ageMonth" value={ageMonth} onChange={this.handleChange}/>
                 <span>Months</span>
               </div>
             </div>

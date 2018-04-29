@@ -9,10 +9,10 @@ const sort = function(array, sorting) {
     return array.filter(furbaby => furbaby.fivpositive);
   } else if (sorting === 'Is Spayed') {
     return array.filter(furbaby => furbaby.spayed);
-  } else if (sorting === 'Age: Youngest') {
-    return array.slice().sort((prev, furbaby) => prev.age - furbaby.age, {age: 0});
   } else if (sorting === 'Age: Oldest') {
-    return array.slice().sort((prev, furbaby) => furbaby.age - prev.age, {age: 0});
+    return array.slice().sort((prev, furbaby) => prev.birthDate - furbaby.birthDate, {birthDate: 0});
+  } else if (sorting === 'Age: Youngest') {
+    return array.slice().sort((prev, furbaby) => furbaby.birthDate - prev.birthDate, {birthDate: 0});
   } else if (sorting === 'Brought to Shelter: Most Recent') {
     return array.slice().sort((prev, furbaby) => furbaby.arrivedDate - prev.arrivedDate, {arrivedDate: 0});
   } else if (sorting === 'Brought to Shelter: Most Previous') {

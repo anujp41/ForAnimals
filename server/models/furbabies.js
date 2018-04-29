@@ -10,7 +10,7 @@ const FurBabies = db.define('furbaby', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  age: {
+  birthDate: {
     type: Sequelize.FLOAT,
     allowNull: false
   },
@@ -58,8 +58,21 @@ const FurBabies = db.define('furbaby', {
     value: [true, false],
     defaultValue: false
   }
-},
-{
+}, {
+  getterMethods: {
+    age() {
+      const currDate = new Date().getTime();
+      const birthDate = this.birthDate;
+      const ageMS = currDate - birthDate;
+      const yearMS = 3.154e+10;
+      const monthMS = 2.628e+9;
+      const currYear = Math.round(ageMS/yearMS);
+      const currMonth = Math.max(0, Math.round((ageMS%yearMS)/monthMS));
+      const result = currYear + ' year(s), ' + currMonth + ' month(s)';
+      return result;
+    }
+  }
+}, {
   hooks: {
     afterUpdate: function(furbaby, option) {
       const id = furbaby.parentId;
