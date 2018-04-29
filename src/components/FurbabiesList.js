@@ -83,17 +83,19 @@ class FurbabiesList extends Component {
             }
             <img alt="" src={furbaby.photoUrl} />
             <div className='furbabyDetails'>
-              <div className='furbabyName'><b>Name: </b>{furbaby.name}</div>
-              <div className='furbabyBreed'><b>Breed: </b>{furbaby.breed}</div>
-              <div className='furbabyAge'><b>Age: </b>{furbaby.age}</div>
-              <div className='furbabyArrived'><b>Arrived at shelter: </b>{furbaby.arrived}</div>
-              <div className='furbabySex'><b>Sex: </b>{furbaby.sex}</div>
-              <div className='furbabySpayed'><b>Spayed: </b>{furbaby.spayed ? 'Yes' : 'No'}</div>
-              <div className='furbabyFivpositive'><b>FIV Positive: </b>{furbaby.fivpositive ? 'Yes' : 'No'}</div>
-              <div className='furbabyComments'><b>Comments: </b>{furbaby.comments.length ? furbaby.comments : 'None'}</div>
+              <div className='furbabyInfo'>
+                <div className='furbabyName'><b>Name: </b>{furbaby.name}</div>
+                <div className='furbabyBreed'><b>Breed: </b>{furbaby.breed}</div>
+                <div className='furbabyAge'><b>Age: </b>{furbaby.age}</div>
+                <div className='furbabyArrived'><b>Arrived at shelter: </b>{furbaby.arrived}</div>
+                <div className='furbabySex'><b>Sex: </b>{furbaby.sex}</div>
+                <div className='furbabySpayed'><b>Spayed: </b>{furbaby.spayed ? 'Yes' : 'No'}</div>
+                <div className='furbabyFivpositive'><b>FIV Positive: </b>{furbaby.fivpositive ? 'Yes' : 'No'}</div>
+                <div className='furbabyComments'><b>Comments: </b>{furbaby.comments.length ? furbaby.comments : 'None'}</div>
+              </div>
               {furbaby.parentId && 
                 <div className='parentInfo'>
-                  <div className='parentTitle'>Parent:</div>
+                  <div className='parentTitle'>{furbaby.fostered ? 'Foster:' : 'Parent:'}</div>
                   <div className='parentName'><b>Name: </b>{furbaby.parent.name}</div>
                   <div className='parentAddress'><b>Address: </b>{furbaby.parent.address}</div>
                 </div>

@@ -92,15 +92,15 @@ li:hover {
 }
 
 .wrapper>img {
-  height: 350px;
+  height: 300px;
   max-width: 100%
 }
 
 .furbabyDetails {
   position: absolute;
-  /* background-color: white; */
+  background-color: white;
   transition: all 0.5s;
-  height: 175px
+  height: 225px
 }
 
 .furbabyCard:hover .furbabyDetails {
@@ -123,7 +123,16 @@ li:hover {
 }
 
 .parentInfo {
-  /* background-color: #e4efd7; */
+  background-color: #C2F970;
   font-weight: bolder;
-  color: goldenrod
+  padding: 5px 10px
+}
+
+.parentTitle {
+  font-size: 1.5em
+}
+
+.parentTitle, .parentName, .parentAddress {
+  color: #091540;
+  font-weight: bolder
 }
