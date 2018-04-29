@@ -62,7 +62,7 @@ const FurBabies = db.define('furbaby', {
       const ageMS = currDate - birthDate;
       const yearMS = 3.154e+10;
       const monthMS = 2.628e+9;
-      const currYear = Math.round(ageMS/yearMS);
+      const currYear = Math.floor(ageMS/yearMS);
       const currMonth = Math.max(0, Math.round((ageMS%yearMS)/monthMS));
       const result = currYear + ' year(s), ' + currMonth + ' month(s)';
       return result;
