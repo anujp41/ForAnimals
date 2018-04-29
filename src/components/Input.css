@@ -23,8 +23,9 @@
 }
 
 .formfield {
-  margin: auto;
-  width: 45%
+  margin: 0 auto;
+  width: 45%;
+  padding-top: 10px
 } 
 
 .comment {
@@ -128,6 +129,7 @@ textarea:focus::-webkit-input-placeholder {
   font-size: 20px;
   margin-top: -110px;
   transition: all 0.5s;
+  color: orange
 }
 
 .input:focus + .label-text {
@@ -179,7 +181,12 @@ textarea:focus::-webkit-input-placeholder {
   background-color: #33aa2a;
   -webkit-transition: .4s;
   transition: .4s;
-   border-radius: 34px;
+  border-radius: 34px;
+}
+
+.slider[type=sex] {
+  background-color: #646bef;
+  border-radius: 0px;
 }
 
 .slider:before {
@@ -195,8 +202,16 @@ textarea:focus::-webkit-input-placeholder {
   border-radius: 50%;
 }
 
+.slider[type=sex]:before {
+  border-radius: 0%;
+}
+
 .input:checked + .slider {
   background-color: #ff7b25;
+}
+
+.input:checked + .slider[type=sex] {
+  background-color: #ef7cdc;
 }
 
 .input:checked + .slider:before {
@@ -217,8 +232,17 @@ textarea:focus::-webkit-input-placeholder {
  font-family: 'Roboto', sans-serif;
 }
 
+.slider[type=sex]:after {
+  content:'M';
+  font-size: 20px
+ }
+
 .input:checked + .slider:after {  
   content:'Yes';
+}
+
+.input:checked + .slider[type=sex]:after {  
+  content:'F';
 }
 
 .foster, .adopt {
@@ -271,16 +295,19 @@ textarea:focus::-webkit-input-placeholder {
   margin-left: 10px
 }
 
-.ageEntry {
-  margin-top: -25px;
+.ageEntry, .sexEntry {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
-.ageEntry:has(.label-text) {
-  background-color: purple
+.ageEntry {
+  margin-top: -25px;
+}
+
+.sexEntry {
+  margin-top: -30px;
 }
 
 input[type=number]::-webkit-outer-spin-button,
@@ -293,8 +320,10 @@ input[type=number]::-webkit-inner-spin-button {
   z-index: 1;
   width: 25px;
   margin: 0 15px;
+  height: 20px;
+  text-align: center
 }
 
-.label-text[type=age] {
+.label-text[type=age], .label-text[type=sex] {
   transform: translateY(-35px);
 }

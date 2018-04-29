@@ -17,7 +17,8 @@ class Furbaby extends Component {
       photoUrl: '',
       photo: null,
       age: '',
-      sex: '',
+      sex: 'M',
+      sexBoolean: false,
       comments: '',
       spayed: false,
       fivpositive: false,
@@ -56,7 +57,8 @@ class Furbaby extends Component {
       photoUrl: '',
       photo: null,
       age: '',
-      sex: '',
+      sex: 'M',
+      sexBoolean: false,
       comments: '',
       spayed: false,
       fivpositive: false,
@@ -78,7 +80,15 @@ class Furbaby extends Component {
     const name = target.name;
     if (name === 'fostered' || name ===  'adopted') this.toggleModal();
     let value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState({ [name] : value });
+    if (name === 'sex') {
+      value = value ? 'F' : 'M';
+      this.setState({
+        [name] : value,
+        sexBoolean: target.checked
+      })
+    } else {
+      this.setState({ [name] : value });
+    }
   }
 
   onImageDrop(files) {
@@ -105,7 +115,7 @@ class Furbaby extends Component {
   }
 
   render() {
-    const { name, breed, age, sex, comments, spayed, fivpositive, fostered, adopted, arrived } = this.state;
+    const { name, breed, age, sexBoolean, comments, spayed, fivpositive, fostered, adopted, arrived } = this.state;
     const today = new Date().toISOString().split('T')[0];
     return (
       <div className='container'>
@@ -127,7 +137,7 @@ class Furbaby extends Component {
             </div>
 
             <div className='formfield'>
-              <input readOnly className="input" type="text" name="age" value={age} onChange={this.handleChange}/>
+              <input readOnly className="input" name="age" value={age} onChange={this.handleChange}/>
               <div className="label-text" type="age">Age</div>
               <div className='ageEntry'>
                 <input required type="number" min="0" max="20" className="years"/>
@@ -138,8 +148,14 @@ class Furbaby extends Component {
             </div>
 
             <div className='formfield'>
-              <input required className="input" type="text" name="sex" value={sex} onChange={this.handleChange}/>
-              <div className="label-text">Sex</div>
+              <input readOnly className="input"/>
+              <div className="label-text" type="sex">Sex</div>
+              <div className='sexEntry'>
+                <label className="switch">
+                  <input className="input" type="checkbox" checked={sexBoolean} name='sex' onChange={this.handleChange}/>
+                  <div className="slider" type="sex"></div>
+                </label>
+              </div>
             </div>
 
           </div>
