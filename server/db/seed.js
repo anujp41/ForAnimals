@@ -5,7 +5,7 @@ const furbabies = [
   {
     name: "Bevo",
     breed: "Tabby Diva",
-    birthDate: new Date(2015, 04, 29).getTime(),
+    birthDate: new Date(2015, 03, 29).getTime(),
     arrived: "2015-09-15",
     arrivedDate: new Date("2015-09-15T00:00:00"),
     sex: "F",
@@ -19,7 +19,7 @@ const furbabies = [
   {
     name: "Mama",
     breed: "Scaredy Tabby",
-    birthDate: new Date(2012, 04, 29).getTime(),
+    birthDate: new Date(2012, 03, 29).getTime(),
     arrived: "2016-02-15",
     arrivedDate: new Date("2016-02-15T00:00:00"),
     sex: "F",
@@ -30,7 +30,7 @@ const furbabies = [
   {
     name: "Smokey",
     breed: "Grey moro",
-    birthDate: new Date(2016, 04, 29).getTime(),
+    birthDate: new Date(2016, 03, 29).getTime(),
     arrived: "2017-10-21",
     arrivedDate: new Date("2017-10-21T00:00:00"),
     sex: "M",
@@ -44,7 +44,7 @@ const furbabies = [
   {
     name: "Remington",
     breed: "Orange Tabby",
-    birthDate: new Date(2014, 11, 29).getTime(),
+    birthDate: new Date(2014, 10, 29).getTime(),
     arrived: "2018-01-08",
     arrivedDate: new Date("2018-01-08T00:00:00"),
     sex: "M",
@@ -58,7 +58,7 @@ const furbabies = [
   {
     name: "Mr. Wobbles",
     breed: "Wobbly",
-    birthDate: new Date(2012, 11, 29).getTime(),
+    birthDate: new Date(2012, 10, 29).getTime(),
     arrived: "2012-03-15",
     arrivedDate: new Date("2012-03-15T00:00:00"),
     sex: "M",
@@ -69,7 +69,7 @@ const furbabies = [
   {
     name: "Sylvester",
     breed: "Kale",
-    birthDate: new Date(2017, 07, 29).getTime(),
+    birthDate: new Date(2017, 06, 29).getTime(),
     arrived: "2017-11-21",
     arrivedDate: new Date("2017-11-21T00:00:00"),
     sex: "M",
@@ -83,7 +83,7 @@ const furbabies = [
   {
     name: "Pizzazz",
     breed: "Bombay",
-    birthDate: new Date(2012, 02, 29).getTime(),
+    birthDate: new Date(2012, 01, 29).getTime(),
     arrived: "2016-04-18",
     arrivedDate: new Date("2016-04-18T00:00:00"),
     sex: "F",
