@@ -55,10 +55,14 @@ class ParentModal extends React.Component {
             columns={[
               {
                 Header: 'Name',
-                accessor: 'name'
+                accessor: 'name',
+                filterMethod: (filter, row) => 
+                  row[filter.id].toLowerCase().includes(filter.value.toLowerCase())
               }, {
                 Header: 'Address',
-                accessor: 'address'
+                accessor: 'address',
+                filterMethod: (filter, row) => 
+                  row[filter.id].toLowerCase().includes(filter.value.toLowerCase())
               }
             ]}
             defaultPageSize={4} 
