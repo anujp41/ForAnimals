@@ -58,9 +58,8 @@ li:hover {
 
 .furbabyCard {
   float: left;
-  padding: 0 1.7rem;
   width: 30%;
-  height: 550px;
+  height: 575px;
   margin: 10px; 
   padding: 0 0 10px 0; 
 }
@@ -99,13 +98,23 @@ li:hover {
 .furbabyDetails {
   position: absolute;
   background-color: white;
-  transition: all 0.5s;
-  height: 225px
+  /* transition: all 0.5s; */
+  height: 250px
 }
 
-.furbabyCard:hover .furbabyDetails {
+/* .furbabyCard:hover .furbabyDetails {
   transform: translateY(-95px);
   background-color: white
+} */
+
+.parentInfo {
+  opacity: 0;
+  transition: all 0.75s;
+}
+
+.furbabyCard:hover .parentInfo {
+  transform: translateY(-300px);
+  opacity: 1
 }
 
 .furbabyDetails {
@@ -135,4 +144,8 @@ li:hover {
 .parentTitle, .parentName, .parentAddress {
   color: #091540;
   font-weight: bolder
+}
+
+.furbabyComments {
+  font-size: 12px
 }
