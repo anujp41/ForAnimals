@@ -17,7 +17,7 @@ class ParentModal extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.showParent = this.showParent.bind(this);
     this.renderParents = this.renderParents.bind(this);
-    this.setParent = this.setParent.bind(this);
+    this.setParentId = this.setParentId.bind(this);
   }
 
   handleChange(event) {
@@ -29,7 +29,7 @@ class ParentModal extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.setParent(this.state);
+    this.props.setParent(this.state.name, this.state.address);
     this.props.toggleModal();
   }
 
@@ -38,9 +38,9 @@ class ParentModal extends React.Component {
     this.setState({ showParents });
   }
 
-  setParent(parent) {
+  setParentId(parent) {
     this.showParent();
-    this.props.setParent(parent);
+    this.props.setParentId(parent.id);
     this.props.toggleModal();
   }
 
@@ -69,7 +69,7 @@ class ParentModal extends React.Component {
             minRows={0}
             className='-highlight parentItem'
             getTdProps={(state, rowInfo, column, instance) => {
-              return { onClick: (e) => this.setParent(rowInfo.original) }
+              return { onClick: (e) => this.setParentId(rowInfo.original) }
             }}
           />
       </div>

@@ -37,6 +37,7 @@ class Furbaby extends Component {
     this.saveToDB = this.saveToDB.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.setParent = this.setParent.bind(this);
+    this.setParentId = this.setParentId.bind(this);
     this.updateBirthDate = this.updateBirthDate.bind(this);
   }
 
@@ -71,7 +72,8 @@ class Furbaby extends Component {
       adopted: false,
       showModal: false,
       parent: null,
-      arrived: new Date().toISOString().split('T')[0]
+      arrived: new Date().toISOString().split('T')[0],
+      parentId: null
     };
     const { parent, parentId } = this.state;
     let { name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
@@ -138,8 +140,11 @@ class Furbaby extends Component {
     }
   }
 
-  setParent(parent) {
-    const parentId = parent.id;
+  setParent(name, address) {
+    this.setState({ parent: {name, address} });
+  }
+
+  setParentId(parentId) {
     this.setState({ parentId });
   }
 
@@ -252,7 +257,7 @@ class Furbaby extends Component {
             
         </form>
 
-        <ParentModal furbaby={name} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent}/>
+        <ParentModal furbaby={name} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent} setParentId={this.setParentId}/>
       </div>
     )
   }
