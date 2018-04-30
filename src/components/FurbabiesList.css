@@ -6,16 +6,6 @@
   right: 50px;
 }
 
-ul {
-  list-style-type: none;
-}
-
-.menu {
-  display: block;
-  position: relative;
-  cursor: pointer;
-}
-
 .menu-title {
   display: inline-block;
   width: 150px;
@@ -31,22 +21,28 @@ ul {
 .menu-dropdown {
   display: block;
   position: absolute;
+  top: 52px;
   background: #ebebeb;
   z-index: 1;
-  transition: all 0.5s;
-  height: 150px;
+  transition: all 0.65s;
+  width: 150px;
   visibility: hidden;
   opacity: 0;
-  filter: alpha(opacity=0);
+  color: darkslategray;
+  text-transform: none;
 }
 
-.dropdown-title:hover .menu-dropdown {
+.menu-title:hover .menu-dropdown {
   visibility: visible;
   opacity: 1;
-  filter: alpha(opacity=100);
 }
 
-li:hover {
+.sortItem {
+  padding: 5px 0 0 0;
+  font-size: small
+}
+
+.sortItem:hover {
   background: rgba(17, 71, 234, 0.3);
 }
 

@@ -37,14 +37,12 @@ class FurbabiesList extends Component {
     return (
       <div className='dropdown'>
           {sorts.map((sort, idx) => (
-            <div key={idx} className='dropdown-title'>
-              <div className="menu-title">{sort}</div>
-              <div className="menu-dropdown">
-                <ul className='hList'>
-                  {sortOptions[sort].map((option, i) => (
-                      <li key={i} onClick={() => this.handleClick(option)}>{option}</li>
-                  ))}
-                </ul>
+            <div key={idx} className='menu-title'>
+              {sort}
+              <div className='menu-dropdown'>
+                {sortOptions[sort].map((option, i) => (
+                    <div className='sortItem' key={i} onClick={() => this.handleClick(option)}>&#8605; {option}</div>
+                ))}
               </div>
             </div>
           ))}
