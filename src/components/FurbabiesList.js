@@ -95,9 +95,9 @@ class FurbabiesList extends Component {
               </div>
               {furbaby.parentId && 
                 <div className='parentInfo'>
-                  <div className='parentTitle'>{furbaby.fostered ? 'Foster:' : 'Parent:'}</div>
-                  <div className='parentName'><b>Name: </b>{furbaby.parent.name}</div>
-                  <div className='parentAddress'><b>Address: </b>{furbaby.parent.address}</div>
+                  <div className='parentTitle'>{furbaby.fostered ? 'Foster' : 'Parent'}</div>
+                  <div className='parentName'>{furbaby.parent.name}</div>
+                  <div className='parentAddress'>{furbaby.parent.address}</div>
                 </div>
               }
             </div>
