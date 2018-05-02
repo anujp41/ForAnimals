@@ -27,14 +27,5 @@ const mapState = state => {
   }
 }
 
-// const mapDispatch = dispatch => {
-//   return {
-//     submit(info) {
-//       console.log('dispatching')
-//       dispatch(updateFosterThunk(info))
-//     }
-//   }
-// }
-
 const ParentsListContainer = connect(mapState, null)(ParentsList);
 export default ParentsListContainer;

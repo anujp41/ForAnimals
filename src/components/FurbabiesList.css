@@ -30,6 +30,7 @@
   opacity: 0;
   color: darkslategray;
   text-transform: none;
+  cursor: default;
 }
 
 .menu-title:hover .menu-dropdown {
@@ -39,7 +40,8 @@
 
 .sortItem {
   padding: 5px 0 0 0;
-  font-size: small
+  font-size: small;
+  cursor: pointer;
 }
 
 .sortItem:hover {
@@ -116,7 +118,7 @@
   font-weight: bolder;
   padding: 5px 10px;
   opacity: 0;
-  transition: all 0.75s;
+  transition: all 0.8s;
   width: 83%;
   position: absolute;
   top: 75%;

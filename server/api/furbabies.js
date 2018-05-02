@@ -28,7 +28,6 @@ router.post('/', (req, res, next) => {
     newBaby.age = result;
     //sets arrivedDate in newBaby
     newBaby.arrivedDate = new Date(newBaby.arrived+'T00:00:00');
-    console.log('furbaby before adding parent ', newBaby);
     const id = newBaby.parentId;
     if (id) {
       Parents.findById(id)
