@@ -45,6 +45,7 @@ function generateJSON(fileName) {
   const data = JSON.stringify(fileContentJSON);
   const targetFolder = `./For_Animals_JSON/${fileName.slice(0, -4)}.json`
   fs.writeFileSync(targetFolder, data);
+  console.log('finished writing ', targetFolder);
 }
 
 filesListCSV.map(file => generateJSON(file));
