@@ -96,7 +96,7 @@ class ParentModal extends React.Component {
 
           <div className="titleOption">Or</div>
 
-          <div className="titleModal">Add a new parent below: {furbaby}:</div>
+          <div className="titleModal">Add a new parent below for {furbaby}:</div>
 
           <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
           <div className="modal-text">Name</div>

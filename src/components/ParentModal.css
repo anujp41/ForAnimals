@@ -6,7 +6,8 @@
   right: 0px;
   background-color: rgba(84, 80, 83, 0.6);
   padding: 50px;
-  color: greenyellow
+  color: greenyellow;
+  overflow: scroll
 }
 
 .cancelbtn {
