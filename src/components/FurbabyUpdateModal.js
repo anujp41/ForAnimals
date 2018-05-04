@@ -10,24 +10,25 @@ class FurbabyUpdateModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      breed: '',
-      photoUrl: '',
-      photo: null,
-      ageYear: 0,
-      ageMonth: 0,
-      birthDate: new Date().getTime(),
-      sex: 'M',
-      sexBoolean: false,
-      comments: '',
-      spayed: false,
-      fivpositive: false,
-      fostered: false,
-      adopted: false,
-      showModal: false,
-      parent: null,
-      arrived: new Date().toISOString().split('T')[0],
-      parentId: null
+      furbaby: null
+      // name: '',
+      // breed: '',
+      // photoUrl: '',
+      // photo: null,
+      // ageYear: 0,
+      // ageMonth: 0,
+      // birthDate: new Date().getTime(),
+      // sex: 'M',
+      // sexBoolean: false,
+      // comments: '',
+      // spayed: false,
+      // fivpositive: false,
+      // fostered: false,
+      // adopted: false,
+      // showModal: false,
+      // parent: null,
+      // arrived: new Date().toISOString().split('T')[0],
+      // parentId: null
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -146,11 +147,19 @@ class FurbabyUpdateModal extends Component {
     this.setState({ parentId });
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log('getDerivedStateFromProps ', nextProps)
+    return {
+      furbaby: {...nextProps.currUpdateFurbaby}
+    }
+  }
+
   render() {
-    const { name, breed, ageYear, ageMonth, sexBoolean, comments, spayed, fivpositive, fostered, adopted, arrived } = this.props.furbaby ? this.props.furbaby : this.state;
-    const today = new Date().toISOString().split('T')[0];
-    console.log('updateing furbaby ', this.props.currUpdateFurbaby);
+    console.log('props from modal ', this.props.currUpdateFurbaby);
+    console.log('this.state ', this.state);
     if (!this.props.show) return null;
+    const { name, breed, ageYear, ageMonth, sexBoolean, arrived, comments, photoUrl, spayed, fivpositive, fostered, adopted } = this.state.furbaby;
+    const today = new Date().toISOString().split('T')[0];
     return (
       <div className='backdrop'>
         <button className='cancelbtn' onClick={this.props.toggleModal}>
@@ -216,7 +225,7 @@ class FurbabyUpdateModal extends Component {
                 style={dropzoneStyle} 
                 onDrop={this.onImageDrop.bind(this)}>
                 <p>Click to select a picture.</p>
-                <img alt="" src={!this.state.photo ? this.props.furbaby.photoUrl : this.state.photo.preview}/>
+                <img alt="" src={photoUrl}/>
               </Dropzone>
             </div>
 

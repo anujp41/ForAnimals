@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import './FurbabiesList.css';
 import sort from './SortFunc';
 import FurbabyUpdateModal from './FurbabyUpdateModal';
-import { assignCurrFurbaby } from '../store';
+import { assignCurrFurbaby, clearCurrFurbaby } from '../store';
 
 class FurbabiesList extends Component {
 
@@ -37,8 +37,13 @@ class FurbabiesList extends Component {
   }
 
   toggleModal(furbaby) {
-    this.props.assignFurbaby(furbaby);
-    this.setState({ showUpdateModal: !this.state.showUpdateModal })
+    if (furbaby.age) {
+      this.props.assignFurbaby(furbaby);
+      this.setState({ showUpdateModal: !this.state.showUpdateModal });
+    } else {
+      this.props.clearFurbaby();
+      this.setState({ showUpdateModal: !this.state.showUpdateModal });
+    }
   }
 
   renderUpdate(furbaby) {
@@ -137,7 +142,10 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     assignFurbaby(furbaby) {
-      dispatch(assignCurrFurbaby(furbaby))
+      dispatch(assignCurrFurbaby(furbaby));
+    },
+    clearFurbaby() {
+      dispatch(clearCurrFurbaby());
     }
   }
 }
