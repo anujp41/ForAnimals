@@ -6,7 +6,6 @@ const initialState = {};
 //function currFurbaby object with attributes that are required for front-end
 const addAttributes = furbaby => {
   const age = furbaby.age;
-  console.log('age is ', age);
   furbaby.ageYear = age.slice(0, 1);
   furbaby.ageMonth = age.slice(age.indexOf(',')+1, age.indexOf('month')-1).trim();
 
