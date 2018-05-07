@@ -20,7 +20,7 @@ const addAttributes = furbaby => {
 export const archiveFurbabyThunk = furbaby => dispatch => {
   console.log('about to archive');
   const id = furbaby.id;
-  const currTime = Date.now();
+  const currTime = new Date().toISOString().slice(0,-5);
   database.ref(id).child(currTime).update(furbaby)
   .then(() => dispatch(clearCurrFurbaby()));
 }

@@ -71,7 +71,7 @@ class FurbabyUpdateModal extends Component {
     // console.log('************************************');
     // console.log('updated object\n', { name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted });
     // this.props.submit(parent, {name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted}, parentId);
-    // this.setState({...baseState});
+    this.setState({...baseState});
     // alert('Furbaby saved to database!');
     console.log('called redux store');
   }
