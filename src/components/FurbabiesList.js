@@ -37,11 +37,11 @@ class FurbabiesList extends Component {
   }
 
   toggleModal(furbaby) {
-    if (furbaby.age) {
+    if (furbaby && furbaby.age) {
       this.props.assignFurbaby(furbaby);
       this.setState({ showUpdateModal: !this.state.showUpdateModal });
     } else {
-      this.props.clearFurbaby();
+      // this.props.clearFurbaby();
       this.setState({ showUpdateModal: !this.state.showUpdateModal });
     }
   }

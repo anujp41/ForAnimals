@@ -4,6 +4,7 @@ import './Input.css';
 import Dropzone from 'react-dropzone';
 import firebase from '../firebase';
 import $ from 'jquery';
+import { archiveFurbabyThunk } from '../store';
 
 const baseState = {
   name: '',
@@ -16,11 +17,13 @@ const baseState = {
   comments: '',
   photo: null,
   photoUrl: '',
+  photoUpdated: false,
   spayed: false,
   fivpositive: false,
   fostered: false,
   adopted: false,
   parentId: null,
+  parent: null,
   showModal: false
 }
 
@@ -43,43 +46,34 @@ class FurbabyUpdateModal extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    const storage = firebase.storage();
-    const name = this.state.name.replace(/[\W]/g, '').toLowerCase();
-    const storageRef = storage.ref(`furbabies/${name}`);
-    const photo = this.state.photo;
+    const photoUpdated = this.state.photoUpdated;
+    if (photoUpdated) {
+      const storage = firebase.storage();
+      const name = this.state.name.replace(/[\W]/g, '').toLowerCase();
+      const storageRef = storage.ref(`furbabies/${name}`);
+      const photo = this.state.photo;
 
-    await storageRef.put(photo)
-    .then(snapshot => this.setState({photoUrl: snapshot.downloadURL}))
-    .then(() => this.saveToDB())
-    .catch(err => console.log('there was an error ', err))
+      await storageRef.put(photo)
+      .then(snapshot => this.setState({photoUrl: snapshot.downloadURL}))
+      .then(() => this.saveToDB())
+      .catch(err => console.log('there was an error ', err))
+    } else {
+      this.saveToDB();
+    }
   }
 
   async saveToDB() {
-    const defaultState = {
-      name: '',
-      breed: '',
-      photoUrl: '',
-      photo: null,
-      ageYear: 0,
-      ageMonth: 0,
-      birthDate: new Date().getTime(),
-      sex: 'M',
-      sexBoolean: false,
-      comments: '',
-      spayed: false,
-      fivpositive: false,
-      fostered: false,
-      adopted: false,
-      showModal: false,
-      parent: null,
-      arrived: new Date().toISOString().split('T')[0],
-      parentId: null
-    };
     const { parent, parentId } = this.state;
     let { name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
-    this.props.submit(parent, {name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted}, parentId);
-    this.setState({...defaultState});
-    alert('Furbaby saved to database!');
+    // console.log('previous\n ', this.props.currUpdateFurbaby);
+    this.props.archive(this.props.currUpdateFurbaby);
+    this.props.toggleModal();
+    // console.log('************************************');
+    // console.log('updated object\n', { name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted });
+    // this.props.submit(parent, {name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted}, parentId);
+    // this.setState({...baseState});
+    // alert('Furbaby saved to database!');
+    console.log('called redux store');
   }
 
   handleChange(event) {
@@ -119,7 +113,7 @@ class FurbabyUpdateModal extends Component {
 
   onImageDrop(files) {
     const photo = files[0];
-    this.setState({ photo });
+    this.setState({ photo, photoUpdated: true });
   }
 
   componentDidMount() {
@@ -156,7 +150,6 @@ class FurbabyUpdateModal extends Component {
   }
 
   render() {
-    console.log('state is ', this.state);
     if (!this.props.show) return null;
     const { name, breed, ageYear, ageMonth, sex, sexBoolean, arrived, comments, photoUrl, spayed, fivpositive, fostered, adopted, parentId } = this.state;
     const today = new Date().toISOString().split('T')[0];
@@ -222,7 +215,7 @@ class FurbabyUpdateModal extends Component {
               <Dropzone
                 multiple={false}
                 accept="image/*"
-                style={dropzoneStyle} 
+                style={dropZoneStyle} 
                 onDrop={this.onImageDrop.bind(this)}>
                 <p>Click to select a picture.</p>
                 <img alt="" src={photoUrl}/>
@@ -282,10 +275,18 @@ const mapState = state => {
   }
 }
 
-const FurbabyUpdateModalContainer = connect(mapState, null)(FurbabyUpdateModal);
+const mapDispatch = dispatch => {
+  return {
+    archive(furbaby) {
+      dispatch(archiveFurbabyThunk(furbaby));
+    }
+  }
+}
+
+const FurbabyUpdateModalContainer = connect(mapState, mapDispatch)(FurbabyUpdateModal);
 export default FurbabyUpdateModalContainer;
 
-const dropzoneStyle = {
+const dropZoneStyle = {
   display: 'flexbox',
   justifyContent: 'center',
   alignItems: 'center',

@@ -1,3 +1,6 @@
+import firebase from '../firebase';
+const database = firebase.database();
+
 const ASSIGN_CURR_FURBABY = 'ASSIGN_CURR_FURBABY';
 const CLEAR_CURR_FURBABY = 'CLEAR_CURR_FURBABY';
 
@@ -12,6 +15,14 @@ const addAttributes = furbaby => {
   furbaby.sexBoolean = furbaby.sex === 'M' ? false : true;
 
   return furbaby;
+}
+
+export const archiveFurbabyThunk = furbaby => dispatch => {
+  console.log('about to archive');
+  const id = furbaby.id;
+  const currTime = Date.now();
+  database.ref(id).child(currTime).update(furbaby)
+  .then(() => dispatch(clearCurrFurbaby()));
 }
 
 export const assignCurrFurbaby = furbaby => ({ type: ASSIGN_CURR_FURBABY, furbaby: addAttributes(furbaby) });
