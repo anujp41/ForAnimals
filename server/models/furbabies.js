@@ -6,12 +6,19 @@ const FurBabies = db.define('furbaby', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  breed: {
-    type: Sequelize.STRING,
-    allowNull: false
-  },
+  // adoptedName: {
+  //   type: Sequelize.STRING,
+  //   allowNull: true
+  // },
   birthDate: {
     type: Sequelize.FLOAT,
+    allowNull: false
+  },
+  arrived: {
+    type: Sequelize.STRING
+  },
+  breed: {
+    type: Sequelize.STRING,
     allowNull: false
   },
   sex: {
@@ -19,9 +26,7 @@ const FurBabies = db.define('furbaby', {
     values: ['M', 'F'],
     allowNull: false
   },
-  arrived: {
-    type: Sequelize.STRING
-  },
+  
   photoUrl: {
     type: Sequelize.STRING,
     defaultValue: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Cute-kittens-12929201-1600-1200.jpg/640px-Cute-kittens-12929201-1600-1200.jpg',

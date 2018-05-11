@@ -1,6 +1,3 @@
-import firebase from '../firebase';
-const database = firebase.database();
-
 const ASSIGN_CURR_FURBABY = 'ASSIGN_CURR_FURBABY';
 const CLEAR_CURR_FURBABY = 'CLEAR_CURR_FURBABY';
 

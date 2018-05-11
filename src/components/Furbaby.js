@@ -6,6 +6,7 @@ import Dropzone from 'react-dropzone';
 import firebase from '../firebase';
 import { ParentModal } from './index';
 import $ from 'jquery';
+import uuidv1 from 'uuid/v1';
 
 class Furbaby extends Component {
 
@@ -44,7 +45,8 @@ class Furbaby extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const storage = firebase.storage();
-    const name = this.state.name.replace(/[\W]/g, '').toLowerCase();
+    // const name = this.state.name.replace(/[\W]/g, '').toLowerCase();
+    const name = uuidv1();
     const storageRef = storage.ref(`furbabies/${name}`);
     const photo = this.state.photo;
 

@@ -5,6 +5,7 @@ import Dropzone from 'react-dropzone';
 import firebase from '../firebase';
 import $ from 'jquery';
 import { archiveFurbabyThunk } from '../store';
+import uuidv1 from 'uuid/v1';
 
 const baseState = {
   name: '',
@@ -49,7 +50,7 @@ class FurbabyUpdateModal extends Component {
     const photoUpdated = this.state.photoUpdated;
     if (photoUpdated) {
       const storage = firebase.storage();
-      const name = this.state.name.replace(/[\W]/g, '').toLowerCase();
+      const name = uuidv1();
       const storageRef = storage.ref(`furbabies/${name}`);
       const photo = this.state.photo;
 
@@ -63,17 +64,22 @@ class FurbabyUpdateModal extends Component {
   }
 
   async saveToDB() {
+    const beforeUpdate = this.props.currUpdateFurbaby;
+    beforeUpdate.updates = {};
+    const updates = beforeUpdate.updates;
+    const afterUpdate = this.state;
+    for (let key in afterUpdate) {
+      if (beforeUpdate[key] !== afterUpdate[key]) {
+        updates[key] = afterUpdate[key];
+      }
+    }
     const { parent, parentId } = this.state;
     let { name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
-    // console.log('previous\n ', this.props.currUpdateFurbaby);
-    this.props.archive(this.props.currUpdateFurbaby);
+    this.props.archive(beforeUpdate);
     this.props.toggleModal();
-    // console.log('************************************');
-    // console.log('updated object\n', { name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted });
-    // this.props.submit(parent, {name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted}, parentId);
+    this.props.submit(parent, {name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted}, parentId);
     this.setState({...baseState});
-    // alert('Furbaby saved to database!');
-    console.log('called redux store');
+    alert('Furbaby saved to database!');
   }
 
   handleChange(event) {
