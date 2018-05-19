@@ -2,31 +2,118 @@ const Sequelize = require('sequelize');
 const db = require('../db');
 
 const FurBabies = db.define('furbaby', {
-  name: {
+  shelterName: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  // adoptedName: {
-  //   type: Sequelize.STRING,
-  //   allowNull: true
-  // },
+  adoptedName: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
   birthDate: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.DATEONLY,
     allowNull: false
   },
-  arrived: {
-    type: Sequelize.STRING
+  intakeDate: {
+    type: Sequelize.DATEONLY,
+    allowNull: false
+  },
+  currentStatus: {
+    type: Sequelize.STRING,
+    values: ['Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Deceased', 'Returned to Colony'],
+    allowNull: false
+  },
+  size: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  coatColor: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  coatLength: {
+    type: Sequelize.STRING,
+    allowNull: false
   },
   breed: {
     type: Sequelize.STRING,
     allowNull: false
   },
-  sex: {
+  gender: {
     type: Sequelize.STRING,
     values: ['M', 'F'],
     allowNull: false
   },
-  
+  altered: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    values: ['']
+  },
+  fivStatus: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
+  felvStatus: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
+  otherMedical: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
+  behavioralIssues: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  goodWithCats: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
+  goodWithDogs: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
+  goodWithChildren: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
+  },
+  specialNeeds: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  bio: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  currentLocation: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  courtesyListing: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+  },
+  courtesyListLoc: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  parentId: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
+  youtubeVid: {
+    type: Sequelize.STRING,
+    allowNull: true,
+    validate: {
+      isUrl: true
+    }
+  },
   photoUrl: {
     type: Sequelize.STRING,
     defaultValue: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Cute-kittens-12929201-1600-1200.jpg/640px-Cute-kittens-12929201-1600-1200.jpg',
@@ -34,30 +121,12 @@ const FurBabies = db.define('furbaby', {
       isUrl: true
     }
   },
-  comments: {
-    type: Sequelize.TEXT,
-    allowNull: true,
-    defaultValue: ''
+  microchipNum: {
+    type: Sequelize.FLOAT,
+    allowNull: true
   },
-  spayed: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
-    allowNull: false
-  },
-  fivpositive: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
-    allowNull: false
-  },
-  fostered: {
-    type: Sequelize.BOOLEAN,
-    value: [true, false],
-    defaultValue: false
-  },
-  adopted: {
-    type: Sequelize.BOOLEAN,
-    value: [true, false],
-    defaultValue: false
+  imagesOtherURL: {
+    type: Sequelize.ARRAY(Sequelize.STRING)
   }
 }, {
   getterMethods: {

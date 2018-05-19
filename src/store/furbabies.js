@@ -11,16 +11,14 @@ const getFurbabies = furbabies => ({ type: GET_FURBABIES, furbabies});
 const updateFoster = furbaby => ({ type: UPDATE_FOSTER, furbaby });
 
 export const createFurbabyThunk = furbaby => dispatch => {
-  console.log('from redux store\n ', furbaby)
   return axios.post('http://localhost:8080/api/furbabies', furbaby)
-  // return axios.post('http://localhost:8080/api/furbabies', furbaby)
-  // .then(newFurbaby => newFurbaby.data)
-  // .then(newKitty => {
-  //   newKitty.arrivedDate = new Date(newKitty.arrivedDate);
-  //   return newKitty;
-  // })
-  // .then(newFurbaby => dispatch(createFurbaby(newFurbaby)))
-  // .catch(err => console.log(err));
+  .then(newFurbaby => newFurbaby.data)
+  .then(newKitty => {
+    newKitty.arrivedDate = new Date(newKitty.arrivedDate);
+    return newKitty;
+  })
+  .then(newFurbaby => dispatch(createFurbaby(newFurbaby)))
+  .catch(err => console.log(err));
 }
 
 export const getFurbabiesThunk = () => dispatch =>
