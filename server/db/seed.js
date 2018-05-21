@@ -20,7 +20,6 @@ const furbabySeedData = [{
   goodWithCats: 'Yes',
   goodWithDogs: 'Yes',
   goodWithChildren: 'Yes',
-  specialNeeds: false,
   bio: 'Mona was brought to the shelter after she was found roaming in the street in Jamaica',
   currentLocation: 'Park Slope',
   courtesyListing: false,
@@ -28,7 +27,7 @@ const furbabySeedData = [{
   parentId: 1,
   youtubeVid: 'https://www.mona.com',
   photoUrl: 'https://www.petmd.com/sites/default/files/petmd-cat-happy-13.jpg',
-  microchipNum: 1.2345,
+  microchipNum: 'FDX-Axxxxxxxxxx',
   imagesOtherURL: ["https://www.motherearthnews.com/~/media/Images/MEN/Editorial/Blogs/Organic%20Gardening/Top%2010%20Natural%20Foods%20for%20Cat%20Health/quality-food-for-your-pregnant-cat.jpg?h=467&w=550&hash=6EE24A37382242D01D082FBA97209932733E5D0B"] 
 }, { 
   shelterName: 'Parksville',
@@ -49,7 +48,7 @@ const furbabySeedData = [{
   goodWithCats: 'Yes',
   goodWithDogs: 'Unsure',
   goodWithChildren: 'Yes',
-  specialNeeds: false,
+  specialNeeds: 'Needs to be treated like a diva',
   bio: 'Bevo was rescued in Parksville',
   currentLocation: 'Jackson Heights',
   courtesyListing: false,
@@ -57,7 +56,7 @@ const furbabySeedData = [{
   parentId: 2,
   youtubeVid: 'https://www.bevodiva.com',
   photoUrl: 'https://pbs.twimg.com/profile_images/378800000532546226/dbe5f0727b69487016ffd67a6689e75a_400x400.jpeg',
-  microchipNum: 1.2345,
+  microchipNum: 'TVNxxxxxxxxxx',
   imagesOtherURL: [] 
 }, {
   shelterName: "Macy",
@@ -77,14 +76,14 @@ const furbabySeedData = [{
   goodWithCats: "Yes",
   goodWithDogs: "Unsure",
   goodWithChildren: "Unsure",
-  specialNeeds: false,
+  specialNeeds: 'None',
   bio: "He was rescued in Ozone Park",
   currentLocation: "S Ozone Park, NY",
   courtesyListing: false,
   courtesyListLoc: "N/A",
   youtubeVid: "https://www.youtube.com/watch?v=wWqdhBdeMSg",
   photoUrl: "https://pbs.twimg.com/profile_images/378800000532546226/dbe5f0727b69487016ffd67a6689e75a_400x400.jpeg",
-  microchipNum: 1.2345,
+  microchipNum: '98127y981y9182',
   imagesOtherURL: ["http://pamperedpawgifts.com/images/cat-healthy-blog.jpg", "http://www.animalbehaviorcollege.com/blog/wp-content/uploads/2017/02/CatHealth-vet.jpg"]
   }
 ]

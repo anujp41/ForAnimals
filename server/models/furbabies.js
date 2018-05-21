@@ -81,7 +81,8 @@ const FurBabies = db.define('furbaby', {
     allowNull: false
   },
   specialNeeds: {
-    type: Sequelize.BOOLEAN,
+    type: Sequelize.STRING,
+    defaultValue: 'N/A',
     allowNull: true
   },
   bio: {
@@ -120,7 +121,7 @@ const FurBabies = db.define('furbaby', {
     }
   },
   microchipNum: {
-    type: Sequelize.FLOAT,
+    type: Sequelize.STRING,
     allowNull: true
   },
   imagesOtherURL: {

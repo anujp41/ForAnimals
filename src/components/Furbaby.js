@@ -163,8 +163,9 @@ class Furbaby extends Component {
           <div className="general">
 
             <div className='formfield'>
+            <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
               <label className="label-text">Name</label>
-              <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
+              
             </div>
 
             <div className='formfield'>

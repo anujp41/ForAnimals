@@ -21,7 +21,7 @@
 
 .formfield {
   margin: 0 auto;
-  width: 45%;
+  width: 30%;
   height: 30px;
   padding-top: 10px;
   border: 3px white;
@@ -32,18 +32,17 @@
 } 
 
 .input {
+  position: absolute;
+  left: 0;
+  bottom: 0;
   background-color: transparent;
-  border: 0;
-  /*border-bottom: 2px solid; */
   color: white;
-  font-size: 20px;
-  text-align: center;
+  font-size: 17px;
   height: 30px;
-  width: 80%;
-  margin-top: 15px;
-  margin-bottom: 75px;
+  width: 98%;
   font-family: 'Open Sans', sans-serif;
   outline: none;
+  /* border: none; */
 }
 
 input[type=date]::-webkit-inner-spin-button,
@@ -59,13 +58,13 @@ input[type=date]::-webkit-outer-spin-button {
   left: 15px
 }
 
-/* .input:focus + .label-text {
+.input:focus + .label-text {
   transform: translateY(-35px);
 }
 
 .input:valid + .label-text {
   transform: translateY(-35px);
-} */
+}
 
 /* .label-text[type=age], .label-text[type=sex] {
   transform: translateY(-35px);
