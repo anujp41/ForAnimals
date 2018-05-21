@@ -168,14 +168,13 @@ class Furbaby extends Component {
             </div>
 
             <div className='formfield'>
-              <input readOnly className="input" name="age"/>
-              <label className="label-text" type="age">Age</label>
-              <div className='ageEntry'>
+              <div className="input ageEntry">
                 <input required type="number" min="0" max="20" className="years" name="ageYear" value={ageYear} onChange={this.handleChange}/>
                 <span>Years</span>
                 <input required type="number" min="0" max="12" className="months" name="ageMonth" value={ageMonth} onChange={this.handleChange}/>
                 <span>Months</span>
               </div>
+              <label className="label-text" type="age">Age</label>
             </div>
 
             <div className='formfield'>
@@ -188,10 +187,10 @@ class Furbaby extends Component {
               <label className="label-text" type="sex">Sex</label>
               <input readOnly className="input"/>
               <div className='sexEntry'>
-                <label className="switch">
-                  <input className="input" type="checkbox" checked={sexBoolean} name='sex' onChange={this.handleChange}/>
-                  <div className="slider" type="sex"></div>
-                </label>
+                {/* <label className="switch"> */}
+                  {/* <input className="input" type="checkbox" checked={sexBoolean} name='sex' onChange={this.handleChange}/> */}
+                  {/* <div className="slider" type="sex"></div> */}
+                {/* </label> */}
               </div>
             </div>
 

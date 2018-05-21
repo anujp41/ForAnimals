@@ -20,10 +20,9 @@
 }
 
 .formfield {
-  margin: 0 auto;
+  margin: 5px auto;
   width: 30%;
   height: 30px;
-  padding-top: 10px;
   border: 3px white;
   border-style: inset;
   padding: 5px 0;
@@ -72,6 +71,37 @@ input[type=date]::-webkit-outer-spin-button {
 /* .label-text[type=age], .label-text[type=sex] {
   transform: translateY(-35px);
 } */
+
+.ageEntry, .sexEntry {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: 13%
+}
+
+.ageEntry {
+  margin-bottom: 0.6vh;
+}
+
+.years, .months {
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  font-family: 'Open Sans', serif;
+  font-weight: 900;
+  font-size: 90%;
+  margin: 0 5px;
+}
+
+.years:out-of-range, .months:out-of-range {
+  background-color: chocolate
+}
+
+.sexEntry {
+  margin-top: -30px;
+}
 
 .comment {
   width: 100%;
@@ -303,31 +333,8 @@ textarea:focus::-webkit-input-placeholder {
   margin-left: 10px
 }
 
-.ageEntry, .sexEntry {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-.ageEntry {
-  margin-top: -25px;
-}
-
-.sexEntry {
-  margin-top: -30px;
-}
-
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
-
-.years, .months {
-  z-index: 1;
-  width: 25px;
-  margin: 0 15px;
-  height: 20px;
-  text-align: center
 }
