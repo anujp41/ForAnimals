@@ -33,16 +33,16 @@
 
 .input {
   position: absolute;
-  left: 0;
+  left: 15px;
   bottom: 0;
   background-color: transparent;
   color: white;
-  font-size: 17px;
-  height: 30px;
-  width: 98%;
+  font-size: 15px;
+  height: 25px;
+  width: 90%;
   font-family: 'Open Sans', sans-serif;
   outline: none;
-  /* border: none; */
+  border: none;
 }
 
 input[type=date]::-webkit-inner-spin-button,
@@ -55,15 +55,18 @@ input[type=date]::-webkit-outer-spin-button {
   font-size: 20px;
   transition: all 0.5s;
   color: orange;
-  left: 15px
+  left: 15px;
+  transition: all 0.75s;
 }
 
 .input:focus + .label-text {
-  transform: translateY(-35px);
+  transform: translateY(-5px);
+  font-size: 11px;
 }
 
 .input:valid + .label-text {
-  transform: translateY(-35px);
+  transform: translateY(-5px);
+  font-size: 11px;
 }
 
 /* .label-text[type=age], .label-text[type=sex] {
