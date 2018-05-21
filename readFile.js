@@ -15,7 +15,7 @@ function generateJSON(fileName) {
   //generate array of headers
   const firstLine = fileContents.slice(0, lineBreak);
   const firstLineArr = firstLine.split(',');
-  const firstLineArrUpdate = firstLineArr.map(item => item.toLowerCase().trim().replace(/ /g, '_'));
+  const firstLineArrUpdate = firstLineArr.map(item => item.trim().replace(":",""));
 
   //generate array of contents (i.e., everything but the 1st line of fileContents)
   const contents = fileContents.slice(lineBreak);
@@ -23,17 +23,15 @@ function generateJSON(fileName) {
 
   //this goes through the contents of the file and generate key-value pair for each line to contents
   const fileContentJSON = contentArr.filter(content => content.length && content[0] !== ',').map(content => {
-    if (content.length) {
-      const contentObj = {};
-      const contentArr = content.split(',');
-      for (let i = 0; i < contentArr.length; i++) {
-        const key = firstLineArrUpdate[i];
-        contentObj[key] = contentArr[i];
-      }
-      return contentObj;
-    } else {
-      return {};
+    const contentObj = {};
+    const contentArr = content.split(',');
+    for (let i = 0; i < contentArr.length; i++) {
+      const key = firstLineArrUpdate[i];
+      // let value = (key === 'birthDate' || key === 'intakeDate') ? new Date(contentArr[i]) : contentArr[i];
+      // if (key === 'imagesOtherURL') value = [];
+      contentObj[key] = contentArr[i];
     }
+    return contentObj;
   });
 
   //writes the key-value pair into a JSON file in the For_Animals_JSON folder

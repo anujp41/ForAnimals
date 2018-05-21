@@ -11,16 +11,15 @@ const FurBabies = db.define('furbaby', {
     allowNull: true
   },
   birthDate: {
-    type: Sequelize.DATEONLY,
+    type: Sequelize.DATE,
     allowNull: false
   },
   intakeDate: {
-    type: Sequelize.DATEONLY,
+    type: Sequelize.DATE,
     allowNull: false
   },
   currentStatus: {
-    type: Sequelize.STRING,
-    values: ['Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Deceased', 'Returned to Colony'],
+    type: Sequelize.ENUM('Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Deceased', 'Returned to Colony'),
     allowNull: false
   },
   size: {
@@ -40,14 +39,12 @@ const FurBabies = db.define('furbaby', {
     allowNull: false
   },
   gender: {
-    type: Sequelize.STRING,
-    values: ['M', 'F'],
+    type: Sequelize.ENUM("Male", "Female"),
     allowNull: false
   },
   altered: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    values: ['']
+    type: Sequelize.BOOLEAN,
+    allowNull: false
   },
   fivStatus: {
     type: Sequelize.BOOLEAN,
@@ -60,7 +57,7 @@ const FurBabies = db.define('furbaby', {
     allowNull: false
   },
   otherMedical: {
-    type: Sequelize.BOOLEAN,
+    type: Sequelize.STRING,
     defaultValue: false,
     allowNull: false
   },
@@ -69,22 +66,22 @@ const FurBabies = db.define('furbaby', {
     allowNull: false
   },
   goodWithCats: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
+    type: Sequelize.ENUM("Yes", "No", "Unsure"),
+    defaultValue: "Unsure",
     allowNull: false
   },
   goodWithDogs: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
+    type: Sequelize.ENUM("Yes", "No", "Unsure"),
+    defaultValue: "Unsure",
     allowNull: false
   },
   goodWithChildren: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
+    type: Sequelize.ENUM("Yes", "No", "Unsure"),
+    defaultValue: "Unsure",
     allowNull: false
   },
   specialNeeds: {
-    type: Sequelize.STRING,
+    type: Sequelize.BOOLEAN,
     allowNull: true
   },
   bio: {
@@ -101,6 +98,7 @@ const FurBabies = db.define('furbaby', {
   },
   courtesyListLoc: {
     type: Sequelize.STRING,
+    defaultValue: 'N/A',
     allowNull: true
   },
   parentId: {
@@ -126,38 +124,41 @@ const FurBabies = db.define('furbaby', {
     allowNull: true
   },
   imagesOtherURL: {
-    type: Sequelize.ARRAY(Sequelize.STRING)
+    type: Sequelize.ARRAY(Sequelize.STRING),
+    allowNull: true
   }
-}, {
-  getterMethods: {
-    age() {
-      const currDate = new Date().getTime();
-      const birthDate = this.birthDate;
-      const ageMS = currDate - birthDate;
-      const yearMS = 3.154e+10;
-      const monthMS = 2.628e+9;
-      const currYear = Math.floor(ageMS/yearMS);
-      const currMonth = Math.max(0, Math.round((ageMS%yearMS)/monthMS));
-      const result = currYear + ' year(s), ' + currMonth + ' month(s)';
-      return result;
-    },
-    arrivedDate() {
-      return new Date(this.arrived+'T00:00:00');
-    }
-  }
-}, {
-  hooks: {
-    afterUpdate: function(furbaby, option) {
-      const id = furbaby.parentId;
-      const hasFoster = id ? true : false;
-      this.associations.parent.target.update({hasFoster}, {where: {id}})
-    },
-    afterCreate: function(furbaby, option) {
-      const id = furbaby.parentId;
-      const hasFoster = id ? true : false;
-      this.associations.parent.target.update({hasFoster}, {where: {id}})
-    }
-  }
+// }
+// {
+//   getterMethods: {
+//     age() {
+//       const currDate = new Date().getTime();
+//       const birthDate = this.birthDate;
+//       const ageMS = currDate - birthDate;
+//       const yearMS = 3.154e+10;
+//       const monthMS = 2.628e+9;
+//       const currYear = Math.floor(ageMS/yearMS);
+//       const currMonth = Math.max(0, Math.round((ageMS%yearMS)/monthMS));
+//       const result = currYear + ' year(s), ' + currMonth + ' month(s)';
+//       return result;
+//     },
+//     arrivedDate() {
+//       return new Date(this.arrived+'T00:00:00');
+//     }
+//   }
+// }
+// , {
+//   hooks: {
+//     afterUpdate: function(furbaby, option) {
+//       const id = furbaby.parentId;
+//       const hasFoster = id ? true : false;
+//       this.associations.parent.target.update({hasFoster}, {where: {id}})
+//     },
+//     afterCreate: function(furbaby, option) {
+//       const id = furbaby.parentId;
+//       const hasFoster = id ? true : false;
+//       this.associations.parent.target.update({hasFoster}, {where: {id}})
+//     }
+//   }
 });
 
 

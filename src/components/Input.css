@@ -15,9 +15,6 @@
 }
 
 .general {
-  margin: auto;
-  width: 80%;
-  margin-bottom: 15px;
   display: flex;
   flex-wrap: wrap
 }
@@ -25,8 +22,54 @@
 .formfield {
   margin: 0 auto;
   width: 45%;
-  padding-top: 10px
+  height: 30px;
+  padding-top: 10px;
+  border: 3px white;
+  border-style: inset;
+  padding: 5px 0;
+  position: relative;
+  cursor: text;
 } 
+
+.input {
+  background-color: transparent;
+  border: 0;
+  /*border-bottom: 2px solid; */
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  height: 30px;
+  width: 80%;
+  margin-top: 15px;
+  margin-bottom: 75px;
+  font-family: 'Open Sans', sans-serif;
+  outline: none;
+}
+
+input[type=date]::-webkit-inner-spin-button,
+input[type=date]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.label-text {
+  position: absolute;
+  font-size: 20px;
+  transition: all 0.5s;
+  color: orange;
+  left: 15px
+}
+
+/* .input:focus + .label-text {
+  transform: translateY(-35px);
+}
+
+.input:valid + .label-text {
+  transform: translateY(-35px);
+} */
+
+/* .label-text[type=age], .label-text[type=sex] {
+  transform: translateY(-35px);
+} */
 
 .comment {
   width: 100%;
@@ -81,27 +124,6 @@
   margin-bottom: -15px;
 }
 
-.input {
-  background-color: transparent;
-  border: 0;
-  border-bottom: 2px solid;
-  color: white;
-  font-size: 20px;
-  padding: 5px 50px;
-  text-align: center;
-  height: 30px;
-  width: 50%;
-  margin-top: 35px;
-  margin-bottom: 75px;
-  font-family: 'Open Sans', sans-serif;
-  outline: none;
-}
-
-input[type=date]::-webkit-inner-spin-button,
-input[type=date]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-}
-
 textarea {
   background-color: transparent;
   border: 2px solid;
@@ -122,22 +144,6 @@ textarea::-webkit-input-placeholder {
 
 textarea:focus::-webkit-input-placeholder {
   color: #6d6969;
-}
-
-.label-text {
-  cursor: text;
-  font-size: 20px;
-  margin-top: -110px;
-  transition: all 0.5s;
-  color: orange
-}
-
-.input:focus + .label-text {
-  transform: translateY(-35px);
-}
-
-.input:valid + .label-text {
-  transform: translateY(-35px);
 }
 
 .button {
@@ -322,8 +328,4 @@ input[type=number]::-webkit-inner-spin-button {
   margin: 0 15px;
   height: 20px;
   text-align: center
-}
-
-.label-text[type=age], .label-text[type=sex] {
-  transform: translateY(-35px);
 }
