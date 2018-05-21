@@ -20,8 +20,8 @@ class Furbaby extends Component {
       ageYear: 0,
       ageMonth: 0,
       birthDate: new Date().getTime(),
-      sex: 'M',
-      sexBoolean: false,
+      gender: 'M',
+      genderBoolean: false,
       comments: '',
       spayed: false,
       fivpositive: false,
@@ -65,8 +65,8 @@ class Furbaby extends Component {
       ageYear: 0,
       ageMonth: 0,
       birthDate: new Date().getTime(),
-      sex: 'M',
-      sexBoolean: false,
+      gender: 'M',
+      genderBoolean: false,
       comments: '',
       spayed: false,
       fivpositive: false,
@@ -78,8 +78,8 @@ class Furbaby extends Component {
       parentId: null
     };
     const { parent, parentId } = this.state;
-    let { name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
-    this.props.submit(parent, {name, breed, birthDate, sex, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted}, parentId);
+    let { name, breed, birthDate, gender, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
+    this.props.submit(parent, {name, breed, birthDate, gender, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted}, parentId);
     this.setState({...defaultState});
     alert('Furbaby saved to database!');
   }
@@ -89,11 +89,11 @@ class Furbaby extends Component {
     const name = target.name;
     if (name === 'fostered' || name ===  'adopted') this.toggleModal(target.checked);
     let value = target.type === 'checkbox' ? target.checked : target.value;
-    if (name === 'sex') {
+    if (name === 'gender') {
       value = value ? 'F' : 'M';
       this.setState({
         [name] : value,
-        sexBoolean: target.checked
+        genderBoolean: target.checked
       })
     } else {
       this.setState({ [name] : value });
@@ -151,7 +151,7 @@ class Furbaby extends Component {
   }
 
   render() {
-    const { name, breed, ageYear, ageMonth, sexBoolean, comments, spayed, fivpositive, fostered, adopted, arrived } = this.state;
+    const { name, breed, ageYear, ageMonth, genderBoolean, comments, spayed, fivpositive, fostered, adopted, arrived } = this.state;
     const today = new Date().toISOString().split('T')[0];
     return (
       <div className='container'>
@@ -184,13 +184,29 @@ class Furbaby extends Component {
 
 
             <div className='formfield'>
-              <label className="label-text" type="sex">Sex</label>
+              <label className="label-text" type="gender">Gender</label>
               <input readOnly className="input"/>
-              <div className='sexEntry'>
+              <div className='genderEntry'>
                 {/* <label className="switch"> */}
-                  {/* <input className="input" type="checkbox" checked={sexBoolean} name='sex' onChange={this.handleChange}/> */}
-                  {/* <div className="slider" type="sex"></div> */}
+                  {/* <input className="input" type="checkbox" checked={genderBoolean} name='gender' onChange={this.handleChange}/> */}
+                  {/* <div className="slider" type="gender"></div> */}
                 {/* </label> */}
+              </div>
+            </div>
+
+            <div className='formfield'>
+              <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
+              <label className="label-text">Size</label>
+            </div>
+
+            <div className='formfield coatfield'>
+              <div className='coat-left'>
+                <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
+                <label className="label-text">Coat Size</label>
+              </div>
+              <div className='coat-right'>
+                <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
+                <label className="label-text">Coat Length</label>
               </div>
             </div>
 

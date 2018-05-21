@@ -68,11 +68,11 @@ input[type=date]::-webkit-outer-spin-button {
   font-size: 11px;
 }
 
-/* .label-text[type=age], .label-text[type=sex] {
+/* .label-text[type=age], .label-text[type=gender] {
   transform: translateY(-35px);
 } */
 
-.ageEntry, .sexEntry {
+.ageEntry, .genderEntry {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -99,9 +99,52 @@ input[type=date]::-webkit-outer-spin-button {
   background-color: chocolate
 }
 
-.sexEntry {
+.genderEntry {
   margin-top: -30px;
 }
+
+.coatfield {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  position: relative
+}
+
+.coat-left, .coat-right {
+  width: 50%;
+  position: absolute
+}
+
+.coat-left {
+  left: 0;
+  border-style: dashed
+  /* border-left: 5px white; */
+}
+
+.coat-right {
+  right: 0;
+  border-bottom-style: dotted
+}
+
+.coat-left > .label-text, .coat-right > .label-text {
+  position: absolute;
+  font-size: 15px;
+  transition: all 0.5s;
+  color: orange;
+  left: 15px;
+  transition: all 0.75s;
+  margin-top: 1vh;
+}
+
+/* .input:focus + .label-text {
+  transform: translateY(-5px);
+  font-size: 11px;
+}
+
+.input:valid + .label-text {
+  transform: translateY(-5px);
+  font-size: 11px;
+} */
 
 .comment {
   width: 100%;
@@ -222,7 +265,7 @@ textarea:focus::-webkit-input-placeholder {
   border-radius: 34px;
 }
 
-.slider[type=sex] {
+.slider[type=gender] {
   background-color: #646bef;
   border-radius: 0px;
 }
@@ -240,7 +283,7 @@ textarea:focus::-webkit-input-placeholder {
   border-radius: 50%;
 }
 
-.slider[type=sex]:before {
+.slider[type=gender]:before {
   border-radius: 0%;
 }
 
@@ -248,7 +291,7 @@ textarea:focus::-webkit-input-placeholder {
   background-color: #ff7b25;
 }
 
-.input:checked + .slider[type=sex] {
+.input:checked + .slider[type=gender] {
   background-color: #ef7cdc;
 }
 
@@ -270,7 +313,7 @@ textarea:focus::-webkit-input-placeholder {
  font-family: 'Roboto', sans-serif;
 }
 
-.slider[type=sex]:after {
+.slider[type=gender]:after {
   content:'M';
   font-size: 20px
  }
@@ -279,7 +322,7 @@ textarea:focus::-webkit-input-placeholder {
   content:'Yes';
 }
 
-.input:checked + .slider[type=sex]:after {  
+.input:checked + .slider[type=gender]:after {  
   content:'F';
 }
 
