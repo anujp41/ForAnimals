@@ -23,8 +23,8 @@
   margin: 5px auto;
   width: 30%;
   height: 30px;
-  border: 3px white;
-  border-style: inset;
+  border-bottom: 3px inset white;
+  /* border-style: inset; */
   padding: 5px 0;
   position: relative;
   cursor: text;
@@ -96,7 +96,7 @@ input[type=date]::-webkit-outer-spin-button {
 }
 
 .years:out-of-range, .months:out-of-range {
-  background-color: chocolate
+  background-color: #ff0000
 }
 
 .genderEntry {
@@ -111,92 +111,39 @@ input[type=date]::-webkit-outer-spin-button {
 }
 
 .coat-left, .coat-right {
-  width: 50%;
-  position: absolute
+  width: 48%;
+  position: absolute;
+  height: 100%;
+  top: -0.1vh;
+}
+
+.coat-left > .input, .coat-right > .input {
+  left: 5px;
 }
 
 .coat-left {
   left: 0;
-  border-style: dashed
-  /* border-left: 5px white; */
+  border-width: 6px;
+  border-right-style: dotted;
 }
 
 .coat-right {
   right: 0;
-  border-bottom-style: dotted
 }
 
 .coat-left > .label-text, .coat-right > .label-text {
   position: absolute;
   font-size: 15px;
-  transition: all 0.5s;
   color: orange;
-  left: 15px;
+  left: 5px;
   transition: all 0.75s;
   margin-top: 1vh;
 }
 
-/* .input:focus + .label-text {
-  transform: translateY(-5px);
-  font-size: 11px;
-}
-
-.input:valid + .label-text {
-  transform: translateY(-5px);
-  font-size: 11px;
-} */
-
 .comment {
   width: 100%;
   height: 90px;
-  margin-bottom: 45px;
-}
-
-.commentInput {
-  height: 90px;
-  font-size: 15px;
-}
-
-.charactersLeft {
-  font-size: 10px;
-  margin-left: 72%
-}
-
-.dropzone {
-  text-align: center;
-  padding-top: 20px;
-  margin-bottom: 15px
-}
-
-.dropzone img {
-  height: 100px;
-  width: 100px
-}
-
-.health {
-  background-color: orange;
-  padding: 10px 0 20px 0;
-  margin-bottom: 15px;
-}
-
-.healthTitle {
-  padding: 5px 0 10px 0;
-  font-size: x-large;
-  font-weight: bolder;
-}
-
-.flexContainer {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.flexItem {
-  margin: 0 15%;
-}
-
-.flexQ {
-  margin-bottom: -15px;
+  margin-bottom: 30px;
 }
 
 textarea {
@@ -206,8 +153,8 @@ textarea {
   font-size: 20px;
   padding: 5px 5px;
   text-align: center;
-  width: 80%;
-  margin-top: 35px;
+  width: 90%;
+  margin-top: 10px;
   font-family: 'Open Sans', sans-serif;
   outline: none;
   resize: none;
@@ -221,24 +168,102 @@ textarea:focus::-webkit-input-placeholder {
   color: #6d6969;
 }
 
-.button {
-  background-color: transparent;
-  border: 2px solid white;
-  border-radius: 27px;
-  color: white;
-  cursor: pointer;
-  font-size: 20px;
-  margin-top: 20px;
-  padding: 15px 30px;
-  text-transform: uppercase;
-  transition: all 200ms;
-  margin-bottom: 15px
+.commentInput {
+  height: 65px;
+  font-size: 15px;
 }
 
-.button:hover {
-  background-color: white;
-  color: #61e887;
-  outline: none
+.charactersLeft {
+  font-size: 10px;
+  margin-left: 72%
+}
+
+.date-input {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.date-field {
+  /* margin-top: -10px; */
+  padding: 5px 0;
+  color: orange;
+  width: 55%;
+}
+
+.arrived {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 70%;
+  text-align: center
+}
+
+.arrived:out-of-range {
+  background-color: #ff0000
+}
+
+/*
+.arrived:valid+.isValid:after{
+  content: '✓';
+  color: green;
+  font-size: 150%;
+  margin-left: 5px
+}
+
+.arrived:invalid+.isValid:after{
+  content: '✖';
+  color: firebrick;
+  font-size: 150%;
+  margin-left: 10px
+} */
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.health {
+  background-color: orange;
+  padding-bottom: 15px;
+}
+
+.healthTitle {
+  font-size: x-large;
+  font-weight: bolder;
+}
+
+.healthContainer {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border: #aa33dd;
+  border-style: dotted;
+  border-width: 2px;
+  width: 85%
+}
+
+.healthItem {
+  width: 215px;
+  height: 65px;
+  /* border: #aa33dd;
+  border-style: dotted;
+  border-width: 2px; */
+}
+
+.healthQ {
+  display: block;
+  margin-bottom: -15px;
+}
+
+.health-dropdown {
+  margin-top: 20px;
+  width: 90px;
+  height: 34px;
+  background-color: #2fc8e2;
+  font-size: 100%;
 }
 
 .switch {
@@ -326,6 +351,37 @@ textarea:focus::-webkit-input-placeholder {
   content:'F';
 }
 
+.dropzone {
+  text-align: center;
+  padding-top: 20px;
+  margin-bottom: 15px
+}
+
+.dropzone img {
+  height: 100px;
+  width: 100px
+}
+
+.button {
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 27px;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 20px;
+  padding: 15px 30px;
+  text-transform: uppercase;
+  transition: all 200ms;
+  margin-bottom: 15px
+}
+
+.button:hover {
+  background-color: white;
+  color: #61e887;
+  outline: none
+}
+
 .foster, .adopt {
   display: flex;
   flex-direction: column;
@@ -345,39 +401,4 @@ textarea:focus::-webkit-input-placeholder {
   margin: 0;
   width: 0px;
   height: 25px;
-}
-
-.date-input {
-  border: 2px solid;
-  margin-top: 50px
-}
-
-.date-input > .input {
-  margin: 0 0 25px 0;
-}
-
-.date-field {
-  margin-top: -10px;
-  padding: 5px 0;
-  background-color: orange
-}
-
-.arrived:valid+.isValid:after{
-  content: '✓';
-  color: green;
-  font-size: 150%;
-  margin-left: 10px
-}
-
-.arrived:invalid+.isValid:after{
-  content: '✖';
-  color: firebrick;
-  font-size: 150%;
-  margin-left: 10px
-}
-
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
 }

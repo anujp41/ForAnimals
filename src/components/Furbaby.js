@@ -153,6 +153,7 @@ class Furbaby extends Component {
   render() {
     const { name, breed, ageYear, ageMonth, genderBoolean, comments, spayed, fivpositive, fostered, adopted, arrived } = this.state;
     const today = new Date().toISOString().split('T')[0];
+    const selectOption = ['Yes', 'No', 'Unsure'];
     return (
       <div className='container'>
 
@@ -212,16 +213,83 @@ class Furbaby extends Component {
 
           </div>
 
-          <div className='formfield date-input'>
-            <div className='date-field'>Date brought to shelter!</div>
-            <input required className="input arrived" type="date" name="arrived" value={arrived} max={today} onChange={this.handleChange}/>
-            <span className="isValid"></span>
+          <div className='comment bio'>
+            <textarea className='commentInput' maxLength='250' type="text" row='3' name="bio" value={comments} placeholder='History/Biography of Furbaby' onChange={this.handleChange}/>
+            <div className='charactersLeft'>250 character(s) remaining</div>
+          </div>
+
+
+          <div className="general">
+            <div className='formfield date-input'>
+              <div className='date-field'>Intake Date: </div>
+              <input required className='arrived' type="date" name="arrived" value={arrived} max={today} onChange={this.handleChange}/>
+              {/* <span className="isValid"></span> */}
+            </div>
+
+            <div className='formfield'>
+              <input required className="input" type="text" name="name" value={name} maxLength="30" onChange={this.handleChange}/>
+              <label className="label-text">Current Location</label>
+            </div>
+
           </div>
 
           <div className='comment'>
-              <textarea className='commentInput' maxLength='200' type="text" row='3' name="comments" value={comments} placeholder='Additional comments on health/appearance etc.' onChange={this.handleChange}/>
-              <div className='charactersLeft'>200 character(s) remaining</div>
+            <textarea className='commentInput' maxLength='200' type="text" row='3' name="comments" value={comments} placeholder='Additional comments on health/appearance etc.' onChange={this.handleChange}/>
+            <div className='charactersLeft'>200 character(s) remaining</div>
+          </div>
+
+          <div className='health'>
+            <div className='healthTitle'>Health Info for furbaby</div>
+
+            <div className='healthContainer'>
+
+              <div className='healthItem'>
+                <div className='healthQ'>Good w/ cats?</div>
+                <select className='health-dropdown'>
+                  {selectOption.map(item => <option value={item}>{item}</option>)}
+                </select>
+              </div>
+
+              <div className='healthItem'>
+                <div className='healthQ'>Good w/ dogs?</div>
+                <select className='health-dropdown'>
+                  {selectOption.map(item => <option value={item}>{item}</option>)}
+                </select>
+              </div>
+
+              <div className='healthItem'>
+                <div className='healthQ'>Good w/ children?</div>
+                <select className='health-dropdown'>
+                  {selectOption.map(item => <option className='behaviorQ' value={item}>{item}</option>)}
+                </select>
+              </div>
+
+              <div className='healthItem'>
+                <div className='healthQ'>Has FIV?</div><br/>
+                <label className="switch">
+                  <input className="input" type="checkbox" checked={fivpositive} name='fivpositive' onChange={this.handleChange}/>
+                  <div className="slider"></div>
+                </label>
+              </div>
+
+              <div className='healthItem'>
+                <div className='healthQ'>Has FeLV?</div><br/>
+                <label className="switch">
+                  <input className="input" type="checkbox" checked={fivpositive} name='fivpositive' onChange={this.handleChange}/>
+                  <div className="slider"/>
+                </label>
+              </div>
+
+              <div className='healthItem'>
+                <div className='healthQ'>Is Altered?</div><br/>
+                <label className="switch">
+                  <input className="input" type="checkbox" checked={fivpositive} name='fivpositive' onChange={this.handleChange}/>
+                  <div className="slider"/>
+                </label>
+              </div>
+              
             </div>
+          </div>
 
           <div className="dropzone">
             <Dropzone
@@ -232,29 +300,6 @@ class Furbaby extends Component {
               <p>Click to select a picture.</p>
               <img alt="" src={this.state.photo && this.state.photo.preview}/>
             </Dropzone>
-          </div>
-
-          <div className='health'>
-              <div className='healthTitle'>Health Info for furbaby</div>
-              <div className='flexContainer'>
-
-              <div className='flexItem'>
-                <div className='flexQ'>Is the furbaby spayed?</div><br/>
-                <label className="switch">
-                  <input className="input" type="checkbox" checked={spayed} name='spayed' onChange={this.handleChange}/>
-                  <div className="slider"></div>
-                </label>
-              </div>
-
-              <div className='flexItem'>
-                <div className='flexQ'>FIV Positive?</div><br/>
-                <label className="switch">
-                  <input className="input" type="checkbox" checked={fivpositive} name='fivpositive' onChange={this.handleChange}/>
-                  <div className="slider"/>
-                </label>
-              </div>
-              
-            </div>
           </div>
 
           <div className='foster'>
