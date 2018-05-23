@@ -246,21 +246,21 @@ class Furbaby extends Component {
               <div className='healthItem'>
                 <div className='healthQ'>Good w/ cats?</div>
                 <select className='health-dropdown'>
-                  {selectOption.map(item => <option value={item}>{item}</option>)}
+                  {selectOption.map((item, idx) => <option key={idx} value={item}>{item}</option>)}
                 </select>
               </div>
 
               <div className='healthItem'>
                 <div className='healthQ'>Good w/ dogs?</div>
                 <select className='health-dropdown'>
-                  {selectOption.map(item => <option value={item}>{item}</option>)}
+                  {selectOption.map((item, idx) => <option key={idx} value={item}>{item}</option>)}
                 </select>
               </div>
 
               <div className='healthItem'>
                 <div className='healthQ'>Good w/ children?</div>
                 <select className='health-dropdown'>
-                  {selectOption.map(item => <option className='behaviorQ' value={item}>{item}</option>)}
+                  {selectOption.map((item, idx) => <option className='behaviorQ' key={idx} value={item}>{item}</option>)}
                 </select>
               </div>
 
@@ -291,8 +291,64 @@ class Furbaby extends Component {
             </div>
           </div>
 
-          <div className="dropzone">
+          <div className="general">
+
+            <div className='otherComment'>
+              <textarea className='otherCommentInput' maxLength='75' type="text" row='3' name="comments" value={comments} placeholder='Behavioral Issues:' onChange={this.handleChange}/>
+              <div className='charactersLeft'>75 character(s) remaining</div>
+            </div>
+
+            <div className='otherComment'>
+              <textarea className='otherCommentInput' maxLength='75' type="text" row='3' name="comments" value={comments} placeholder='Other Medical Issues:' onChange={this.handleChange}/>
+              <div className='charactersLeft'>75 character(s) remaining</div>
+            </div>
+
+            <div className='otherComment'>
+              <textarea className='otherCommentInput' maxLength='75' type="text" row='3' name="comments" value={comments} placeholder='Special Needs, if any:' onChange={this.handleChange}/>
+              <div className='charactersLeft'>75 character(s) remaining</div>
+            </div>
+
+            <div className='otherComment'>
+              <div className='formfield'>
+                <input className="input otherDetail" type="text" name="youtube" value={name} onChange={this.handleChange}/>
+                <label className="label-text otherDetail">YouTube Link:</label>
+              </div>
+              <div className='formfield'>
+                <input className="input otherDetail" type="text" name="microchip" value={name} onChange={this.handleChange}/>
+                <label className="label-text otherDetail">Microchip ID:</label>
+              </div>
+            </div>
+
+            <div className="dropzone">
+              <Dropzone
+                className='drop-zone'
+                multiple={false}
+                accept="image/*"
+                onDrop={this.onImageDrop.bind(this)}>
+                <p>Upload pictures (Limit One).</p>
+                <img alt="" src={this.state.photo && this.state.photo.preview}/>
+              </Dropzone>
+            </div>
+
+            <div className="dropzone">
+              <Dropzone
+                className='drop-zone'
+                multiple={true}
+                accept="image/*"
+                onDrop={this.onImageDrop.bind(this)}>
+                <p>Upload medical forms:</p>
+                <img alt="" src={this.state.photo && this.state.photo.preview}/>
+              </Dropzone>
+            </div>
+
+          </div>
+
+
+
+
+          {/* <div className="dropzone">
             <Dropzone
+              className='drop-zone'
               multiple={false}
               accept="image/*"
               style={dropzoneStyle} 
@@ -300,7 +356,7 @@ class Furbaby extends Component {
               <p>Click to select a picture.</p>
               <img alt="" src={this.state.photo && this.state.photo.preview}/>
             </Dropzone>
-          </div>
+          </div> */}
 
           <div className='foster'>
             <div className='fosterdiv'>
@@ -347,11 +403,3 @@ const mapDispatch = dispatch => {
 
 const FurbabyContainer = connect(null, mapDispatch)(Furbaby);
 export default FurbabyContainer;
-
-const dropzoneStyle = {
-  display: 'flexbox',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height : '20%',
-  border : 'none'
-};

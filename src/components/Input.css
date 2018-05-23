@@ -55,7 +55,6 @@ input[type=date]::-webkit-outer-spin-button {
   transition: all 0.5s;
   color: orange;
   left: 15px;
-  transition: all 0.75s;
 }
 
 .input:focus + .label-text {
@@ -136,7 +135,7 @@ input[type=date]::-webkit-outer-spin-button {
   font-size: 15px;
   color: orange;
   left: 5px;
-  transition: all 0.75s;
+  transition: all 0.5s;
   margin-top: 1vh;
 }
 
@@ -146,31 +145,27 @@ input[type=date]::-webkit-outer-spin-button {
   margin-bottom: 30px;
 }
 
-textarea {
+.commentInput {
   background-color: transparent;
   border: 2px solid;
   color: white;
-  font-size: 20px;
   padding: 5px 5px;
   text-align: center;
   width: 90%;
+  height: 65px;
   margin-top: 10px;
   font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
   outline: none;
   resize: none;
 }
 
-textarea::-webkit-input-placeholder {
+.commentInput::-webkit-input-placeholder {
   color: #89d63b;
 }
 
-textarea:focus::-webkit-input-placeholder {
+.commentInput:focus::-webkit-input-placeholder {
   color: #6d6969;
-}
-
-.commentInput {
-  height: 65px;
-  font-size: 15px;
 }
 
 .charactersLeft {
@@ -351,15 +346,123 @@ input[type=number]::-webkit-inner-spin-button {
   content:'F';
 }
 
-.dropzone {
+.otherComment {
+  width: 45%;
+  height: 90px;
+  padding: 0 2.5%;
+  margin: 5px 0;
+}
+
+.otherComment > .charactersLeft {
+  margin-left: 65%;
+  text-align: left
+}
+
+/* .input {
+  position: absolute;
+  left: 15px;
+  bottom: 0;
+  background-color: transparent;
+  color: white;
+  font-size: 15px;
+  height: 25px;
+  width: 90%;
+  font-family: 'Open Sans', sans-serif;
+  outline: none;
+  border: none;
+}
+
+input[type=date]::-webkit-inner-spin-button,
+input[type=date]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.label-text {
+  position: absolute;
+  font-size: 20px;
+  transition: all 0.5s;
+  color: orange;
+  left: 15px;
+}
+
+.input:focus + .label-text {
+  transform: translateY(-5px);
+  font-size: 11px;
+}
+
+.input:valid + .label-text {
+  transform: translateY(-5px);
+  font-size: 11px;
+} */
+
+.otherComment:nth-last-of-type(1) {
+  margin-top: -10px;
+}
+
+.otherComment > .formfield {
+  margin: 0;
+  width: 100%
+}
+
+.otherComment .label-text {
+  position: absolute;
+  font-size: 20px;
+  transition: all 0.5s;
+  color: #89d63b;
+  left: 15px;
+}
+
+/* .input[name="youtube"], .input[name="microchip"] { */
+  /* background-color: red */
+/* } */
+
+/* .otherComment .input {
+  width: 150%
+} */
+
+.otherCommentInput {
+  background-color: transparent;
+  border: 2px solid;
+  color: white;
+  padding: 5px 5px;
   text-align: center;
-  padding-top: 20px;
-  margin-bottom: 15px
+  width: 95%;
+  height: 45px;
+  margin-top: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  outline: none;
+  resize: none;
+}
+
+.otherCommentInput::-webkit-input-placeholder {
+  color: #89d63b;
+}
+
+.otherCommentInput:focus::-webkit-input-placeholder {
+  color: #6d6969;
+}
+
+.dropzone {
+  margin: 0 auto;
+  text-align: center;
+  background-color: orange;
+  height: 150px;
+  width: 150px;
+}
+
+/* .drop-zone {
+  background-color: purple;
+} */
+
+.dropzone p {
+  font-size: 12px;
 }
 
 .dropzone img {
   height: 100px;
-  width: 100px
+  width: 100px;
+  border-style: 1px white;
 }
 
 .button {
