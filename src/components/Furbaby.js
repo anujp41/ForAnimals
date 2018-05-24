@@ -7,6 +7,7 @@ import firebase from '../firebase';
 import { ParentModal } from './index';
 import $ from 'jquery';
 import uuidv1 from 'uuid/v1';
+import FileDrop from 'react-file-drop';
 
 class Furbaby extends Component {
 
@@ -30,7 +31,8 @@ class Furbaby extends Component {
       showModal: false,
       parent: null,
       arrived: new Date().toISOString().split('T')[0],
-      parentId: null
+      parentId: null,
+      otherFiles: []
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,6 +42,7 @@ class Furbaby extends Component {
     this.setParent = this.setParent.bind(this);
     this.setParentId = this.setParentId.bind(this);
     this.updateBirthDate = this.updateBirthDate.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
   }
 
   async handleSubmit(event) {
@@ -124,6 +127,13 @@ class Furbaby extends Component {
     this.setState({ photo });
   }
 
+  handleDrop = (file) => {
+    let otherFiles = this.state.otherFiles;
+    otherFiles = otherFiles.length>0 ? [...otherFiles, file] : [file];
+    this.setState({ otherFiles });
+    console.log('state of state ', otherFiles, otherFiles.length)
+  }
+
   componentDidMount() {
     $('textarea').on('keyup', () => {
       const num = $('.commentInput')[0].maxLength - $('textarea').val().length;
@@ -151,7 +161,7 @@ class Furbaby extends Component {
   }
 
   render() {
-    const { name, breed, ageYear, ageMonth, genderBoolean, comments, spayed, fivpositive, fostered, adopted, arrived } = this.state;
+    const { name, breed, ageYear, ageMonth, genderBoolean, comments, spayed, fivpositive, fostered, adopted, arrived, otherFiles } = this.state;
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     return (
@@ -325,20 +335,18 @@ class Furbaby extends Component {
                 multiple={false}
                 accept="image/*"
                 onDrop={this.onImageDrop.bind(this)}>
-                <p>Upload pictures (Limit One).</p>
+                <p>Upload pictures</p>
+                <p>(Limit One):</p>
                 <img alt="" src={this.state.photo && this.state.photo.preview}/>
               </Dropzone>
             </div>
 
             <div className="dropzone">
-              <Dropzone
-                className='drop-zone'
-                multiple={true}
-                accept="image/*"
-                onDrop={this.onImageDrop.bind(this)}>
-                <p>Upload medical forms:</p>
-                <img alt="" src={this.state.photo && this.state.photo.preview}/>
-              </Dropzone>
+              <p>Upload Medical Forms:</p>
+              <p>(Can upload multiple)</p>
+              <FileDrop onDrop={this.handleDrop}>
+                {otherFiles.length> 0 && <h6>{otherFiles.length} file(s) added!</h6>}
+              </FileDrop>
             </div>
 
           </div>
