@@ -84,7 +84,6 @@ input[type=date]::-webkit-outer-spin-button {
 }
 
 .years, .months {
-  z-index: 1;
   width: 20px;
   height: 20px;
   text-align: center;
@@ -234,9 +233,6 @@ input[type=number]::-webkit-inner-spin-button {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  border: #aa33dd;
-  border-style: dotted;
-  border-width: 2px;
   width: 85%
 }
 
@@ -358,6 +354,10 @@ input[type=number]::-webkit-inner-spin-button {
   text-align: left
 }
 
+.otherComment:nth-last-child(3) {
+  margin-top: -10px;
+}
+
 /* .input {
   position: absolute;
   left: 15px;
@@ -444,7 +444,7 @@ input[type=date]::-webkit-outer-spin-button {
 }
 
 .dropzone {
-  margin: 0 auto;
+  margin: 20px auto;
   text-align: center;
   background-color: orange;
   height: 150px;
@@ -464,9 +464,51 @@ input[type=date]::-webkit-outer-spin-button {
   border: 1px solid white;
 }
 
+.dropzone p:nth-child(1) {
+  margin-top: 2px
+}
+
 .file-drop h6 {
+  margin: 40% 0;
+}
+
+.courtesyList {
+  /* display: flex;
+  flex-direction: column; */
   margin: auto;
-  width: 50%;
+  border: 2px dashed darkblue;
+  width: 80%;
+  height: 100px;
+}
+
+.courtesyList-Bool {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 5px;
+  /* align-items: center */
+}
+
+.courtesyList-Bool>.healthQ {
+  margin: 5px 20px 0 0;
+}
+
+.courtesyList-Q {
+  margin-top: -5px
+}
+
+.courtesyList-Q>.formfield {
+  margin-top: 15px;
+  width: 70%;
+}
+
+.courtesyList-Q .label-text {
+  color: white;
+  margin-left: -30px;
+}
+
+.courtesyList-Q .input {
+  font-size: 12px;
 }
 
 .button {

@@ -17,19 +17,16 @@
 }
 
 .containerModal {
+  /* display: flex;
+  flex-direction: column; */
   margin: auto;
   text-align: center;
   background-color: #7dad26;
   font-family: 'Open Sans', sans-serif;
   width: 65vw;
+  /* height: 75vh; */
   color: white;
   margin-bottom: 15px
-}
-
-.titleOption {
-  font-size: 2.5em;
-  padding-top: 15px;
-  text-align: center;
 }
 
 .titleModal, .titleExisting {
@@ -46,6 +43,36 @@
   color: #ce19ea;
   font-weight: 200;
   cursor: pointer;
+}
+
+.titleOption {
+  display: flex;
+  flex-direction: column;
+  font-size: 2.5em;
+  padding-top: 15px;
+  text-align: center;
+}
+
+.parentName {
+  margin-top: 20px;
+  border-bottom: 0;
+}
+
+.parentAddress {
+  padding-bottom: 20px;
+  border-top: 0;
+}
+
+.parentName, .parentAddress {
+  /* background-color: #BEEF9E */
+}
+
+.parentName>.input, .parentAddress>.input {
+  border-bottom: 2px solid white;
+  margin: auto;
+  position: static;
+  width: 65%;
+  padding: 0 15px;
 }
 
 .parents {
@@ -77,17 +104,5 @@
 .modal-text {
   cursor: text;
   font-size: 20px;
-  margin-top: -110px;
-  transition: all 0.5s;
-  /* padding-bottom: 75px */
-}
-
-input:focus + .modal-text {
-  transform: translateY(-35px);
-  color: #ea5b0e;
-}
-
-input:valid + .modal-text {
-  transform: translateY(-35px);
-  color: #ea5b0e;
+  color: white;
 }

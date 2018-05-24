@@ -43,6 +43,7 @@ class Furbaby extends Component {
     this.setParentId = this.setParentId.bind(this);
     this.updateBirthDate = this.updateBirthDate.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
+    this.handleStatus = this.handleStatus.bind(this);
   }
 
   async handleSubmit(event) {
@@ -142,6 +143,10 @@ class Furbaby extends Component {
     });
   }
 
+  handleStatus() {
+    this.setState({showModal: true})
+  }
+
   toggleModal(showModal) {
     this.setState({ showModal });
     if (showModal === false ) {
@@ -164,6 +169,7 @@ class Furbaby extends Component {
     const { name, breed, ageYear, ageMonth, genderBoolean, comments, spayed, fivpositive, fostered, adopted, arrived, otherFiles } = this.state;
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
+    const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
     return (
       <div className='container'>
 
@@ -342,8 +348,8 @@ class Furbaby extends Component {
             </div>
 
             <div className="dropzone">
-              <p>Upload Medical Forms:</p>
-              <p>(Can upload multiple)</p>
+              <p>Upload Medical Forms</p>
+              <p>(Can upload multiple):</p>
               <FileDrop onDrop={this.handleDrop}>
                 {otherFiles.length> 0 && <h6>{otherFiles.length} file(s) added!</h6>}
               </FileDrop>
@@ -351,33 +357,28 @@ class Furbaby extends Component {
 
           </div>
 
-
-
-
-          {/* <div className="dropzone">
-            <Dropzone
-              className='drop-zone'
-              multiple={false}
-              accept="image/*"
-              style={dropzoneStyle} 
-              onDrop={this.onImageDrop.bind(this)}>
-              <p>Click to select a picture.</p>
-              <img alt="" src={this.state.photo && this.state.photo.preview}/>
-            </Dropzone>
-          </div> */}
-
-          <div className='foster'>
-            <div className='fosterdiv'>
-              <div className='fosterQ'>Furbaby fostered?</div>
-              <input className='input fostercheck' type='checkbox' name='fostered' checked={fostered} onChange={this.handleChange}/>
+          <div className='courtesyList'>
+            <div className='courtesyList-Bool'>
+              <div className='healthQ'>Is this a courtesy listing?</div>
+              <label className="switch">
+                <input className="input" type="checkbox" checked={fivpositive} name='fivpositive' onChange={this.handleChange}/>
+                <div className="slider"/>
+              </label>
             </div>
+            {fivpositive && 
+            <div className='courtesyList-Q'>
+              <div className='formfield'>
+                <input className="input otherDetail" type="text" name="microchip" value={name} onChange={this.handleChange}/>
+                <label className="label-text otherDetail">Provide detail of the person or rescue for whom we are cross listing:</label>
+              </div>
+            </div>}
           </div>
 
-          <div className='adopt'>
-            <div className='adoptdiv'>
-              <div className='adoptQ'>Furbaby adopted?</div>
-              <input className='input adoptcheck' type='checkbox' name='adopted' checked={adopted} onChange={this.handleChange}/>
-            </div>
+          <div className='status'>
+            <div>Current Status of furbaby:</div>
+              <select required onChange={this.handleStatus}>
+                {status.map((curr, idx) => <option disabled={curr==='Choose from list:'} selected={curr==='Choose from list:'} key={idx}>{curr}</option>)}
+              </select>              
           </div>
 
           <button className='button' type="submit" value="submit">Submit</button>
