@@ -188,10 +188,7 @@ class Furbaby extends Component {
   render() {
     const { 
       shelterName, 
-      adoptedName,
-      birthDate,
       intakeDate,
-      currentStatus,
       size,
       coatColor,
       coatLength,
@@ -202,18 +199,12 @@ class Furbaby extends Component {
       felvStatus,
       otherMedical,
       behavioralIssues,
-      goodWithCats,
-      goodWithDogs,
-      goodWithChildren,
       specialNeeds,
       bio,
       currentLocation,
       courtesyListing,
       courtesyListLoc,
-      parentId,
-      parent,
       youtubeVid,
-      photoUrl,
       microchipNum,
       imagesOtherURL } = this.state;
     const today = new Date().toISOString().split('T')[0];
@@ -419,8 +410,8 @@ class Furbaby extends Component {
 
           <div className='status'>
             <div>Current Status of furbaby:</div>
-              <select required name='currentStatus' onChange={this.handleStatus}>
-                {status.map((curr, idx) => <option disabled={curr==='Choose from list:'} selected={curr==='Choose from list:'} key={idx}>{curr}</option>)}
+              <select required name='currentStatus' value={status[0]} onChange={this.handleStatus}>
+                {status.map((curr, idx) => <option disabled={curr==='Choose from list:'} key={idx}>{curr}</option>)}
               </select>              
           </div>
 

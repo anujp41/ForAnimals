@@ -78,7 +78,7 @@ class ParentModal extends React.Component {
 
   render() {
     const { name, address } = this.state;
-    const furbaby = this.props.furbaby;
+    const { furbaby } = this.props;
     if(!this.props.show) {
       return null;
     }
