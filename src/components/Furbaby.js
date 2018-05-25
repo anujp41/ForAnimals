@@ -14,25 +14,34 @@ class Furbaby extends Component {
   constructor() {
     super();
     this.state = {
-      name: '',
+      shelterName: '',
+      adoptedName: '',
+      birthDate: '',
+      intakeDate: '',
+      currentStatus: '',
+      size: '',
+      coatColor: '',
+      coatLength: '',
       breed: '',
-      photoUrl: '',
-      photo: null,
-      ageYear: 0,
-      ageMonth: 0,
-      birthDate: new Date().getTime(),
-      gender: 'M',
-      genderBoolean: false,
-      comments: '',
-      spayed: false,
-      fivpositive: false,
-      fostered: false,
-      adopted: false,
-      showModal: false,
-      parent: null,
-      arrived: new Date().toISOString().split('T')[0],
+      gender: '',
+      altered: false,
+      fivStatus: false,
+      felvStatus: false,
+      otherMedical: '',
+      behavioralIssues: '',
+      goodWithCats: '',
+      goodWithDogs: '',
+      goodWithChildren: '',
+      bio: '',
+      currentLocation: '',
+      courtesyListing: false,
+      courtesyListLoc: '',
       parentId: null,
-      otherFiles: []
+      parent: null,
+      youtubeVid: '',
+      photoUrl: '',
+      microchipNum: '',
+      imagesOtherURL: []
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -62,24 +71,34 @@ class Furbaby extends Component {
 
   async saveToDB() {
     const defaultState = {
-      name: '',
+      shelterName: '',
+      adoptedName: '',
+      birthDate: '',
+      intakeDate: '',
+      currentStatus: '',
+      size: '',
+      coatColor: '',
+      coatLength: '',
       breed: '',
-      photoUrl: '',
-      photo: null,
-      ageYear: 0,
-      ageMonth: 0,
-      birthDate: new Date().getTime(),
-      gender: 'M',
-      genderBoolean: false,
-      comments: '',
-      spayed: false,
-      fivpositive: false,
-      fostered: false,
-      adopted: false,
-      showModal: false,
+      gender: '',
+      altered: false,
+      fivStatus: false,
+      felvStatus: false,
+      otherMedical: '',
+      behavioralIssues: '',
+      goodWithCats: '',
+      goodWithDogs: '',
+      goodWithChildren: '',
+      bio: '',
+      currentLocation: '',
+      courtesyListing: false,
+      courtesyListLoc: '',
+      parentId: null,
       parent: null,
-      arrived: new Date().toISOString().split('T')[0],
-      parentId: null
+      youtubeVid: '',
+      photoUrl: '',
+      microchipNum: '',
+      imagesOtherURL: [],
     };
     const { parent, parentId } = this.state;
     let { name, breed, birthDate, gender, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
@@ -166,10 +185,11 @@ class Furbaby extends Component {
   }
 
   render() {
-    const { name, breed, ageYear, ageMonth, genderBoolean, comments, spayed, fivpositive, fostered, adopted, arrived, otherFiles } = this.state;
+    const { name, breed, ageYear, ageMonth, genderBoolean, comments, spayed, fivpositive, fostered, adopted, arrived, imagesOtherURL } = this.state;
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
+    console.log(this.state);
     return (
       <div className='container'>
 
@@ -351,7 +371,7 @@ class Furbaby extends Component {
               <p>Upload Medical Forms</p>
               <p>(Can upload multiple):</p>
               <FileDrop onDrop={this.handleDrop}>
-                {otherFiles.length> 0 && <h6>{otherFiles.length} file(s) added!</h6>}
+                {imagesOtherURL.length> 0 && <h6>{imagesOtherURL.length} file(s) added!</h6>}
               </FileDrop>
             </div>
 
