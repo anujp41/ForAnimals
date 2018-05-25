@@ -89,6 +89,7 @@ class Furbaby extends Component {
       goodWithCats: '',
       goodWithDogs: '',
       goodWithChildren: '',
+      specialNeeds: '',
       bio: '',
       currentLocation: '',
       courtesyListing: false,
@@ -121,7 +122,7 @@ class Furbaby extends Component {
     } else {
       this.setState({ [name] : value });
     }
-    if (name === 'ageYear' || name === 'ageMonth') this.updateBirthDate(name, value);
+    // if (name === 'ageYear' || name === 'ageMonth') this.updateBirthDate(name, value);
   }
 
   updateBirthDate(name, value) {
@@ -185,7 +186,36 @@ class Furbaby extends Component {
   }
 
   render() {
-    const { name, breed, ageYear, ageMonth, genderBoolean, comments, spayed, fivpositive, fostered, adopted, arrived, imagesOtherURL } = this.state;
+    const { 
+      shelterName, 
+      adoptedName,
+      birthDate,
+      intakeDate,
+      currentStatus,
+      size,
+      coatColor,
+      coatLength,
+      breed,
+      gender,
+      altered,
+      fivStatus,
+      felvStatus,
+      otherMedical,
+      behavioralIssues,
+      goodWithCats,
+      goodWithDogs,
+      goodWithChildren,
+      specialNeeds,
+      bio,
+      currentLocation,
+      courtesyListing,
+      courtesyListLoc,
+      parentId,
+      parent,
+      youtubeVid,
+      photoUrl,
+      microchipNum,
+      imagesOtherURL } = this.state;
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
@@ -200,15 +230,15 @@ class Furbaby extends Component {
           <div className="general">
 
             <div className='formfield'>
-              <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
+              <input required className="input" type="text" name="shelterName" value={shelterName} onChange={this.handleChange}/>
               <label className="label-text">Name</label>
             </div>
 
             <div className='formfield'>
               <div className="input ageEntry">
-                <input required type="number" min="0" max="20" className="years" name="ageYear" value={ageYear} onChange={this.handleChange}/>
+                <input required type="number" min="0" max="20" className="years" name="ageYear" onChange={this.handleChange}/>
                 <span>Years</span>
-                <input required type="number" min="0" max="12" className="months" name="ageMonth" value={ageMonth} onChange={this.handleChange}/>
+                <input required type="number" min="0" max="12" className="months" name="ageMonth" onChange={this.handleChange}/>
                 <span>Months</span>
               </div>
               <label className="label-text" type="age">Age</label>
@@ -222,27 +252,23 @@ class Furbaby extends Component {
 
             <div className='formfield'>
               <label className="label-text" type="gender">Gender</label>
-              <input readOnly className="input"/>
+              <input name='gender' className="input"/>
               <div className='genderEntry'>
-                {/* <label className="switch"> */}
-                  {/* <input className="input" type="checkbox" checked={genderBoolean} name='gender' onChange={this.handleChange}/> */}
-                  {/* <div className="slider" type="gender"></div> */}
-                {/* </label> */}
               </div>
             </div>
 
             <div className='formfield'>
-              <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
+              <input required className="input" type="text" name="size" value={size} onChange={this.handleChange}/>
               <label className="label-text">Size</label>
             </div>
 
             <div className='formfield coatfield'>
               <div className='coat-left'>
-                <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
-                <label className="label-text">Coat Size</label>
+                <input required className="input" type="text" name="coatColor" value={coatColor} onChange={this.handleChange}/>
+                <label className="label-text">Coat Color</label>
               </div>
               <div className='coat-right'>
-                <input required className="input" type="text" name="name" value={name} onChange={this.handleChange}/>
+                <input required className="input" type="text" name="coatLength" value={coatLength} onChange={this.handleChange}/>
                 <label className="label-text">Coat Length</label>
               </div>
             </div>
@@ -250,7 +276,7 @@ class Furbaby extends Component {
           </div>
 
           <div className='comment bio'>
-            <textarea className='commentInput' maxLength='250' type="text" row='3' name="bio" value={comments} placeholder='History/Biography of Furbaby' onChange={this.handleChange}/>
+            <textarea className='commentInput' maxLength='250' type="text" row='3' name="bio" value={bio} placeholder='History/Biography of Furbaby' onChange={this.handleChange}/>
             <div className='charactersLeft'>250 character(s) remaining</div>
           </div>
 
@@ -258,19 +284,19 @@ class Furbaby extends Component {
           <div className="general">
             <div className='formfield date-input'>
               <div className='date-field'>Intake Date: </div>
-              <input required className='arrived' type="date" name="arrived" value={arrived} max={today} onChange={this.handleChange}/>
+              <input required className='arrived' type="date" name="intakeDate" value={intakeDate} max={today} onChange={this.handleChange}/>
               {/* <span className="isValid"></span> */}
             </div>
 
             <div className='formfield'>
-              <input required className="input" type="text" name="name" value={name} maxLength="30" onChange={this.handleChange}/>
+              <input required className="input" type="text" name="currentLocation" value={currentLocation} maxLength="30" onChange={this.handleChange}/>
               <label className="label-text">Current Location</label>
             </div>
 
           </div>
 
           <div className='comment'>
-            <textarea className='commentInput' maxLength='200' type="text" row='3' name="comments" value={comments} placeholder='Additional comments on health/appearance etc.' onChange={this.handleChange}/>
+            <textarea className='commentInput' maxLength='200' type="text" row='3' name="otherMedical" value={otherMedical} placeholder='Additional comments on health/appearance etc.' onChange={this.handleChange}/>
             <div className='charactersLeft'>200 character(s) remaining</div>
           </div>
 
@@ -282,28 +308,28 @@ class Furbaby extends Component {
               <div className='healthItem'>
                 <div className='healthQ'>Good w/ cats?</div>
                 <select className='health-dropdown'>
-                  {selectOption.map((item, idx) => <option key={idx} value={item}>{item}</option>)}
+                  {selectOption.map((item, idx) => <option key={idx} name='goodWithCats' value={item}>{item}</option>)}
                 </select>
               </div>
 
               <div className='healthItem'>
                 <div className='healthQ'>Good w/ dogs?</div>
                 <select className='health-dropdown'>
-                  {selectOption.map((item, idx) => <option key={idx} value={item}>{item}</option>)}
+                  {selectOption.map((item, idx) => <option key={idx} name='goodWithDogs' value={item}>{item}</option>)}
                 </select>
               </div>
 
               <div className='healthItem'>
                 <div className='healthQ'>Good w/ children?</div>
                 <select className='health-dropdown'>
-                  {selectOption.map((item, idx) => <option className='behaviorQ' key={idx} value={item}>{item}</option>)}
+                  {selectOption.map((item, idx) => <option className='behaviorQ' key={idx} name='goodWithChildren' value={item}>{item}</option>)}
                 </select>
               </div>
 
               <div className='healthItem'>
                 <div className='healthQ'>Has FIV?</div><br/>
                 <label className="switch">
-                  <input className="input" type="checkbox" checked={fivpositive} name='fivpositive' onChange={this.handleChange}/>
+                  <input className="input" type="checkbox" checked={fivStatus} name='fivStatus' onChange={this.handleChange}/>
                   <div className="slider"></div>
                 </label>
               </div>
@@ -311,7 +337,7 @@ class Furbaby extends Component {
               <div className='healthItem'>
                 <div className='healthQ'>Has FeLV?</div><br/>
                 <label className="switch">
-                  <input className="input" type="checkbox" checked={fivpositive} name='fivpositive' onChange={this.handleChange}/>
+                  <input className="input" type="checkbox" checked={felvStatus} name='felvStatus' onChange={this.handleChange}/>
                   <div className="slider"/>
                 </label>
               </div>
@@ -319,7 +345,7 @@ class Furbaby extends Component {
               <div className='healthItem'>
                 <div className='healthQ'>Is Altered?</div><br/>
                 <label className="switch">
-                  <input className="input" type="checkbox" checked={fivpositive} name='fivpositive' onChange={this.handleChange}/>
+                  <input className="input" type="checkbox" checked={altered} name='altered' onChange={this.handleChange}/>
                   <div className="slider"/>
                 </label>
               </div>
@@ -330,27 +356,27 @@ class Furbaby extends Component {
           <div className="general">
 
             <div className='otherComment'>
-              <textarea className='otherCommentInput' maxLength='75' type="text" row='3' name="comments" value={comments} placeholder='Behavioral Issues:' onChange={this.handleChange}/>
+              <textarea className='otherCommentInput' maxLength='75' type="text" row='3' name="behavioralIssues" value={behavioralIssues} placeholder='Behavioral Issues:' onChange={this.handleChange}/>
               <div className='charactersLeft'>75 character(s) remaining</div>
             </div>
 
             <div className='otherComment'>
-              <textarea className='otherCommentInput' maxLength='75' type="text" row='3' name="comments" value={comments} placeholder='Other Medical Issues:' onChange={this.handleChange}/>
+              <textarea className='otherCommentInput' maxLength='75' type="text" row='3' name="otherMedical" value={otherMedical} placeholder='Other Medical Issues:' onChange={this.handleChange}/>
               <div className='charactersLeft'>75 character(s) remaining</div>
             </div>
 
             <div className='otherComment'>
-              <textarea className='otherCommentInput' maxLength='75' type="text" row='3' name="comments" value={comments} placeholder='Special Needs, if any:' onChange={this.handleChange}/>
+              <textarea className='otherCommentInput' maxLength='75' type="text" row='3' name="specialNeeds" value={specialNeeds} placeholder='Special Needs, if any:' onChange={this.handleChange}/>
               <div className='charactersLeft'>75 character(s) remaining</div>
             </div>
 
             <div className='otherComment'>
               <div className='formfield'>
-                <input className="input otherDetail" type="text" name="youtube" value={name} onChange={this.handleChange}/>
+                <input className="input otherDetail" type="text" name="youtubeVid" value={youtubeVid} onChange={this.handleChange}/>
                 <label className="label-text otherDetail">YouTube Link:</label>
               </div>
               <div className='formfield'>
-                <input className="input otherDetail" type="text" name="microchip" value={name} onChange={this.handleChange}/>
+                <input className="input otherDetail" type="text" name="microchipNum" value={microchipNum} onChange={this.handleChange}/>
                 <label className="label-text otherDetail">Microchip ID:</label>
               </div>
             </div>
@@ -381,22 +407,22 @@ class Furbaby extends Component {
             <div className='courtesyList-Bool'>
               <div className='healthQ'>Is this a courtesy listing?</div>
               <label className="switch">
-                <input className="input" type="checkbox" checked={fivpositive} name='fivpositive' onChange={this.handleChange}/>
+                <input className="input" type="checkbox" checked={courtesyListing} name='courtesyListing' onChange={this.handleChange}/>
                 <div className="slider"/>
               </label>
             </div>
-            {fivpositive && 
-            <div className='courtesyList-Q'>
-              <div className='formfield'>
-                <input className="input otherDetail" type="text" name="microchip" value={name} onChange={this.handleChange}/>
-                <label className="label-text otherDetail">Provide detail of the person or rescue for whom we are cross listing:</label>
-              </div>
-            </div>}
+            {courtesyListing && 
+              <div className='courtesyList-Q'>
+                <div className='formfield'>
+                  <input className="input otherDetail" type="text" name="courtesyListLoc" value={courtesyListLoc} onChange={this.handleChange}/>
+                  <label className="label-text otherDetail">Provide detail of the person or rescue for whom we are cross listing:</label>
+                </div>
+              </div>}
           </div>
 
           <div className='status'>
             <div>Current Status of furbaby:</div>
-              <select required onChange={this.handleStatus}>
+              <select required name='currentStatus' onChange={this.handleStatus}>
                 {status.map((curr, idx) => <option disabled={curr==='Choose from list:'} selected={curr==='Choose from list:'} key={idx}>{curr}</option>)}
               </select>              
           </div>
@@ -405,7 +431,7 @@ class Furbaby extends Component {
             
         </form>
 
-        <ParentModal furbaby={name} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent} setParentId={this.setParentId}/>
+        <ParentModal furbaby={shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent} setParentId={this.setParentId}/>
       </div>
     )
   }
