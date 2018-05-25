@@ -249,12 +249,9 @@ class Furbaby extends Component {
               <label className="label-text">Breed</label>
             </div>
 
-
             <div className='formfield'>
-              <label className="label-text" type="gender">Gender</label>
-              <input name='gender' className="input"/>
-              <div className='genderEntry'>
-              </div>
+              <input required className="input" type="text" name="gender" value={gender} onChange={this.handleChange}/>
+              <label className="label-text">Gender</label>
             </div>
 
             <div className='formfield'>
@@ -322,7 +319,7 @@ class Furbaby extends Component {
               <div className='healthItem'>
                 <div className='healthQ'>Good w/ children?</div>
                 <select className='health-dropdown'>
-                  {selectOption.map((item, idx) => <option className='behaviorQ' key={idx} name='goodWithChildren' value={item}>{item}</option>)}
+                  {selectOption.map((item, idx) => <option key={idx} name='goodWithChildren' value={item}>{item}</option>)}
                 </select>
               </div>
 
