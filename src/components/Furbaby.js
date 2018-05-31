@@ -29,10 +29,12 @@ class Furbaby extends Component {
       felvStatus: false,
       otherMedical: '',
       behavioralIssues: '',
-      goodWithCats: '',
-      goodWithDogs: '',
-      goodWithChildren: '',
+      goodWithCats: 'Yes',
+      goodWithDogs: 'Yes',
+      goodWithChildren: 'Yes',
+      specialNeeds: '',
       bio: '',
+      addlComments: '',
       currentLocation: '',
       courtesyListing: false,
       courtesyListLoc: '',
@@ -86,11 +88,12 @@ class Furbaby extends Component {
       felvStatus: false,
       otherMedical: '',
       behavioralIssues: '',
-      goodWithCats: '',
-      goodWithDogs: '',
-      goodWithChildren: '',
+      goodWithCats: 'Yes',
+      goodWithDogs: 'Yes',
+      goodWithChildren: 'Yes',
       specialNeeds: '',
       bio: '',
+      addlComments: '',
       currentLocation: '',
       courtesyListing: false,
       courtesyListLoc: '',
@@ -111,18 +114,8 @@ class Furbaby extends Component {
   handleChange(event) {
     const target = event.target;
     const name = target.name;
-    if (name === 'fostered' || name ===  'adopted') this.toggleModal(target.checked);
     let value = target.type === 'checkbox' ? target.checked : target.value;
-    if (name === 'gender') {
-      value = value ? 'F' : 'M';
-      this.setState({
-        [name] : value,
-        genderBoolean: target.checked
-      })
-    } else {
-      this.setState({ [name] : value });
-    }
-    // if (name === 'ageYear' || name === 'ageMonth') this.updateBirthDate(name, value);
+    this.setState ({ [name] : value });
   }
 
   updateBirthDate(name, value) {
@@ -156,10 +149,11 @@ class Furbaby extends Component {
   }
 
   componentDidMount() {
-    $('textarea').on('keyup', () => {
-      const num = $('.commentInput')[0].maxLength - $('textarea').val().length;
-      const text = num + ' character(s) remaining!';
-      $('.charactersLeft').text(text);
+    $('textarea').on('keyup', (event) => {
+      console.log(event.currentTarget.maxLength, event.currentTarget.value)
+      const num = event.currentTarget.maxLength - event.currentTarget.value.length;
+      const text = num + ' character(s) remaining';
+      $(event.currentTarget).next().text(text);
     });
   }
 
@@ -199,8 +193,12 @@ class Furbaby extends Component {
       felvStatus,
       otherMedical,
       behavioralIssues,
+      goodWithCats,
+      goodWithDogs,
+      goodWithChildren,
       specialNeeds,
       bio,
+      addlComments,
       currentLocation,
       courtesyListing,
       courtesyListLoc,
@@ -210,7 +208,6 @@ class Furbaby extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
-    console.log(this.state);
     return (
       <div className='container'>
 
@@ -284,7 +281,7 @@ class Furbaby extends Component {
           </div>
 
           <div className='comment'>
-            <textarea className='commentInput' maxLength='200' type="text" row='3' name="otherMedical" value={otherMedical} placeholder='Additional comments on health/appearance etc.' onChange={this.handleChange}/>
+            <textarea className='commentInput' maxLength='200' type="text" row='3' name="addlComments" value={addlComments} placeholder='Additional comments on health/appearance etc.' onChange={this.handleChange}/>
             <div className='charactersLeft'>200 character(s) remaining</div>
           </div>
 
@@ -295,22 +292,22 @@ class Furbaby extends Component {
 
               <div className='healthItem'>
                 <div className='healthQ'>Good w/ cats?</div>
-                <select className='health-dropdown'>
-                  {selectOption.map((item, idx) => <option key={idx} name='goodWithCats' value={item}>{item}</option>)}
+                <select className='health-dropdown' name='goodWithCats' value={goodWithCats} onChange={this.handleChange}>
+                  {selectOption.map((item, idx) => <option key={idx}>{item}</option>)}
                 </select>
               </div>
 
               <div className='healthItem'>
                 <div className='healthQ'>Good w/ dogs?</div>
-                <select className='health-dropdown'>
-                  {selectOption.map((item, idx) => <option key={idx} name='goodWithDogs' value={item}>{item}</option>)}
+                <select className='health-dropdown' name='goodWithDogs' value={goodWithDogs} onChange={this.handleChange}>
+                  {selectOption.map((item, idx) => <option key={idx}>{item}</option>)}
                 </select>
               </div>
 
               <div className='healthItem'>
                 <div className='healthQ'>Good w/ children?</div>
-                <select className='health-dropdown'>
-                  {selectOption.map((item, idx) => <option key={idx} name='goodWithChildren' value={item}>{item}</option>)}
+                <select className='health-dropdown' name='goodWithChildren' value={goodWithChildren} onChange={this.handleChange}>
+                  {selectOption.map((item, idx) => <option key={idx}>{item}</option>)}
                 </select>
               </div>
 

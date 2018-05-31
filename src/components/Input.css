@@ -253,8 +253,9 @@ input[type=number]::-webkit-inner-spin-button {
   margin-top: 20px;
   width: 90px;
   height: 34px;
-  background-color: #2fc8e2;
+  background-color: #33aa2a;
   font-size: 100%;
+  color: white;
 }
 
 .switch {

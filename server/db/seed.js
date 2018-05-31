@@ -125,7 +125,6 @@ const main = () => {
     })
     .catch(err => {
       console.log("Error while seeding");
-      console.log(err);
     })
     .then(() => {
       db.close();

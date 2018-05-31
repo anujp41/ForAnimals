@@ -89,6 +89,10 @@ const FurBabies = db.define('furbaby', {
     type: Sequelize.STRING,
     allowNull: true
   },
+  addlComments: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
   currentLocation: {
     type: Sequelize.STRING,
     allowNull: true
