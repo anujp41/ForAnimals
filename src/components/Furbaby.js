@@ -23,7 +23,7 @@ class Furbaby extends Component {
       coatColor: '',
       coatLength: '',
       breed: '',
-      gender: '',
+      gender: 'Male',
       altered: false,
       fivStatus: false,
       felvStatus: false,
@@ -82,7 +82,7 @@ class Furbaby extends Component {
       coatColor: '',
       coatLength: '',
       breed: '',
-      gender: '',
+      gender: 'Male',
       altered: false,
       fivStatus: false,
       felvStatus: false,
@@ -150,7 +150,6 @@ class Furbaby extends Component {
 
   componentDidMount() {
     $('textarea').on('keyup', (event) => {
-      console.log(event.currentTarget.maxLength, event.currentTarget.value)
       const num = event.currentTarget.maxLength - event.currentTarget.value.length;
       const text = num + ' character(s) remaining';
       $(event.currentTarget).next().text(text);
@@ -208,6 +207,7 @@ class Furbaby extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
+    console.log('gender is ', gender)
     return (
       <div className='container'>
 
@@ -238,8 +238,11 @@ class Furbaby extends Component {
             </div>
 
             <div className='formfield'>
-              <input required className="input" type="text" name="gender" value={gender} onChange={this.handleChange}/>
               <label className="label-text">Gender</label>
+              <select name="gender" value={gender} onChange={this.handleChange}>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
             </div>
 
             <div className='formfield'>
