@@ -16,7 +16,7 @@ class Furbaby extends Component {
     this.state = {
       shelterName: '',
       adoptedName: '',
-      birthDate: '',
+      birthDate: '5/31/2018',
       intakeDate: '',
       currentStatus: '',
       size: '',
@@ -46,13 +46,13 @@ class Furbaby extends Component {
       imagesOtherURL: []
     }
     this.handleChange = this.handleChange.bind(this);
+    this.handleDate = this.handleDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onImageDrop = this.onImageDrop.bind(this);
     this.saveToDB = this.saveToDB.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.setParent = this.setParent.bind(this);
     this.setParentId = this.setParentId.bind(this);
-    this.updateBirthDate = this.updateBirthDate.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
     this.handleStatus = this.handleStatus.bind(this);
   }
@@ -118,22 +118,15 @@ class Furbaby extends Component {
     this.setState ({ [name] : value });
   }
 
-  updateBirthDate(name, value) {
-    const ageYear = name === 'ageYear' ? +value : +this.state.ageYear;
-    const ageMonth = name === 'ageMonth' ? +value : +this.state.ageMonth;
-    
-    const currDate = new Date().getTime();
-
-    const yearMS = 3.154e+10;
-    const monthMS = 2.628e+9;
-
-    const yearInMS = ageYear * yearMS;
-    const monthInMS = ageMonth * monthMS;
-
-    const totalAge = yearInMS + monthInMS;
-    const birthDate = currDate - totalAge;
-    
-    this.setState( { birthDate })
+  handleDate(event) {
+    const currBirthDate = this.state.birthDate ? new Date(this.state.birthDate) : new Date();
+    const target = event.target;
+    const { name, value } = target;
+    let [ year, month, date ]  = [ currBirthDate.getFullYear(), currBirthDate.getMonth()+1, currBirthDate.getDate()];
+    if (name === 'ageYear') { year = year - value }
+    else { month = month - value };
+    const newDate = month+'/'+date+'/'+year;
+    this.setState ({ birthDate : newDate});
   }
 
   onImageDrop(files) {
@@ -182,6 +175,7 @@ class Furbaby extends Component {
     const { 
       shelterName, 
       intakeDate,
+      birthDate,
       size,
       coatColor,
       coatLength,
@@ -207,7 +201,7 @@ class Furbaby extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
-    console.log('gender is ', gender)
+    console.log('birth date is ', birthDate)
     return (
       <div className='container'>
 
@@ -224,9 +218,9 @@ class Furbaby extends Component {
 
             <div className='formfield'>
               <div className="input ageEntry">
-                <input required type="number" min="0" max="20" className="years" name="ageYear" onChange={this.handleChange}/>
+                <input required type="number" min="0" max="20" className="years" name="ageYear" onChange={this.handleDate}/>
                 <span>Years</span>
-                <input required type="number" min="0" max="12" className="months" name="ageMonth" onChange={this.handleChange}/>
+                <input required type="number" min="0" max="12" className="months" name="ageMonth" onChange={this.handleDate}/>
                 <span>Months</span>
               </div>
               <label className="label-text" type="age">Age</label>
