@@ -67,17 +67,17 @@ const FurBabies = db.define('furbaby', {
   },
   goodWithCats: {
     type: Sequelize.ENUM("Yes", "No", "Unsure"),
-    defaultValue: "Unsure",
+    defaultValue: "Yes",
     allowNull: false
   },
   goodWithDogs: {
     type: Sequelize.ENUM("Yes", "No", "Unsure"),
-    defaultValue: "Unsure",
+    defaultValue: "Yes",
     allowNull: false
   },
   goodWithChildren: {
     type: Sequelize.ENUM("Yes", "No", "Unsure"),
-    defaultValue: "Unsure",
+    defaultValue: "Yes",
     allowNull: false
   },
   specialNeeds: {

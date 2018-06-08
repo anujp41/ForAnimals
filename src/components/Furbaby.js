@@ -14,35 +14,37 @@ class Furbaby extends Component {
   constructor() {
     super();
     this.state = {
-      shelterName: '',
+      shelterName: 'Bevo',
+      ageYear: '3',
+      ageMonth: '2',
       adoptedName: '',
-      birthDate: '5/31/2018',
-      intakeDate: '',
+      birthDate: '',
+      intakeDate: '2018-06-01',
       currentStatus: '',
-      size: '',
-      coatColor: '',
-      coatLength: '',
-      breed: '',
-      gender: 'Male',
-      altered: false,
+      size: 'Small',
+      coatColor: 'Tabby',
+      coatLength: 'Long',
+      breed: 'Diva',
+      gender: 'Female',
+      altered: true,
       fivStatus: false,
       felvStatus: false,
-      otherMedical: '',
-      behavioralIssues: '',
-      goodWithCats: 'Yes',
-      goodWithDogs: 'Yes',
-      goodWithChildren: 'Yes',
-      specialNeeds: '',
-      bio: '',
-      addlComments: '',
-      currentLocation: '',
+      otherMedical: 'Nada',
+      behavioralIssues: 'Lots',
+      goodWithCats: 'No',
+      goodWithDogs: 'No',
+      goodWithChildren: 'No',
+      specialNeeds: 'Too much diva',
+      bio: 'Found in Parksville',
+      addlComments: 'Where do i Stop',
+      currentLocation: 'Home',
       courtesyListing: false,
       courtesyListLoc: '',
       parentId: null,
       parent: null,
-      youtubeVid: '',
+      youtubeVid: 'www.youtube.com/watch',
       photoUrl: '',
-      microchipNum: '',
+      microchipNum: '09871111',
       imagesOtherURL: []
     }
     this.handleChange = this.handleChange.bind(this);
@@ -57,18 +59,38 @@ class Furbaby extends Component {
     this.handleStatus = this.handleStatus.bind(this);
   }
 
+  handleChange(event) {
+    const target = event.target;
+    const name = target.name;
+    let value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState ({ [name] : value });
+  }
+
   async handleSubmit(event) {
     event.preventDefault();
-    const storage = firebase.storage();
-    // const name = this.state.name.replace(/[\W]/g, '').toLowerCase();
-    const name = uuidv1();
-    const storageRef = storage.ref(`furbabies/${name}`);
-    const photo = this.state.photo;
+    await this.handleDate( this.state.ageYear, this.state.ageMonth ); //saved
+    // const storage = firebase.storage();
+    // const name = uuidv1();
+    // const storageRef = storage.ref(`furbabies/${name}`);
+    // const photo = this.state.photo;
 
-    await storageRef.put(photo)
-    .then(snapshot => this.setState({photoUrl: snapshot.downloadURL}))
-    .then(() => this.saveToDB())
-    .catch(err => console.log('there was an error ', err))
+    // await storageRef.put(photo)
+    // .then(snapshot => this.setState({photoUrl: snapshot.downloadURL}))
+    // .then(() => this.saveToDB())
+    // .catch(err => console.log('there was an error ', err))
+  }
+
+  handleDate(ageYear, ageMonth) {
+    const today = new Date();
+    let [ year, month, date ]  = [ today.getFullYear(), today.getMonth()+1, today.getDate() ];
+    year -= ageYear;
+    month -= ageMonth;
+    if (month <= 0) {
+      year = year + Math.min(-1, Math.floor(month/12));
+      month = 12 + month;
+    }
+    const birthDate = year+'-'+month+'-'+date;
+    this.setState({ birthDate });
   }
 
   async saveToDB() {
@@ -111,24 +133,6 @@ class Furbaby extends Component {
     alert('Furbaby saved to database!');
   }
 
-  handleChange(event) {
-    const target = event.target;
-    const name = target.name;
-    let value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState ({ [name] : value });
-  }
-
-  handleDate(event) {
-    const currBirthDate = this.state.birthDate ? new Date(this.state.birthDate) : new Date();
-    const target = event.target;
-    const { name, value } = target;
-    let [ year, month, date ]  = [ currBirthDate.getFullYear(), currBirthDate.getMonth()+1, currBirthDate.getDate()];
-    if (name === 'ageYear') { year = year - value }
-    else { month = month - value };
-    const newDate = month+'/'+date+'/'+year;
-    this.setState ({ birthDate : newDate});
-  }
-
   onImageDrop(files) {
     const photo = files[0];
     this.setState({ photo });
@@ -150,6 +154,7 @@ class Furbaby extends Component {
   }
 
   handleStatus() {
+    //function will show modal based on the status of pet
     this.setState({showModal: true})
   }
 
@@ -173,9 +178,10 @@ class Furbaby extends Component {
 
   render() {
     const { 
-      shelterName, 
+      shelterName,
+      ageYear,
+      ageMonth, 
       intakeDate,
-      birthDate,
       size,
       coatColor,
       coatLength,
@@ -201,7 +207,6 @@ class Furbaby extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
-    console.log('birth date is ', birthDate)
     return (
       <div className='container'>
 
@@ -218,9 +223,9 @@ class Furbaby extends Component {
 
             <div className='formfield'>
               <div className="input ageEntry">
-                <input required type="number" min="0" max="20" className="years" name="ageYear" onChange={this.handleDate}/>
+                <input required type="number" min="0" max="20" className="years" name="ageYear" value={ageYear} onChange={this.handleChange}/>
                 <span>Years</span>
-                <input required type="number" min="0" max="12" className="months" name="ageMonth" onChange={this.handleDate}/>
+                <input required type="number" min="0" max="12" className="months" name="ageMonth" value={ageMonth} onChange={this.handleChange}/>
                 <span>Months</span>
               </div>
               <label className="label-text" type="age">Age</label>
@@ -267,7 +272,6 @@ class Furbaby extends Component {
             <div className='formfield date-input'>
               <div className='date-field'>Intake Date: </div>
               <input required className='arrived' type="date" name="intakeDate" value={intakeDate} max={today} onChange={this.handleChange}/>
-              {/* <span className="isValid"></span> */}
             </div>
 
             <div className='formfield'>

@@ -4,8 +4,8 @@ const { FurBabies, Parents } = require('../models');
 const furbabySeedData = [{
   shelterName: 'Monica',
   adoptedName: 'Mona',
-  birthDate: '5/5/11',
-  intakeDate: '9/20/15',
+  birthDate: '2011-05-05',
+  intakeDate: '2015-09-20',
   currentStatus: 'Adopted',
   size: 'Medium',
   coatColor: 'Calico',
@@ -32,8 +32,8 @@ const furbabySeedData = [{
 }, { 
   shelterName: 'Parksville',
   adoptedName: 'Bevo',
-  birthDate: '4/13/15',
-  intakeDate: '4/27/15',
+  birthDate: '2015-4-3',
+  intakeDate: '2015-4-27',
   currentStatus: 'Adopted',
   size: 'Small',
   coatColor: 'Calico',
@@ -60,8 +60,8 @@ const furbabySeedData = [{
   imagesOtherURL: [] 
 }, {
   shelterName: "Macy",
-  birthDate: "03/17/2017",
-  intakeDate: "01/20/2018",
+  birthDate: "2017-3-17",
+  intakeDate: "2018-1-20",
   currentStatus: "Adoptable",
   size: "Large",
   coatColor: "Black",
