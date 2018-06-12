@@ -104,7 +104,7 @@ class Furbaby extends Component {
     });
   }
 
-  async saveToDB() {
+  saveToDB() {
     const defaultState = {
       shelterName: '',
       ageYear: '',
@@ -148,8 +148,13 @@ class Furbaby extends Component {
   }
 
   onImageDrop(files) {
-    const photo = files[0];
-    this.setState({ photo });
+    // if (this.state.photo !== null) alert('This will replace the current photo');
+    const response = this.state.photo === null ? true : window.confirm("Do you want to replace the current photo?");
+    console.log('response is ', response)
+    if (response) {
+      const photo = files[0];
+      this.setState({ photo });
+    }
   }
 
   handleDrop = (inputFiles) => {
