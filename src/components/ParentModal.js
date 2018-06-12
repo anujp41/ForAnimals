@@ -39,13 +39,16 @@ class ParentModal extends React.Component {
   }
 
   setParentId(parent) {
-    this.showParent();
+    console.log('parent is ', parent)
+    // this.showParent();
+    this.setState({parentId: parent.id})
     this.props.setParentId(parent.id);
-    this.props.toggleModal();
+    // this.props.toggleModal();
   }
 
   renderParents() {
     const parents = this.props.parents;
+    console.log('state is ', this.state)
     return (
       <div>
         <div className='parents'>Select parent from list below!</div>
@@ -65,11 +68,15 @@ class ParentModal extends React.Component {
                   row[filter.id].toLowerCase().includes(filter.value.toLowerCase())
               }
             ]}
-            defaultPageSize={4} 
+            defaultPageSize={5} 
             minRows={0}
-            className='-highlight parentItem'
+            className='-striped parentItem'
             getTdProps={(state, rowInfo, column, instance) => {
-              return { onClick: (e) => this.setParentId(rowInfo.original) }
+              return { 
+                onClick: (e) => this.setParentId(rowInfo.original),
+                style: {
+                  background: rowInfo.original.id === this.state.parentId ? '#26ada8' : '#7dad26'
+                }}
             }}
           />
       </div>

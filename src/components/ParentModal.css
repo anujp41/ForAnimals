@@ -81,7 +81,11 @@
 
 .parentItem {
   cursor: pointer;
-  margin-bottom: 25px
+  margin-bottom: 25px;
+}
+
+.rt-tr:hover {
+  opacity: 0.5;
 }
 
 .-pagination {
