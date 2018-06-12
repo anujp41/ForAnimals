@@ -21,7 +21,7 @@ class Furbaby extends Component {
       adoptedName: '',
       birthDate: '',
       intakeDate: '2018-06-01',
-      currentStatus: '',
+      currentStatus: 'Adopted',
       size: 'Small',
       coatColor: 'Tabby',
       coatLength: 'Long',
@@ -44,7 +44,8 @@ class Furbaby extends Component {
       parentId: null,
       parent: null,
       youtubeVid: 'www.youtube.com/watch',
-      photoURL: '',
+      photo: null,
+      photoUrl: '',
       microchipNum: '09871111',
       otherFiles: [],
       imagesOtherURL: []
@@ -73,11 +74,12 @@ class Furbaby extends Component {
     event.preventDefault();
     const firebaseFolder = uuidv1();
     await this.handleDate(this.state.ageYear, this.state.ageMonth); //save birthDate to state
-    const photoURL = await this.saveToFirebase(firebaseFolder, this.state.photo);
+    const photoUrl = await this.saveToFirebase(firebaseFolder, this.state.photo);
     const promiseArr = this.state.otherFiles.map(async (file) => await this.saveToFirebase(firebaseFolder, file).then((value) => value));
     const imagesOtherURL = await Promise.all(promiseArr);
-    this.setState({photoURL, imagesOtherURL});
-    console.log('saved to firebase')
+    this.setState({photoUrl, imagesOtherURL});
+    console.log('saved to firebase');
+    this.saveToDB();
   }
 
   handleDate(ageYear, ageMonth) {
@@ -105,15 +107,17 @@ class Furbaby extends Component {
   async saveToDB() {
     const defaultState = {
       shelterName: '',
+      ageYear: '',
+      ageMonth: '',
       adoptedName: '',
       birthDate: '',
       intakeDate: '',
-      currentStatus: '',
+      currentStatus: 'Choose from list:',
       size: '',
       coatColor: '',
       coatLength: '',
       breed: '',
-      gender: 'Male',
+      gender: '',
       altered: false,
       fivStatus: false,
       felvStatus: false,
@@ -131,13 +135,14 @@ class Furbaby extends Component {
       parentId: null,
       parent: null,
       youtubeVid: '',
-      photoURL: '',
+      photo: null,
+      photoUrl: '',
       microchipNum: '',
-      imagesOtherURL: [],
+      otherFiles: [],
+      imagesOtherURL: []
     };
-    const { parent, parentId } = this.state;
-    let { name, breed, birthDate, gender, arrived, photoURL, comments, spayed, fivpositive, fostered, adopted } = this.state;
-    this.props.submit(parent, {name, breed, birthDate, gender, arrived, photoURL, comments, spayed, fivpositive, fostered, adopted}, parentId);
+    const { parent, parentId, ageYear, ageMonth, addlComments, photo, otherFiles, ...furbaby } = this.state;
+    this.props.submit(parent, furbaby, parentId);
     this.setState({...defaultState});
     alert('Furbaby saved to database!');
   }
@@ -210,7 +215,8 @@ class Furbaby extends Component {
       courtesyListLoc,
       youtubeVid,
       microchipNum,
-      otherFiles } = this.state;
+      otherFiles,
+      currentStatus } = this.state;
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
@@ -415,7 +421,7 @@ class Furbaby extends Component {
 
           <div className='status'>
             <div>Current Status of furbaby:</div>
-              <select required name='currentStatus' value={status[0]} onChange={this.handleStatus}>
+              <select required name='currentStatus' value={currentStatus} onChange={this.handleStatus}>
                 {status.map((curr, idx) => <option disabled={curr==='Choose from list:'} key={idx}>{curr}</option>)}
               </select>              
           </div>
