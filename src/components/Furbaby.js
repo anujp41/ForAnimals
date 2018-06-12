@@ -8,6 +8,7 @@ import { ParentModal } from './index';
 import $ from 'jquery';
 import uuidv1 from 'uuid/v1';
 import FileDrop from 'react-file-drop';
+const storage = firebase.storage();
 
 class Furbaby extends Component {
 
@@ -43,8 +44,9 @@ class Furbaby extends Component {
       parentId: null,
       parent: null,
       youtubeVid: 'www.youtube.com/watch',
-      photoUrl: '',
+      photoURL: '',
       microchipNum: '09871111',
+      otherFiles: [],
       imagesOtherURL: []
     }
     this.handleChange = this.handleChange.bind(this);
@@ -57,6 +59,7 @@ class Furbaby extends Component {
     this.setParentId = this.setParentId.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
     this.handleStatus = this.handleStatus.bind(this);
+    this.savetoFirebase = this.savetoFirebase.bind(this);
   }
 
   handleChange(event) {
@@ -68,16 +71,11 @@ class Furbaby extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    await this.handleDate( this.state.ageYear, this.state.ageMonth ); //saved
-    // const storage = firebase.storage();
-    // const name = uuidv1();
-    // const storageRef = storage.ref(`furbabies/${name}`);
-    // const photo = this.state.photo;
-
-    // await storageRef.put(photo)
-    // .then(snapshot => this.setState({photoUrl: snapshot.downloadURL}))
-    // .then(() => this.saveToDB())
-    // .catch(err => console.log('there was an error ', err))
+    await this.handleDate(this.state.ageYear, this.state.ageMonth); //save birthDate to state
+    const photoURL = await this.savetoFirebase(this.state.photo);
+    console.log('photoURL ', photoURL)
+    const imagesOtherURL = this.state.otherFiles.map(async (file) => await this.savetoFirebase(file));
+    console.log('imagesOtherURL', imagesOtherURL);
   }
 
   handleDate(ageYear, ageMonth) {
@@ -86,11 +84,25 @@ class Furbaby extends Component {
     year -= ageYear;
     month -= ageMonth;
     if (month <= 0) {
-      year = year + Math.min(-1, Math.floor(month/12));
-      month = 12 + month;
+      year += Math.min(-1, Math.floor(month/12));
+      month += 12;
     }
     const birthDate = year+'-'+month+'-'+date;
     this.setState({ birthDate });
+  }
+
+  savetoFirebase(file) {
+    return new Promise(resolve => {
+      console.log('promise')
+      const fileName = uuidv1();
+      const storageRef = storage.ref(`furbabies/${fileName}`);
+      resolve(storageRef.put(file)
+      .then(result => result.downloadURL))
+    });
+    // .then(snapshot => {
+    //   console.log('returning')
+    //   return snapshot.downloadURL
+    // }).catch(err => console.log(err));
   }
 
   async saveToDB() {
@@ -122,13 +134,13 @@ class Furbaby extends Component {
       parentId: null,
       parent: null,
       youtubeVid: '',
-      photoUrl: '',
+      photoURL: '',
       microchipNum: '',
       imagesOtherURL: [],
     };
     const { parent, parentId } = this.state;
-    let { name, breed, birthDate, gender, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted } = this.state;
-    this.props.submit(parent, {name, breed, birthDate, gender, arrived, photoUrl, comments, spayed, fivpositive, fostered, adopted}, parentId);
+    let { name, breed, birthDate, gender, arrived, photoURL, comments, spayed, fivpositive, fostered, adopted } = this.state;
+    this.props.submit(parent, {name, breed, birthDate, gender, arrived, photoURL, comments, spayed, fivpositive, fostered, adopted}, parentId);
     this.setState({...defaultState});
     alert('Furbaby saved to database!');
   }
@@ -140,9 +152,8 @@ class Furbaby extends Component {
 
   handleDrop = (file) => {
     let otherFiles = this.state.otherFiles;
-    otherFiles = otherFiles.length>0 ? [...otherFiles, file] : [file];
+    otherFiles = otherFiles.length>0 ? [...otherFiles, file[0]] : [file[0]];
     this.setState({ otherFiles });
-    console.log('state of state ', otherFiles, otherFiles.length)
   }
 
   componentDidMount() {
@@ -203,10 +214,12 @@ class Furbaby extends Component {
       courtesyListLoc,
       youtubeVid,
       microchipNum,
-      imagesOtherURL } = this.state;
+      otherFiles } = this.state;
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
+    console.log(this.state.photo)
+    console.log(this.state.otherFiles)
     return (
       <div className='container'>
 
@@ -383,7 +396,7 @@ class Furbaby extends Component {
               <p>Upload Medical Forms</p>
               <p>(Can upload multiple):</p>
               <FileDrop onDrop={this.handleDrop}>
-                {imagesOtherURL.length> 0 && <h6>{imagesOtherURL.length} file(s) added!</h6>}
+                {otherFiles.length> 0 && <h6>{otherFiles.length} file(s) added!</h6>}
               </FileDrop>
             </div>
 
