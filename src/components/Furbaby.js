@@ -59,7 +59,7 @@ class Furbaby extends Component {
     this.setParentId = this.setParentId.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
     this.handleStatus = this.handleStatus.bind(this);
-    this.savetoFirebase = this.savetoFirebase.bind(this);
+    this.saveToFirebase = this.saveToFirebase.bind(this);
   }
 
   handleChange(event) {
@@ -71,11 +71,13 @@ class Furbaby extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
+    const firebaseFolder = uuidv1();
     await this.handleDate(this.state.ageYear, this.state.ageMonth); //save birthDate to state
-    const photoURL = await this.savetoFirebase(this.state.photo);
-    const promiseArr = this.state.otherFiles.map(async (file) => await this.savetoFirebase(file).then((value) => value));
+    const photoURL = await this.saveToFirebase(firebaseFolder, this.state.photo);
+    const promiseArr = this.state.otherFiles.map(async (file) => await this.saveToFirebase(firebaseFolder, file).then((value) => value));
     const imagesOtherURL = await Promise.all(promiseArr);
     this.setState({photoURL, imagesOtherURL});
+    console.log('saved to firebase')
   }
 
   handleDate(ageYear, ageMonth) {
@@ -91,10 +93,10 @@ class Furbaby extends Component {
     this.setState({ birthDate });
   }
 
-  savetoFirebase(file) {
+  saveToFirebase(folder, file) {
     return new Promise(resolve => {
-      const fileName = uuidv1();
-      const storageRef = storage.ref(`furbabies/${fileName}`);
+      const name = file.name;
+      const storageRef = storage.ref('furbabies').child(`${folder}/${name}`);
       storageRef.put(file)
       .then(result => resolve(result.downloadURL))
     });
