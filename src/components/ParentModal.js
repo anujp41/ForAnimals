@@ -11,14 +11,17 @@ class ParentModal extends React.Component {
     this.state = {
       name: '',
       address: '',
-      showParents: false
+      parentId: '',
+      parentAdd: null,
+      parentSelect: null
     }
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.showParent = this.showParent.bind(this);
+    this.submitNewParent = this.submitNewParent.bind(this);
+    this.submitSelectParent = this.submitSelectParent.bind(this);
     this.renderParentList = this.renderParentList.bind(this);
     this.renderParentAddForm = this.renderParentAddForm.bind(this);
     this.setParentId = this.setParentId.bind(this);
+    this.parentOptionClick = this.parentOptionClick.bind(this);
   }
 
   handleChange(event) {
@@ -28,23 +31,35 @@ class ParentModal extends React.Component {
     this.setState({ [name] : value });
   }
 
-  handleSubmit(event) {
+  submitNewParent(event) {
     event.preventDefault();
     this.props.setParent(this.state.name, this.state.address);
     this.props.toggleModal();
   }
 
-  showParent() {
-    const showParents = !this.state.showParents;
-    this.setState({ showParents });
+  submitSelectParent() {
+    const parentId = this.state.parentId;
+    this.props.setParentId({parentId});
+    this.props.toggleModal();
   }
 
   setParentId(parent) {
-    console.log('parent is ', parent)
-    // this.showParent();
     this.setState({parentId: parent.id})
-    this.props.setParentId(parent.id);
-    // this.props.toggleModal();
+  }
+
+  parentOptionClick(option) {
+    let parentAdd = null;
+    let parentSelect = null;
+    console.log('option ', option)
+    if (option === 'parentAdd') {
+      parentAdd = true;
+      parentSelect = false;
+    }
+    if (option === 'parentSelect') {
+      parentAdd = false;
+      parentSelect = true;
+    }
+    this.setState({parentAdd, parentSelect});
   }
 
   renderParentList() {
@@ -68,7 +83,7 @@ class ParentModal extends React.Component {
                   row[filter.id].toLowerCase().includes(filter.value.toLowerCase())
               }
             ]}
-            defaultPageSize={5} 
+            defaultPageSize={4} 
             minRows={0}
             className='-striped parentItem'
             getTdProps={(state, rowInfo, column, instance) => {
@@ -79,6 +94,7 @@ class ParentModal extends React.Component {
                 }}
             }}
           />
+          <button className='button' onClick={this.submitSelectParent}>Submit</button>
       </div>
     )
   }
@@ -88,7 +104,7 @@ class ParentModal extends React.Component {
     const { furbaby } = this.props;
     return (
       <div className="titleModal">Add a new parent below for {furbaby}:
-        <form autoComplete="off" onSubmit={this.handleSubmit}>
+        <form autoComplete="off" onSubmit={this.submitNewParent}>
           <div className='parentName'>
             <div className="modal-text">Parent Name:</div>
             <input required className="input" type="text" maxLength='75' name="name" value={name} onChange={this.handleChange}/>              
@@ -98,6 +114,7 @@ class ParentModal extends React.Component {
             <div className="modal-text">Parent Address:</div>
             <input required className="input" type="text" name="address" value={address} onChange={this.handleChange}/>
           </div>
+          <button className='button' type="submit" value="submit">Submit</button>
         </form>
       </div>
     )
@@ -106,6 +123,7 @@ class ParentModal extends React.Component {
   render() {
     const { name, address } = this.state;
     const { furbaby } = this.props;
+    console.log(this.state)
     if(!this.props.show) {
       return null;
     }
@@ -115,14 +133,15 @@ class ParentModal extends React.Component {
         <button className='cancelbtn' onClick={()=>this.props.toggleModal(false)}>Cancel</button>
         <div className='containerModal'>
 
-          <div className="titleExisting">To add a parent for #{furbaby.name}, choose from below:</div>
+          <div className="titleExisting">To add a parent for {furbaby}, choose from below:</div>
 
           <div className='parentOptions'>
-            <div className='parentAdd'>Add Parent</div>
-            <div className='parentSelect'>Select Existing Parent</div>
+            <div className='parentAdd' onClick={()=>this.parentOptionClick('parentAdd')}>Add Parent</div>
+            <div className='parentSelect' onClick={()=>this.parentOptionClick('parentSelect')}>Select Existing Parent</div>
           </div>
 
-          <button className='button' type="submit" value="submit">Submit</button>
+          {this.state.parentAdd && this.renderParentAddForm()}
+          {this.state.parentSelect && this.renderParentList()}
                 
         </div>
       </div>
