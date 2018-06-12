@@ -148,7 +148,6 @@ class Furbaby extends Component {
   }
 
   onImageDrop(files) {
-    // if (this.state.photo !== null) alert('This will replace the current photo');
     const response = this.state.photo === null ? true : window.confirm("Do you want to replace the current photo?");
     console.log('response is ', response)
     if (response) {
@@ -170,9 +169,12 @@ class Furbaby extends Component {
     });
   }
 
-  handleStatus() {
-    //function will show modal based on the status of pet
-    this.setState({showModal: true})
+  handleStatus(event) {
+    const noModalStatus = ['Adoptable', 'Available as Barn Cat', 'Deceased', 'Returned to Colony'];
+    const target = event.target;
+    const currentStatus = target.value;
+    this.setState ({ currentStatus });
+    if (noModalStatus.indexOf(currentStatus) === -1) this.setState({showModal: true})
   }
 
   toggleModal(showModal) {
