@@ -146,10 +146,7 @@ class Furbaby extends Component {
   }
 
   handleDrop = (inputFiles) => {
-    let otherFiles = this.state.otherFiles;
-    console.log('before ', otherFiles.length, otherFiles)
-    otherFiles = otherFiles.length>0 ? [...otherFiles, ...inputFiles] : [...inputFiles];
-    console.log('after ', otherFiles)
+    const otherFiles = [...this.state.otherFiles, ...inputFiles];
     this.setState({ otherFiles });
   }
 
