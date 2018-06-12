@@ -74,7 +74,7 @@ class Furbaby extends Component {
     await this.handleDate(this.state.ageYear, this.state.ageMonth); //save birthDate to state
     const photoURL = await this.savetoFirebase(this.state.photo);
     const promiseArr = this.state.otherFiles.map(async (file) => await this.savetoFirebase(file).then((value) => value));
-    const imagesOtherURL = await Promise.all(promiseArr).then(value => value);
+    const imagesOtherURL = await Promise.all(promiseArr);
     this.setState({photoURL, imagesOtherURL});
   }
 
@@ -145,9 +145,11 @@ class Furbaby extends Component {
     this.setState({ photo });
   }
 
-  handleDrop = (file) => {
+  handleDrop = (inputFiles) => {
     let otherFiles = this.state.otherFiles;
-    otherFiles = otherFiles.length>0 ? [...otherFiles, file[0]] : [file[0]];
+    console.log('before ', otherFiles.length, otherFiles)
+    otherFiles = otherFiles.length>0 ? [...otherFiles, ...inputFiles] : [...inputFiles];
+    console.log('after ', otherFiles)
     this.setState({ otherFiles });
   }
 
@@ -387,7 +389,7 @@ class Furbaby extends Component {
 
             <div className="dropzone">
               <p>Upload Medical Forms</p>
-              <p>(Can upload multiple):</p>
+              <p>(Drop files in the box):</p>
               <FileDrop onDrop={this.handleDrop}>
                 {otherFiles.length> 0 && <h6>{otherFiles.length} file(s) added!</h6>}
               </FileDrop>
