@@ -73,9 +73,9 @@ class Furbaby extends Component {
     event.preventDefault();
     await this.handleDate(this.state.ageYear, this.state.ageMonth); //save birthDate to state
     const photoURL = await this.savetoFirebase(this.state.photo);
-    console.log('photoURL ', photoURL)
-    const imagesOtherURL = this.state.otherFiles.map(async (file) => await this.savetoFirebase(file));
-    console.log('imagesOtherURL', imagesOtherURL);
+    const promiseArr = this.state.otherFiles.map(async (file) => await this.savetoFirebase(file).then((value) => value));
+    const imagesOtherURL = await Promise.all(promiseArr).then(value => value);
+    this.setState({photoURL, imagesOtherURL});
   }
 
   handleDate(ageYear, ageMonth) {
@@ -93,16 +93,11 @@ class Furbaby extends Component {
 
   savetoFirebase(file) {
     return new Promise(resolve => {
-      console.log('promise')
       const fileName = uuidv1();
       const storageRef = storage.ref(`furbabies/${fileName}`);
-      resolve(storageRef.put(file)
-      .then(result => result.downloadURL))
+      storageRef.put(file)
+      .then(result => resolve(result.downloadURL))
     });
-    // .then(snapshot => {
-    //   console.log('returning')
-    //   return snapshot.downloadURL
-    // }).catch(err => console.log(err));
   }
 
   async saveToDB() {
@@ -218,8 +213,6 @@ class Furbaby extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
-    console.log(this.state.photo)
-    console.log(this.state.otherFiles)
     return (
       <div className='container'>
 
