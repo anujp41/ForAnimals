@@ -16,7 +16,8 @@ class ParentModal extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.showParent = this.showParent.bind(this);
-    this.renderParents = this.renderParents.bind(this);
+    this.renderParentList = this.renderParentList.bind(this);
+    this.renderParentAddForm = this.renderParentAddForm.bind(this);
     this.setParentId = this.setParentId.bind(this);
   }
 
@@ -46,9 +47,8 @@ class ParentModal extends React.Component {
     // this.props.toggleModal();
   }
 
-  renderParents() {
+  renderParentList() {
     const parents = this.props.parents;
-    console.log('state is ', this.state)
     return (
       <div>
         <div className='parents'>Select parent from list below!</div>
@@ -83,6 +83,26 @@ class ParentModal extends React.Component {
     )
   }
 
+  renderParentAddForm() {
+    const { name, address } = this.state;
+    const { furbaby } = this.props;
+    return (
+      <div className="titleModal">Add a new parent below for {furbaby}:
+        <form autoComplete="off" onSubmit={this.handleSubmit}>
+          <div className='parentName'>
+            <div className="modal-text">Parent Name:</div>
+            <input required className="input" type="text" maxLength='75' name="name" value={name} onChange={this.handleChange}/>              
+          </div>
+
+          <div className='parentAddress'>
+            <div className="modal-text">Parent Address:</div>
+            <input required className="input" type="text" name="address" value={address} onChange={this.handleChange}/>
+          </div>
+        </form>
+      </div>
+    )
+  }
+
   render() {
     const { name, address } = this.state;
     const { furbaby } = this.props;
@@ -92,34 +112,18 @@ class ParentModal extends React.Component {
 
     return (
       <div className='backdrop'>
-        <button className='cancelbtn' onClick={()=>this.props.toggleModal(false)}>
-          Cancel
-        </button>
+        <button className='cancelbtn' onClick={()=>this.props.toggleModal(false)}>Cancel</button>
         <div className='containerModal'>
-          <form autoComplete="off" onSubmit={this.handleSubmit}>
 
-          <div className="titleExisting" onClick={this.showParent}>Click here to select an existing parent</div>
-          { this.state.showParents && this.renderParents() }
+          <div className="titleExisting">To add a parent for #{furbaby.name}, choose from below:</div>
 
-          <div className="titleOption">Or</div>
-
-          <div className="titleModal">Add a new parent below for {furbaby}:
-
-            <div className='parentName'>
-              <div className="modal-text">Parent Name:</div>
-              <input required className="input" type="text" maxLength='75' name="name" value={name} onChange={this.handleChange}/>              
-            </div>
-
-            <div className='parentAddress'>
-              <div className="modal-text">Parent Address:</div>
-              <input required className="input" type="text" name="address" value={address} onChange={this.handleChange}/>
-            </div>
-
+          <div className='parentOptions'>
+            <div className='parentAdd'>Add Parent</div>
+            <div className='parentSelect'>Select Existing Parent</div>
           </div>
 
           <button className='button' type="submit" value="submit">Submit</button>
                 
-          </form>
         </div>
       </div>
     );
