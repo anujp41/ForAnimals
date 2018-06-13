@@ -206,7 +206,10 @@ class Furbaby extends Component {
 
   removeFile(event) {
     event.preventDefault();
-    console.log('removing file');
+    const targetFileName = event.target.name;
+    let otherFiles = this.state.otherFiles;
+    otherFiles = otherFiles.filter(file => file.name !== targetFileName);
+    this.setState({otherFiles});
   }
 
   render() {
@@ -424,14 +427,14 @@ class Furbaby extends Component {
                     {this.state.showFiles && 
                       <div>
                         <button className='cancelbtn' onClick={this.showFileList}>Close</button>
-                        <ol className='fileList' start='50'>
+                        <ul className='fileList' start='50'>
                           {otherFiles.map((file, idx) => (
                             <li className='fileItem' key={idx}>
                               <div className='fileListItem'>{file.name}</div>
-                              <button className='btnRemoveFile' onClick={this.removeFile} >X</button>
+                              <button className='btnRemoveFile' name={file.name} onClick={this.removeFile} >X</button>
                             </li>
                           ))}
-                        </ol>
+                        </ul>
                       </div>}
                   </div>}
               </FileDrop>
