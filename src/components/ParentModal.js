@@ -40,7 +40,6 @@ class ParentModal extends React.Component {
   submitSelectParent() {
     const {parentId} = this.state;
     this.props.setParentId({parentId});
-    console.log('i am sending', parentId)
     this.props.toggleModal();
   }
 

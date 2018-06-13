@@ -81,7 +81,6 @@ class Furbaby extends Component {
     const promiseArr = this.state.otherFiles.map(async (file) => await this.saveToFirebase(firebaseFolder, file).then((value) => value));
     const imagesOtherURL = await Promise.all(promiseArr);
     this.setState({photoUrl, imagesOtherURL});
-    console.log('saved to firebase');
     this.saveToDB();
   }
 
@@ -153,7 +152,6 @@ class Furbaby extends Component {
 
   onImageDrop(files) {
     const response = this.state.photo === null ? true : window.confirm("Do you want to replace the current photo?");
-    console.log('response is ', response)
     if (response) {
       const photo = files[0];
       this.setState({ photo });
@@ -197,7 +195,6 @@ class Furbaby extends Component {
 
   setParentId(id) {
     const {parentId} = id;
-    console.log('i am setting ', parentId);
     this.setState({ parentId });
   }
 
@@ -215,7 +212,6 @@ class Furbaby extends Component {
   }
 
   render() {
-    console.log('state from furbaby ', this.state)
     const { 
       shelterName,
       ageYear,
