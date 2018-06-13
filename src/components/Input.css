@@ -470,7 +470,8 @@ input[type=date]::-webkit-outer-spin-button {
 }
 
 .file-drop h6 {
-  margin: 40% 0;
+  margin: 0;
+  /* margin: 40% 0; */
 }
 
 .courtesyList {

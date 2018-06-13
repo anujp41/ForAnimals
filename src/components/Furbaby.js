@@ -48,7 +48,8 @@ class Furbaby extends Component {
       photoUrl: '',
       microchipNum: '09871111',
       otherFiles: [],
-      imagesOtherURL: []
+      imagesOtherURL: [],
+      showFiles: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
@@ -61,6 +62,8 @@ class Furbaby extends Component {
     this.handleDrop = this.handleDrop.bind(this);
     this.handleStatus = this.handleStatus.bind(this);
     this.saveToFirebase = this.saveToFirebase.bind(this);
+    this.showFileList = this.showFileList.bind(this);
+    this.removeFile = this.removeFile.bind(this);
   }
 
   handleChange(event) {
@@ -139,9 +142,10 @@ class Furbaby extends Component {
       photoUrl: '',
       microchipNum: '',
       otherFiles: [],
-      imagesOtherURL: []
+      imagesOtherURL: [],
+      showFiles: false
     };
-    const { parent, parentId, ageYear, ageMonth, addlComments, photo, otherFiles, ...furbaby } = this.state;
+    const { parent, parentId, ageYear, ageMonth, addlComments, photo, otherFiles, showFiles, ...furbaby } = this.state;
     this.props.submit(parent, furbaby, parentId);
     this.setState({...defaultState});
     alert('Furbaby saved to database!');
@@ -195,6 +199,16 @@ class Furbaby extends Component {
     this.setState({ parentId });
   }
 
+  showFileList() {
+    const showFiles = this.state.showFiles;
+    this.setState({ showFiles: !showFiles});
+  }
+
+  removeFile(event) {
+    event.preventDefault();
+    console.log('removing file');
+  }
+
   render() {
     const { 
       shelterName,
@@ -227,7 +241,6 @@ class Furbaby extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
-    console.log(this.state)
     return (
       <div className='container'>
 
@@ -405,10 +418,22 @@ class Furbaby extends Component {
               <p>(Drop files in the box):</p>
               <FileDrop onDrop={this.handleDrop}>
                 {otherFiles.length> 0 && 
-                  <h6 className='tooltip'>
-                    {otherFiles.length} file(s) added!
-                    <span class="tooltiptext">Click to see list of files!</span>
-                  </h6>}
+                  <div className='tooltip'>
+                    <h6 className='tooltipLabel' onClick={this.showFileList} >{otherFiles.length} file(s) added!</h6>
+                    <span className="tooltiptext">Click to see list of files!</span>
+                    {this.state.showFiles && 
+                      <div>
+                        <button className='cancelbtn' onClick={this.showFileList}>Close</button>
+                        <ol className='fileList' start='50'>
+                          {otherFiles.map((file, idx) => (
+                            <li className='fileItem' key={idx}>
+                              <div className='fileListItem'>{file.name}</div>
+                              <button className='btnRemoveFile' onClick={this.removeFile} >X</button>
+                            </li>
+                          ))}
+                        </ol>
+                      </div>}
+                  </div>}
               </FileDrop>
             </div>
 
