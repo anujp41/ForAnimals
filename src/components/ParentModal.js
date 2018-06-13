@@ -90,7 +90,7 @@ class ParentModal extends React.Component {
               return { 
                 onClick: (e) => this.setParentId(rowInfo.original),
                 style: {
-                  background: rowInfo.original.id === this.state.parentId ? '#26ada8' : '#7dad26'
+                  background: rowInfo.original.id === this.state.parentId ? '#26ada8' : '#cae599'
                 }}
             }}
           />

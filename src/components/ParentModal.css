@@ -19,7 +19,7 @@
 .containerModal {
   margin: auto;
   text-align: center;
-  background-color: #6a2fff;
+  background-color: rgb(112, 179, 237);
   font-family: 'Open Sans', sans-serif;
   width: 65vw;
   color: white;
@@ -45,7 +45,7 @@
 
 .parentAdd, .parentSelect {
   width: 50%;
-  background-color: rgb(255, 148, 28);
+  background-color: #efa959;
   height: 30px;
   cursor: pointer;
   padding-top: 10px;
@@ -81,6 +81,9 @@
 }
 
 .parentItem {
+  color: black;
+  font-size: 110%;
+  font-weight: 800;
   cursor: pointer;
   margin-bottom: 25px;
 }
@@ -107,4 +110,27 @@
   cursor: text;
   font-size: 20px;
   color: white;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 135px;
+  background-color: grey;
+  text-align: center;
+  border-radius: 10px;
+  padding: 5px 0;
+  position: absolute;
+  left: 80px;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }

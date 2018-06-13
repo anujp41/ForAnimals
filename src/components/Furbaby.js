@@ -404,7 +404,11 @@ class Furbaby extends Component {
               <p>Upload Medical Forms</p>
               <p>(Drop files in the box):</p>
               <FileDrop onDrop={this.handleDrop}>
-                {otherFiles.length> 0 && <h6>{otherFiles.length} file(s) added!</h6>}
+                {otherFiles.length> 0 && 
+                  <h6 className='tooltip'>
+                    {otherFiles.length} file(s) added!
+                    <span class="tooltiptext">Click to see list of files!</span>
+                  </h6>}
               </FileDrop>
             </div>
 
