@@ -43,7 +43,7 @@ class Furbaby extends Component {
       courtesyListLoc: '',
       parentId: null,
       parent: null,
-      youtubeVid: 'www.youtube.com/watch',
+      youtubeVid: null,
       photo: null,
       photoUrl: '',
       microchipNum: '09871111',
@@ -137,7 +137,7 @@ class Furbaby extends Component {
       courtesyListLoc: '',
       parentId: null,
       parent: null,
-      youtubeVid: '',
+      youtubeVid: null,
       photo: null,
       photoUrl: '',
       microchipNum: '',
@@ -195,7 +195,9 @@ class Furbaby extends Component {
     this.setState({ parent: {name, address} });
   }
 
-  setParentId(parentId) {
+  setParentId(id) {
+    const {parentId} = id;
+    console.log('i am setting ', parentId);
     this.setState({ parentId });
   }
 
@@ -213,6 +215,7 @@ class Furbaby extends Component {
   }
 
   render() {
+    console.log('state from furbaby ', this.state)
     const { 
       shelterName,
       ageYear,
@@ -395,7 +398,7 @@ class Furbaby extends Component {
 
             <div className='otherComment'>
               <div className='formfield'>
-                <input className="input otherDetail" type="text" name="youtubeVid" value={youtubeVid} onChange={this.handleChange}/>
+                <input className="input otherDetail" type="text" name="youtubeVid" value={youtubeVid || ''} onChange={this.handleChange}/>
                 <label className="label-text otherDetail">YouTube Link:</label>
               </div>
               <div className='formfield'>
@@ -427,7 +430,7 @@ class Furbaby extends Component {
                     {this.state.showFiles && 
                       <div>
                         <button className='cancelbtn' onClick={this.showFileList}>Close</button>
-                        <ul className='fileList' start='50'>
+                        <ul className='fileList'>
                           {otherFiles.map((file, idx) => (
                             <li className='fileItem' key={idx}>
                               <div className='fileListItem'>{file.name}</div>

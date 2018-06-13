@@ -38,8 +38,9 @@ class ParentModal extends React.Component {
   }
 
   submitSelectParent() {
-    const parentId = this.state.parentId;
+    const {parentId} = this.state;
     this.props.setParentId({parentId});
+    console.log('i am sending', parentId)
     this.props.toggleModal();
   }
 
@@ -50,7 +51,6 @@ class ParentModal extends React.Component {
   parentOptionClick(option) {
     let parentAdd = null;
     let parentSelect = null;
-    console.log('option ', option)
     if (option === 'parentAdd') {
       parentAdd = true;
       parentSelect = false;

@@ -143,6 +143,10 @@
   margin-left: 75px;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .fileList {
   position: absolute;
   top: 25px;

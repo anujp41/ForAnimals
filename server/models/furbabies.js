@@ -19,7 +19,7 @@ const FurBabies = db.define('furbaby', {
     allowNull: false
   },
   currentStatus: {
-    type: Sequelize.ENUM('Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Deceased', 'Returned to Colony'),
+    type: Sequelize.ENUM('Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'),
     allowNull: false
   },
   size: {
