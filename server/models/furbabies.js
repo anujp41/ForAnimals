@@ -132,7 +132,7 @@ const FurBabies = db.define('furbaby', {
     type: Sequelize.ARRAY(Sequelize.STRING),
     allowNull: true
   }
-// }
+}
 // {
 //   getterMethods: {
 //     age() {
@@ -151,19 +151,19 @@ const FurBabies = db.define('furbaby', {
 //     }
 //   }
 // }
-// , {
-//   hooks: {
-//     afterUpdate: function(furbaby, option) {
-//       const id = furbaby.parentId;
-//       const hasFoster = id ? true : false;
-//       this.associations.parent.target.update({hasFoster}, {where: {id}})
-//     },
-//     afterCreate: function(furbaby, option) {
-//       const id = furbaby.parentId;
-//       const hasFoster = id ? true : false;
-//       this.associations.parent.target.update({hasFoster}, {where: {id}})
-//     }
-//   }
+, {
+  hooks: {
+    afterUpdate: function(furbaby, option) {
+      const id = furbaby.parentId;
+      const hasFoster = id ? true : false;
+      this.associations.parent.target.update({hasFoster}, {where: {id}})
+    },
+    afterCreate: function(furbaby, option) {
+      const id = furbaby.parentId;
+      const hasFoster = id ? true : false;
+      this.associations.parent.target.update({hasFoster}, {where: {id}})
+    }
+  }
 });
 
 

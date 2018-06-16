@@ -22,6 +22,7 @@ class ParentModal extends React.Component {
     this.renderParentAddForm = this.renderParentAddForm.bind(this);
     this.setParentId = this.setParentId.bind(this);
     this.parentOptionClick = this.parentOptionClick.bind(this);
+    // this.clearState = this.clearState.bind(this);
   }
 
   handleChange(event) {
@@ -35,12 +36,14 @@ class ParentModal extends React.Component {
     event.preventDefault();
     this.props.setParent(this.state.name, this.state.address);
     this.props.toggleModal();
+    // this.clearState();
   }
 
   submitSelectParent() {
     const {parentId} = this.state;
     this.props.setParentId({parentId});
     this.props.toggleModal();
+    // this.clearState();
   }
 
   setParentId(parent) {
