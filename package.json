@@ -43,6 +43,8 @@
   "devDependencies": {
     "cats-js": "^1.0.2",
     "chance": "^1.0.16",
-    "random-cat": "^1.0.1"
+    "random-cat": "^1.0.1",
+    "request": "^2.87.0",
+    "xml2json": "^0.11.2"
   }
 }

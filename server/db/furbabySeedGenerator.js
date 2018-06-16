@@ -1,5 +1,6 @@
 const Chance = require("chance");
 const Cats = require("cats-js");
+const imageURLArr = require('./photoURLSeed');
 
 const chance = new Chance();
 const cat = new Cats();
@@ -43,12 +44,6 @@ const defaultJSON = async () => {
     imagesOtherURL: chance.n(chance.url, chance.integer({ min: 0, max: 20 }), {extensions: ['doc', 'docx', 'pdf']})
   }
 }
-
-// defaultJSON().then(val => console.log('val: ', val))
-// console.log('default1: ', Promise.resolve(defaultJSON()));
-// getCatImg().then(result => console.log('result is : ', result.images.image.url))
-
-
 
 const createFurbabySeed = async function() {
   const seed = new Array();
