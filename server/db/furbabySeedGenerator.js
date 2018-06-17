@@ -10,12 +10,11 @@ const gender = ['Male', 'Female'];
 const goodVars = ['Yes', 'No', 'Unsure'];
 
 const capitalize = string => string.replace(/\b\w/g, l => l.toUpperCase());
-const getCatImg = async () => await cat.get({type: "jpg", size: "med"});//.then(catImgURL => catImgURL.images.image.url);
+// const getCatImg = async () => await cat.get({type: "jpg", size: "med"});//.then(catImgURL => catImgURL.images.image.url);
 
-const defaultJSON = async () => { 
-  return {
-    shelterName: chance.name(),
-    adoptedName: chance.name(),
+const defaultJSON = () => ({
+    shelterName: chance.first(),
+    adoptedName: chance.first(),
     birthDate: chance.year({min: 2000, max: 2018})+'-'+chance.month({raw: true}).numeric+'-'+chance.integer({ min: 1, max: 28 }),
     intakeDate: chance.year({min: 2000, max: 2018})+'-'+chance.month({raw: true}).numeric+'-'+chance.integer({ min: 1, max: 28 }),
     currentStatus: currentState[chance.integer({min:0, max: currentState.length-1})],
@@ -37,20 +36,21 @@ const defaultJSON = async () => {
     currentLocation: chance.address(),
     courtesyListing: chance.bool(),
     courtesyListLoc: chance.bool({likelihood: 5}),
-    parentId: chance.bool() ? chance.integer({min: 0, max: 99}) : null,
+    parentId: chance.bool({likelihood: 40}) ? chance.integer({min: 0, max: 99}) : null,
     youtubeVid: chance.url({domain: 'www.youtube.com'}),
-    photoUrl: await getCatImg().then(result => result.images.image.url),
-    microchipNum: 'TVNxxxxxxxxxx',
+    photoUrl: imageURLArr[chance.integer({min: 0, max: 199})],
+    microchipNum: chance.hash({length: 15}),
     imagesOtherURL: chance.n(chance.url, chance.integer({ min: 0, max: 20 }), {extensions: ['doc', 'docx', 'pdf']})
-  }
-}
+});
 
-const createFurbabySeed = async function() {
+const createFurbabySeed = function() {
   const seed = new Array();
-  for (let i = 0; i < 45; i++) {
+  for (let i = 0; i < 500; i++) {
     seed.push(defaultJSON());
   }
   return seed;
 };
-// createFurbabySeed().then(seed => Promise.resolve(seed).then(result => Promise.all(result).then(async value => console.log(await value))));
+
+// console.log(createFurbabySeed())
+
 module.exports = createFurbabySeed;
