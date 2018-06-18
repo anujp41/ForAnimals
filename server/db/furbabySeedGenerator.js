@@ -1,8 +1,7 @@
-const Chance = require("chance");
+const Chance = require('chance');
 const moment = require('moment');
 const parentSeed = require('./parentSeedGenerator');
 const chance = new Chance();
-
 const imageURLArr = require('./photoURLSeed');
 
 const currentStatusArray = ['Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
@@ -20,7 +19,7 @@ const defaultJSON = () => {
   const addlAdoptionDate = chance.integer({min: addlIntakeDay, max: 1825});
   const adoptionDate = moment(birthDate).add(addlIntakeDay, 'days').add(addlAdoptionDate, 'days').format('MM-DD-YYYY');
   return {
-    shelterName: chance.first({ nationality: "it" }),
+    shelterName: chance.first({ nationality: 'it' }),
     birthDate: birthDateFormatted,
     intakeDate: intakeDate,
     currentStatus: currentStatusArray[chance.integer({min:0, max: currentStatusArray.length-1})],
@@ -57,7 +56,7 @@ const createFurbabySeed = function() {
     const currentStatus = seedObj.currentStatus;
     if (adoptionStatusArray.indexOf(currentStatus) >= 0) seedObj.parentId = null;
     if (seedObj.parentId === null) seedObj.adoptionDate = null;
-    seedObj.adoptedName = seedObj.parentId === null ? '' : chance.first({ nationality: "it" });
+    seedObj.adoptedName = seedObj.parentId === null ? '' : chance.first({ nationality: 'it' });
     seed.push(seedObj);
   }
   return seed;
@@ -70,7 +69,7 @@ furbabySeed.forEach(furbaby => {
   const parent = parentSeed[parentId-1];
   if (furbaby.parentId !== null) {
     parent.hasFoster = true;
-  }
-})
+  };
+});
 
 module.exports = {furbabySeed, parentSeed};

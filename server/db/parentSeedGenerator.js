@@ -1,12 +1,21 @@
-const Chance = require("chance");
+let zipcodes = require('zipcodes');
+const Chance = require('chance');
 const chance = new Chance();
 
-const defaultJSON = () => { 
+const defaultJSON = () => {
+  let zip = chance.zip();
+  let zipInfo = zipcodes.lookup(zip);
+  //loops till the chance zipcode is real zip code
+  while (zipInfo === undefined) {
+    zip = chance.zip();
+    zipInfo = zipcodes.lookup(zip);
+  }
+  const {city, state} = zipInfo;
   return {
     name: chance.name(),
     address: chance.address(),
-    city: chance.city(),
-    state: chance.state(),
+    city,
+    state,
     zip: chance.zip()
   }
 };

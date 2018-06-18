@@ -1,4 +1,4 @@
-const {furbabySeed, parentSeed} = require("./furbabySeedGenerator");
+const {furbabySeed, parentSeed} = require('./furbabySeedGenerator');
 
 const db = require('./index.js');
 const { FurBabies, Parents } = require('../models');
