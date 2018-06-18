@@ -110,6 +110,10 @@ const FurBabies = db.define('furbaby', {
     type: Sequelize.INTEGER,
     allowNull: true
   },
+  adoptionDate: {
+    type: Sequelize.DATE,
+    allowNull: true
+  },
   youtubeVid: {
     type: Sequelize.STRING,
     allowNull: true,

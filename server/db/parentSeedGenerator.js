@@ -19,4 +19,6 @@ const createParentSeed = function() {
   return seed;
 };
 
-module.exports = createParentSeed;
+const parentSeed = createParentSeed();
+
+module.exports = parentSeed;
