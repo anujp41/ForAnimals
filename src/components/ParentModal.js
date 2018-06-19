@@ -175,7 +175,7 @@ class ParentModal extends React.Component {
     const today = new Date().toISOString().split('T')[0];
     return (
       <div className='adoptionDate'>
-        <label className="input-label" htmlFor="adoptionDate">Intake Date: </label>
+        <label className="input-label" htmlFor="adoptionDate">Date of Adoption: </label>
         <input required type="date" name="adoptionDate" value={adoptionDate} max={today} onChange={this.handleChange}/>
       </div>
     )
