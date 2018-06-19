@@ -247,7 +247,6 @@ class Furbaby extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
-    console.log(this.state.photo)
     return (
       <div className='container'>
 

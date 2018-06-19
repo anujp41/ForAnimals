@@ -39,10 +39,6 @@
   display: flex;
 }
 
-/* .parentOptions > div {
-  text-align: center
-} */
-
 .parentAdd, .parentSelect {
   width: 50%;
   background-color: #efa959;
@@ -58,22 +54,45 @@
   transform: translateY(4px);
 }
 
-.parentName {
-  margin-top: 20px;
+.parentName, .parentAddress {
+  margin: 20px 50px 0 50px;
   border-bottom: 0;
+  background-color: rgb(77, 119, 155);
+  padding-bottom: 15px;
 }
 
-.parentAddress {
-  padding-bottom: 20px;
-  border-top: 0;
+
+.parentAddressItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 25px;
 }
 
-.parentName>.input, .parentAddress>.input {
+.input-label {
+  font-size: 15px;
+  font-style: italic;
+  color: orange;
+  font-weight: bolder;
+  margin-right: 15px;
+}
+
+.parentName .input {
   border-bottom: 2px solid white;
-  margin: auto;
   position: static;
-  width: 65%;
-  padding: 0 15px;
+  width: 95%;
+}
+
+.parentAddress .input {
+  border-bottom: 2px solid white;
+  position: static;
+  width: 75%;
+  transform: translateY(-5px);
+}
+
+.state, .zip {
+  display: flex;
+  width: 45%;
 }
 
 .parents {
@@ -108,8 +127,12 @@
 
 .modal-text {
   cursor: text;
-  font-size: 20px;
-  color: white;
+  font-size: 15px;
+  color: navy;
+}
+
+.modal-text-address {
+  padding-bottom: 15px;
 }
 
 .tooltip {

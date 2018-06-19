@@ -113,8 +113,25 @@ class ParentModal extends React.Component {
           </div>
 
           <div className='parentAddress'>
-            <div className="modal-text">Parent Address:</div>
-            <input required className="input" type="text" name="address" value={address} onChange={this.handleChange}/>
+            <div className="modal-text modal-text-address">Parent Address:</div>
+              <div class="parentAddressItem">
+                <label class="input-label" htmlFor="address">Street: </label>
+                <input required className="input" type="text" name="street" value={address} onChange={this.handleChange}/>
+              </div>
+              <div class="parentAddressItem">
+                <label class="input-label" htmlFor="address">City: </label>
+                <input required className="input" type="text" name="city" value={address} onChange={this.handleChange}/>
+              </div>
+              <div class="parentAddressItem state-zip">
+                <div class="state">
+                  <label class="input-label" htmlFor="address">State: </label>
+                  <input required className="input" type="text" name="state" value={address} onChange={this.handleChange}/>
+                </div>
+                <div class="zip">
+                  <label class="input-label" htmlFor="address">Zipcode: </label>
+                  <input required className="input" type="text" name="zip" value={address} onChange={this.handleChange}/>
+                </div>
+              </div>
           </div>
           <button className='button' type="submit" value="submit">Submit</button>
         </form>
