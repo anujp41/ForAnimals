@@ -77,9 +77,13 @@ class Furbaby extends Component {
     event.preventDefault();
     const firebaseFolder = uuidv1();
     await this.handleDate(this.state.ageYear, this.state.ageMonth); //save birthDate to state
-    const photoUrl = await this.saveToFirebase(firebaseFolder, this.state.photo);
-    const promiseArr = this.state.otherFiles.map(async (file) => await this.saveToFirebase(firebaseFolder, file).then((value) => value));
-    const imagesOtherURL = await Promise.all(promiseArr);
+    const photoUrl = this.state.photo !== null ? await this.saveToFirebase(firebaseFolder, this.state.photo) : null;
+    let promiseArr = [];
+    let imagesOtherURL = [];
+    if (this.state.otherFiles.length) {
+      promiseArr = this.state.otherFiles.map(async (file) => await this.saveToFirebase(firebaseFolder, file).then((value) => value));
+      imagesOtherURL = await Promise.all(promiseArr);
+    }
     this.setState({photoUrl, imagesOtherURL});
     this.saveToDB();
   }
@@ -243,6 +247,7 @@ class Furbaby extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
+    console.log(this.state.photo)
     return (
       <div className='container'>
 

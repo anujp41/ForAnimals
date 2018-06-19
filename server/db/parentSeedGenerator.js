@@ -5,7 +5,7 @@ const chance = new Chance();
 const defaultJSON = () => {
   let zip = chance.zip();
   let zipInfo = zipcodes.lookup(zip);
-  //loops till the chance zipcode is real zip code
+  //loops till the random chance zipcode is verfied to be real zip code
   while (zipInfo === undefined) {
     zip = chance.zip();
     zipInfo = zipcodes.lookup(zip);
@@ -16,7 +16,7 @@ const defaultJSON = () => {
     address: chance.address(),
     city,
     state,
-    zip: chance.zip()
+    zip
   }
 };
 
