@@ -6,7 +6,7 @@ const Parents = db.define('parent', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  address: {
+  street: {
     type: Sequelize.STRING,
     allowNull: false
   },

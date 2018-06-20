@@ -193,12 +193,12 @@ class Furbaby extends Component {
     }
   }
 
-  setParent(name, address) {
-    this.setState({ parent: {name, address} });
+  setParent(parentInfo) {
+    this.setState({ parent: {...parentInfo} });
   }
 
-  setParentId(id) {
-    const {parentId} = id;
+  setParentId(parentId) {
+    console.log('i get ', parentId)
     this.setState({ parentId });
   }
 
@@ -247,6 +247,7 @@ class Furbaby extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
+    console.log('parentId: ', this.state.parentId);
     return (
       <div className='container'>
 

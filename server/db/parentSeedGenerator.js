@@ -13,7 +13,7 @@ const defaultJSON = () => {
   const {city, state} = zipInfo;
   return {
     name: chance.name(),
-    address: chance.address(),
+    street: chance.address(),
     city,
     state,
     zip

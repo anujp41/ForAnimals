@@ -46,17 +46,19 @@ class ParentModal extends React.Component {
 
   submitNewParent(event) {
     event.preventDefault();
-    if (this.state.state.length !==2) {
+    if (states.indexOf(this.state.state) === -1) {
       alert("Please select state from the dropdown list");
       return;
     }
-    this.props.setParent(this.state.name, this.state.address);
+    const {name, street, city, state, zip} = this.state;
+    const parentInfo = {name, street, city, state, zip};
+    this.props.setParent(parentInfo);
     this.props.toggleModal();
   }
 
   submitSelectParent() {
     const {parentId} = this.state;
-    this.props.setParentId({parentId});
+    this.props.setParentId(parentId);
     this.props.toggleModal();
   }
 
