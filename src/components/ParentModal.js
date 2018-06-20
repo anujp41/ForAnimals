@@ -31,6 +31,7 @@ class ParentModal extends React.Component {
     this.setParentId = this.setParentId.bind(this);
     this.parentOptionClick = this.parentOptionClick.bind(this);
     this.handleDropdown = this.handleDropdown.bind(this);
+    this.groupAddress = this.groupAddress.bind(this);
   }
 
   handleChange(event) {
@@ -79,6 +80,10 @@ class ParentModal extends React.Component {
     }
     this.setState({parentAdd, parentSelect});
   }
+  
+  groupAddress(item) {
+    return `${item.street}, ${item.city}, ${item.state} ${item.zip}`;
+  }
 
   renderParentList() {
     const parents = this.props.parents;
@@ -92,11 +97,13 @@ class ParentModal extends React.Component {
               {
                 Header: 'Name',
                 accessor: 'name',
+                maxWidth: 275,
                 filterMethod: (filter, row) => 
                   row[filter.id].toLowerCase().includes(filter.value.toLowerCase())
               }, {
+                id: 'parentAddress',
                 Header: 'Address',
-                accessor: 'address',
+                accessor: d => this.groupAddress(d),
                 filterMethod: (filter, row) => 
                   row[filter.id].toLowerCase().includes(filter.value.toLowerCase())
               }
