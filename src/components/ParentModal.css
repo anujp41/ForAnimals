@@ -66,6 +66,7 @@
   align-items: center;
   justify-content: center;
   padding-bottom: 25px;
+  height: 35px;
 }
 
 .input-label {
@@ -73,7 +74,11 @@
   font-style: italic;
   color: orange;
   font-weight: bolder;
-  margin-right: 15px;
+  margin-right: 25px;
+}
+
+.input-label-state {
+  float: left;
 }
 
 .parentName .input {
@@ -98,8 +103,16 @@
 }
 
 .stateList {
-  font-size: 12px;
-  cursor: pointer;
+  background-color: rgb(77, 119, 155);
+  font-size: 15px;
+  color: white;
+  width: 150px;
+  height: 35px;
+  float: left;
+}
+
+.stateOption {
+  text-align: center;
 }
 
 .parents {

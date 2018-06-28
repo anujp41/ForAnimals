@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import './ParentModal.css';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
-import Autocomplete from 'react-autocomplete';
 
 const states = require('../assets/statesList');
 
@@ -18,14 +17,12 @@ class ParentModal extends React.Component {
       city: '',
       state: '',
       zip: '',
-      parentId: '',
       parentAdd: null,
       parentSelect: null,
       adoptionDate: ''
     }
     this.handleChange = this.handleChange.bind(this);
-    this.submitNewParent = this.submitNewParent.bind(this);
-    this.submitSelectParent = this.submitSelectParent.bind(this);
+    this.submitParent = this.submitParent.bind(this);
     this.renderParentList = this.renderParentList.bind(this);
     this.renderParentAddForm = this.renderParentAddForm.bind(this);
     this.renderAdoptionDate = this.renderAdoptionDate.bind(this);
@@ -33,6 +30,7 @@ class ParentModal extends React.Component {
     this.parentOptionClick = this.parentOptionClick.bind(this);
     this.handleDropdown = this.handleDropdown.bind(this);
     this.groupAddress = this.groupAddress.bind(this);
+    this.clearState = this.clearState.bind(this);
   }
 
   handleChange(event) {
@@ -42,25 +40,32 @@ class ParentModal extends React.Component {
     this.setState({ [name] : value });
   }
 
+  clearState() {
+    const defaultState = {
+      id: '', name: '',
+      street: '', 
+      city: '',
+      state: '',
+      zip: '',
+      parentAdd: null,
+      parentSelect: null,
+      adoptionDate: ''
+    };
+    this.setState({ ...defaultState });
+  }
+
   handleDropdown(state) {
     this.setState({state})
   }
 
-  submitNewParent(event) {
+  submitParent(event) {
     event.preventDefault();
     if (states.indexOf(this.state.state) === -1) {
       alert("Please select state from the dropdown list");
       return;
     }
-    const {name, street, city, state, zip} = this.state;
-    const parentInfo = {name, street, city, state, zip};
-    this.props.setParent(parentInfo);
-    this.props.toggleModal();
-  }
-
-  submitSelectParent() {
-    const {parentId} = this.state;
-    this.props.setParentId(parentId);
+    const {id, name, street, city, state, zip} = this.state;
+    this.props.setParent({id, name, street, city, state, zip});
     this.props.toggleModal();
   }
 
@@ -70,6 +75,7 @@ class ParentModal extends React.Component {
   }
 
   parentOptionClick(option) {
+    this.clearState();
     let parentAdd = null;
     let parentSelect = null;
     if (option === 'parentAdd') {
@@ -80,7 +86,7 @@ class ParentModal extends React.Component {
       parentAdd = false;
       parentSelect = true;
     }
-    this.setState({parentAdd, parentSelect});
+    this.setState({ parentAdd, parentSelect });
   }
   
   groupAddress(item) {
@@ -89,7 +95,6 @@ class ParentModal extends React.Component {
 
   renderParentList() {
     const parents = this.props.parents;
-    console.log('state: ', this.state)
     return (
       <div>
         <div className='parents'>Select parent from list below!</div>
@@ -118,12 +123,12 @@ class ParentModal extends React.Component {
               return { 
                 onClick: (e) => this.setParentId(rowInfo.original),
                 style: {
-                  background: rowInfo.original.id === this.state.parentId ? '#26ada8' : '#cae599'
+                  background: rowInfo.original.id === this.state.id ? '#26ada8' : '#cae599'
                 }}
             }}
           />
           {this.renderAdoptionDate()}
-          <button className='button' onClick={this.submitSelectParent}>Submit</button>
+          <button className='button' onClick={this.submitParent}>Submit</button>
       </div>
     )
   }
@@ -133,48 +138,44 @@ class ParentModal extends React.Component {
     const { furbaby } = this.props;
     return (
       <div className="titleModal">Add a new parent below for {furbaby}:
-        <form autoComplete="nada" onSubmit={this.submitNewParent}>
+        <form autoComplete="nada" onSubmit={this.submitParent}>
+
           <div className='parentName'>
             <div className="modal-text">Parent Name:</div>
             <input required className="input" type="text" maxLength='75' name="name" value={name} onChange={this.handleChange}/>              
           </div>
 
           <div className='parentAddress'>
+
             <div className="modal-text modal-text-address">Parent Address:</div>
+
               <div className="parentAddressItem">
                 <label className="input-label" htmlFor="address">Street: </label>
                 <input required className="input" type="text" name="street" value={street} onChange={this.handleChange}/>
               </div>
+
               <div className="parentAddressItem">
                 <label className="input-label" htmlFor="address">City: </label>
                 <input required className="input" type="text" name="city" value={city} onChange={this.handleChange}/>
               </div>
-              <div className="parentAddressItem state-zip">
+
+              <div className="parentAddressItem">
+
                 <div className="state">
-                  <label className="input-label" htmlFor="state">State: </label>
-                  <Autocomplete
-                    readonly
-                    items={states}
-                    getItemValue={item => item}
-                    value={state}
-                    onSelect={value => this.handleDropdown(value)}
-                    onChange={event => this.handleDropdown(event.target.value)}
-                    renderItem={(item, highlighted) => 
-                      <div 
-                        className="stateList"
-                        key={item}
-                        style={{ backgroundColor: highlighted ? '#a59898' : 'transparent'}}
-                        >{item}
-                      </div>
-                    }
-                    />
+                  <label className="input-label input-label-state" for="state">State: </label>
+                  <select required name='state' className='stateList' value={state} onChange={this.handleChange}>
+                    {states.map((val, idx) => <option key={idx} className='stateOption'>{val}</option>)}
+                  </select>
                 </div>
+
                 <div className="zip">
                   <label className="input-label" htmlFor="address">Zipcode: </label>
                   <input required className="input" type="text" name="zip" value={zip} onChange={this.handleChange}/>
                 </div>
+
               </div>
-              {this.renderAdoptionDate()}
+
+            {this.renderAdoptionDate()}
           </div>
           <button className='button' type="submit" value="submit">Submit</button>
         </form>

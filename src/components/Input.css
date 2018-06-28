@@ -458,7 +458,9 @@ input[type=date]::-webkit-outer-spin-button {
   margin: 0;
 }
 
-.dropzone img, .file-drop {
+.furbaby-photo, .file-drop {
+  min-height: 100px;
+  min-width: 100px;
   height: 100px;
   width: 100px;
   margin: 5px auto;

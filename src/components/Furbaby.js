@@ -41,7 +41,6 @@ class Furbaby extends Component {
       currentLocation: 'Home',
       courtesyListing: false,
       courtesyListLoc: '',
-      parentId: null,
       parent: null,
       youtubeVid: null,
       photo: null,
@@ -49,7 +48,8 @@ class Furbaby extends Component {
       microchipNum: '09871111',
       otherFiles: [],
       imagesOtherURL: [],
-      showFiles: false
+      showFiles: false,
+      showModal: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
@@ -58,7 +58,6 @@ class Furbaby extends Component {
     this.saveToDB = this.saveToDB.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.setParent = this.setParent.bind(this);
-    this.setParentId = this.setParentId.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
     this.handleStatus = this.handleStatus.bind(this);
     this.saveToFirebase = this.saveToFirebase.bind(this);
@@ -76,7 +75,7 @@ class Furbaby extends Component {
   async handleSubmit(event) {
     event.preventDefault();
     const firebaseFolder = uuidv1();
-    await this.handleDate(this.state.ageYear, this.state.ageMonth); //save birthDate to state
+    await this.handleDate(this.state.ageYear, this.state.ageMonth);
     const photoUrl = this.state.photo !== null ? await this.saveToFirebase(firebaseFolder, this.state.photo) : null;
     let promiseArr = [];
     let imagesOtherURL = [];
@@ -138,7 +137,6 @@ class Furbaby extends Component {
       currentLocation: '',
       courtesyListing: false,
       courtesyListLoc: '',
-      parentId: null,
       parent: null,
       youtubeVid: null,
       photo: null,
@@ -146,10 +144,11 @@ class Furbaby extends Component {
       microchipNum: '',
       otherFiles: [],
       imagesOtherURL: [],
-      showFiles: false
+      showFiles: false,
+      showModal: false
     };
-    const { parent, parentId, ageYear, ageMonth, addlComments, photo, otherFiles, showFiles, ...furbaby } = this.state;
-    this.props.submit(parent, furbaby, parentId);
+    const { parent, ageYear, ageMonth, addlComments, photo, otherFiles, showFiles, ...furbaby } = this.state;
+    this.props.submit(parent, furbaby);
     this.setState({...defaultState});
     alert('Furbaby saved to database!');
   }
@@ -193,12 +192,8 @@ class Furbaby extends Component {
     }
   }
 
-  setParent(parentInfo) {
-    this.setState({ parent: {...parentInfo} });
-  }
-
-  setParentId(parentId) {
-    this.setState({ parentId });
+  setParent(parent) {
+    this.setState({ parent });
   }
 
   showFileList() {
@@ -248,7 +243,6 @@ class Furbaby extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
-    console.log('parent: ', parent)
     return (
       <div className='container'>
 
@@ -417,7 +411,7 @@ class Furbaby extends Component {
                 onDrop={this.onImageDrop.bind(this)}>
                 <p>Upload pictures</p>
                 <p>(Limit One):</p>
-                <img alt="" src={this.state.photo && this.state.photo.preview}/>
+                <img className='furbaby-photo' alt="" src={this.state.photo && this.state.photo.preview}/>
               </Dropzone>
             </div>
 
@@ -480,7 +474,7 @@ class Furbaby extends Component {
             
         </form>
 
-        {this.state.showModal && <ParentModal furbaby={shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent} setParentId={this.setParentId}/>}
+        {this.state.showModal && <ParentModal furbaby={shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent}/>}
       </div>
     )
   }
@@ -488,15 +482,18 @@ class Furbaby extends Component {
 
 const mapDispatch = dispatch => {
   return {
-    submit(parent, furbaby, parentId) {
-      if (parent) {
-        dispatch(createParentThunk(parent))
+    submit(parent, furbaby) {
+      console.log('parent is ', parent)
+      parent && console.log('parent id is ', parent.id);
+      if (parent && parent.id.length === 0) {
+        const {id, ...parentInfo} = parent;
+        dispatch(createParentThunk(parentInfo))
         .then(parent => {
           furbaby.parentId = parent.parent.id;
           dispatch(createFurbabyThunk(furbaby));
         });
-      } else if (parentId) {
-        furbaby.parentId = parentId;
+      } else if (parent && parent.id > 0) {
+        furbaby.parentId = parent.id;
         dispatch(createFurbabyThunk(furbaby));
       } else {
         dispatch(createFurbabyThunk(furbaby));
