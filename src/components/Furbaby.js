@@ -74,6 +74,10 @@ class Furbaby extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
+    if (this.state.currentStatus === 'Choose from list:') {
+      alert(`Please select the current status of ${this.state.shelterName}!`);
+      return;
+    }
     const firebaseFolder = uuidv1();
     await this.handleDate(this.state.ageYear, this.state.ageMonth);
     const photoUrl = this.state.photo !== null ? await this.saveToFirebase(firebaseFolder, this.state.photo) : null;
@@ -147,7 +151,7 @@ class Furbaby extends Component {
       showFiles: false,
       showModal: false
     };
-    const { parent, ageYear, ageMonth, addlComments, photo, otherFiles, showFiles, ...furbaby } = this.state;
+    const { parent, ageYear, ageMonth, photo, otherFiles, showFiles, ...furbaby } = this.state;
     this.props.submit(parent, furbaby);
     this.setState({...defaultState});
     alert('Furbaby saved to database!');
