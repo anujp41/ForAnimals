@@ -12,6 +12,7 @@ class ParentModal extends React.Component {
   constructor() {
     super();
     this.state = {
+      id: '',
       name: '',
       street: '',
       city: '',
@@ -64,7 +65,8 @@ class ParentModal extends React.Component {
   }
 
   setParentId(parent) {
-    this.setState({parentId: parent.id})
+    const {id, name, street, city, state, zip } = parent;
+    this.setState({ id, name, street, city, state, zip })
   }
 
   parentOptionClick(option) {
@@ -87,6 +89,7 @@ class ParentModal extends React.Component {
 
   renderParentList() {
     const parents = this.props.parents;
+    console.log('state: ', this.state)
     return (
       <div>
         <div className='parents'>Select parent from list below!</div>

@@ -572,6 +572,7 @@ input[type=date]::-webkit-outer-spin-button {
   font-size: 10px;
   position: absolute;
   left: 80px;
+  bottom: 5px;
   z-index: 1;
 }
 
@@ -579,8 +580,62 @@ input[type=date]::-webkit-outer-spin-button {
   visibility: visible;
 }
 
-.tooltip .cancelbtn {
+.cancelbtn {
   position: absolute;
   top: 6px;
   margin-left: 75px;
+  left: 0;
+}
+
+.fileList {
+  position: absolute;
+  top: 25px;
+  width: 150px;
+  margin: 0;
+  padding: 2px 0 2px 5px ;
+  background-color: antiquewhite;
+  color: black;
+}
+
+.fileListBox {
+  position: absolute;
+  background-color: red;
+  top: 30px;
+  right: 100px;
+}
+
+.fileItem {
+  display: flex;
+  margin-bottom: 3px;
+}
+
+.fileListItem {
+  text-align: left;
+  width: 90%;
+  height: 15px;
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+.btnRemoveFile {
+  position: absolute;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  width: 25px;
+  height: 15px;
+}
+
+.status {
+  margin-top: 15px;
+}
+
+.currentStatus {
+  background-color: #6d6969;
+  font-size: 15px;
+  color: white;
+  height: 35px;
 }

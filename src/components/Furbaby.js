@@ -21,7 +21,7 @@ class Furbaby extends Component {
       adoptedName: '',
       birthDate: '',
       intakeDate: '2018-06-01',
-      currentStatus: 'Adopted',
+      currentStatus: 'Choose from list:',
       size: 'Small',
       coatColor: 'Tabby',
       coatLength: 'Long',
@@ -198,7 +198,6 @@ class Furbaby extends Component {
   }
 
   setParentId(parentId) {
-    console.log('i get ', parentId)
     this.setState({ parentId });
   }
 
@@ -244,10 +243,12 @@ class Furbaby extends Component {
       youtubeVid,
       microchipNum,
       otherFiles,
-      currentStatus } = this.state;
+      currentStatus,
+      parent } = this.state;
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
+    console.log('parent: ', parent)
     return (
       <div className='container'>
 
@@ -427,15 +428,16 @@ class Furbaby extends Component {
                 {otherFiles.length> 0 && 
                   <div className='tooltip'>
                     <h6 className='tooltipLabel' onClick={this.showFileList} >{otherFiles.length} file(s) added!</h6>
-                    <span className="tooltiptext">Click to see list of files!</span>
+                    <span className='tooltiptext'>Click to see list of files!</span>
                     {this.state.showFiles && 
-                      <div>
+                      <div className='fileListBox'>
                         <button className='cancelbtn' onClick={this.showFileList}>Close</button>
                         <ul className='fileList'>
                           {otherFiles.map((file, idx) => (
                             <li className='fileItem' key={idx}>
-                              <div className='fileListItem'>{file.name}</div>
-                              <button className='btnRemoveFile' name={file.name} onClick={this.removeFile} >X</button>
+                              <div className='fileListItem'>{file.name}
+                                <button className='btnRemoveFile' name={file.name} onClick={this.removeFile} >X</button>
+                              </div>
                             </li>
                           ))}
                         </ul>
@@ -464,11 +466,15 @@ class Furbaby extends Component {
           </div>
 
           <div className='status'>
-            <div>Current Status of furbaby:</div>
-              <select required name='currentStatus' value={currentStatus} onChange={this.handleStatus}>
+            <div><ins>Current Status of furbaby:</ins></div>
+              <select required name='currentStatus' className='currentStatus' value={currentStatus} onChange={this.handleStatus}>
                 {status.map((curr, idx) => <option disabled={curr==='Choose from list:'} key={idx}>{curr}</option>)}
               </select>              
           </div>
+
+          {parent !== null &&
+            <div>{parent.name}</div>
+          }
 
           <button className='button' type="submit" value="submit">Submit</button>
             

@@ -103,7 +103,8 @@
 }
 
 .parents {
-  margin: 25px 0 20px 0
+  font-size: 2em;
+  padding-top: 15px;
 }
 
 .parentItem {
@@ -162,36 +163,4 @@ input[role="combobox"] {
 
 ul {
   list-style-type: none;
-}
-
-.fileList {
-  position: absolute;
-  top: 25px;
-  width: 150px;
-  margin: 0;
-  padding: 2px 0 2px 10px ;
-  background-color: antiquewhite;
-  color: black;
-}
-
-.fileItem {
-  display: flex;
-  margin-bottom: 3px;
-}
-
-.fileListItem {
-  text-align: left;
-  width: 120px;
-  height: 15px;
-  font-size: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.btnRemoveFile {
-  margin: 0;
-  padding: 0;
-  width: 25px;
-  height: 15px;
 }
