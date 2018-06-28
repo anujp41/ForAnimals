@@ -213,6 +213,7 @@ class Furbaby extends Component {
     let otherFiles = this.state.otherFiles;
     otherFiles = otherFiles.filter(file => file.name !== targetFileName);
     this.setState({otherFiles});
+    if (otherFiles.length === 0) this.setState({ showFiles: false });
   }
 
   render() {
@@ -247,7 +248,6 @@ class Furbaby extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
-    console.log('parentId: ', this.state.parentId);
     return (
       <div className='container'>
 

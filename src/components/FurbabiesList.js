@@ -114,7 +114,8 @@ class FurbabiesList extends Component {
                 <div className='furbabySex'><b>Sex: </b>{furbaby.sex}</div>
                 <div className='furbabySpayed'><b>Spayed: </b>{furbaby.spayed ? 'Yes' : 'No'}</div>
                 <div className='furbabyFivpositive'><b>FIV Positive: </b>{furbaby.fivpositive ? 'Yes' : 'No'}</div>
-                <div className='furbabyComments'><b>Comments: </b>{furbaby.comments.length ? furbaby.comments : 'None'}</div>
+                <div className='furbabyComments'><b>Comments: </b>'None'</div>
+                {/* <div className='furbabyComments'><b>Comments: </b>{furbaby.comments.length ? furbaby.comments : 'None'}</div> */}
               </div>
               {furbaby.parentId && 
                 <div className='parentInfo'>

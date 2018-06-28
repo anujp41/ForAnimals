@@ -103,7 +103,7 @@ class ParentModal extends React.Component {
               }, {
                 id: 'parentAddress',
                 Header: 'Address',
-                accessor: d => this.groupAddress(d),
+                accessor: parentInfo => this.groupAddress(parentInfo),
                 filterMethod: (filter, row) => 
                   row[filter.id].toLowerCase().includes(filter.value.toLowerCase())
               }

@@ -13,12 +13,12 @@ class Main extends Component {
 
   render() {
     return (
-      <div className="Main">
-        <header className="Main-header">
-          <img alt='' className="Main-logo" src={logo}/>
-          <h1 className="Main-title">Welcome to For Animals Inc Database</h1>
+      <div className="main">
+        <header className="main-header">
+          <img alt='' className="main-logo" src={logo}/>
+          <h1 className="main-title">Welcome to For Animals Inc Database</h1>
         </header>
-        <div className="Main-intro">
+        <div className="main-intro">
         <Link to='/'>Go Home</Link>
         </div>
       </div>
