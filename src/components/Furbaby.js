@@ -195,8 +195,11 @@ class Furbaby extends Component {
     }
   }
 
-  toggleModal(showModal) {
+  toggleModal(showModal, method=null) {
     this.setState({ showModal });
+    if (method === 'cancelled') {
+      this.setState({ currentStatus: 'Choose from list:'})
+    }
   }
 
   setParent(parent, adoptedName, adoptionDate) {
@@ -218,6 +221,7 @@ class Furbaby extends Component {
   }
 
   render() {
+    console.log('show modal ', this.state.showModal);
     const { 
       shelterName,
       ageYear,

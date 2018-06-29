@@ -69,7 +69,7 @@ class ParentModal extends React.Component {
     }
     const {id, name, street, city, state, zip, adoptedName, adoptionDate} = this.state;
     this.props.setParent({id, name, street, city, state, zip}, adoptedName, adoptionDate);
-    this.props.toggleModal();
+    this.props.toggleModal(false);
   }
 
   setParentId(parent) {
@@ -215,7 +215,7 @@ class ParentModal extends React.Component {
     }
     return (
       <div className='backdrop'>
-        <button className='cancelbtn' onClick={()=>this.props.toggleModal(false)}>Cancel</button>
+        <button className='cancelbtn' onClick={()=>this.props.toggleModal(false, 'cancelled')}>Cancel</button>
         <div className='containerModal'>
 
           <div className='titleExisting'>To add a parent for {furbaby}, choose from below:</div>

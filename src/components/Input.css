@@ -574,13 +574,6 @@ input[type=date]::-webkit-outer-spin-button {
   visibility: visible;
 }
 
-.cancelbtn {
-  position: absolute;
-  top: 6px;
-  margin-left: 75px;
-  left: 0;
-}
-
 .fileList {
   position: absolute;
   top: 25px;
