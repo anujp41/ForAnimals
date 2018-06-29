@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { createFurbabyThunk, createParentThunk } from '../store';
 import './Input.css';
 import Dropzone from 'react-dropzone';
@@ -50,7 +50,7 @@ class Furbaby extends Component {
       otherFiles: [],
       imagesOtherURL: [],
       showFiles: false,
-      showModal: true
+      showModal: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
@@ -128,7 +128,7 @@ class Furbaby extends Component {
       coatColor: '',
       coatLength: '',
       breed: '',
-      gender: '',
+      gender: 'Select:',
       altered: false,
       fivStatus: false,
       felvStatus: false,
@@ -160,14 +160,14 @@ class Furbaby extends Component {
   }
 
   onImageDrop(files) {
-    const response = this.state.photo === null ? true : window.confirm("Do you want to replace the current photo?");
+    const response = this.state.photo === null ? true : window.confirm('Do you want to replace the current photo?');
     if (response) {
       const photo = files[0];
       this.setState({ photo });
     }
   }
 
-  handleDrop = (inputFiles) => {
+  handleDrop (inputFiles) {
     const otherFiles = [...this.state.otherFiles, ...inputFiles];
     this.setState({ otherFiles });
   }
@@ -190,19 +190,13 @@ class Furbaby extends Component {
       return;
     }
     if (noModalStatus.indexOf(currentStatus) >= 0) {
-      this.setState({ parent: null });
+      this.setState({ parent: null, adoptedName: '', adoptionDate: '' });
       return;
     }
   }
 
   toggleModal(showModal) {
     this.setState({ showModal });
-    if (showModal === false ) {
-      this.setState({
-        fostered: false,
-        adopted: false
-      })
-    }
   }
 
   setParent(parent, adoptedName, adoptionDate) {
@@ -224,7 +218,6 @@ class Furbaby extends Component {
   }
 
   render() {
-    console.log('adopted: ', this.state.adoptedName);
     const { 
       shelterName,
       ageYear,
@@ -260,79 +253,80 @@ class Furbaby extends Component {
     return (
       <div className='container'>
 
-        <form autoComplete="off" onSubmit={this.handleSubmit}>
+        <form autoComplete='off' onSubmit={this.handleSubmit}>
 
-          <div className="title">Enter details for our new furbaby:</div>
+          <div className='title'>Enter details for our new furbaby:</div>
 
-          <div className="general">
+          <div className='general'>
 
             <div className='formfield'>
-              <input required className="input" type="text" name="shelterName" value={shelterName} onChange={this.handleChange}/>
-              <label className="label-text">Name</label>
+              <input required className='input' type='text' name='shelterName' value={shelterName} onChange={this.handleChange}/>
+              <label className='label-text'>Name</label>
             </div>
 
             <div className='formfield'>
-              <div className="input ageEntry">
-                <input required type="number" min="0" max="20" className="years" name="ageYear" value={ageYear} onChange={this.handleChange}/>
+              <div className='input ageEntry'>
+                <input required type='number' min='0' max='20' className='years' name='ageYear' value={ageYear} onChange={this.handleChange}/>
                 <span>Years</span>
-                <input required type="number" min="0" max="12" className="months" name="ageMonth" value={ageMonth} onChange={this.handleChange}/>
+                <input required type='number' min='0' max='12' className='months' name='ageMonth' value={ageMonth} onChange={this.handleChange}/>
                 <span>Months</span>
               </div>
-              <label className="label-text" type="age">Age</label>
+              <label className='label-text' type='age'>Age</label>
             </div>
 
             <div className='formfield'>
-              <input required className="input" type="text" name="breed" value={breed} onChange={this.handleChange}/>
-              <label className="label-text">Breed</label>
+              <input required className='input' type='text' name='breed' value={breed} onChange={this.handleChange}/>
+              <label className='label-text'>Breed</label>
             </div>
 
             <div className='formfield'>
-              <label className="label-text">Gender</label>
-              <select name="gender" value={gender} onChange={this.handleChange}>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+              <label className='label-text'>Gender</label>
+              <select required name='gender' className='genderEntry' value={gender} onChange={this.handleChange}>
+                <option disabled value=''>Select:</option>
+                <option value='Male'>Male</option>
+                <option value='Female'>Female</option>
               </select>
             </div>
 
             <div className='formfield'>
-              <input required className="input" type="text" name="size" value={size} onChange={this.handleChange}/>
-              <label className="label-text">Size</label>
+              <input required className='input' type='text' name='size' value={size} onChange={this.handleChange}/>
+              <label className='label-text'>Size</label>
             </div>
 
             <div className='formfield coatfield'>
               <div className='coat-left'>
-                <input required className="input" type="text" name="coatColor" value={coatColor} onChange={this.handleChange}/>
-                <label className="label-text">Coat Color</label>
+                <input required className='input' type='text' name='coatColor' value={coatColor} onChange={this.handleChange}/>
+                <label className='label-text'>Coat Color</label>
               </div>
               <div className='coat-right'>
-                <input required className="input" type="text" name="coatLength" value={coatLength} onChange={this.handleChange}/>
-                <label className="label-text">Coat Length</label>
+                <input required className='input' type='text' name='coatLength' value={coatLength} onChange={this.handleChange}/>
+                <label className='label-text'>Coat Length</label>
               </div>
             </div>
 
           </div>
 
           <div className='comment bio'>
-            <textarea className='commentInput' maxLength='250' type="text" row='3' name="bio" value={bio} placeholder='History/Biography of Furbaby' onChange={this.handleChange}/>
+            <textarea className='commentInput' maxLength='250' type='text' row='3' name='bio' value={bio} placeholder='History / Biography of Furbaby' onChange={this.handleChange}/>
             <div className='charactersLeft'>250 character(s) remaining</div>
           </div>
 
 
-          <div className="general">
+          <div className='general'>
             <div className='formfield date-input'>
               <div className='date-field'>Intake Date: </div>
-              <input required className='arrived' type="date" name="intakeDate" value={intakeDate} max={today} onChange={this.handleChange}/>
+              <input required className='arrived' type='date' name='intakeDate' value={intakeDate} max={today} onChange={this.handleChange}/>
             </div>
 
             <div className='formfield'>
-              <input required className="input" type="text" name="currentLocation" value={currentLocation} maxLength="30" onChange={this.handleChange}/>
-              <label className="label-text">Current Location</label>
+              <input required className='input' type='text' name='currentLocation' value={currentLocation} maxLength='30' onChange={this.handleChange}/>
+              <label className='label-text'>Current Location</label>
             </div>
 
           </div>
 
           <div className='comment'>
-            <textarea className='commentInput' maxLength='200' type="text" row='3' name="addlComments" value={addlComments} placeholder='Additional comments on health/appearance etc.' onChange={this.handleChange}/>
+            <textarea className='commentInput' maxLength='200' type='text' row='3' name='addlComments' value={addlComments} placeholder='Additional comments on health/appearance etc.' onChange={this.handleChange}/>
             <div className='charactersLeft'>200 character(s) remaining</div>
           </div>
 
@@ -364,72 +358,72 @@ class Furbaby extends Component {
 
               <div className='healthItem'>
                 <div className='healthQ'>Has FIV?</div><br/>
-                <label className="switch">
-                  <input className="input" type="checkbox" checked={fivStatus} name='fivStatus' onChange={this.handleChange}/>
-                  <div className="slider"></div>
+                <label className='switch'>
+                  <input className='input' type='checkbox' checked={fivStatus} name='fivStatus' onChange={this.handleChange}/>
+                  <div className='slider'></div>
                 </label>
               </div>
 
               <div className='healthItem'>
                 <div className='healthQ'>Has FeLV?</div><br/>
-                <label className="switch">
-                  <input className="input" type="checkbox" checked={felvStatus} name='felvStatus' onChange={this.handleChange}/>
-                  <div className="slider"/>
+                <label className='switch'>
+                  <input className='input' type='checkbox' checked={felvStatus} name='felvStatus' onChange={this.handleChange}/>
+                  <div className='slider'/>
                 </label>
               </div>
 
               <div className='healthItem'>
                 <div className='healthQ'>Is Altered?</div><br/>
-                <label className="switch">
-                  <input className="input" type="checkbox" checked={altered} name='altered' onChange={this.handleChange}/>
-                  <div className="slider"/>
+                <label className='switch'>
+                  <input className='input' type='checkbox' checked={altered} name='altered' onChange={this.handleChange}/>
+                  <div className='slider'/>
                 </label>
               </div>
               
             </div>
           </div>
 
-          <div className="general">
+          <div className='general'>
 
             <div className='otherComment'>
-              <textarea className='otherCommentInput' maxLength='75' type="text" row='3' name="behavioralIssues" value={behavioralIssues} placeholder='Behavioral Issues:' onChange={this.handleChange}/>
+              <textarea className='otherCommentInput' maxLength='75' type='text' row='3' name='behavioralIssues' value={behavioralIssues} placeholder='Behavioral Issues:' onChange={this.handleChange}/>
               <div className='charactersLeft'>75 character(s) remaining</div>
             </div>
 
             <div className='otherComment'>
-              <textarea className='otherCommentInput' maxLength='75' type="text" row='3' name="otherMedical" value={otherMedical} placeholder='Other Medical Issues:' onChange={this.handleChange}/>
+              <textarea className='otherCommentInput' maxLength='75' type='text' row='3' name='otherMedical' value={otherMedical} placeholder='Other Medical Issues:' onChange={this.handleChange}/>
               <div className='charactersLeft'>75 character(s) remaining</div>
             </div>
 
             <div className='otherComment'>
-              <textarea className='otherCommentInput' maxLength='75' type="text" row='3' name="specialNeeds" value={specialNeeds} placeholder='Special Needs, if any:' onChange={this.handleChange}/>
+              <textarea className='otherCommentInput' maxLength='75' type='text' row='3' name='specialNeeds' value={specialNeeds} placeholder='Special Needs, if any:' onChange={this.handleChange}/>
               <div className='charactersLeft'>75 character(s) remaining</div>
             </div>
 
             <div className='otherComment'>
               <div className='formfield'>
-                <input className="input otherDetail" type="text" name="youtubeVid" value={youtubeVid || ''} onChange={this.handleChange}/>
-                <label className="label-text otherDetail">YouTube Link:</label>
+                <input className='input otherDetail' type='text' name='youtubeVid' value={youtubeVid || ''} onChange={this.handleChange}/>
+                <label className='label-text otherDetail'>YouTube Link:</label>
               </div>
               <div className='formfield'>
-                <input className="input otherDetail" type="text" name="microchipNum" value={microchipNum} onChange={this.handleChange}/>
-                <label className="label-text otherDetail">Microchip ID:</label>
+                <input className='input otherDetail' type='text' name='microchipNum' value={microchipNum} onChange={this.handleChange}/>
+                <label className='label-text otherDetail'>Microchip ID:</label>
               </div>
             </div>
 
-            <div className="dropzone">
+            <div className='dropzone'>
               <Dropzone
                 className='drop-zone'
                 multiple={false}
-                accept="image/*"
+                accept='image/*'
                 onDrop={this.onImageDrop.bind(this)}>
                 <p>Upload pictures</p>
                 <p>(Limit One):</p>
-                <img className='furbaby-photo' alt="" src={this.state.photo && this.state.photo.preview}/>
+                <img className='furbaby-photo' alt='' src={this.state.photo && this.state.photo.preview}/>
               </Dropzone>
             </div>
 
-            <div className="dropzone">
+            <div className='dropzone'>
               <p>Upload Medical Forms</p>
               <p>(Drop files in the box):</p>
               <FileDrop onDrop={this.handleDrop}>
@@ -459,16 +453,16 @@ class Furbaby extends Component {
           <div className='courtesyList'>
             <div className='courtesyList-Bool'>
               <div className='healthQ'>Is this a courtesy listing?</div>
-              <label className="switch">
-                <input className="input" type="checkbox" checked={courtesyListing} name='courtesyListing' onChange={this.handleChange}/>
-                <div className="slider"/>
+              <label className='switch'>
+                <input className='input' type='checkbox' checked={courtesyListing} name='courtesyListing' onChange={this.handleChange}/>
+                <div className='slider'/>
               </label>
             </div>
             {courtesyListing && 
               <div className='courtesyList-Q'>
                 <div className='formfield'>
-                  <input className="input otherDetail" type="text" name="courtesyListLoc" value={courtesyListLoc} onChange={this.handleChange}/>
-                  <label className="label-text otherDetail">Provide detail of the person or rescue for whom we are cross listing:</label>
+                  <input className='input otherDetail' type='text' name='courtesyListLoc' value={courtesyListLoc} onChange={this.handleChange}/>
+                  <label className='label-text otherDetail'>Provide detail of the person or rescue for whom we are cross listing:</label>
                 </div>
               </div>}
           </div>
@@ -489,7 +483,7 @@ class Furbaby extends Component {
             </div>
           }
 
-          <button className='button' type="submit" value="submit">Submit</button>
+          <button className='button' type='submit' value='submit'>Submit</button>
             
         </form>
 
@@ -502,8 +496,6 @@ class Furbaby extends Component {
 const mapDispatch = dispatch => {
   return {
     submit(parent, furbaby) {
-      console.log('parent is ', parent)
-      parent && console.log('parent id is ', parent.id);
       if (parent && parent.id.length === 0) {
         const {id, ...parentInfo} = parent;
         dispatch(createParentThunk(parentInfo))

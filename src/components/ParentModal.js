@@ -17,8 +17,8 @@ class ParentModal extends React.Component {
       city: '',
       state: '',
       zip: '',
-      parentAdd: true,
-      parentSelect: null,
+      parentAdd: false,
+      parentSelect: false,
       adoptedName: '',
       adoptionDate: ''
     }
@@ -79,8 +79,8 @@ class ParentModal extends React.Component {
 
   parentOptionClick(option) {
     this.clearState();
-    let parentAdd = null;
-    let parentSelect = null;
+    let parentAdd = false;
+    let parentSelect = false;
     if (option === 'parentAdd') {
       parentAdd = true;
       parentSelect = false;
@@ -100,6 +100,7 @@ class ParentModal extends React.Component {
     const parents = this.props.parents;
     return (
       <div>
+        <form onSubmit={this.submitParent}>
           <ReactTable
             filterable
             data={parents}
@@ -130,7 +131,8 @@ class ParentModal extends React.Component {
             }}
           />
           {this.renderAdoptionDate()}
-          <button className='button button-parent' onClick={this.submitParent}>Submit</button>
+          <button className='button button-parent'>Submit</button>
+        </form>
       </div>
     )
   }
@@ -188,6 +190,7 @@ class ParentModal extends React.Component {
 
   renderAdoptionDate() {
     const {adoptedName, adoptionDate} = this.state;
+    console.log('adoptedName, adoptionDate', adoptedName, adoptionDate);
     const today = new Date().toISOString().split('T')[0];
     return (
       <div className='adoptionDetail'>
