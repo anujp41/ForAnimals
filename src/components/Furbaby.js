@@ -50,7 +50,7 @@ class Furbaby extends Component {
       otherFiles: [],
       imagesOtherURL: [],
       showFiles: false,
-      showModal: false
+      showModal: true
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);

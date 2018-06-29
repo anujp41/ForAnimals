@@ -15,9 +15,9 @@ class ParentModal extends React.Component {
       name: '',
       street: '',
       city: '',
-      state: '',
+      state: 'Select:',
       zip: '',
-      parentAdd: false,
+      parentAdd: true,
       parentSelect: false,
       adoptedName: '',
       adoptionDate: ''
@@ -47,7 +47,7 @@ class ParentModal extends React.Component {
       name: '',
       street: '', 
       city: '',
-      state: '',
+      state: 'Select:',
       zip: '',
       parentAdd: null,
       parentSelect: null,
@@ -167,7 +167,7 @@ class ParentModal extends React.Component {
                 <div className='state'>
                   <label className='input-label input-label-state' htmlFor='state'>State: </label>
                   <select required name='state' className='stateList' value={state} onChange={this.handleChange}>
-                    {states.map((val, idx) => <option key={idx} className='stateOption'>{val}</option>)}
+                    {states.map((val, idx) => <option key={idx} disabled={val==='Select:'} className='stateOption'>{val}</option>)}
                   </select>
                 </div>
 
@@ -190,14 +190,13 @@ class ParentModal extends React.Component {
 
   renderAdoptionDate() {
     const {adoptedName, adoptionDate} = this.state;
-    console.log('adoptedName, adoptionDate', adoptedName, adoptionDate);
     const today = new Date().toISOString().split('T')[0];
     return (
       <div className='adoptionDetail'>
         <div className='modal-text'>Adoption Details for Furbaby:</div>
           <div className='parentAddressItem'>
-            <label className='input-label' htmlFor='address'>Adopted Name: </label>
-            <input required className='input' type='text' name='adoptedName' value={adoptedName} onChange={this.handleChange}/>
+            <label className='input-label' htmlFor='address'>Adopted Name (if diff): </label>
+            <input className='input' type='text' name='adoptedName' value={adoptedName} onChange={this.handleChange}/>
         </div>
 
         <div className='adoptionDate'>

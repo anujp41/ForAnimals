@@ -90,7 +90,7 @@
 }
 
 .input-label-state {
-  float: left;
+  margin-right: 45px;
 }
 
 .parentName .input, .parentAddress .input, .adoptionDetail .input {
@@ -112,8 +112,8 @@
   font-size: 15px;
   color: white;
   width: 150px;
-  height: 35px;
-  float: left;
+  height: 25px;
+  margin: 0;
 }
 
 .stateOption {
