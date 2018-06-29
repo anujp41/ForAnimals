@@ -641,3 +641,33 @@ input[type=date]::-webkit-outer-spin-button {
   color: white;
   height: 35px;
 }
+
+.chosen-parent {
+  border: 1px dashed white;
+  margin: auto;
+  width: 50%;
+  height: 90px;
+  padding-top: 15px;
+  background-color: orange;
+  color: black;
+  position: relative;
+}
+
+.update-parent {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  background-color: #d9534f;
+  border-radius: 27px;
+  color: white;
+  cursor: pointer;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  transition: all 200ms;
+}
+
+.update-parent:hover {
+  background-color: white;
+  color: #d9534f;
+  outline: none
+}

@@ -15,37 +15,37 @@ class Furbaby extends Component {
   constructor() {
     super();
     this.state = {
-      shelterName: 'Bevo',
-      ageYear: '3',
-      ageMonth: '2',
+      shelterName: '',
+      ageYear: '',
+      ageMonth: '',
       adoptedName: '',
       birthDate: '',
-      intakeDate: '2018-06-01',
+      intakeDate: '',
       currentStatus: 'Choose from list:',
-      size: 'Small',
-      coatColor: 'Tabby',
-      coatLength: 'Long',
-      breed: 'Diva',
-      gender: 'Female',
-      altered: true,
+      size: '',
+      coatColor: '',
+      coatLength: '',
+      breed: '',
+      gender: '',
+      altered: false,
       fivStatus: false,
       felvStatus: false,
-      otherMedical: 'Nada',
-      behavioralIssues: 'Lots',
-      goodWithCats: 'No',
-      goodWithDogs: 'No',
-      goodWithChildren: 'No',
-      specialNeeds: 'Too much diva',
-      bio: 'Found in Parksville',
-      addlComments: 'Where do i Stop',
-      currentLocation: 'Home',
+      otherMedical: '',
+      behavioralIssues: '',
+      goodWithCats: 'Yes',
+      goodWithDogs: 'Yes',
+      goodWithChildren: 'Yes',
+      specialNeeds: '',
+      bio: '',
+      addlComments: '',
+      currentLocation: '',
       courtesyListing: false,
       courtesyListLoc: '',
       parent: null,
       youtubeVid: null,
       photo: null,
       photoUrl: '',
-      microchipNum: '09871111',
+      microchipNum: '',
       otherFiles: [],
       imagesOtherURL: [],
       showFiles: false,
@@ -471,7 +471,12 @@ class Furbaby extends Component {
           </div>
 
           {parent !== null &&
-            <div>{parent.name}</div>
+            <div className='chosen-parent'>
+              <button className='update-parent'>Update</button>
+              <div><b><ins>Selected Parent:</ins></b></div>
+              <div>{parent.name}</div>
+              <div>{parent.street}, {parent.city}, {parent.state}, {parent.zip}</div>
+            </div>
           }
 
           <button className='button' type="submit" value="submit">Submit</button>
