@@ -472,7 +472,7 @@ class Furbaby extends Component {
 
           {parent !== null &&
             <div className='chosen-parent'>
-              <button className='update-parent'>Update</button>
+              <button className='update-parent' onClick={()=>this.setState({showModal: true})}>Update</button>
               <div><b><ins>Selected Parent:</ins></b></div>
               <div>{parent.name}</div>
               <div>{parent.street}, {parent.city}, {parent.state}, {parent.zip}</div>
