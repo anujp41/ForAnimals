@@ -11,6 +11,9 @@
 }
 
 .cancelbtn {
+  position: relative;
+  height: 25px;
+  padding: 10px 20px;
   color: #d68306;
   background-color: #ad2662;
   margin-left: 65%
@@ -54,7 +57,7 @@
   transform: translateY(4px);
 }
 
-.parentName, .parentAddress {
+.parentName, .parentAddress, .adoptionDetail {
   margin: 20px 50px 0 50px;
   border-bottom: 0;
   background-color: rgb(77, 119, 155);
@@ -65,7 +68,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 25px;
+  padding-bottom: 10px;
   height: 35px;
 }
 
@@ -81,14 +84,7 @@
   float: left;
 }
 
-.parentName .input {
-  border-bottom: 2px solid white;
-  position: static;
-  width: 95%;
-  text-align: center;
-}
-
-.parentAddress .input {
+.parentName .input, .parentAddress .input, .adoptionDetail .input {
   border-bottom: 2px solid white;
   position: static;
   width: 75%;
@@ -115,9 +111,9 @@
   text-align: center;
 }
 
-.parents {
-  font-size: 2em;
-  padding-top: 15px;
+.-header {
+  margin-top: 25px;
+  height: 30px;
 }
 
 .parentItem {
@@ -159,21 +155,32 @@ input[role="combobox"] {
 
 .modal-text {
   cursor: text;
-  font-size: 15px;
-  color: navy;
-}
-
-.modal-text-address {
-  padding-bottom: 15px;
+  font-size: 25px;
+  color: white;
+  padding: 10px 0;
 }
 
 .adoptionDate {
   margin: auto;
-  padding: 25px;
-  width: 40%;
+  width: 60%;
   background-color: rgb(77, 119, 155);
 }
 
 ul {
   list-style-type: none;
+}
+
+.adoption-input {
+  background-color: rgb(77,119,155);
+  width: 50%;
+  height: 25px;
+  color: white;
+  text-align: center;
+  font-family: 'Open sans';
+  font-size: 13px;
+}
+
+.button-parent:hover {
+  background-color: white;
+  color: rgb(112,179,237);
 }

@@ -19,6 +19,7 @@ class Furbaby extends Component {
       ageYear: '',
       ageMonth: '',
       adoptedName: '',
+      adoptionDate: '',
       birthDate: '',
       intakeDate: '',
       currentStatus: 'Choose from list:',
@@ -49,7 +50,7 @@ class Furbaby extends Component {
       otherFiles: [],
       imagesOtherURL: [],
       showFiles: false,
-      showModal: false
+      showModal: true
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
@@ -119,6 +120,7 @@ class Furbaby extends Component {
       ageYear: '',
       ageMonth: '',
       adoptedName: '',
+      adoptionDate: '',
       birthDate: '',
       intakeDate: '',
       currentStatus: 'Choose from list:',
@@ -183,7 +185,14 @@ class Furbaby extends Component {
     const target = event.target;
     const currentStatus = target.value;
     this.setState ({ currentStatus });
-    if (noModalStatus.indexOf(currentStatus) === -1) this.setState({showModal: true})
+    if (noModalStatus.indexOf(currentStatus) === -1 && this.state.parent === null) {
+      this.setState({ showModal: true });
+      return;
+    }
+    if (noModalStatus.indexOf(currentStatus) >= 0) {
+      this.setState({ parent: null });
+      return;
+    }
   }
 
   toggleModal(showModal) {
@@ -196,8 +205,8 @@ class Furbaby extends Component {
     }
   }
 
-  setParent(parent) {
-    this.setState({ parent });
+  setParent(parent, adoptedName, adoptionDate) {
+    this.setState({ parent, adoptedName, adoptionDate });
   }
 
   showFileList() {
@@ -215,6 +224,7 @@ class Furbaby extends Component {
   }
 
   render() {
+    console.log('adopted: ', this.state.adoptedName);
     const { 
       shelterName,
       ageYear,

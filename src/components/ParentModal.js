@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './ParentModal.css';
-import ReactTable from "react-table";
-import "react-table/react-table.css";
+import ReactTable from 'react-table';
+import 'react-table/react-table.css';
 
 const states = require('../assets/statesList');
 
@@ -17,8 +17,9 @@ class ParentModal extends React.Component {
       city: '',
       state: '',
       zip: '',
-      parentAdd: null,
+      parentAdd: true,
       parentSelect: null,
+      adoptedName: '',
       adoptionDate: ''
     }
     this.handleChange = this.handleChange.bind(this);
@@ -42,13 +43,15 @@ class ParentModal extends React.Component {
 
   clearState() {
     const defaultState = {
-      id: '', name: '',
+      id: '', 
+      name: '',
       street: '', 
       city: '',
       state: '',
       zip: '',
       parentAdd: null,
       parentSelect: null,
+      adoptedName: '',
       adoptionDate: ''
     };
     this.setState({ ...defaultState });
@@ -61,11 +64,11 @@ class ParentModal extends React.Component {
   submitParent(event) {
     event.preventDefault();
     if (states.indexOf(this.state.state) === -1) {
-      alert("Please select state from the dropdown list");
+      alert('Please select state from the dropdown list');
       return;
     }
-    const {id, name, street, city, state, zip} = this.state;
-    this.props.setParent({id, name, street, city, state, zip});
+    const {id, name, street, city, state, zip, adoptedName, adoptionDate} = this.state;
+    this.props.setParent({id, name, street, city, state, zip}, adoptedName, adoptionDate);
     this.props.toggleModal();
   }
 
@@ -97,7 +100,6 @@ class ParentModal extends React.Component {
     const parents = this.props.parents;
     return (
       <div>
-        <div className='parents'>Select parent from list below!</div>
           <ReactTable
             filterable
             data={parents}
@@ -128,68 +130,77 @@ class ParentModal extends React.Component {
             }}
           />
           {this.renderAdoptionDate()}
-          <button className='button' onClick={this.submitParent}>Submit</button>
+          <button className='button button-parent' onClick={this.submitParent}>Submit</button>
       </div>
     )
   }
 
   renderParentAddForm() {
     const { name, street, city, state, zip } = this.state;
-    const { furbaby } = this.props;
     return (
-      <div className="titleModal">Add a new parent below for {furbaby}:
-        <form autoComplete="nada" onSubmit={this.submitParent}>
+      <div>
+        <form autoComplete='nada' onSubmit={this.submitParent}>
 
           <div className='parentName'>
-            <div className="modal-text">Parent Name:</div>
-            <input required className="input" type="text" maxLength='75' name="name" value={name} onChange={this.handleChange}/>              
+            <div className='modal-text'>Parent Name:</div>
+            <input required className='input' type='text' maxLength='75' name='name' value={name} onChange={this.handleChange}/>              
           </div>
 
           <div className='parentAddress'>
 
-            <div className="modal-text modal-text-address">Parent Address:</div>
+            <div className='modal-text'>Parent Address:</div>
 
-              <div className="parentAddressItem">
-                <label className="input-label" htmlFor="address">Street: </label>
-                <input required className="input" type="text" name="street" value={street} onChange={this.handleChange}/>
+              <div className='parentAddressItem'>
+                <label className='input-label' htmlFor='address'>Street: </label>
+                <input required className='input' type='text' name='street' value={street} onChange={this.handleChange}/>
               </div>
 
-              <div className="parentAddressItem">
-                <label className="input-label" htmlFor="address">City: </label>
-                <input required className="input" type="text" name="city" value={city} onChange={this.handleChange}/>
+              <div className='parentAddressItem'>
+                <label className='input-label' htmlFor='address'>City: </label>
+                <input required className='input' type='text' name='city' value={city} onChange={this.handleChange}/>
               </div>
 
-              <div className="parentAddressItem">
+              <div className='parentAddressItem'>
 
-                <div className="state">
-                  <label className="input-label input-label-state" for="state">State: </label>
+                <div className='state'>
+                  <label className='input-label input-label-state' htmlFor='state'>State: </label>
                   <select required name='state' className='stateList' value={state} onChange={this.handleChange}>
                     {states.map((val, idx) => <option key={idx} className='stateOption'>{val}</option>)}
                   </select>
                 </div>
 
-                <div className="zip">
-                  <label className="input-label" htmlFor="address">Zipcode: </label>
-                  <input required className="input" type="text" name="zip" value={zip} onChange={this.handleChange}/>
+                <div className='zip'>
+                  <label className='input-label' htmlFor='address'>Zipcode: </label>
+                  <input required className='input' type='text' name='zip' value={zip} onChange={this.handleChange}/>
                 </div>
 
               </div>
-
-            {this.renderAdoptionDate()}
           </div>
-          <button className='button' type="submit" value="submit">Submit</button>
+
+          {this.renderAdoptionDate()}
+
+          <button className='button button-parent' type='submit' value='submit'>Submit</button>
+
         </form>
       </div>
     )
   }
 
   renderAdoptionDate() {
-    const {adoptionDate} = this.state;
+    const {adoptedName, adoptionDate} = this.state;
     const today = new Date().toISOString().split('T')[0];
     return (
-      <div className='adoptionDate'>
-        <label className="input-label" htmlFor="adoptionDate">Date of Adoption: </label>
-        <input required type="date" name="adoptionDate" value={adoptionDate} max={today} onChange={this.handleChange}/>
+      <div className='adoptionDetail'>
+        <div className='modal-text'>Adoption Details for Furbaby:</div>
+          <div className='parentAddressItem'>
+            <label className='input-label' htmlFor='address'>Adopted Name: </label>
+            <input required className='input' type='text' name='adoptedName' value={adoptedName} onChange={this.handleChange}/>
+        </div>
+
+        <div className='adoptionDate'>
+          <label className='input-label' htmlFor='adoptionDate'>Date of Adoption: </label>
+          <input required className='adoption-input' type='date' name='adoptionDate' value={adoptionDate} max={today} onChange={this.handleChange}/>
+        </div>
       </div>
     )
   }
@@ -204,7 +215,7 @@ class ParentModal extends React.Component {
         <button className='cancelbtn' onClick={()=>this.props.toggleModal(false)}>Cancel</button>
         <div className='containerModal'>
 
-          <div className="titleExisting">To add a parent for {furbaby}, choose from below:</div>
+          <div className='titleExisting'>To add a parent for {furbaby}, choose from below:</div>
 
           <div className='parentOptions'>
             <div className='parentAdd' onClick={()=>this.parentOptionClick('parentAdd')}>Add Parent</div>
