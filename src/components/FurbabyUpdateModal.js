@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import './Input.css';
 import Dropzone from 'react-dropzone';
 import firebase from '../firebase';
-import $ from 'jquery';
 import { archiveFurbabyThunk } from '../store';
 import uuidv1 from 'uuid/v1';
 
@@ -120,14 +119,6 @@ class FurbabyUpdateModal extends Component {
   onImageDrop(files) {
     const photo = files[0];
     this.setState({ photo, photoUpdated: true });
-  }
-
-  componentDidMount() {
-    $('textarea').on('keyup', () => {
-      const num = $('.commentInput')[0].maxLength - $('textarea').val().length;
-      const text = num + ' character(s) remaining!';
-      $('.charactersLeft').text(text);
-    });
   }
 
   toggleModal(showModal) {

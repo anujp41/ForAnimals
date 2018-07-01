@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { getFurbabiesThunk } from '../store';
 
 class Welcome extends Component {
 
@@ -18,7 +20,7 @@ class Welcome extends Component {
           <h1>Add parents!</h1>
         </Link> */}
 
-        <Link to={'/furbabies'}>
+        <Link to={'/furbabies'} onClick={this.props.getFurbabiesThunk}>
           <h1>Let's go see the furbabies!</h1>
         </Link>
 
@@ -30,7 +32,9 @@ class Welcome extends Component {
   }
 }
 
-export default Welcome;
+const mapDispatch = { getFurbabiesThunk };
+
+export default connect(null, mapDispatch)(Welcome);
 
 const divStyle = {
   fontFamily: 'Eczar, sans-serif',

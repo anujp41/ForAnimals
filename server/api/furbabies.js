@@ -5,7 +5,8 @@ const { FurBabies, Parents } = require('../models');
 router.get('/', (req, res, next) => {
   FurBabies.findAll({
     include: [Parents],
-    order: ['id']
+    order: ['id'],
+    limit: 10
   })
   .then(newBabies => res.json(newBabies))
   .catch(next);

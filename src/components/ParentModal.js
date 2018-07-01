@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './ParentModal.css';
 import ReactTable from 'react-table';
@@ -17,7 +18,7 @@ class ParentModal extends React.Component {
       city: '',
       state: 'Select:',
       zip: '',
-      parentAdd: true,
+      parentAdd: false,
       parentSelect: false,
       adoptedName: '',
       adoptionDate: ''
@@ -231,6 +232,10 @@ class ParentModal extends React.Component {
       </div>
     );
   }
+}
+
+ParentModal.propTypes = {
+  furbaby: PropTypes.string
 }
 
 const mapState = state => {

@@ -5,7 +5,6 @@ import './Input.css';
 import Dropzone from 'react-dropzone';
 import firebase from '../firebase';
 import { ParentModal } from './index';
-import $ from 'jquery';
 import uuidv1 from 'uuid/v1';
 import FileDrop from 'react-file-drop';
 const storage = firebase.storage();
@@ -50,7 +49,7 @@ class Furbaby extends Component {
       otherFiles: [],
       imagesOtherURL: [],
       showFiles: false,
-      showModal: true
+      showModal: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleDate = this.handleDate.bind(this);
@@ -71,7 +70,7 @@ class Furbaby extends Component {
     const name = target.name;
     let value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState ({ [name] : value });
-  }
+  };
 
   async handleSubmit(event) {
     event.preventDefault();
@@ -172,14 +171,6 @@ class Furbaby extends Component {
     this.setState({ otherFiles });
   }
 
-  componentDidMount() {
-    $('textarea').on('keyup', (event) => {
-      const num = event.currentTarget.maxLength - event.currentTarget.value.length;
-      const text = num + ' character(s) remaining';
-      $(event.currentTarget).next().text(text);
-    });
-  }
-
   handleStatus(event) {
     const noModalStatus = ['Adoptable', 'Available as Barn Cat', 'Deceased', 'Returned to Colony'];
     const target = event.target;
@@ -221,7 +212,6 @@ class Furbaby extends Component {
   }
 
   render() {
-    console.log('show modal ', this.state.showModal);
     const { 
       shelterName,
       ageYear,
@@ -312,7 +302,7 @@ class Furbaby extends Component {
 
           <div className='comment bio'>
             <textarea className='commentInput' maxLength='250' type='text' row='3' name='bio' value={bio} placeholder='History / Biography of Furbaby' onChange={this.handleChange}/>
-            <div className='charactersLeft'>250 character(s) remaining</div>
+            <div className='charactersLeft'>{250-bio.length} character(s) remaining</div>
           </div>
 
 
@@ -331,7 +321,7 @@ class Furbaby extends Component {
 
           <div className='comment'>
             <textarea className='commentInput' maxLength='200' type='text' row='3' name='addlComments' value={addlComments} placeholder='Additional comments on health/appearance etc.' onChange={this.handleChange}/>
-            <div className='charactersLeft'>200 character(s) remaining</div>
+            <div className='charactersLeft'>{200-addlComments.length} character(s) remaining</div>
           </div>
 
           <div className='health'>
@@ -391,17 +381,17 @@ class Furbaby extends Component {
 
             <div className='otherComment'>
               <textarea className='otherCommentInput' maxLength='75' type='text' row='3' name='behavioralIssues' value={behavioralIssues} placeholder='Behavioral Issues:' onChange={this.handleChange}/>
-              <div className='charactersLeft'>75 character(s) remaining</div>
+              <div className='charactersLeft'>{75-behavioralIssues.length} character(s) remaining</div>
             </div>
 
             <div className='otherComment'>
               <textarea className='otherCommentInput' maxLength='75' type='text' row='3' name='otherMedical' value={otherMedical} placeholder='Other Medical Issues:' onChange={this.handleChange}/>
-              <div className='charactersLeft'>75 character(s) remaining</div>
+              <div className='charactersLeft'>{75-otherMedical.length} character(s) remaining</div>
             </div>
 
             <div className='otherComment'>
               <textarea className='otherCommentInput' maxLength='75' type='text' row='3' name='specialNeeds' value={specialNeeds} placeholder='Special Needs, if any:' onChange={this.handleChange}/>
-              <div className='charactersLeft'>75 character(s) remaining</div>
+              <div className='charactersLeft'>{75-specialNeeds.length} character(s) remaining</div>
             </div>
 
             <div className='otherComment'>

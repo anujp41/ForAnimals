@@ -7,10 +7,8 @@ import currUpdateFurbaby from './currUpdateFurbaby';
 
 const reducer = combineReducers({ furbabies, parents, currUpdateFurbaby });
 const middleware = applyMiddleware(thunkMiddleware, createLogger({collapsed: true}));
-// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
-// const store = createStore(reducer, composeEnhancers(middleware));
-
-const store = createStore(reducer, middleware);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+const store = createStore(reducer, composeEnhancers(middleware));
 
 
 
