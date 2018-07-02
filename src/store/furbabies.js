@@ -41,7 +41,7 @@ export default function (state = initialState, action) {
     case CREATE_FURBABY:
       return [...state, action.furbaby];
     case GET_FURBABIES:
-      return action.furbabies;
+      return [...state, ...action.furbabies];
     case UPDATE_FOSTER:
       state.forEach(item => {
         if (item.id === action.furbaby.id) {

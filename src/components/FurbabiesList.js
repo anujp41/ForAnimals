@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import './FurbabiesList.css';
 import sort from './SortFunc';
 import FurbabyUpdateModal from './FurbabyUpdateModal';
-import { assignCurrFurbaby, clearCurrFurbaby } from '../store';
+import { assignCurrFurbaby, clearCurrFurbaby, getFurbabiesThunk } from '../store';
+import debouce from 'debounce';
 
 class FurbabiesList extends Component {
 
@@ -24,7 +25,7 @@ class FurbabiesList extends Component {
     this.renderUpdate = this.renderUpdate.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.returnParentAddress = this.returnParentAddress.bind(this);
-    this.handleScrolling = this.handleScrolling.bind(this);
+    this.handleScrolling = debouce(this.handleScrolling.bind(this), 200);
   }
 
   handleClick(sortType) {
@@ -81,7 +82,12 @@ class FurbabiesList extends Component {
   }
 
   handleScrolling() {
-    console.log('handle scroll');
+    const targetElement = document.getElementById('furbaby-display');
+    const cardHeight = 575;
+    if (targetElement.getBoundingClientRect().bottom-window.innerHeight < (cardHeight*1.25)) {
+      console.log('getting more');
+      this.props.getFurbabiesThunk();
+    };
   }
 
   componentDidMount() {
@@ -96,14 +102,15 @@ class FurbabiesList extends Component {
     if (this.state.sort) {
       furbabies = sort(furbabies, this.state.sorting);
     }
-    console.log('first furbaby ', furbabies.slice(0, 5))
+    // console.log('first furbaby ', furbabies.slice(0, 5))
+    console.log('total furbabies: ', furbabies.length)
     return (
-      <div className='mainContainer' onScroll={this.handleScrolling}>
+      <div>
         {this.state.sort && <div style={{backgroundColor: 'goldenrod', width: '75px'}} onClick={this.clear}>Clear!</div>}
         {this.renderDropdown()}
-        <div className='furbabyDisplay'>
-        {furbabies.map(furbaby => (
-          <div key={furbaby.id} className='furbabyCard'>
+        <div className='mainContainer' id='furbaby-display'>
+        {furbabies.map((furbaby, idx) => (
+          <div key={idx} className='furbabyCard'>
             <div className='wrapper'>
             {this.renderUpdate(furbaby)}
               {furbaby.parentId 
@@ -152,16 +159,18 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    assignFurbaby(furbaby) {
-      dispatch(assignCurrFurbaby(furbaby));
-    },
-    clearFurbaby() {
-      dispatch(clearCurrFurbaby());
-    }
-  }
-}
+const mapDispatch = {getFurbabiesThunk };
+
+// const mapDispatch = dispatch => {
+//   return {
+//     assignFurbaby(furbaby) {
+//       dispatch(assignCurrFurbaby(furbaby));
+//     },
+//     clearFurbaby() {
+//       dispatch(clearCurrFurbaby());
+//     }
+//   }
+// }
 
 const FurbabiesListContainer = connect(mapState, mapDispatch)(FurbabiesList);
 export default FurbabiesListContainer;
