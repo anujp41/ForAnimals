@@ -2,11 +2,12 @@ const router = require('express').Router();
 const { FurBabies, Parents } = require('../models');
 
 // Return all furbabies from database
-router.get('/', (req, res, next) => {
+router.get('/:index', (req, res, next) => {
+  const {index} = req.params;
   FurBabies.findAll({
     include: [Parents],
-    order: ['id'],
-    limit: 10
+    offset: index,
+    limit: 25
   })
   .then(newBabies => res.json(newBabies))
   .catch(next);

@@ -10,8 +10,8 @@ const createFurbaby = furbaby => ({ type: CREATE_FURBABY, furbaby });
 const getFurbabies = furbabies => ({ type: GET_FURBABIES, furbabies});
 const updateFoster = furbaby => ({ type: UPDATE_FOSTER, furbaby });
 
-export const createFurbabyThunk = furbaby => dispatch => {
-  return axios.post('http://localhost:8080/api/furbabies', furbaby)
+export const createFurbabyThunk = furbaby => dispatch => 
+  axios.post('http://localhost:8080/api/furbabies', furbaby)
   .then(newFurbaby => newFurbaby.data)
   .then(newKitty => {
     newKitty.arrivedDate = new Date(newKitty.arrivedDate);
@@ -19,11 +19,9 @@ export const createFurbabyThunk = furbaby => dispatch => {
   })
   .then(newFurbaby => dispatch(createFurbaby(newFurbaby)))
   .catch(err => console.log(err));
-}
 
-export const getFurbabiesThunk = (index=0) => dispatch => {
-  console.warn('index is ', index, typeof index)
-  return axios.get('http://localhost:8080/api/furbabies')
+export const getFurbabiesThunk = (idx = 0) => dispatch => 
+  axios.get(`http://localhost:8080/api/furbabies/${idx}`)
   .then(furbabies => furbabies.data)
   .then(furbabiesArr => furbabiesArr.map(furbaby => {
     furbaby.arrivedDate = new Date(furbaby.arrivedDate);
@@ -31,7 +29,7 @@ export const getFurbabiesThunk = (index=0) => dispatch => {
   }))
   .then(furbabies => dispatch(getFurbabies(furbabies)))
   .catch(err => console.log(err));
-}
+
 export const updateFosterThunk = furbaby => dispatch => 
   axios.put('http://localhost:8080/api/furbabies', furbaby)
   .then(furbaby => dispatch(updateFoster(furbaby)))

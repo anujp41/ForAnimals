@@ -86,17 +86,15 @@ class FurbabiesList extends Component {
     const targetElement = document.getElementById('furbaby-display');
     const cardHeight = 575;
     const { currIndex } = this.state;
-    if (targetElement.getBoundingClientRect().bottom-window.innerHeight < (cardHeight*1.25)) {
+    if (targetElement.getBoundingClientRect().bottom-window.innerHeight < 1250) { //1250 chosen as this is equivalent to height of 2 rows
       this.props.getFurbabiesThunk(this.state.currIndex)
     };
   }
 
   componentDidUpdate() {
-    console.log('componentDidUpdate');
     const { currIndex } = this.state;
     const { furbabies } = this.props;
     if (currIndex !== furbabies.length) {
-      console.log('updating state');
       this.setState({ currIndex: this.props.furbabies.length});
     }
   }
@@ -123,8 +121,7 @@ class FurbabiesList extends Component {
     if (this.state.sort) {
       furbabies = sort(furbabies, this.state.sorting);
     }
-    console.log('total furbabies: ', furbabies.length)
-    console.log('currIndex ', this.state.currIndex)
+    console.log('total furbabies: ', furbabies[0])
     return (
       <div>
         {this.state.sort && <div style={{backgroundColor: 'goldenrod', width: '75px'}} onClick={this.clear}>Clear!</div>}
