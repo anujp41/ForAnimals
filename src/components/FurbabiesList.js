@@ -8,8 +8,8 @@ import debouce from 'debounce';
 
 class FurbabiesList extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       sort: false,
       sorting: null,
@@ -17,7 +17,8 @@ class FurbabiesList extends Component {
         'Sort': ['Age: Oldest', 'Age: Youngest', 'Brought to Shelter: Most Recent', 'Brought to Shelter: Most Previous'],
         'Filter': ['Available', 'Fostered', 'Adopted', 'Has FIV', 'Is Spayed']
       },
-      showUpdateModal: false
+      showUpdateModal: false,
+      currIndex: 0
     }
     this.renderDropdown = this.renderDropdown.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -25,7 +26,7 @@ class FurbabiesList extends Component {
     this.renderUpdate = this.renderUpdate.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.returnParentAddress = this.returnParentAddress.bind(this);
-    this.handleScrolling = debouce(this.handleScrolling.bind(this), 200);
+    this.handleScrolling = debouce(this.handleScrolling.bind(this), 50);
   }
 
   handleClick(sortType) {
@@ -84,10 +85,30 @@ class FurbabiesList extends Component {
   handleScrolling() {
     const targetElement = document.getElementById('furbaby-display');
     const cardHeight = 575;
+    const { currIndex } = this.state;
     if (targetElement.getBoundingClientRect().bottom-window.innerHeight < (cardHeight*1.25)) {
-      console.log('getting more');
-      this.props.getFurbabiesThunk();
+      this.props.getFurbabiesThunk(this.state.currIndex)
     };
+  }
+
+  componentDidUpdate() {
+    console.log('componentDidUpdate');
+    const { currIndex } = this.state;
+    const { furbabies } = this.props;
+    if (currIndex !== furbabies.length) {
+      console.log('updating state');
+      this.setState({ currIndex: this.props.furbabies.length});
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props.furbabies.length !== nextProps.furbabies.length) {
+      return true;
+    }
+    if (this.state !== nextState) {
+      return true;
+    }
+    return false;
   }
 
   componentDidMount() {
@@ -102,8 +123,8 @@ class FurbabiesList extends Component {
     if (this.state.sort) {
       furbabies = sort(furbabies, this.state.sorting);
     }
-    // console.log('first furbaby ', furbabies.slice(0, 5))
     console.log('total furbabies: ', furbabies.length)
+    console.log('currIndex ', this.state.currIndex)
     return (
       <div>
         {this.state.sort && <div style={{backgroundColor: 'goldenrod', width: '75px'}} onClick={this.clear}>Clear!</div>}
@@ -159,7 +180,7 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = {getFurbabiesThunk };
+const mapDispatch = { getFurbabiesThunk };
 
 // const mapDispatch = dispatch => {
 //   return {

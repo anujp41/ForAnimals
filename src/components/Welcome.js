@@ -20,7 +20,7 @@ class Welcome extends Component {
           <h1>Add parents!</h1>
         </Link> */}
 
-        <Link to={'/furbabies'} onClick={this.props.getFurbabiesThunk}>
+        <Link to={'/furbabies'} onClick={()=>this.props.getFurbabiesThunk()}>
           <h1>Let's go see the furbabies!</h1>
         </Link>
 

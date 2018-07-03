@@ -21,8 +21,9 @@ export const createFurbabyThunk = furbaby => dispatch => {
   .catch(err => console.log(err));
 }
 
-export const getFurbabiesThunk = () => dispatch =>
-  axios.get('http://localhost:8080/api/furbabies')
+export const getFurbabiesThunk = (index=0) => dispatch => {
+  console.warn('index is ', index, typeof index)
+  return axios.get('http://localhost:8080/api/furbabies')
   .then(furbabies => furbabies.data)
   .then(furbabiesArr => furbabiesArr.map(furbaby => {
     furbaby.arrivedDate = new Date(furbaby.arrivedDate);
@@ -30,7 +31,7 @@ export const getFurbabiesThunk = () => dispatch =>
   }))
   .then(furbabies => dispatch(getFurbabies(furbabies)))
   .catch(err => console.log(err));
-
+}
 export const updateFosterThunk = furbaby => dispatch => 
   axios.put('http://localhost:8080/api/furbabies', furbaby)
   .then(furbaby => dispatch(updateFoster(furbaby)))
