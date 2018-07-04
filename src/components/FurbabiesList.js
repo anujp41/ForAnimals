@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import './FurbabiesList.css';
 import sort from './SortFunc';
 import FurbabyUpdateModal from './FurbabyUpdateModal';
-import { assignCurrFurbaby, clearCurrFurbaby, getFurbabiesThunk } from '../store';
+import { assignCurrFurbaby, clearCurrFurbaby, getFurbabiesThunk, getFilterThunk, removeFilter } from '../store';
 import debouce from 'debounce';
+const { currentStatusVals } = require('../assets');
 
 class FurbabiesList extends Component {
 
@@ -14,8 +15,8 @@ class FurbabiesList extends Component {
       sort: false,
       sorting: null,
       sortOptions: {
-        'Sort': ['Age: Oldest', 'Age: Youngest', 'Brought to Shelter: Most Recent', 'Brought to Shelter: Most Previous'],
-        'Filter': ['Available', 'Fostered', 'Adopted', 'Has FIV', 'Is Spayed']
+        // 'Sort': ['Age: Oldest', 'Age: Youngest', 'Brought to Shelter: Most Recent', 'Brought to Shelter: Most Previous'],
+        'Filter': currentStatusVals.slice(1) //slicing as first val is 'Choose from List:'
       },
       showUpdateModal: false,
       currIndex: 0
@@ -31,13 +32,14 @@ class FurbabiesList extends Component {
 
   handleClick(sortType) {
     this.setState({
-      sort: true,
-      sorting: sortType
+      sort: true
     })
+    this.props.getFilterThunk(sortType);
   }
 
   clear() {
-    this.setState({sort: false, sorting: null})
+    this.setState({sort: false});
+    this.props.removeFilter();
   }
 
   toggleModal(furbaby) {
@@ -86,7 +88,7 @@ class FurbabiesList extends Component {
     const targetElement = document.getElementById('furbaby-display');
     const cardHeight = 575;
     const { currIndex } = this.state;
-    if (targetElement.getBoundingClientRect().bottom-window.innerHeight < 1250) { //1250 chosen as this is equivalent to height of 2 rows
+    if (targetElement.getBoundingClientRect().bottom-window.innerHeight < 1500) { //1500 chosen as this is equivalent to height of 3 rows
       this.props.getFurbabiesThunk(this.state.currIndex)
     };
   }
@@ -100,12 +102,15 @@ class FurbabiesList extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.furbabies.length !== nextProps.furbabies.length) {
+    if (this.props.furbabies !== nextProps.furbabies) {
       return true;
     }
-    if (this.state !== nextState) {
+    if (this.props.filterResult !== nextProps.filterFurbaby) {
       return true;
     }
+    // if (this.state !== nextState) {
+    //   return true;
+    // }
     return false;
   }
 
@@ -117,11 +122,12 @@ class FurbabiesList extends Component {
   }
 
   render() {
-    let { furbabies } = this.props;
-    if (this.state.sort) {
-      furbabies = sort(furbabies, this.state.sorting);
-    }
-    console.log('total furbabies: ', furbabies[0])
+    let furbabies = !this.state.sort ? this.props.furbabies : this.props.filterResult;
+    // let { furbabies } = this.props;
+    // if (this.state.sort) {
+    //   furbabies = sort(furbabies, this.state.sorting);
+    // }
+    console.log('furbabies: ', furbabies);
     return (
       <div>
         {this.state.sort && <div style={{backgroundColor: 'goldenrod', width: '75px'}} onClick={this.clear}>Clear!</div>}
@@ -131,14 +137,7 @@ class FurbabiesList extends Component {
           <div key={idx} className='furbabyCard'>
             <div className='wrapper'>
             {this.renderUpdate(furbaby)}
-              {furbaby.parentId 
-              ?
-                (furbaby.fostered
-                ?
-                <div className='good'>Fostered</div>
-                : <div className='fivpositive'>Adopted</div>)
-              : <div className='spayed'>Available</div>}
-              
+            <div className='currentStatus-List' name={furbaby.currentStatus}>{furbaby.currentStatus}</div>
               <img alt="" className='furbabyPhoto' src={furbaby.photoUrl} />
               <div className='furbabyDetails'>
                 <div className='furbabyInfo'>
@@ -173,11 +172,12 @@ class FurbabiesList extends Component {
 
 const mapState = state => {
   return {
-    furbabies: state.furbabies
+    furbabies: state.furbabies,
+    filterResult: state.filterFurbaby
   }
 }
 
-const mapDispatch = { getFurbabiesThunk };
+const mapDispatch = { getFurbabiesThunk, getFilterThunk, removeFilter };
 
 // const mapDispatch = dispatch => {
 //   return {

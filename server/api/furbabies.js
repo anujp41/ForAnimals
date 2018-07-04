@@ -7,7 +7,7 @@ router.get('/:index', (req, res, next) => {
   FurBabies.findAll({
     include: [Parents],
     offset: index,
-    limit: 25
+    limit: 25 // 25 furbabies pulled at given time
   })
   .then(newBabies => res.json(newBabies))
   .catch(next);

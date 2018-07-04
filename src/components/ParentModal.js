@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import './ParentModal.css';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-
-const states = require('../assets/statesList');
+const { states } = require('../assets');
 
 class ParentModal extends React.Component {
 

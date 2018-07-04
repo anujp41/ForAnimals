@@ -8,6 +8,7 @@ import { ParentModal } from './index';
 import uuidv1 from 'uuid/v1';
 import FileDrop from 'react-file-drop';
 const storage = firebase.storage();
+const {currentStatusVals} = require('../assets');
 
 class Furbaby extends Component {
 
@@ -243,7 +244,7 @@ class Furbaby extends Component {
       parent } = this.state;
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
-    const status = ['Choose from list:', 'Adoptable', 'Available as Barn Cat', 'Adoption Pending', 'Return Pending', 'Adopted', 'Fostered', 'Deceased', 'Returned to Colony'];
+    const status = currentStatusVals;
     return (
       <div className='container'>
 
