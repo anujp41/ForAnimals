@@ -151,28 +151,6 @@ class FurbabiesList extends Component {
         {this.renderDropdown()}
         <div className='mainContainer' id='furbaby-display'>
         {furbabies.map((furbaby, idx) => (
-          <div className='furbabySumm' ley={idx}>
-            <div className='furbabySumm-cat1'>
-              <div><span className='label'>Name: </span><span className='text'>{furbaby.adoptedname || furbaby.shelterName}</span></div>
-              <div><span className='label'>Intake: </span><span className='text'>{this.getDate(furbaby.intakeDate)}</span></div>
-            </div>
-            <div className='furbabySumm-cat2'>
-              <div>
-                <div><span className='label'>Age: </span><span className='text'>{this.getAge(furbaby.birthDate)}</span></div>
-                <div><span className='label'>Breed: </span><span className='text'>{furbaby.breed}</span></div>
-              </div>
-              <div>
-                <div><span className='label'>Gender: </span><span className='text'>{furbaby.gender}</span></div>
-                <div><span className='label'>Color: </span><span className='text'>{furbaby.coatColor}</span></div>
-              </div>
-            </div>
-            <div className='furbabySumm-cat3'>
-              <div><span className='label'>Current Status: </span><span className='text'>{furbaby.currentStatus}</span></div>
-              {Number.isInteger(furbaby.parentId) && <div><span className='label'>Parent Name: </span><span className='text'>{furbaby.parent.name}</span></div>}
-            </div>
-          </div>
-        ))}
-        {/* {furbabies.map((furbaby, idx) => (
           <div key={idx} className='furbabyCard'>
             <div className='wrapper'>
             {this.renderUpdate(furbaby)}
@@ -201,7 +179,7 @@ class FurbabiesList extends Component {
               </div>
             </div>
           </div>
-        ))} */}
+        ))}
         </div>
         <FurbabyUpdateModal show={this.state.showUpdateModal} toggleModal={this.toggleModal}/>
       </div>

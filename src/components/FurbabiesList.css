@@ -74,7 +74,18 @@
 .furbabySumm-cat1, .furbabySumm-cat2, .furbabySumm-cat3 {
   position: relative;
   display: block;
-  width: 33%;
+}
+
+.furbabySumm-cat1, .furbabySumm-cat2, .furbabySumm-cat3 {
+  width: 25%;
+}
+
+.furbabySumm-cat2 {
+  width: 45%;
+}
+
+.furbabySumm-cat3 {
+  width: 30%;
 }
 
 .furbabySumm .label {
