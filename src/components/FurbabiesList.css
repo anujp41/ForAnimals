@@ -6,6 +6,25 @@
   right: 50px;
 }
 
+.clear-btn {
+  background-color: #ffc107;
+  width: 50px;
+  cursor: pointer;
+  position: fixed;
+  left: 10px;
+  top: 24%;
+  text-align: center;
+  padding: 10px;
+  border-radius: 20px;
+  box-shadow: 20px 20px 50px 10px pink;
+}
+
+.clear-btn:hover {
+  background-color: black;
+  color: #ffc107;
+  box-shadow: 20px 20px 50px 10px #ffc107;
+}
+
 .menu-title {
   display: inline-block;
   width: 150px;
@@ -16,6 +35,7 @@
   color: #ffffff;
   font-weight: bold;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 .menu-dropdown {
@@ -36,6 +56,41 @@
 .menu-title:hover .menu-dropdown {
   visibility: visible;
   opacity: 1;
+}
+
+.furbabySumm {
+  width: 100%;
+  background-color: #aeecf2;
+  height: 90px;
+  display: flex;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.furbabySumm:hover {
+  box-shadow: 5px 10px 8px #888888;
+}
+
+.furbabySumm-cat1, .furbabySumm-cat2, .furbabySumm-cat3 {
+  position: relative;
+  display: block;
+  width: 33%;
+}
+
+.furbabySumm .label {
+  font-family: 'Roboto';
+  font-size: 12px;
+  vertical-align: super;
+  margin-right: 5px;
+}
+
+.furbabySumm .text {
+  font-family: 'Markazi Text', serif;
+  font-size: 30px;
+}
+
+.furbabySumm-cat2 {
+  display: flex;
 }
 
 .sortItem {

@@ -28,6 +28,8 @@ class FurbabiesList extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.returnParentAddress = this.returnParentAddress.bind(this);
     this.handleScrolling = debouce(this.handleScrolling.bind(this), 50);
+    this.getAge = this.getAge.bind(this);
+    this.getDate = this.getDate.bind(this);
   }
 
   handleClick(sortType) {
@@ -63,6 +65,24 @@ class FurbabiesList extends Component {
         <div className='updateMsg'>Click to update!</div>
       </div>
     )
+  }
+
+  getAge(input) {
+    const date = new Date(input);
+    const today = new Date();
+    const [todayYear, todayMonth] = [today.getFullYear(), today.getMonth()];
+    const [dateYear, dateMonth] = [date.getFullYear(), date.getMonth()];
+    let [diffYear, diffMonth] = [todayYear-dateYear, todayMonth-dateMonth];
+    if (diffMonth < 0) {
+      diffMonth = 12 + diffMonth;
+      diffYear--;
+    }
+    return `${diffYear}y, ${diffMonth}m`
+  }
+  
+  getDate(input) {
+    const date = new Date(input);
+    return `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`
   }
 
   renderDropdown() {
@@ -123,17 +143,36 @@ class FurbabiesList extends Component {
 
   render() {
     let furbabies = !this.state.sort ? this.props.furbabies : this.props.filterResult;
-    // let { furbabies } = this.props;
-    // if (this.state.sort) {
-    //   furbabies = sort(furbabies, this.state.sorting);
-    // }
-    console.log('furbabies: ', furbabies);
+    const furbaby = furbabies.length && furbabies[10];
+    console.log('furbaby: ', furbaby);
     return (
       <div>
-        {this.state.sort && <div style={{backgroundColor: 'goldenrod', width: '75px'}} onClick={this.clear}>Clear!</div>}
+        {this.state.sort && <div className='clear-btn' onClick={this.clear}>Clear</div>}
         {this.renderDropdown()}
         <div className='mainContainer' id='furbaby-display'>
         {furbabies.map((furbaby, idx) => (
+          <div className='furbabySumm' ley={idx}>
+            <div className='furbabySumm-cat1'>
+              <div><span className='label'>Name: </span><span className='text'>{furbaby.adoptedname || furbaby.shelterName}</span></div>
+              <div><span className='label'>Intake: </span><span className='text'>{this.getDate(furbaby.intakeDate)}</span></div>
+            </div>
+            <div className='furbabySumm-cat2'>
+              <div>
+                <div><span className='label'>Age: </span><span className='text'>{this.getAge(furbaby.birthDate)}</span></div>
+                <div><span className='label'>Breed: </span><span className='text'>{furbaby.breed}</span></div>
+              </div>
+              <div>
+                <div><span className='label'>Gender: </span><span className='text'>{furbaby.gender}</span></div>
+                <div><span className='label'>Color: </span><span className='text'>{furbaby.coatColor}</span></div>
+              </div>
+            </div>
+            <div className='furbabySumm-cat3'>
+              <div><span className='label'>Current Status: </span><span className='text'>{furbaby.currentStatus}</span></div>
+              {Number.isInteger(furbaby.parentId) && <div><span className='label'>Parent Name: </span><span className='text'>{furbaby.parent.name}</span></div>}
+            </div>
+          </div>
+        ))}
+        {/* {furbabies.map((furbaby, idx) => (
           <div key={idx} className='furbabyCard'>
             <div className='wrapper'>
             {this.renderUpdate(furbaby)}
@@ -162,7 +201,7 @@ class FurbabiesList extends Component {
               </div>
             </div>
           </div>
-        ))}
+        ))} */}
         </div>
         <FurbabyUpdateModal show={this.state.showUpdateModal} toggleModal={this.toggleModal}/>
       </div>
