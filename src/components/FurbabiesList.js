@@ -15,7 +15,7 @@ class FurbabiesList extends Component {
       sort: false,
       sorting: null,
       sortOptions: {
-        // 'Sort': ['Age: Oldest', 'Age: Youngest', 'Brought to Shelter: Most Recent', 'Brought to Shelter: Most Previous'],
+        'Sort': ['Age: Oldest', 'Age: Youngest', 'Brought to Shelter: Most Recent', 'Brought to Shelter: Most Previous'],
         'Filter': currentStatusVals.slice(1) //slicing as first val is 'Choose from List:'
       },
       showUpdateModal: false,
@@ -62,7 +62,7 @@ class FurbabiesList extends Component {
     return (
       <div onClick={()=>this.toggleModal(furbaby)}>
         <div className='update'>&#10247;</div>
-        <div className='updateMsg'>Click to update!</div>
+        <div className='updateMsg'>Update!</div>
       </div>
     )
   }
@@ -155,28 +155,17 @@ class FurbabiesList extends Component {
             <div className='wrapper'>
             {this.renderUpdate(furbaby)}
             <div className='currentStatus-List' name={furbaby.currentStatus}>{furbaby.currentStatus}</div>
-              <img alt="" className='furbabyPhoto' src={furbaby.photoUrl} />
-              <div className='furbabyDetails'>
-                <div className='furbabyInfo'>
-                  <div className='furbabyName'><b>Name: </b>{furbaby.adoptedname || furbaby.shelterName}</div>
-                  <div className='furbabyBreed'><b>Breed: </b>{furbaby.breed}</div>
-                  <div className='furbabyAge'><b>Age: </b>{furbaby.age}</div>
-                  <div className='furbabyArrived'><b>Arrived at shelter: </b>{furbaby.arrived}</div>
-                  <div className='furbabySex'><b>Sex: </b>{furbaby.sex}</div>
-                  <div className='furbabySpayed'><b>Spayed: </b>{furbaby.spayed ? 'Yes' : 'No'}</div>
-                  <div className='furbabyFivpositive'><b>FIV Positive: </b>{furbaby.fivpositive ? 'Yes' : 'No'}</div>
-                  <div className='furbabyComments'><b>Comments: </b>'None'</div>
-                </div>
-              {furbaby.parentId && 
-                <div className='parentInfo'>
-                  <div className='parentTitle'>{furbaby.fostered ? 'Fostered by;' : 'Adopted by:'}</div>
-                  <div className='parentDetail'>
-                    <div className='parentName'>{furbaby.parent.name}</div>
-                    <div className='parentAddress'>{this.returnParentAddress(furbaby)}</div>
-                  </div>
-                </div>
-              }
+              <img alt="" className='furbabyPhoto' src={furbaby.photoUrl}/>
+              <div className='furbabyInfo'>
+                <div><span className='label'>Name: </span><span className='text-name'>{furbaby.adoptedname || furbaby.shelterName}</span></div>
+                <div><span className='label'>Age: </span><span className='text'>{this.getAge(furbaby.birthDate)}</span></div>
+                <div><span className='label'>Breed: </span><span className='text'>{furbaby.breed}</span></div>
+                <div><span className='label'>Gender: </span><span className='text'>{furbaby.gender}</span></div>
+                <div><span className='label'>Color: </span><span className='text'>{furbaby.coatColor}</span></div>
+                <div><span className='label'>Intake Date: </span><span className='text'>{this.getDate(furbaby.intakeDate)}</span></div>
+                {Number.isInteger(furbaby.parentId) && <div><span className='label'>Parent Name: </span><span className='text'>{furbaby.parent.name}</span></div>}
               </div>
+              <div className='furbabyClick'>Click for more details</div>
             </div>
           </div>
         ))}
