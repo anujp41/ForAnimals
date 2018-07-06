@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 router.use('/furbabies', require('./furbabies'));
+router.use('/furbabyDetail', require('./furbabyDetail'));
 router.use('/filter', require('./filter'));
 router.use('/parents', require('./parents'));
 

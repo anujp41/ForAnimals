@@ -5,6 +5,7 @@ const { FurBabies, Parents } = require('../models');
 router.get('/:index', (req, res, next) => {
   const {index} = req.params;
   FurBabies.findAll({
+    attributes: ['id', 'adoptedName', 'shelterName', 'birthDate', 'breed', 'gender', 'coatColor', 'intakeDate', 'parentId', 'photoUrl', 'currentStatus'],
     include: [Parents],
     offset: index,
     limit: 25 // 25 furbabies pulled at given time

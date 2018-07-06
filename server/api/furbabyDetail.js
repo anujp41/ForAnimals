@@ -2,13 +2,13 @@ const router = require('express').Router();
 const { FurBabies, Parents } = require('../models');
 
 // Return all furbabies from database
-router.get('/:option', (req, res, next) => {
-  const { option } = req.params;
-  FurBabies.findAll({
-    where: {currentStatus: option},
+router.get('/:id', (req, res, next) => {
+  const { id } = req.params;
+  FurBabies.findOne({
+    where: { id },
     include: [Parents]
   })
-  .then(filterResult => res.json(filterResult))
+  .then(furbaby => res.json(furbaby.dataValues))
   .catch(next);
 })
 

@@ -181,34 +181,3 @@
   font-family: 'Markazi Text', serif;
   font-size: 25px;
 }
-
-.update {
-  position: absolute;
-  right: 0;
-  background-color: #d1d2d6;
-  width: 10px;
-  height: 30px;
-  font-family: none;
-  padding-top: 10px;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-.updateMsg {
-  position: absolute;
-  right: 10px;
-  top: 8px;
-  background-color: white;
-  padding: 5px 15px;
-  border-radius: 25px;
-  font-family: 'Roboto', sans-serif;
-  font-weight: bolder;
-  font-size: 12px;
-  cursor: pointer;
-  opacity: 0;
-  transition: all 0.5s
-}
-
-.update:hover + .updateMsg {
-  opacity: 1;
-}

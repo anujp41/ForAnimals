@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import './FurbabiesList.css';
-import sort from './SortFunc';
+import FurbabyDetailModal from './FurbabyDetailModal';
 import FurbabyUpdateModal from './FurbabyUpdateModal';
-import { assignCurrFurbaby, clearCurrFurbaby, getFurbabiesThunk, getFilterThunk, removeFilter } from '../store';
+import { assignCurrFurbaby, clearCurrFurbaby, getFurbabiesThunk, getFilterThunk, removeFilter, getFurbabyThunk } from '../store';
 import debouce from 'debounce';
 const { currentStatusVals } = require('../assets');
 
@@ -18,18 +18,20 @@ class FurbabiesList extends Component {
         'Sort': ['Age: Oldest', 'Age: Youngest', 'Brought to Shelter: Most Recent', 'Brought to Shelter: Most Previous'],
         'Filter': currentStatusVals.slice(1) //slicing as first val is 'Choose from List:'
       },
-      showUpdateModal: false,
+      showDetail: false,
+      showUpdate: false,
       currIndex: 0
     }
     this.renderDropdown = this.renderDropdown.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.clear = this.clear.bind(this);
-    this.renderUpdate = this.renderUpdate.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.returnParentAddress = this.returnParentAddress.bind(this);
     this.handleScrolling = debouce(this.handleScrolling.bind(this), 50);
     this.getAge = this.getAge.bind(this);
     this.getDate = this.getDate.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
   }
 
   handleClick(sortType) {
@@ -44,27 +46,25 @@ class FurbabiesList extends Component {
     this.props.removeFilter();
   }
 
-  toggleModal(furbaby) {
-    if (furbaby && furbaby.age) {
-      this.props.assignFurbaby(furbaby);
-      this.setState({ showUpdateModal: !this.state.showUpdateModal });
-    } else {
-      this.setState({ showUpdateModal: !this.state.showUpdateModal });
+  closeModal() {
+    this.setState({ showDetail: false, showUpdate: false })
+  }
+
+  toggleModal(method) {
+    if (method==='detail') {
+      this.setState ({ showDetail: false, showUpdate: false})
     }
+    // if (furbaby && furbaby.age) {
+    //   this.props.assignFurbaby(furbaby);
+    //   this.setState({ showUpdate: !this.state.showUpdate });
+    // } else {
+    //   this.setState({ showUpdate: !this.state.showUpdate });
+    // }
   }
 
   returnParentAddress(furbaby) {
     const { parent } = furbaby;
     return `${parent.street}, ${parent.city}, ${parent.state} ${parent.zip}`;
-  }
-
-  renderUpdate(furbaby) {
-    return (
-      <div onClick={()=>this.toggleModal(furbaby)}>
-        <div className='update'>&#10247;</div>
-        <div className='updateMsg'>Update!</div>
-      </div>
-    )
   }
 
   getAge(input) {
@@ -106,11 +106,14 @@ class FurbabiesList extends Component {
 
   handleScrolling() {
     const targetElement = document.getElementById('furbaby-display');
-    const cardHeight = 575;
-    const { currIndex } = this.state;
     if (targetElement.getBoundingClientRect().bottom-window.innerHeight < 1500) { //1500 chosen as this is equivalent to height of 3 rows
       this.props.getFurbabiesThunk(this.state.currIndex)
     };
+  }
+
+  handleSelect(idx) {
+    this.props.getFurbabyThunk(idx);
+    this.setState({ showDetail: true });
   }
 
   componentDidUpdate() {
@@ -128,9 +131,6 @@ class FurbabiesList extends Component {
     if (this.props.filterResult !== nextProps.filterFurbaby) {
       return true;
     }
-    // if (this.state !== nextState) {
-    //   return true;
-    // }
     return false;
   }
 
@@ -144,7 +144,6 @@ class FurbabiesList extends Component {
   render() {
     let furbabies = !this.state.sort ? this.props.furbabies : this.props.filterResult;
     const furbaby = furbabies.length && furbabies[10];
-    console.log('furbaby: ', furbaby);
     return (
       <div>
         {this.state.sort && <div className='clear-btn' onClick={this.clear}>Clear</div>}
@@ -152,12 +151,11 @@ class FurbabiesList extends Component {
         <div className='mainContainer' id='furbaby-display'>
         {furbabies.map((furbaby, idx) => (
           <div key={idx} className='furbabyCard'>
-            <div className='wrapper'>
-            {this.renderUpdate(furbaby)}
+            <div className='wrapper' onClick={()=>this.handleSelect(furbaby.id)}>
             <div className='currentStatus-List' name={furbaby.currentStatus}>{furbaby.currentStatus}</div>
               <img alt="" className='furbabyPhoto' src={furbaby.photoUrl}/>
               <div className='furbabyInfo'>
-                <div><span className='label'>Name: </span><span className='text-name'>{furbaby.adoptedname || furbaby.shelterName}</span></div>
+                <div><span className='label'>Name: </span><span className='text-name'>{furbaby.adoptedName || furbaby.shelterName}</span></div>
                 <div><span className='label'>Age: </span><span className='text'>{this.getAge(furbaby.birthDate)}</span></div>
                 <div><span className='label'>Breed: </span><span className='text'>{furbaby.breed}</span></div>
                 <div><span className='label'>Gender: </span><span className='text'>{furbaby.gender}</span></div>
@@ -170,7 +168,8 @@ class FurbabiesList extends Component {
           </div>
         ))}
         </div>
-        <FurbabyUpdateModal show={this.state.showUpdateModal} toggleModal={this.toggleModal}/>
+        {this.state.showDetail && <FurbabyDetailModal closeModal={this.closeModal}/>}
+        <FurbabyUpdateModal show={this.state.showUpdate} toggleModal={this.toggleModal}/>
       </div>
     )
   }
@@ -183,18 +182,7 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = { getFurbabiesThunk, getFilterThunk, removeFilter };
-
-// const mapDispatch = dispatch => {
-//   return {
-//     assignFurbaby(furbaby) {
-//       dispatch(assignCurrFurbaby(furbaby));
-//     },
-//     clearFurbaby() {
-//       dispatch(clearCurrFurbaby());
-//     }
-//   }
-// }
+const mapDispatch = { getFurbabiesThunk, getFilterThunk, removeFilter, getFurbabyThunk };
 
 const FurbabiesListContainer = connect(mapState, mapDispatch)(FurbabiesList);
 export default FurbabiesListContainer;
