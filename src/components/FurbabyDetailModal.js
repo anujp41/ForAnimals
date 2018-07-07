@@ -10,6 +10,7 @@ class FurbabyDetailModal extends Component {
   constructor(props) {
     super(props);
     this.onImageDrop = this.onImageDrop.bind(this);
+    this.getAgeYYMM = this.getAgeYYMM.bind(this);
     this.state = {
       shelterName: '',
       ageYear: '',
@@ -56,6 +57,25 @@ class FurbabyDetailModal extends Component {
     }
   }
 
+  getAgeYYMM(input) {
+    const date = new Date(input);
+    const today = new Date();
+    const [todayYear, todayMonth] = [today.getFullYear(), today.getMonth()];
+    const [dateYear, dateMonth] = [date.getFullYear(), date.getMonth()];
+    let [ageYear, ageMonth] = [todayYear-dateYear, todayMonth-dateMonth];
+    if (ageMonth < 0) {
+      ageMonth = 12 + ageMonth;
+      ageYear--;
+    }
+    this.setState({ ageYear, ageMonth });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.furbabyDetail.birthDate !== undefined && prevProps.furbabyDetail.birthDate === undefined) {
+      this.getAgeYYMM(this.props.furbabyDetail.birthDate);
+    }
+  }
+
   onImageDrop(files) {
     const response = this.state.photo === null ? true : window.confirm('Do you want to replace the current photo?');
     if (response) {
@@ -95,6 +115,7 @@ class FurbabyDetailModal extends Component {
       otherFiles,
       currentStatus,
       parent } = this.state;
+    console.log('state ', ageYear)
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
@@ -103,7 +124,7 @@ class FurbabyDetailModal extends Component {
         <button className='cancelbtn' onClick={this.props.closeModal}>
           Cancel
         </button>
-        <div className='container'>
+        <div className='detail-container'>
           <form autoComplete='off' >
 
           <div className='title-detail'>See details for {adoptedName || shelterName}</div>

@@ -10,13 +10,23 @@
   overflow: scroll
 }
 
+.detail-container {
+  margin: auto;
+  text-align: center;
+  background-color: #6d6969;
+  font-family: 'Open Sans', sans-serif;
+  width: 85vw;
+  color: white;
+  margin-bottom: 15px
+}
+
 .title-detail {
   font-size: 1.5em;
-  /* padding-top: 15px; */
   text-align: center;
 }
 
 .sub-title-detail {
   font-size: 0.9em;
   text-align: center;
+  padding-bottom: 15px;
 }

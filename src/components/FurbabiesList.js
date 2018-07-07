@@ -169,7 +169,7 @@ class FurbabiesList extends Component {
         ))}
         </div>
         {this.state.showDetail && <FurbabyDetailModal closeModal={this.closeModal}/>}
-        <FurbabyUpdateModal show={this.state.showUpdate} toggleModal={this.toggleModal}/>
+        {/* <FurbabyUpdateModal show={this.state.showUpdate} toggleModal={this.toggleModal}/> */}
       </div>
     )
   }
