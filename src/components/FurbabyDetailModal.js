@@ -115,7 +115,9 @@ class FurbabyDetailModal extends Component {
       otherFiles,
       currentStatus,
       parent } = this.state;
-    console.log('state ', this.state.photoUrl)
+    console.log('length ', otherFiles.length+this.state.imagesOtherURL.length);
+    console.log('otherFiles ', otherFiles);
+    console.log('imagesOtherURL ', this.state.imagesOtherURL)
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
@@ -300,9 +302,9 @@ class FurbabyDetailModal extends Component {
               <p>Upload Medical Forms</p>
               <p>(Drop files in the box):</p>
               <FileDrop onDrop={this.handleDrop}>
-                {otherFiles.length> 0 && 
+                {(otherFiles.length> 0 || this.state.imagesOtherURL.length) && 
                   <div className='tooltip'>
-                    <h6 className='tooltipLabel' onClick={this.showFileList} >{otherFiles.length} file(s) added!</h6>
+                    <h6 className='tooltipLabel' onClick={this.showFileList} >{otherFiles.length+this.state.imagesOtherURL.length} file(s) added!</h6>
                     <span className='tooltiptext'>Click to see list of files!</span>
                     {this.state.showFiles && 
                       <div className='fileListBox'>
