@@ -115,7 +115,7 @@ class FurbabyDetailModal extends Component {
       otherFiles,
       currentStatus,
       parent } = this.state;
-    console.log('state ', ageYear)
+    console.log('state ', this.state.photoUrl)
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
@@ -292,7 +292,7 @@ class FurbabyDetailModal extends Component {
                 onDrop={this.onImageDrop.bind(this)}>
                 <p>Upload pictures</p>
                 <p>(Limit One):</p>
-                <img className='furbaby-photo' alt='' src={this.state.photo && this.state.photo.preview}/>
+                <img className='furbaby-photo' alt='' src={this.state.photo && this.state.photo.preview || this.state.photoUrl}/>
               </Dropzone>
             </div>
 

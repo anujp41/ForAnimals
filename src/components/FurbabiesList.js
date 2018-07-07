@@ -19,8 +19,7 @@ class FurbabiesList extends Component {
         'Filter': currentStatusVals.slice(1) //slicing as first val is 'Choose from List:'
       },
       showDetail: false,
-      showUpdate: false,
-      currIndex: 0
+      currIndex: 0 // tracks the current number of furbabies displayed to user
     }
     this.renderDropdown = this.renderDropdown.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -47,12 +46,12 @@ class FurbabiesList extends Component {
   }
 
   closeModal() {
-    this.setState({ showDetail: false, showUpdate: false })
+    this.setState({ showDetail: false })
   }
 
   toggleModal(method) {
     if (method==='detail') {
-      this.setState ({ showDetail: false, showUpdate: false})
+      this.setState ({ showDetail: false })
     }
     // if (furbaby && furbaby.age) {
     //   this.props.assignFurbaby(furbaby);
@@ -169,7 +168,6 @@ class FurbabiesList extends Component {
         ))}
         </div>
         {this.state.showDetail && <FurbabyDetailModal closeModal={this.closeModal}/>}
-        {/* <FurbabyUpdateModal show={this.state.showUpdate} toggleModal={this.toggleModal}/> */}
       </div>
     )
   }
