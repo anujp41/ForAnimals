@@ -14,6 +14,8 @@ class FurbabyDetailModal extends Component {
     this.handleDrop = this.handleDrop.bind(this);
     this.showFileList = this.showFileList.bind(this);
     this.removeFile = this.removeFile.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleStatus = this.handleStatus.bind(this);
     this.state = {
       shelterName: '',
       ageYear: '',
@@ -55,10 +57,35 @@ class FurbabyDetailModal extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    let {intakeDate, ...furbabyDetail} = nextProps.furbabyDetail;
+    intakeDate = intakeDate && intakeDate.slice(0, intakeDate.indexOf('T'));
     return {
-      ...nextProps.furbabyDetail,
+      ...furbabyDetail,
       photo: null,
-      otherFiles: []
+      otherFiles: [],
+      intakeDate
+    }
+  }
+
+  handleChange(event) {
+    const target = event.target;
+    const name = target.name;
+    let value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState ({ [name] : value });
+  }
+
+  handleStatus(event) {
+    const noModalStatus = ['Adoptable', 'Available as Barn Cat', 'Deceased', 'Returned to Colony'];
+    const target = event.target;
+    const currentStatus = target.value;
+    this.setState ({ currentStatus });
+    if (noModalStatus.indexOf(currentStatus) === -1 && this.state.parent === null) {
+      this.setState({ showModal: true });
+      return;
+    }
+    if (noModalStatus.indexOf(currentStatus) >= 0) {
+      this.setState({ parent: null, adoptedName: '', adoptionDate: '' });
+      return;
     }
   }
 
@@ -148,7 +175,7 @@ class FurbabyDetailModal extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
-    // console.log('state: ', this.state);
+    console.log('state: ', this.state);
     return (
       <div className='backdrop-detail'>
         <button className='cancelbtn' onClick={this.props.closeModal}>
@@ -394,7 +421,6 @@ class FurbabyDetailModal extends Component {
           }
 
           <button className='button' type='submit' value='submit'>Submit</button>
-            
           </form>
         </div>
       </div>
