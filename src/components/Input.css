@@ -616,6 +616,12 @@ input[type=date]::-webkit-outer-spin-button {
   padding: 0;
   width: 25px;
   height: 15px;
+  cursor: pointer;
+}
+
+.btnRemoveFile:hover {
+  color: white;
+  background-color: #ff0000;
 }
 
 .status {

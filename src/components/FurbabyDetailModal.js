@@ -13,6 +13,7 @@ class FurbabyDetailModal extends Component {
     this.getAgeYYMM = this.getAgeYYMM.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
     this.showFileList = this.showFileList.bind(this);
+    this.removeFile = this.removeFile.bind(this);
     this.state = {
       shelterName: '',
       ageYear: '',
@@ -98,6 +99,21 @@ class FurbabyDetailModal extends Component {
     this.setState({ showFiles: !showFiles});
   }
 
+  removeFile(event) {
+    event.preventDefault();
+    let targetFileName = event.target.name;
+    let otherFiles = this.state.otherFiles;
+    let imagesOtherURL = this.state.imagesOtherURL;
+    if (isNaN(+targetFileName)) {
+      otherFiles = otherFiles.filter(file => file.name !== targetFileName);
+      this.setState({otherFiles});
+    } else {
+      imagesOtherURL.splice(+targetFileName, 1);
+      this.setState ({ imagesOtherURL });
+    }
+    if ((otherFiles.length + imagesOtherURL.length) === 0) this.setState({ showFiles: false });
+  }
+
   render() {
     const { 
       shelterName,
@@ -132,7 +148,7 @@ class FurbabyDetailModal extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
-    console.log('state: ', this.state);
+    // console.log('state: ', this.state);
     return (
       <div className='backdrop-detail'>
         <button className='cancelbtn' onClick={this.props.closeModal}>
@@ -332,7 +348,7 @@ class FurbabyDetailModal extends Component {
                           {this.state.imagesOtherURL.map((file, idx) => (
                             <li className='fileItem' key={idx}>
                               <div className='fileListItem'>{file.slice(file.lastIndexOf('/')+1)}
-                                <button className='btnRemoveFile' name={file.name} onClick={this.removeFile} >X</button>
+                                <button className='btnRemoveFile' name={idx} onClick={event=>this.removeFile(event)} >X</button>
                               </div>
                             </li>
                           ))}
