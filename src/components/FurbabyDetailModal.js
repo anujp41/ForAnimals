@@ -11,6 +11,8 @@ class FurbabyDetailModal extends Component {
     super(props);
     this.onImageDrop = this.onImageDrop.bind(this);
     this.getAgeYYMM = this.getAgeYYMM.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
+    this.showFileList = this.showFileList.bind(this);
     this.state = {
       shelterName: '',
       ageYear: '',
@@ -53,7 +55,9 @@ class FurbabyDetailModal extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     return {
-      ...nextProps.furbabyDetail
+      ...nextProps.furbabyDetail,
+      photo: null,
+      otherFiles: []
     }
   }
 
@@ -82,6 +86,16 @@ class FurbabyDetailModal extends Component {
       const photo = files[0];
       this.setState({ photo });
     }
+  }
+
+  handleDrop(inputFiles) {
+    const otherFiles = [...this.state.otherFiles, ...inputFiles];
+    this.setState({ otherFiles });
+  }
+
+  showFileList() {
+    const showFiles = this.state.showFiles;
+    this.setState({ showFiles: !showFiles});
   }
 
   render() {
@@ -115,12 +129,10 @@ class FurbabyDetailModal extends Component {
       otherFiles,
       currentStatus,
       parent } = this.state;
-    console.log('length ', otherFiles.length+this.state.imagesOtherURL.length);
-    console.log('otherFiles ', otherFiles);
-    console.log('imagesOtherURL ', this.state.imagesOtherURL)
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
+    console.log('state: ', this.state);
     return (
       <div className='backdrop-detail'>
         <button className='cancelbtn' onClick={this.props.closeModal}>
@@ -291,7 +303,7 @@ class FurbabyDetailModal extends Component {
                 className='drop-zone'
                 multiple={false}
                 accept='image/*'
-                onDrop={this.onImageDrop.bind(this)}>
+                onDrop={this.onImageDrop}>
                 <p>Upload pictures</p>
                 <p>(Limit One):</p>
                 <img className='furbaby-photo' alt='' src={this.state.photo && this.state.photo.preview || this.state.photoUrl}/>
@@ -313,6 +325,13 @@ class FurbabyDetailModal extends Component {
                           {otherFiles.map((file, idx) => (
                             <li className='fileItem' key={idx}>
                               <div className='fileListItem'>{file.name}
+                                <button className='btnRemoveFile' name={file.name} onClick={this.removeFile} >X</button>
+                              </div>
+                            </li>
+                          ))}
+                          {this.state.imagesOtherURL.map((file, idx) => (
+                            <li className='fileItem' key={idx}>
+                              <div className='fileListItem'>{file.slice(file.lastIndexOf('/')+1)}
                                 <button className='btnRemoveFile' name={file.name} onClick={this.removeFile} >X</button>
                               </div>
                             </li>

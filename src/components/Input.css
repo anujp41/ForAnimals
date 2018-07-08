@@ -50,6 +50,7 @@ input[type=date]::-webkit-outer-spin-button {
 }
 
 .label-text {
+  font-family: 'Eczar', serif;
   position: absolute;
   font-size: 20px;
   transition: all 0.5s;
@@ -586,6 +587,7 @@ input[type=date]::-webkit-outer-spin-button {
 
 .fileListBox {
   position: absolute;
+  z-index: 100;
   background-color: red;
   top: 30px;
   right: 100px;

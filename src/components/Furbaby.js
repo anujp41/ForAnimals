@@ -411,7 +411,7 @@ class Furbaby extends Component {
                 className='drop-zone'
                 multiple={false}
                 accept='image/*'
-                onDrop={this.onImageDrop.bind(this)}>
+                onDrop={this.onImageDrop}>
                 <p>Upload pictures</p>
                 <p>(Limit One):</p>
                 <img className='furbaby-photo' alt='' src={this.state.photo && this.state.photo.preview}/>

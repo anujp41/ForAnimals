@@ -11,12 +11,12 @@
 }
 
 .cancelbtn {
-  position: relative;
+  position: absolute;
   padding: 5px 10px;
   color: white;
   background-color: #d9534f;
-  top: 30px;
-  margin-left: 64%;
+  /* top: 30px;
+  margin-left: 64%; */
   border-radius: 15px;
   font-size: 12px;
   cursor: pointer;
