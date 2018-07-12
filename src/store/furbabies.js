@@ -3,12 +3,14 @@ import axios from 'axios';
 const CREATE_FURBABY = 'CREATE_FURBABY';
 const GET_FURBABIES = 'GET_FURBABIES';
 const UPDATE_FOSTER = 'UPDATE_FOSTER';
+const DELETE_FURBABY = 'DELETE_FURBABY';
 
 const initialState = [];
 
 const createFurbaby = furbaby => ({ type: CREATE_FURBABY, furbaby });
 const getFurbabies = furbabies => ({ type: GET_FURBABIES, furbabies});
 const updateFoster = furbaby => ({ type: UPDATE_FOSTER, furbaby });
+const deleteFurbaby = index => ({ type: DELETE_FURBABY, index})
 
 export const createFurbabyThunk = furbaby => dispatch => 
   axios.post('http://localhost:8080/api/furbabies', furbaby)
@@ -35,8 +37,10 @@ export const updateFosterThunk = furbaby => dispatch =>
   .then(furbaby => dispatch(updateFoster(furbaby)))
   .catch(err => console.log(err));
 
-export const deleteFurbabyThunk = id => dispatch =>
+export const deleteFurbabyThunk = (id, arrIndex) => dispatch =>
   axios.delete(`http://localhost:8080/api/furbabies/${id}`)
+  .then(() => dispatch(deleteFurbaby(arrIndex)))
+  .catch(err => console.log(err));
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -51,6 +55,9 @@ export default function (state = initialState, action) {
         }
       });
       return state;
+    case DELETE_FURBABY:
+      state.splice(action.index, 1);
+      return [...state];
     default:
       return state;
   }

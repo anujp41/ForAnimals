@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import FileDrop from 'react-file-drop';
 import './FurbabyDetailModal.css';
+import { deleteFurbabyThunk, clearCurrFurbaby } from '../store';
 const {currentStatusVals} = require('../assets');
 
 class FurbabyDetailModal extends Component {
@@ -103,8 +104,10 @@ class FurbabyDetailModal extends Component {
     }
   }
 
-  handleDelete(idx) {
-    console.log('deleting', idx);
+  handleDelete(idx, arrIndex) {
+    this.props.deleteFurbabyThunk(idx, arrIndex);
+    this.props.clearCurrFurbaby();
+    this.props.closeModal();
   }
 
   componentDidUpdate(prevProps) {
@@ -356,7 +359,7 @@ class FurbabyDetailModal extends Component {
                 onDrop={this.onImageDrop}>
                 <p>Upload pictures</p>
                 <p>(Limit One):</p>
-                <img className='furbaby-photo' alt='' src={this.state.photo && this.state.photo.preview || this.state.photoUrl}/>
+                <img className='furbaby-photo' alt='' src={this.state.photo && (this.state.photo.preview || this.state.photoUrl)}/>
               </Dropzone>
             </div>
 
@@ -429,7 +432,7 @@ class FurbabyDetailModal extends Component {
 
             <button className='button button-update' type='submit' value='submit'>Update</button>
           </form>
-            <button className='button button-delete' onClick={()=>this.handleDelete(id)}>Delete</button>
+            <button className='button button-delete' onClick={()=>this.handleDelete(id, this.props.stateIdx)}>Delete</button>
         </div>
       </div>
     )
@@ -442,5 +445,7 @@ const mapState = state => {
   }
 }
 
-const FurbabyDetailModalContainer = connect(mapState, null)(FurbabyDetailModal);
+const mapDispatch = { deleteFurbabyThunk, clearCurrFurbaby };
+
+const FurbabyDetailModalContainer = connect(mapState, mapDispatch)(FurbabyDetailModal);
 export default FurbabyDetailModalContainer;

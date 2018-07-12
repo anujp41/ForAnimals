@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import './FurbabiesList.css';
 import FurbabyDetailModal from './FurbabyDetailModal';
 import FurbabyUpdateModal from './FurbabyUpdateModal';
-import { assignCurrFurbaby, clearCurrFurbaby, getFurbabiesThunk, getFilterThunk, removeFilter, getFurbabyThunk } from '../store';
+import { clearCurrFurbaby, getFurbabiesThunk, getFilterThunk, removeFilter, getFurbabyThunk } from '../store';
 import debouce from 'debounce';
 const { currentStatusVals } = require('../assets');
 
@@ -19,7 +19,8 @@ class FurbabiesList extends Component {
         'Filter': currentStatusVals.slice(1) //slicing as first val is 'Choose from List:'
       },
       showDetail: false,
-      currIndex: 0 // tracks the current number of furbabies displayed to user
+      currIndex: 0, // tracks the current number of furbabies displayed to user
+      stateIdx: null
     }
     this.renderDropdown = this.renderDropdown.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -110,9 +111,9 @@ class FurbabiesList extends Component {
     };
   }
 
-  handleSelect(idx) {
+  handleSelect(idx, stateIdx) {
     this.props.getFurbabyThunk(idx);
-    this.setState({ showDetail: true });
+    this.setState({ showDetail: true, stateIdx });
   }
 
   componentDidUpdate() {
@@ -150,7 +151,7 @@ class FurbabiesList extends Component {
         <div className='mainContainer' id='furbaby-display'>
         {furbabies.map((furbaby, idx) => (
           <div key={idx} className='furbabyCard'>
-            <div className='wrapper' onClick={()=>this.handleSelect(furbaby.id)}>
+            <div className='wrapper' onClick={()=>this.handleSelect(furbaby.id, idx)}>
             <div className='currentStatus-List' name={furbaby.currentStatus}>{furbaby.currentStatus}</div>
               <img alt="" className='furbabyPhoto' src={furbaby.photoUrl}/>
               <div className='furbabyInfo'>
@@ -167,7 +168,7 @@ class FurbabiesList extends Component {
           </div>
         ))}
         </div>
-        {this.state.showDetail && <FurbabyDetailModal closeModal={this.closeModal} getAge={this.getAge}/>}
+        {this.state.showDetail && <FurbabyDetailModal closeModal={this.closeModal} getAge={this.getAge} stateIdx={this.state.stateIdx}/>}
       </div>
     )
   }
