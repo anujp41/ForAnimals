@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getFurbabiesThunk } from '../store';
+import { getFurbabiesThunk, getParentsThunk } from '../store';
 
 class Welcome extends Component {
+
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(action=null) {
+    this.props.getParentsThunk();
+    if (action==='furbabies') this.props.getFurbabiesThunk();
+  }
 
   render() {
     return (
@@ -12,7 +22,7 @@ class Welcome extends Component {
           <h1>Let's visit this site!</h1>
         </Link> */}
 
-        <Link to={'/furbaby'}>
+        <Link to={'/furbaby'} onClick={this.handleClick}>
           <h1>Add furbabies!</h1>
         </Link>
 
@@ -20,7 +30,7 @@ class Welcome extends Component {
           <h1>Add parents!</h1>
         </Link> */}
 
-        <Link to={'/furbabies'} onClick={()=>this.props.getFurbabiesThunk()}>
+        <Link to={'/furbabies'} onClick={()=>this.handleClick('furbabies')}>
           <h1>Let's go see the furbabies!</h1>
         </Link>
 
@@ -32,7 +42,7 @@ class Welcome extends Component {
   }
 }
 
-const mapDispatch = { getFurbabiesThunk };
+const mapDispatch = { getFurbabiesThunk, getParentsThunk };
 
 export default connect(null, mapDispatch)(Welcome);
 

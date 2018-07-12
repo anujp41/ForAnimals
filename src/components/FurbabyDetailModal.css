@@ -30,3 +30,25 @@
   text-align: center;
   padding-bottom: 15px;
 }
+
+.button-update {
+  background-color: #49c1ed;
+}
+
+.button-update:hover {
+  font-size: 25px;
+  border: 2px solid #419ff2;
+  background-color: #419ff2;
+  color: white;
+}
+
+.button-delete {
+  background-color: #e84435;
+}
+
+.button-delete:hover {
+  font-size: 25px;
+  border: 2px solid #c61909;
+  background-color: #c61909;
+  color: white;
+}

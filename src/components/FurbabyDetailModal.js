@@ -10,12 +10,14 @@ class FurbabyDetailModal extends Component {
   constructor(props) {
     super(props);
     this.onImageDrop = this.onImageDrop.bind(this);
-    this.getAgeYYMM = this.getAgeYYMM.bind(this);
     this.handleDrop = this.handleDrop.bind(this);
     this.showFileList = this.showFileList.bind(this);
     this.removeFile = this.removeFile.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleStatus = this.handleStatus.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.updateDB = this.updateDB.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
     this.state = {
       shelterName: '',
       ageYear: '',
@@ -67,6 +69,18 @@ class FurbabyDetailModal extends Component {
     }
   }
 
+  handleUpdate(event) {
+    event.preventDefault();
+    this.updateDB();
+  }
+
+  updateDB() {
+    const { parent, ageYear, ageMonth, photo, otherFiles, showFiles, ...furbaby } = this.state;
+    // this.props.submit(furbaby);
+    alert('Furbaby information updated!');
+    this.props.closeModal();
+  }
+
   handleChange(event) {
     const target = event.target;
     const name = target.name;
@@ -89,22 +103,14 @@ class FurbabyDetailModal extends Component {
     }
   }
 
-  getAgeYYMM(input) {
-    const date = new Date(input);
-    const today = new Date();
-    const [todayYear, todayMonth] = [today.getFullYear(), today.getMonth()];
-    const [dateYear, dateMonth] = [date.getFullYear(), date.getMonth()];
-    let [ageYear, ageMonth] = [todayYear-dateYear, todayMonth-dateMonth];
-    if (ageMonth < 0) {
-      ageMonth = 12 + ageMonth;
-      ageYear--;
-    }
-    this.setState({ ageYear, ageMonth });
+  handleDelete(idx) {
+    console.log('deleting', idx);
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.furbabyDetail.birthDate !== undefined && prevProps.furbabyDetail.birthDate === undefined) {
-      this.getAgeYYMM(this.props.furbabyDetail.birthDate);
+    if (prevProps.furbabyDetail.birthDate !== this.props.furbabyDetail.birthDate) {
+      const {diffYear: ageYear, diffMonth: ageMonth} = this.props.getAge(this.props.furbabyDetail.birthDate, 'detailModal');
+      this.setState({ ageYear, ageMonth });
     }
   }
 
@@ -142,7 +148,8 @@ class FurbabyDetailModal extends Component {
   }
 
   render() {
-    const { 
+    const {
+      id, 
       shelterName,
       adoptedName,
       ageYear,
@@ -175,17 +182,17 @@ class FurbabyDetailModal extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
-    console.log('state: ', this.state);
+    // console.log('state: ', this.state);
     return (
       <div className='backdrop-detail'>
         <button className='cancelbtn' onClick={this.props.closeModal}>
           Cancel
         </button>
         <div className='detail-container'>
-          <form autoComplete='off' >
+          <form autoComplete='off' onSubmit={this.handleUpdate}>
 
           <div className='title-detail'>See details for {adoptedName || shelterName}</div>
-          <div className='sub-title-detail'>You can edit any detail as well here</div>
+          <div className='sub-title-detail'>View or edit any info for furbaby</div>
 
           <div className='general'>
 
@@ -359,7 +366,7 @@ class FurbabyDetailModal extends Component {
               <FileDrop onDrop={this.handleDrop}>
                 {(otherFiles.length> 0 || this.state.imagesOtherURL.length) && 
                   <div className='tooltip'>
-                    <h6 className='tooltipLabel' onClick={this.showFileList} >{otherFiles.length+this.state.imagesOtherURL.length} file(s) added!</h6>
+                    <h6 className='tooltipLabel' onClick={this.showFileList} >{(otherFiles.length || this.state.imagesOtherURL.length) && otherFiles.length+this.state.imagesOtherURL.length} file(s) added!</h6>
                     <span className='tooltiptext'>Click to see list of files!</span>
                     {this.state.showFiles && 
                       <div className='fileListBox'>
@@ -420,8 +427,9 @@ class FurbabyDetailModal extends Component {
             </div>
           }
 
-          <button className='button' type='submit' value='submit'>Submit</button>
+            <button className='button button-update' type='submit' value='submit'>Update</button>
           </form>
+            <button className='button button-delete' onClick={()=>this.handleDelete(id)}>Delete</button>
         </div>
       </div>
     )

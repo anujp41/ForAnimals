@@ -35,6 +35,9 @@ export const updateFosterThunk = furbaby => dispatch =>
   .then(furbaby => dispatch(updateFoster(furbaby)))
   .catch(err => console.log(err));
 
+export const deleteFurbabyThunk = id => dispatch =>
+  axios.delete(`http://localhost:8080/api/furbabies/${id}`)
+
 export default function (state = initialState, action) {
   switch (action.type) {
     case CREATE_FURBABY:
@@ -42,7 +45,7 @@ export default function (state = initialState, action) {
     case GET_FURBABIES:
       return [...state, ...action.furbabies];
     case UPDATE_FOSTER:
-      state.forEach(item => {
+      state.forEach(item => {                          
         if (item.id === action.furbaby.id) {
           item.parentId = action.furbaby.parentId;
         }

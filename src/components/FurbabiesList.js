@@ -66,7 +66,7 @@ class FurbabiesList extends Component {
     return `${parent.street}, ${parent.city}, ${parent.state} ${parent.zip}`;
   }
 
-  getAge(input) {
+  getAge(input, modal) {
     const date = new Date(input);
     const today = new Date();
     const [todayYear, todayMonth] = [today.getFullYear(), today.getMonth()];
@@ -76,7 +76,7 @@ class FurbabiesList extends Component {
       diffMonth = 12 + diffMonth;
       diffYear--;
     }
-    return `${diffYear}y, ${diffMonth}m`
+    return modal !== 'detailModal' ? `${diffYear}y, ${diffMonth}m` : {diffYear, diffMonth};
   }
   
   getDate(input) {
@@ -167,7 +167,7 @@ class FurbabiesList extends Component {
           </div>
         ))}
         </div>
-        {this.state.showDetail && <FurbabyDetailModal closeModal={this.closeModal}/>}
+        {this.state.showDetail && <FurbabyDetailModal closeModal={this.closeModal} getAge={this.getAge}/>}
       </div>
     )
   }
