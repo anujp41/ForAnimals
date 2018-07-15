@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import './Match.css';
-import { updateFosterThunk } from '../store';
+import { updateFurbabyThunk } from '../store';
 
 class Match extends Component {
 
@@ -61,7 +61,7 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     submit(info) {
-      dispatch(updateFosterThunk(info))
+      dispatch(updateFurbabyThunk(info))
     }
   }
 }

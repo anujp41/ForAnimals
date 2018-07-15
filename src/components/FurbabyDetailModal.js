@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import FileDrop from 'react-file-drop';
 import './FurbabyDetailModal.css';
-import { deleteFurbabyThunk, clearCurrFurbaby } from '../store';
+import { deleteFurbabyThunk, clearCurrFurbaby, updateFurbabyThunk} from '../store';
 const {currentStatusVals} = require('../assets');
 
 class FurbabyDetailModal extends Component {
@@ -77,7 +77,7 @@ class FurbabyDetailModal extends Component {
 
   updateDB() {
     const { parent, ageYear, ageMonth, photo, otherFiles, showFiles, ...furbaby } = this.state;
-    // this.props.submit(furbaby);
+    this.props.updateFurbabyThunk(furbaby);
     alert('Furbaby information updated!');
     this.props.closeModal();
   }
@@ -445,7 +445,7 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = { deleteFurbabyThunk, clearCurrFurbaby };
+const mapDispatch = { deleteFurbabyThunk, clearCurrFurbaby, updateFurbabyThunk };
 
 const FurbabyDetailModalContainer = connect(mapState, mapDispatch)(FurbabyDetailModal);
 export default FurbabyDetailModalContainer;

@@ -2,14 +2,14 @@ import axios from 'axios';
 
 const CREATE_FURBABY = 'CREATE_FURBABY';
 const GET_FURBABIES = 'GET_FURBABIES';
-const UPDATE_FOSTER = 'UPDATE_FOSTER';
+const UPDATE_FURBABY = 'UPDATE_FURBABY';
 const DELETE_FURBABY = 'DELETE_FURBABY';
 
 const initialState = [];
 
 const createFurbaby = furbaby => ({ type: CREATE_FURBABY, furbaby });
 const getFurbabies = furbabies => ({ type: GET_FURBABIES, furbabies});
-const updateFoster = furbaby => ({ type: UPDATE_FOSTER, furbaby });
+const updateFurbaby = furbaby => ({ type: UPDATE_FURBABY, furbaby });
 const deleteFurbaby = index => ({ type: DELETE_FURBABY, index})
 
 export const createFurbabyThunk = furbaby => dispatch => 
@@ -32,9 +32,9 @@ export const getFurbabiesThunk = (idx = 0) => dispatch =>
   .then(furbabies => dispatch(getFurbabies(furbabies)))
   .catch(err => console.log(err));
 
-export const updateFosterThunk = furbaby => dispatch => 
+export const updateFurbabyThunk = furbaby => dispatch => 
   axios.put('http://localhost:8080/api/furbabies', furbaby)
-  .then(furbaby => dispatch(updateFoster(furbaby)))
+  .then(furbaby => dispatch(updateFurbaby(furbaby)))
   .catch(err => console.log(err));
 
 export const deleteFurbabyThunk = (id, arrIndex) => dispatch =>
@@ -48,7 +48,7 @@ export default function (state = initialState, action) {
       return [...state, action.furbaby];
     case GET_FURBABIES:
       return [...state, ...action.furbabies];
-    case UPDATE_FOSTER:
+    case UPDATE_FURBABY:
       state.forEach(item => {                          
         if (item.id === action.furbaby.id) {
           item.parentId = action.furbaby.parentId;
