@@ -48,7 +48,7 @@ class Furbaby extends Component {
       photoUrl: '',
       microchipNum: '',
       otherFiles: [],
-      imagesOtherURL: [],
+      otherFilesURL: [],
       showFiles: false,
       showModal: false
     }
@@ -83,12 +83,12 @@ class Furbaby extends Component {
     await this.handleDate(this.state.ageYear, this.state.ageMonth);
     const photoUrl = this.state.photo !== null ? await this.saveToFirebase(firebaseFolder, this.state.photo) : null;
     let promiseArr = [];
-    let imagesOtherURL = [];
+    let otherFilesURL = [];
     if (this.state.otherFiles.length) {
       promiseArr = this.state.otherFiles.map(async (file) => await this.saveToFirebase(firebaseFolder, file).then((value) => value));
-      imagesOtherURL = await Promise.all(promiseArr);
+      otherFilesURL = await Promise.all(promiseArr);
     }
-    this.setState({photoUrl, imagesOtherURL});
+    this.setState({photoUrl, otherFilesURL});
     this.saveToDB();
   }
 
@@ -149,7 +149,7 @@ class Furbaby extends Component {
       photoUrl: '',
       microchipNum: '',
       otherFiles: [],
-      imagesOtherURL: [],
+      otherFilesURL: [],
       showFiles: false,
       showModal: false
     };

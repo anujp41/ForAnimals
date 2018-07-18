@@ -56,7 +56,7 @@ class FurbabyDetailModal extends Component {
       photoUrl: '',
       microchipNum: '',
       otherFiles: [],
-      imagesOtherURL: [],
+      otherFilesURL: [],
       showFiles: false,
       showModal: false
     }
@@ -151,15 +151,15 @@ class FurbabyDetailModal extends Component {
     event.preventDefault();
     let targetFileName = event.target.name;
     let otherFiles = this.state.otherFiles;
-    let imagesOtherURL = this.state.imagesOtherURL;
+    let otherFilesURL = this.state.otherFilesURL;
     if (isNaN(+targetFileName)) {
       otherFiles = otherFiles.filter(file => file.name !== targetFileName);
       this.setState({otherFiles});
     } else {
-      imagesOtherURL.splice(+targetFileName, 1);
-      this.setState ({ imagesOtherURL });
+      otherFilesURL.splice(+targetFileName, 1);
+      this.setState ({ otherFilesURL });
     }
-    if ((otherFiles.length + imagesOtherURL.length) === 0) this.setState({ showFiles: false });
+    if ((otherFiles.length + otherFilesURL.length) === 0) this.setState({ showFiles: false });
   }
 
   render() {
@@ -379,9 +379,9 @@ class FurbabyDetailModal extends Component {
               <p>Upload Medical Forms</p>
               <p>(Drop files in the box):</p>
               <FileDrop onDrop={this.handleDrop}>
-                {(otherFiles.length> 0 || this.state.imagesOtherURL.length) && 
+                {(otherFiles.length> 0 || this.state.otherFilesURL.length) && 
                   <div className='tooltip'>
-                    <h6 className='tooltipLabel' onClick={this.showFileList} >{(otherFiles.length || this.state.imagesOtherURL.length) && otherFiles.length+this.state.imagesOtherURL.length} file(s) added!</h6>
+                    <h6 className='tooltipLabel' onClick={this.showFileList} >{(otherFiles.length || this.state.otherFilesURL.length) && otherFiles.length+this.state.otherFilesURL.length} file(s) added!</h6>
                     <span className='tooltiptext'>Click to see list of files!</span>
                     {this.state.showFiles && 
                       <div className='fileListBox'>
@@ -394,7 +394,7 @@ class FurbabyDetailModal extends Component {
                               </div>
                             </li>
                           ))}
-                          {this.state.imagesOtherURL.map((file, idx) => (
+                          {this.state.otherFilesURL.map((file, idx) => (
                             <li className='fileItem' key={idx}>
                               <div className='fileListItem'>{file.slice(file.lastIndexOf('/')+1)}
                                 <button className='btnRemoveFile' name={idx} onClick={event=>this.removeFile(event)} >X</button>

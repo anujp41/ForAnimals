@@ -15,7 +15,7 @@ const defaultJSON = () => {
   const birthDate = chance.birthday({type: 'child'});
   const birthDateFormatted = moment(birthDate).format('MM-DD-YYYY');
   const addlIntakeDay = chance.integer({min: 30, max: 1825});
-  const intakeDate = moment(birthDate).add(addlIntakeDay, 'days').format('MM-DD-YYYY');
+  const intakeDate = moment(Math.min(moment(birthDate).add(addlIntakeDay, 'days'), moment())).format('MM-DD-YYYY');
   const addlAdoptionDate = chance.integer({min: addlIntakeDay, max: 1825});
   const adoptionDate = moment(birthDate).add(addlIntakeDay, 'days').add(addlAdoptionDate, 'days').format('MM-DD-YYYY');
   return {
@@ -47,7 +47,7 @@ const defaultJSON = () => {
     youtubeVid: chance.url({domain: 'www.youtube.com'}),
     photoUrl: imageURLArr[chance.integer({min: 0, max: 199})],
     microchipNum: chance.hash({length: 15}),
-    imagesOtherURL: chance.n(chance.url, chance.integer({ min: 0, max: 20 }), {extensions: ['doc', 'docx', 'pdf']})
+    otherFilesURL: chance.n(chance.url, chance.integer({ min: 0, max: 20 }), {extensions: ['doc', 'docx', 'pdf']})
 }};
 
 const createFurbabySeed = function() {

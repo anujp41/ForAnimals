@@ -28,7 +28,7 @@ function generateJSON(fileName) {
     for (let i = 0; i < contentArr.length; i++) {
       const key = firstLineArrUpdate[i];
       // let value = (key === 'birthDate' || key === 'intakeDate') ? new Date(contentArr[i]) : contentArr[i];
-      // if (key === 'imagesOtherURL') value = [];
+      // if (key === 'otherFilesURL') value = [];
       contentObj[key] = contentArr[i];
     }
     return contentObj;

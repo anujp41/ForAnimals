@@ -132,7 +132,7 @@ const FurBabies = db.define('furbaby', {
     type: Sequelize.STRING,
     allowNull: true
   },
-  imagesOtherURL: {
+  otherFilesURL: {
     type: Sequelize.ARRAY(Sequelize.STRING),
     allowNull: true
   }
