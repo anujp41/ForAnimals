@@ -4,6 +4,7 @@ import Dropzone from 'react-dropzone';
 import FileDrop from 'react-file-drop';
 import './FurbabyDetailModal.css';
 import { deleteFurbabyThunk, clearCurrFurbaby, updateFurbabyThunk} from '../store';
+import { ParentModal } from './index';
 const {currentStatusVals} = require('../assets');
 
 class FurbabyDetailModal extends Component {
@@ -19,6 +20,8 @@ class FurbabyDetailModal extends Component {
     this.handleUpdate = this.handleUpdate.bind(this);
     this.updateDB = this.updateDB.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+    this.setParent = this.setParent.bind(this);
     this.state = {
       shelterName: '',
       ageYear: '',
@@ -76,6 +79,7 @@ class FurbabyDetailModal extends Component {
   }
 
   updateDB() {
+    console.error('updating')
     const { parent, ageYear, ageMonth, photo, otherFiles, showFiles, ...furbaby } = this.state;
     this.props.updateFurbabyThunk(furbaby);
     alert('Furbaby information updated!');
@@ -108,6 +112,14 @@ class FurbabyDetailModal extends Component {
     this.props.deleteFurbabyThunk(idx, arrIndex);
     this.props.clearCurrFurbaby();
     this.props.closeModal();
+  }
+
+  toggleModal(showModal) {
+    this.setState({ showModal });
+  }
+
+  setParent(parent, adoptedName, adoptionDate) {
+    this.setState({ parent, adoptedName, adoptionDate });
   }
 
   componentDidUpdate(prevProps) {
@@ -185,7 +197,7 @@ class FurbabyDetailModal extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
-    // console.log('state: ', this.state);
+    console.log('state: ', this.state);
     return (
       <div className='backdrop-detail'>
         <button className='cancelbtn' onClick={this.props.closeModal}>
@@ -359,7 +371,7 @@ class FurbabyDetailModal extends Component {
                 onDrop={this.onImageDrop}>
                 <p>Upload pictures</p>
                 <p>(Limit One):</p>
-                <img className='furbaby-photo' alt='' src={this.state.photo && (this.state.photo.preview || this.state.photoUrl)}/>
+                <img className='furbaby-photo' alt='' src={(this.state.photo && this.state.photo.preview) || this.state.photoUrl}/>
               </Dropzone>
             </div>
 
@@ -423,7 +435,7 @@ class FurbabyDetailModal extends Component {
 
           {parent !== null &&
             <div className='chosen-parent'>
-              <button className='update-parent' onClick={()=>this.setState({showModal: true})}>Update</button>
+              <button className='update-parent' onClick={()=>this.toggleModal(true)}>Update</button>
               <div><b><ins>Selected Parent:</ins></b></div>
               <div>{parent.name}</div>
               <div>{parent.street}, {parent.city}, {parent.state}, {parent.zip}</div>
@@ -432,7 +444,8 @@ class FurbabyDetailModal extends Component {
 
             <button className='button button-update' type='submit' value='submit'>Update</button>
           </form>
-            <button className='button button-delete' onClick={()=>this.handleDelete(id, this.props.stateIdx)}>Delete</button>
+          <button className='button button-delete' onClick={()=>this.handleDelete(id, this.props.stateIdx)}>Delete</button>
+          {this.state.showModal && <ParentModal furbaby={shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent}/>}
         </div>
       </div>
     )
