@@ -182,7 +182,7 @@ class Furbaby extends Component {
       return;
     }
     if (noModalStatus.indexOf(currentStatus) >= 0) {
-      this.setState({ parent: null, adoptedName: '', adoptionDate: '' });
+      this.setState({ parent: null, adoptedName: '', adoptionDate: null });
       return;
     }
   }

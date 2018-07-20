@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import FileDrop from 'react-file-drop';
 import './FurbabyDetailModal.css';
-import { deleteFurbabyThunk, clearCurrFurbaby, updateFurbabyThunk} from '../store';
+import { deleteFurbabyThunk, clearCurrFurbaby, updateFurbabyThunk, createParentThunk} from '../store';
 import { ParentModal } from './index';
 const {currentStatusVals} = require('../assets');
 
@@ -27,7 +27,7 @@ class FurbabyDetailModal extends Component {
       ageYear: '',
       ageMonth: '',
       adoptedName: '',
-      adoptionDate: '',
+      adoptionDate: null,
       birthDate: '',
       intakeDate: '',
       currentStatus: 'Choose from list:',
@@ -102,7 +102,7 @@ class FurbabyDetailModal extends Component {
       return;
     }
     if (noModalStatus.indexOf(currentStatus) >= 0) {
-      this.setState({ parent: null, adoptedName: '', adoptionDate: '' });
+      this.setState({ parent: null, adoptedName: '', adoptionDate: null });
       return;
     }
   }
@@ -465,9 +465,19 @@ const mapDispatch = dispatch => ({
     dispatch(clearCurrFurbaby())
   },
   updateFurbaby(parent, furbaby, index) {
-    if (parent.id !== furbaby.parentId) {
+    if (parent && parent.id !== furbaby.parentId) { //if new parent from db
       furbaby.parentId = parent.id;
       dispatch(updateFurbabyThunk(furbaby, index))
+    } else if (parent && parent.id.length === 0) { //if new parent entered in form not in db
+      const { id, ...parentInfo} = parent;
+      dispatch(createParentThunk(parentInfo))
+      .then(parent => {
+        furbaby.parentId = parent.parent.id;
+        console.log('furbaby ', furbaby)
+        dispatch(updateFurbabyThunk(furbaby, index));
+      })
+    } else {
+      dispatch(updateFurbabyThunk(furbaby, index));
     }
   }
 });
