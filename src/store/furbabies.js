@@ -9,7 +9,7 @@ const initialState = [];
 
 const createFurbaby = furbaby => ({ type: CREATE_FURBABY, furbaby });
 const getFurbabies = furbabies => ({ type: GET_FURBABIES, furbabies});
-const updateFurbaby = furbaby => ({ type: UPDATE_FURBABY, furbaby });
+const updateFurbaby = (furbaby, index) => ({ type: UPDATE_FURBABY, furbaby, index });
 const deleteFurbaby = index => ({ type: DELETE_FURBABY, index})
 
 export const createFurbabyThunk = furbaby => dispatch => 
@@ -32,9 +32,9 @@ export const getFurbabiesThunk = (idx = 0) => dispatch =>
   .then(furbabies => dispatch(getFurbabies(furbabies)))
   .catch(err => console.log(err));
 
-export const updateFurbabyThunk = furbaby => dispatch => 
+export const updateFurbabyThunk = (furbaby, index) => dispatch => 
   axios.put('http://localhost:8080/api/furbabies', furbaby)
-  .then(furbaby => dispatch(updateFurbaby(furbaby)))
+  .then(updatedFurbaby => dispatch(updateFurbaby(updatedFurbaby.data, index)))
   .catch(err => console.log(err));
 
 export const deleteFurbabyThunk = (id, arrIndex) => dispatch =>
@@ -49,12 +49,9 @@ export default function (state = initialState, action) {
     case GET_FURBABIES:
       return [...state, ...action.furbabies];
     case UPDATE_FURBABY:
-      state.forEach(item => {                          
-        if (item.id === action.furbaby.id) {
-          item.parentId = action.furbaby.parentId;
-        }
-      });
-      return state;
+      const {furbaby, index} = action;
+      state.splice(index, 1, furbaby);
+      return Object.assign([], state);
     case DELETE_FURBABY:
       state.splice(action.index, 1);
       return [...state];

@@ -67,8 +67,6 @@ class FurbabyDetailModal extends Component {
     intakeDate = intakeDate && intakeDate.slice(0, intakeDate.indexOf('T'));
     return {
       ...furbabyDetail,
-      photo: null,
-      otherFiles: [],
       intakeDate
     }
   }
@@ -81,7 +79,7 @@ class FurbabyDetailModal extends Component {
   updateDB() {
     console.error('updating')
     const { parent, ageYear, ageMonth, photo, otherFiles, showFiles, ...furbaby } = this.state;
-    this.props.updateFurbabyThunk(furbaby);
+    this.props.updateFurbabyThunk(furbaby, this.props.stateIdx);
     alert('Furbaby information updated!');
     this.props.closeModal();
   }
@@ -197,7 +195,7 @@ class FurbabyDetailModal extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
-    console.log('state: ', this.state);
+    console.log('state: ', this.props.stateIdx);
     return (
       <div className='backdrop-detail'>
         <button className='cancelbtn' onClick={this.props.closeModal}>
@@ -435,7 +433,7 @@ class FurbabyDetailModal extends Component {
 
           {parent !== null &&
             <div className='chosen-parent'>
-              <button className='update-parent' onClick={()=>this.toggleModal(true)}>Update</button>
+              <button className='update-parent' type='button' onClick={()=>this.toggleModal(true)}>Update</button>
               <div><b><ins>Selected Parent:</ins></b></div>
               <div>{parent.name}</div>
               <div>{parent.street}, {parent.city}, {parent.state}, {parent.zip}</div>
@@ -444,7 +442,7 @@ class FurbabyDetailModal extends Component {
 
             <button className='button button-update' type='submit' value='submit'>Update</button>
           </form>
-          <button className='button button-delete' onClick={()=>this.handleDelete(id, this.props.stateIdx)}>Delete</button>
+          <button className='button button-delete' type='button' onClick={()=>this.handleDelete(id, this.props.stateIdx)}>Delete</button>
           {this.state.showModal && <ParentModal furbaby={shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent}/>}
         </div>
       </div>

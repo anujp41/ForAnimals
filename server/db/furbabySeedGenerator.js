@@ -36,7 +36,7 @@ const defaultJSON = () => {
     goodWithCats: goodVars[chance.integer({min:0, max: goodVars.length-1})],
     goodWithDogs: goodVars[chance.integer({min:0, max: goodVars.length-1})],
     goodWithChildren: goodVars[chance.integer({min:0, max: goodVars.length-1})],
-    specialNeeds: capitalize(chance.sentence({words: 15})),
+    specialNeeds: capitalize(chance.sentence({words: 10})),
     bio: capitalize(chance.sentence({words: 25})),
     addlComments: capitalize(chance.sentence({words: 25})),
     currentLocation: chance.address(),

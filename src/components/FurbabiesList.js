@@ -111,8 +111,8 @@ class FurbabiesList extends Component {
     };
   }
 
-  handleSelect(idx, stateIdx) {
-    this.props.getFurbabyThunk(idx);
+  handleSelect(id, stateIdx) { //id->id of furbaby in database; stateIdx=>index of furbaby inside array
+    this.props.getFurbabyThunk(id);
     this.setState({ showDetail: true, stateIdx });
   }
 

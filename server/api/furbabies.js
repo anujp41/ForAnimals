@@ -54,8 +54,10 @@ router.put('/', (req, res, next) => {
     where: { id: furbaby.id },
     individualHooks: true
   })
-  .then((updatedInfo) => {
-    res.json(updatedInfo)})
+  .then(([updatedRow, [updatedFurbaby]]) => {
+    const {id, adoptedName, shelterName, birthDate, breed, gender, coatColor, intakeDate, parentId, photoUrl, currentStatus} = updatedFurbaby.dataValues;
+    res.json({id, adoptedName, shelterName, birthDate, breed, gender, coatColor, intakeDate, parentId, photoUrl, currentStatus});
+  })
   .catch(next);
 })
 
