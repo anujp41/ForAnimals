@@ -79,8 +79,9 @@ class FurbabyDetailModal extends Component {
   updateDB() {
     console.error('updating')
     const { parent, ageYear, ageMonth, photo, otherFiles, showFiles, ...furbaby } = this.state;
-    this.props.updateFurbabyThunk(furbaby, this.props.stateIdx);
+    this.props.updateFurbaby(parent, furbaby, this.props.stateIdx);
     alert('Furbaby information updated!');
+    this.props.clearCurr();
     this.props.closeModal();
   }
 
@@ -107,8 +108,8 @@ class FurbabyDetailModal extends Component {
   }
 
   handleDelete(idx, arrIndex) {
-    this.props.deleteFurbabyThunk(idx, arrIndex);
-    this.props.clearCurrFurbaby();
+    this.props.deleteFurbaby(idx, arrIndex);
+    this.props.clearCurr();
     this.props.closeModal();
   }
 
@@ -195,7 +196,7 @@ class FurbabyDetailModal extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
-    console.log('state: ', this.props.stateIdx);
+    console.log('state: ', this.state);
     return (
       <div className='backdrop-detail'>
         <button className='cancelbtn' onClick={this.props.closeModal}>
@@ -456,7 +457,21 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = { deleteFurbabyThunk, clearCurrFurbaby, updateFurbabyThunk };
+const mapDispatch = dispatch => ({ 
+  deleteFurbaby(id, index) {
+    dispatch(deleteFurbabyThunk(id, index))
+  },
+  clearCurr() {
+    dispatch(clearCurrFurbaby())
+  },
+  updateFurbaby(parent, furbaby, index) {
+    if (parent.id !== furbaby.parentId) {
+      furbaby.parentId = parent.id;
+      dispatch(updateFurbabyThunk(furbaby, index))
+    }
+  }
+});
+
 
 const FurbabyDetailModalContainer = connect(mapState, mapDispatch)(FurbabyDetailModal);
 export default FurbabyDetailModalContainer;

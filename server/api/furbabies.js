@@ -50,13 +50,16 @@ router.post('/', (req, res, next) => {
 //Update existing cats
 router.put('/', (req, res, next) => {
   const furbaby = req.body;
+  const { parentId } = furbaby;
   return FurBabies.update( furbaby, {
     where: { id: furbaby.id },
-    individualHooks: true
+    individualHooks: true,
   })
   .then(([updatedRow, [updatedFurbaby]]) => {
     const {id, adoptedName, shelterName, birthDate, breed, gender, coatColor, intakeDate, parentId, photoUrl, currentStatus} = updatedFurbaby.dataValues;
-    res.json({id, adoptedName, shelterName, birthDate, breed, gender, coatColor, intakeDate, parentId, photoUrl, currentStatus});
+    Parents.findById(parentId)
+    .then(parent => parent.dataValues)
+    .then(parent => res.json({id, adoptedName, shelterName, birthDate, breed, gender, coatColor, intakeDate, parentId, photoUrl, currentStatus, parent}))
   })
   .catch(next);
 })

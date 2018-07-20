@@ -143,7 +143,6 @@ class FurbabiesList extends Component {
 
   render() {
     let furbabies = !this.state.sort ? this.props.furbabies : this.props.filterResult;
-    const furbaby = furbabies.length && furbabies[10];
     return (
       <div>
         {this.state.sort && <div className='clear-btn' onClick={this.clear}>Clear</div>}
