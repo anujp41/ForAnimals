@@ -110,7 +110,9 @@ class Furbaby extends Component {
       const name = file.name;
       const storageRef = storage.ref('furbabies').child(`${folder}/${name}`);
       storageRef.put(file)
-      .then(result => resolve(result.downloadURL))
+      .then(result => {
+        const { metadata } = result;
+        return resolve({path: metadata.fullPath, downloadURL: result.downloadURL})})
     });
   }
 
@@ -182,7 +184,7 @@ class Furbaby extends Component {
       return;
     }
     if (noModalStatus.indexOf(currentStatus) >= 0) {
-      this.setState({ parent: null, adoptedName: '', adoptionDate: null });
+      this.setState({ parent: null, adoptedName: '', adoptionDate: null, parentId: null });
       return;
     }
   }

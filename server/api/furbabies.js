@@ -16,6 +16,7 @@ router.get('/:index', (req, res, next) => {
 
 //Creates new entries for kitties
 router.post('/', (req, res, next) => {
+  console.log('creating: ', req.body)
   FurBabies.create(req.body)
   .then(newBabies => newBabies.dataValues)
   .then(newBaby => {

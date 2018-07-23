@@ -5,7 +5,11 @@ import FileDrop from 'react-file-drop';
 import './FurbabyDetailModal.css';
 import { deleteFurbabyThunk, clearCurrFurbaby, updateFurbabyThunk, createParentThunk} from '../store';
 import { ParentModal } from './index';
-const {currentStatusVals} = require('../assets');
+import firebase from '../firebase';
+import { currentStatusVals } from '../assets';
+
+// reference firebase storage
+const storage = firebase.storage();
 
 class FurbabyDetailModal extends Component {
 
@@ -22,6 +26,7 @@ class FurbabyDetailModal extends Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.setParent = this.setParent.bind(this);
+    this.updateFBFiles = this.updateFBFiles.bind(this);
     this.state = {
       shelterName: '',
       ageYear: '',
@@ -71,13 +76,24 @@ class FurbabyDetailModal extends Component {
     }
   }
 
-  handleUpdate(event) {
+  async handleUpdate(event) {
     event.preventDefault();
-    this.updateDB();
+    const {photo, otherFiles} = this.state;
+    console.log('photo ', photo);
+    console.log('otherFiles ', otherFiles);
+    if (photo) {
+      await this.updateFBFiles();
+    }
+    if (photo === null && otherFiles.length === 0) {
+      this.updateDB();
+    }
+  }
+
+  updateFBFiles() {
+
   }
 
   updateDB() {
-    console.error('updating')
     const { parent, ageYear, ageMonth, photo, otherFiles, showFiles, ...furbaby } = this.state;
     this.props.updateFurbaby(parent, furbaby, this.props.stateIdx);
     alert('Furbaby information updated!');
@@ -102,7 +118,7 @@ class FurbabyDetailModal extends Component {
       return;
     }
     if (noModalStatus.indexOf(currentStatus) >= 0) {
-      this.setState({ parent: null, adoptedName: '', adoptionDate: null });
+      this.setState({ parent: null, adoptedName: '', adoptionDate: null, parentId: null });
       return;
     }
   }
@@ -128,10 +144,11 @@ class FurbabyDetailModal extends Component {
     }
   }
 
-  onImageDrop(files) {
-    const response = this.state.photo === null ? true : window.confirm('Do you want to replace the current photo?');
+  onImageDrop(file) {
+    const response = window.confirm('Do you want to replace the current photo?'); //checks if user wants to update photo
+    storage.ref('furbabies/cb387000-8e0e-11e8-92c7-ddddac6614b8/kitten.jpg').delete();
     if (response) {
-      const photo = files[0];
+      const photo = file[0];
       this.setState({ photo });
     }
   }
@@ -473,7 +490,6 @@ const mapDispatch = dispatch => ({
       dispatch(createParentThunk(parentInfo))
       .then(parent => {
         furbaby.parentId = parent.parent.id;
-        console.log('furbaby ', furbaby)
         dispatch(updateFurbabyThunk(furbaby, index));
       })
     } else {
