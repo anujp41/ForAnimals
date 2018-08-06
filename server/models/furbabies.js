@@ -121,22 +121,16 @@ const FurBabies = db.define('furbaby', {
       isUrl: true
     }
   },
-  // photoUrl: {
-  //   type: Sequelize.STRING,
-  //   defaultValue: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Cute-kittens-12929201-1600-1200.jpg/640px-Cute-kittens-12929201-1600-1200.jpg',
-  //   validate: {
-  //     isUrl: true
-  //   }
-  // },
   photoUrl: {
-    type: Sequelize.JSON
+    type: Sequelize.JSON,
+    allowNull: true
   },
   microchipNum: {
     type: Sequelize.STRING,
     allowNull: true
   },
   otherFilesURL: {
-    type: Sequelize.ARRAY(Sequelize.STRING),
+    type: Sequelize.ARRAY(Sequelize.JSON),
     allowNull: true
   }
 }

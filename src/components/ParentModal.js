@@ -34,6 +34,14 @@ class ParentModal extends React.Component {
     this.clearState = this.clearState.bind(this);
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let { furbaby, adoptionDate } = nextProps;
+    console.log(`before: furbaby: ${furbaby}, adoptionDate: ${adoptionDate}`);
+    adoptionDate = adoptionDate !== null ? adoptionDate.slice(0, adoptionDate.indexOf('T')) : '';
+    console.log(`after: furbaby: ${furbaby}, adoptionDate: ${adoptionDate}`);
+    return { furbaby, adoptionDate };
+  }
+
   handleChange(event) {
     const target = event.target;
     const name = target.name;
@@ -189,14 +197,14 @@ class ParentModal extends React.Component {
   }
 
   renderAdoptionDate() {
-    const {adoptedName, adoptionDate} = this.state;
+    const {furbaby, adoptionDate} = this.state;
     const today = new Date().toISOString().split('T')[0];
     return (
       <div className='adoptionDetail'>
         <div className='modal-text'>Adoption Details for Furbaby:</div>
           <div className='parentAddressItem'>
             <label className='input-label' htmlFor='address'>Adopted Name (if diff): </label>
-            <input className='input' type='text' name='adoptedName' value={adoptedName} onChange={this.handleChange}/>
+            <input className='input' type='text' name='adoptedName' value={furbaby} onChange={this.handleChange}/>
         </div>
 
         <div className='adoptionDate'>

@@ -152,7 +152,7 @@ class FurbabiesList extends Component {
           <div key={idx} className='furbabyCard'>
             <div className='wrapper' onClick={()=>this.handleSelect(furbaby.id, idx)}>
             <div className='currentStatus-List' name={furbaby.currentStatus}>{furbaby.currentStatus}</div>
-              <img alt="" className='furbabyPhoto' src={furbaby.photoUrl}/>
+              <img alt="" className='furbabyPhoto' src={furbaby.photoUrl.downloadURL}/>
               <div className='furbabyInfo'>
                 <div><span className='label'>Name: </span><span className='text-name'>{furbaby.adoptedName || furbaby.shelterName}</span></div>
                 <div><span className='label'>Age: </span><span className='text'>{this.getAge(furbaby.birthDate)}</span></div>
@@ -167,7 +167,8 @@ class FurbabiesList extends Component {
           </div>
         ))}
         </div>
-        {this.state.showDetail && <FurbabyDetailModal closeModal={this.closeModal} getAge={this.getAge} stateIdx={this.state.stateIdx}/>}
+        {/* {this.state.showDetail && <FurbabyDetailModal closeModal={this.closeModal} getAge={this.getAge} stateIdx={this.state.stateIdx}/>} */}
+        <FurbabyDetailModal showDetail={this.state.showDetail} closeModal={this.closeModal} getAge={this.getAge} stateIdx={this.state.stateIdx}/>
       </div>
     )
   }

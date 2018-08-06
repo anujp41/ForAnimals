@@ -484,7 +484,7 @@ class Furbaby extends Component {
             
         </form>
 
-        {this.state.showModal && <ParentModal furbaby={shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent}/>}
+        {this.state.showModal && <ParentModal furbaby={shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent} adoptionDate={null}/>}
       </div>
     )
   }
