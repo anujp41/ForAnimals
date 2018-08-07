@@ -64,7 +64,8 @@ class FurbabyDetailModal extends Component {
       otherFilesURL: [],
       showFiles: false,
       showModal: false,
-      photoUpdated: false
+      photoUpdated: false,
+      filesUpdated: false
     }
   }
 
@@ -79,15 +80,20 @@ class FurbabyDetailModal extends Component {
 
   async handleUpdate(event) {
     event.preventDefault();
-    const {photo, photoUpdated, photoUrl, otherFiles} = this.state;
+    const {photo, photoUpdated, photoUrl, filesUpdated, otherFiles, otherFilesURL} = this.state;
     const {path} = photoUrl;
     const folder = path.slice(path.indexOf('/'), path.lastIndexOf('/'));
     if (photoUpdated) {
-      console.log('here');
       const updatePhotoUrl = await this.saveToFirebase(folder, photo);
       this.setState({ photoUrl: updatePhotoUrl });
-      this.updateDB();
     }
+    if (filesUpdated) {
+      const promiseUrl = otherFiles.map(async (file) => await this.saveToFirebase(folder, file).then((value) => value));
+      const fileURL = await Promise.all(promiseUrl);
+      const updatedOtherFiles = otherFilesURL.concat(fileURL);
+      this.setState({ otherFilesURL: updatedOtherFiles});
+    }
+    if (photoUpdated || filesUpdated) this.updateDB();
   }
 
   saveToFirebase(folder, file) {
@@ -154,7 +160,6 @@ class FurbabyDetailModal extends Component {
 
   onImageDrop(file) {
     const response = window.confirm('Do you want to replace the current photo?'); //checks if user wants to update photo
-    // storage.ref('furbabies/cb387000-8e0e-11e8-92c7-ddddac6614b8/kitten.jpg').delete();
     if (response) {
       const photo = file[0];
       this.setState({ photo, photoUpdated: true });
@@ -163,7 +168,7 @@ class FurbabyDetailModal extends Component {
 
   handleDrop(inputFiles) {
     const otherFiles = [...this.state.otherFiles, ...inputFiles];
-    this.setState({ otherFiles });
+    this.setState({ otherFiles, filesUpdated: true });
   }
 
   showFileList() {
@@ -176,14 +181,18 @@ class FurbabyDetailModal extends Component {
     let targetFileName = event.target.name;
     let otherFiles = this.state.otherFiles;
     let otherFilesURL = this.state.otherFilesURL;
-    if (isNaN(+targetFileName)) {
+    /*  targetFileName is index if removed file is already onfirebase
+        targetFileName is string if removed file is a file added by user
+    */
+    if (isNaN(+targetFileName)) { // true is targetFileName is string
       otherFiles = otherFiles.filter(file => file.name !== targetFileName);
       this.setState({otherFiles});
-    } else {
+    } else { //else block entered if removed file is aleady on firebase
       otherFilesURL.splice(+targetFileName, 1);
       this.setState ({ otherFilesURL });
     }
     if ((otherFiles.length + otherFilesURL.length) === 0) this.setState({ showFiles: false });
+    this.setState({ filesUpdated: true });
   }
 
   render() {
@@ -222,7 +231,6 @@ class FurbabyDetailModal extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
-    console.log('state: ', this.state.photo, this.state.photoUpdated);
     if (this.props.showDetail) {
       return (
         <div className='backdrop-detail'>
@@ -422,7 +430,7 @@ class FurbabyDetailModal extends Component {
                             ))}
                             {this.state.otherFilesURL.map((file, idx) => (
                               <li className='fileItem' key={idx}>
-                                <div className='fileListItem'>{file.slice(file.lastIndexOf('/')+1)}
+                                <div className='fileListItem'>{file.path.slice(file.path.lastIndexOf('/')+1)}
                                   <button className='btnRemoveFile' name={idx} onClick={event=>this.removeFile(event)} >X</button>
                                 </div>
                               </li>
