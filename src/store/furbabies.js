@@ -4,6 +4,7 @@ const CREATE_FURBABY = 'CREATE_FURBABY';
 const GET_FURBABIES = 'GET_FURBABIES';
 const UPDATE_FURBABY = 'UPDATE_FURBABY';
 const DELETE_FURBABY = 'DELETE_FURBABY';
+const CLEAR_FURBABIES = 'CLEAR_FURBABIES'
 
 const initialState = [];
 
@@ -11,6 +12,7 @@ const createFurbaby = furbaby => ({ type: CREATE_FURBABY, furbaby });
 const getFurbabies = furbabies => ({ type: GET_FURBABIES, furbabies});
 const updateFurbaby = (furbaby, index) => ({ type: UPDATE_FURBABY, furbaby, index });
 const deleteFurbaby = index => ({ type: DELETE_FURBABY, index})
+export const clearFurbabies = () => ({ type: CLEAR_FURBABIES });
 
 export const createFurbabyThunk = furbaby => dispatch => 
   axios.post('http://localhost:8080/api/furbabies', furbaby)
@@ -55,6 +57,8 @@ export default function (state = initialState, action) {
     case DELETE_FURBABY:
       state.splice(action.index, 1);
       return [...state];
+    case CLEAR_FURBABIES:
+      return initialState;
     default:
       return state;
   }

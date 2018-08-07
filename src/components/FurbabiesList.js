@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import './FurbabiesList.css';
 import FurbabyDetailModal from './FurbabyDetailModal';
 import FurbabyUpdateModal from './FurbabyUpdateModal';
-import { clearCurrFurbaby, getFurbabiesThunk, getFilterThunk, removeFilter, getFurbabyThunk } from '../store';
+import { clearCurrFurbaby, getFurbabiesThunk, getFilterThunk, removeFilter, getFurbabyThunk, clearFurbabies } from '../store';
 import debouce from 'debounce';
 const { currentStatusVals } = require('../assets');
 
@@ -139,6 +139,7 @@ class FurbabiesList extends Component {
   }
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScrolling);
+    this.props.clearFurbabies();
   }
 
   render() {
@@ -181,7 +182,7 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = { getFurbabiesThunk, getFilterThunk, removeFilter, getFurbabyThunk };
+const mapDispatch = { getFurbabiesThunk, getFilterThunk, removeFilter, getFurbabyThunk, clearFurbabies };
 
 const FurbabiesListContainer = connect(mapState, mapDispatch)(FurbabiesList);
 export default FurbabiesListContainer;
