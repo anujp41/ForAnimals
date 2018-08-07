@@ -26,7 +26,7 @@ class FurbabyDetailModal extends Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.toggleModal = this.toggleModal.bind(this);
     this.setParent = this.setParent.bind(this);
-    this.updateFBFiles = this.updateFBFiles.bind(this);
+    this.saveToFirebase = this.saveToFirebase.bind(this);
     this.state = {
       shelterName: '',
       ageYear: '',
@@ -63,7 +63,8 @@ class FurbabyDetailModal extends Component {
       otherFiles: [],
       otherFilesURL: [],
       showFiles: false,
-      showModal: false
+      showModal: false,
+      photoUpdated: false
     }
   }
 
@@ -78,19 +79,26 @@ class FurbabyDetailModal extends Component {
 
   async handleUpdate(event) {
     event.preventDefault();
-    const {photo, otherFiles} = this.state;
-    console.log('photo ', photo);
-    console.log('otherFiles ', otherFiles);
-    if (photo) {
-      await this.updateFBFiles();
-    }
-    if (photo === null && otherFiles.length === 0) {
+    const {photo, photoUpdated, photoUrl, otherFiles} = this.state;
+    const {path} = photoUrl;
+    const folder = path.slice(path.indexOf('/'), path.lastIndexOf('/'));
+    if (photoUpdated) {
+      console.log('here');
+      const updatePhotoUrl = await this.saveToFirebase(folder, photo);
+      this.setState({ photoUrl: updatePhotoUrl });
       this.updateDB();
     }
   }
 
-  updateFBFiles() {
-
+  saveToFirebase(folder, file) {
+    return new Promise(resolve => {
+      const name = file.name;
+      const storageRef = storage.ref('furbabies').child(`${folder}/${name}`);
+      storageRef.put(file)
+      .then(result => {
+        const { metadata } = result;
+        return resolve({path: metadata.fullPath, downloadURL: result.downloadURL})})
+    });
   }
 
   updateDB() {
@@ -146,10 +154,10 @@ class FurbabyDetailModal extends Component {
 
   onImageDrop(file) {
     const response = window.confirm('Do you want to replace the current photo?'); //checks if user wants to update photo
-    storage.ref('furbabies/cb387000-8e0e-11e8-92c7-ddddac6614b8/kitten.jpg').delete();
+    // storage.ref('furbabies/cb387000-8e0e-11e8-92c7-ddddac6614b8/kitten.jpg').delete();
     if (response) {
       const photo = file[0];
-      this.setState({ photo });
+      this.setState({ photo, photoUpdated: true });
     }
   }
 
@@ -214,7 +222,7 @@ class FurbabyDetailModal extends Component {
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
-    // console.log('state: ', this.state.intakeDate);
+    console.log('state: ', this.state.photo, this.state.photoUpdated);
     if (this.props.showDetail) {
       return (
         <div className='backdrop-detail'>
@@ -389,7 +397,7 @@ class FurbabyDetailModal extends Component {
                   onDrop={this.onImageDrop}>
                   <p>Upload pictures</p>
                   <p>(Limit One):</p>
-                  <img className='furbaby-photo' alt='' src={(this.state.photo && this.state.photo.preview) || this.state.photoUrl}/>
+                  <img className='furbaby-photo' alt='' src={(this.state.photo && this.state.photo.preview) || this.state.photoUrl.downloadURL}/>
                 </Dropzone>
               </div>
   
