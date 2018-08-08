@@ -144,34 +144,38 @@ class FurbabiesList extends Component {
 
   render() {
     let furbabies = !this.state.sort ? this.props.furbabies : this.props.filterResult;
-    return (
-      <div>
-        {this.state.sort && <div className='clear-btn' onClick={this.clear}>Clear</div>}
-        {this.renderDropdown()}
-        <div className='mainContainer' id='furbaby-display'>
-        {furbabies.map((furbaby, idx) => (
-          <div key={idx} className='furbabyCard'>
-            <div className='wrapper' onClick={()=>this.handleSelect(furbaby.id, idx)}>
-            <div className='currentStatus-List' name={furbaby.currentStatus}>{furbaby.currentStatus}</div>
-              <img alt="" className='furbabyPhoto' src={furbaby.photoUrl.downloadURL}/>
-              <div className='furbabyInfo'>
-                <div><span className='label'>Name: </span><span className='text-name'>{furbaby.adoptedName || furbaby.shelterName}</span></div>
-                <div><span className='label'>Age: </span><span className='text'>{this.getAge(furbaby.birthDate)}</span></div>
-                <div><span className='label'>Breed: </span><span className='text'>{furbaby.breed}</span></div>
-                <div><span className='label'>Gender: </span><span className='text'>{furbaby.gender}</span></div>
-                <div><span className='label'>Color: </span><span className='text'>{furbaby.coatColor}</span></div>
-                <div><span className='label'>Intake Date: </span><span className='text'>{this.getDate(furbaby.intakeDate)}</span></div>
-                {Number.isInteger(furbaby.parentId) && <div><span className='label'>Parent Name: </span><span className='text'>{furbaby.parent.name}</span></div>}
+    // console.log('src: ', furbabies[0])
+    // if (furbabies.length) {
+      return (
+        <div>
+          {this.state.sort && <div className='clear-btn' onClick={this.clear}>Clear</div>}
+          {this.renderDropdown()}
+          <div className='mainContainer' id='furbaby-display'>
+          {furbabies.map((furbaby, idx) => (
+            <div key={idx} className='furbabyCard'>
+              <div className='wrapper' onClick={()=>this.handleSelect(furbaby.id, idx)}>
+              <div className='currentStatus-List' name={furbaby.currentStatus}>{furbaby.currentStatus}</div>
+                <img alt="" className='furbabyPhoto' src={furbaby.photoUrl ? furbaby.photoUrl.downloadURL : 'https://i.imgur.com/5DASmIh.jpg'}/>
+                <div className='furbabyInfo'>
+                  <div><span className='label'>Name: </span><span className='text-name'>{furbaby.adoptedName || furbaby.shelterName}</span></div>
+                  <div><span className='label'>Age: </span><span className='text'>{this.getAge(furbaby.birthDate)}</span></div>
+                  <div><span className='label'>Breed: </span><span className='text'>{furbaby.breed}</span></div>
+                  <div><span className='label'>Gender: </span><span className='text'>{furbaby.gender}</span></div>
+                  <div><span className='label'>Color: </span><span className='text'>{furbaby.coatColor}</span></div>
+                  <div><span className='label'>Intake Date: </span><span className='text'>{this.getDate(furbaby.intakeDate)}</span></div>
+                  {Number.isInteger(furbaby.parentId) && <div><span className='label'>Parent Name: </span><span className='text'>{furbaby.parent.name}</span></div>}
+                </div>
+                <div className='furbabyClick'>Click for more details</div>
               </div>
-              <div className='furbabyClick'>Click for more details</div>
             </div>
+          ))}
           </div>
-        ))}
+          {this.state.showDetail && <FurbabyDetailModal showDetail={this.state.showDetail} closeModal={this.closeModal} getAge={this.getAge} stateIdx={this.state.stateIdx}/>}
         </div>
-        {this.state.showDetail && <FurbabyDetailModal showDetail={this.state.showDetail} closeModal={this.closeModal} getAge={this.getAge} stateIdx={this.state.stateIdx}/>}
-        {/* <FurbabyDetailModal showDetail={this.state.showDetail} closeModal={this.closeModal} getAge={this.getAge} stateIdx={this.state.stateIdx}/> */}
-      </div>
-    )
+      )
+    // } else {
+    //   return null;
+    // }
   }
 }
 

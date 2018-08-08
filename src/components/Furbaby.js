@@ -130,7 +130,7 @@ class Furbaby extends Component {
       coatColor: '',
       coatLength: '',
       breed: '',
-      gender: 'Select:',
+      gender: '',
       altered: false,
       fivStatus: false,
       felvStatus: false,
@@ -244,6 +244,7 @@ class Furbaby extends Component {
       otherFiles,
       currentStatus,
       parent } = this.state;
+      console.log(this.state)
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
