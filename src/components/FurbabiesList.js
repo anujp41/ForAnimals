@@ -168,8 +168,8 @@ class FurbabiesList extends Component {
           </div>
         ))}
         </div>
-        {/* {this.state.showDetail && <FurbabyDetailModal closeModal={this.closeModal} getAge={this.getAge} stateIdx={this.state.stateIdx}/>} */}
-        <FurbabyDetailModal showDetail={this.state.showDetail} closeModal={this.closeModal} getAge={this.getAge} stateIdx={this.state.stateIdx}/>
+        {this.state.showDetail && <FurbabyDetailModal showDetail={this.state.showDetail} closeModal={this.closeModal} getAge={this.getAge} stateIdx={this.state.stateIdx}/>}
+        {/* <FurbabyDetailModal showDetail={this.state.showDetail} closeModal={this.closeModal} getAge={this.getAge} stateIdx={this.state.stateIdx}/> */}
       </div>
     )
   }

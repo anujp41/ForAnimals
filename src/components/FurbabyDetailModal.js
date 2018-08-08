@@ -10,6 +10,7 @@ import { currentStatusVals } from '../assets';
 
 // reference firebase storage
 const storage = firebase.storage();
+const database = firebase.database();
 
 class FurbabyDetailModal extends Component {
 
@@ -27,6 +28,7 @@ class FurbabyDetailModal extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.setParent = this.setParent.bind(this);
     this.saveToFirebase = this.saveToFirebase.bind(this);
+    this.archiveToFB = this.archiveToFB.bind(this);
     this.state = {
       shelterName: '',
       ageYear: '',
@@ -72,9 +74,12 @@ class FurbabyDetailModal extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     let {intakeDate, ...furbabyDetail} = nextProps.furbabyDetail;
     intakeDate = intakeDate && intakeDate.slice(0, intakeDate.indexOf('T'));
+    const {diffYear: ageYear, diffMonth: ageMonth} = nextProps.getAge(nextProps.furbabyDetail.birthDate, 'detailModal');
     return {
       ...furbabyDetail,
-      intakeDate
+      intakeDate,
+      ageYear,
+      ageMonth
     }
   }
 
@@ -85,15 +90,18 @@ class FurbabyDetailModal extends Component {
     const folder = path.slice(path.indexOf('/'), path.lastIndexOf('/'));
     if (photoUpdated) {
       const updatePhotoUrl = await this.saveToFirebase(folder, photo);
-      this.setState({ photoUrl: updatePhotoUrl });
+      this.setState({ photoUrl: updatePhotoUrl, photoUpdated: false });
     }
     if (filesUpdated) {
-      const promiseUrl = otherFiles.map(async (file) => await this.saveToFirebase(folder, file).then((value) => value));
+      const promiseUrl = otherFiles.map(async (file) => await this.saveToFirebase(folder, file));//.then((value) => value));
       const fileURL = await Promise.all(promiseUrl);
-      const updatedOtherFiles = otherFilesURL.concat(fileURL);
-      this.setState({ otherFilesURL: updatedOtherFiles});
+      const updatedFiles = otherFilesURL.concat(fileURL);
+      this.setState({ otherFilesURL: updatedFiles})//, otherFiles: [], filesUpdated: false});
     }
-    if (photoUpdated || filesUpdated) this.updateDB();
+    if (photoUpdated || filesUpdated) {
+      this.archiveToFB();
+      this.updateDB();
+    }
   }
 
   saveToFirebase(folder, file) {
@@ -105,6 +113,15 @@ class FurbabyDetailModal extends Component {
         const { metadata } = result;
         return resolve({path: metadata.fullPath, downloadURL: result.downloadURL})})
     });
+  }
+
+  archiveToFB() {
+    console.log('now archiving')
+    const {furbabyDetail} = this.props;
+    const name = furbabyDetail.adoptedName || furbabyDetail.shelterName;
+    const today = new Date();
+    const [year, month, date, hour, min, sec] = [today.getFullYear(), today.getMonth()+1, today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds()];
+    database.ref(`/${month}-${date}-${year}/${name}/${hour}h:${min}m:${sec}s`).set(furbabyDetail);
   }
 
   updateDB() {
@@ -151,13 +168,6 @@ class FurbabyDetailModal extends Component {
     this.setState({ parent, adoptedName, adoptionDate });
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.furbabyDetail.birthDate !== this.props.furbabyDetail.birthDate) {
-      const {diffYear: ageYear, diffMonth: ageMonth} = this.props.getAge(this.props.furbabyDetail.birthDate, 'detailModal');
-      this.setState({ ageYear, ageMonth });
-    }
-  }
-
   onImageDrop(file) {
     const response = window.confirm('Do you want to replace the current photo?'); //checks if user wants to update photo
     if (response) {
@@ -193,6 +203,49 @@ class FurbabyDetailModal extends Component {
     }
     if ((otherFiles.length + otherFilesURL.length) === 0) this.setState({ showFiles: false });
     this.setState({ filesUpdated: true });
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      shelterName: '',
+      ageYear: '',
+      ageMonth: '',
+      adoptedName: '',
+      adoptionDate: null,
+      birthDate: '',
+      intakeDate: '',
+      currentStatus: 'Choose from list:',
+      size: '',
+      coatColor: '',
+      coatLength: '',
+      breed: '',
+      gender: '',
+      altered: false,
+      fivStatus: false,
+      felvStatus: false,
+      otherMedical: '',
+      behavioralIssues: '',
+      goodWithCats: 'Yes',
+      goodWithDogs: 'Yes',
+      goodWithChildren: 'Yes',
+      specialNeeds: '',
+      bio: '',
+      addlComments: '',
+      currentLocation: '',
+      courtesyListing: false,
+      courtesyListLoc: '',
+      parent: null,
+      youtubeVid: null,
+      photo: null,
+      photoUrl: '',
+      microchipNum: '',
+      otherFiles: [],
+      otherFilesURL: [],
+      showFiles: false,
+      showModal: false,
+      photoUpdated: false,
+      filesUpdated: false
+    })
   }
 
   render() {
