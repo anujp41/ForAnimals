@@ -73,16 +73,7 @@ class FurbabyDetailModal extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     console.log(nextProps.furbabyDetail)
-    let {intakeDate, ...furbabyDetail} = nextProps.furbabyDetail;
-    intakeDate = intakeDate && intakeDate.indexOf('T') > -1 ? intakeDate.slice(0, intakeDate.indexOf('T')) : intakeDate;
-    // console.log('intakeDate', intakeDate)
-    const {diffYear: ageYear, diffMonth: ageMonth} = nextProps.getAge(nextProps.furbabyDetail.birthDate, 'detailModal');
-    return {
-      ...furbabyDetail,
-      intakeDate,
-      ageYear,
-      ageMonth
-    }
+    return nextProps.furbabyDetail;
   }
 
   async handleUpdate(event) {

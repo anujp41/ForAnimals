@@ -143,6 +143,18 @@ const FurBabies = db.define('furbaby', {
       if (!this.adoptionDate) return; // if adoptionDate not included in GET request then adoptionDateStr is not included in store data
       const adoptionDate = this.adoptionDate.toISOString();
       return adoptionDate.slice(0, adoptionDate.indexOf('T'));
+    },
+    ageYYMM() {
+      const birthdate = this.birthDate;
+      const today = new Date();
+      const [todayYear, todayMonth] = [today.getFullYear(), today.getMonth()];
+      const [dateYear, dateMonth] = [birthdate.getFullYear(), birthdate.getMonth()];
+      let [ageYear, ageMonth] = [todayYear-dateYear, todayMonth-dateMonth];
+      if (ageMonth < 0) {
+        ageMonth = 12 + ageMonth;
+        ageYear--;
+      }
+      return {ageYear, ageMonth};
     }
   }
 }, {

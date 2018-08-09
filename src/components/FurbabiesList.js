@@ -29,7 +29,6 @@ class FurbabiesList extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.returnParentAddress = this.returnParentAddress.bind(this);
     this.handleScrolling = debouce(this.handleScrolling.bind(this), 50);
-    this.getAge = this.getAge.bind(this);
     this.getDate = this.getDate.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
   }
@@ -54,30 +53,11 @@ class FurbabiesList extends Component {
     if (method==='detail') {
       this.setState ({ showDetail: false })
     }
-    // if (furbaby && furbaby.age) {
-    //   this.props.assignFurbaby(furbaby);
-    //   this.setState({ showUpdate: !this.state.showUpdate });
-    // } else {
-    //   this.setState({ showUpdate: !this.state.showUpdate });
-    // }
   }
 
   returnParentAddress(furbaby) {
     const { parent } = furbaby;
     return `${parent.street}, ${parent.city}, ${parent.state} ${parent.zip}`;
-  }
-
-  getAge(input, modal) {
-    const date = new Date(input);
-    const today = new Date();
-    const [todayYear, todayMonth] = [today.getFullYear(), today.getMonth()];
-    const [dateYear, dateMonth] = [date.getFullYear(), date.getMonth()];
-    let [diffYear, diffMonth] = [todayYear-dateYear, todayMonth-dateMonth];
-    if (diffMonth < 0) {
-      diffMonth = 12 + diffMonth;
-      diffYear--;
-    }
-    return modal !== 'detailModal' ? `${diffYear}y, ${diffMonth}m` : {diffYear, diffMonth};
   }
   
   getDate(input) {
@@ -156,7 +136,7 @@ class FurbabiesList extends Component {
                 <img alt="" className='furbabyPhoto' src={furbaby.photoUrl ? furbaby.photoUrl.downloadURL : 'https://i.imgur.com/5DASmIh.jpg'}/>
                 <div className='furbabyInfo'>
                   <div><span className='label'>Name: </span><span className='text-name'>{furbaby.adoptedName || furbaby.shelterName}</span></div>
-                  <div><span className='label'>Age: </span><span className='text'>{this.getAge(furbaby.birthDate)}</span></div>
+                  <div><span className='label'>Age: </span><span className='text'>{`${furbaby.ageYYMM.ageYear}y, ${furbaby.ageYYMM.ageMonth}m`}</span></div>
                   <div><span className='label'>Breed: </span><span className='text'>{furbaby.breed}</span></div>
                   <div><span className='label'>Gender: </span><span className='text'>{furbaby.gender}</span></div>
                   <div><span className='label'>Color: </span><span className='text'>{furbaby.coatColor}</span></div>
@@ -168,7 +148,7 @@ class FurbabiesList extends Component {
             </div>
           ))}
           </div>
-          {this.state.showDetail && <FurbabyDetailModal showDetail={this.state.showDetail} closeModal={this.closeModal} getAge={this.getAge} stateIdx={this.state.stateIdx}/>}
+          {this.state.showDetail && <FurbabyDetailModal showDetail={this.state.showDetail} closeModal={this.closeModal} stateIdx={this.state.stateIdx}/>}
         </div>
       )
   }
