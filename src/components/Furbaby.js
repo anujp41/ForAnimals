@@ -214,6 +214,11 @@ class Furbaby extends Component {
     if (otherFiles.length === 0) this.setState({ showFiles: false });
   }
 
+  componentDidMount() {
+    const intakeDate = new Date().toISOString().split('T')[0];
+    this.setState({ intakeDate, today: intakeDate });
+  }
+
   render() {
     const { 
       shelterName,
@@ -243,9 +248,8 @@ class Furbaby extends Component {
       microchipNum,
       otherFiles,
       currentStatus,
+      today,
       parent } = this.state;
-      console.log(this.state)
-    const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
     return (
@@ -253,8 +257,7 @@ class Furbaby extends Component {
 
         <form autoComplete='off' onSubmit={this.handleSubmit}>
 
-          <div className='title'>Enter details for our new furbaby:</div>
-
+          <div className='title'>Enter details for our new furbaby:</div>,
           <div className='general'>
 
             <div className='formfield'>
