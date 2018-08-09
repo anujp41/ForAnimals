@@ -47,7 +47,8 @@ export const deleteFurbabyThunk = (id, arrIndex) => dispatch =>
 export default function (state = initialState, action) {
   switch (action.type) {
     case CREATE_FURBABY:
-      return [...state, action.furbaby];
+      // return [...state, action.furbaby];
+      return state;
     case GET_FURBABIES:
       return [...state, ...action.furbabies];
     case UPDATE_FURBABY:

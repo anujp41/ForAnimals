@@ -144,8 +144,6 @@ class FurbabiesList extends Component {
 
   render() {
     let furbabies = !this.state.sort ? this.props.furbabies : this.props.filterResult;
-    // console.log('src: ', furbabies[0])
-    // if (furbabies.length) {
       return (
         <div>
           {this.state.sort && <div className='clear-btn' onClick={this.clear}>Clear</div>}
@@ -173,9 +171,6 @@ class FurbabiesList extends Component {
           {this.state.showDetail && <FurbabyDetailModal showDetail={this.state.showDetail} closeModal={this.closeModal} getAge={this.getAge} stateIdx={this.state.stateIdx}/>}
         </div>
       )
-    // } else {
-    //   return null;
-    // }
   }
 }
 

@@ -1,3 +1,4 @@
+const sequelize = require('sequelize');
 const router = require('express').Router();
 const { FurBabies, Parents } = require('../models');
 
@@ -8,7 +9,8 @@ router.get('/:index', (req, res, next) => {
     attributes: ['id', 'adoptedName', 'shelterName', 'birthDate', 'breed', 'gender', 'coatColor', 'intakeDate', 'parentId', 'photoUrl', 'currentStatus'],
     include: [Parents],
     offset: index,
-    limit: 25 // 25 furbabies pulled at given time
+    limit: 25, // 25 furbabies pulled at given time
+    order: [[sequelize.col('furbaby.createdAt'), 'DESC']] //order furbabies by createdDate
   })
   .then(newBabies => res.json(newBabies))
   .catch(next);

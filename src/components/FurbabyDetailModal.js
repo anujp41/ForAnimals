@@ -116,7 +116,6 @@ class FurbabyDetailModal extends Component {
   }
 
   archiveToFB() {
-    console.log('now archiving')
     const {furbabyDetail} = this.props;
     const name = furbabyDetail.adoptedName || furbabyDetail.shelterName;
     const today = new Date();
