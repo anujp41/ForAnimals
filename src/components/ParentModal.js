@@ -36,9 +36,9 @@ class ParentModal extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     let { furbaby, adoptionDate } = nextProps;
-    console.log(`before: furbaby: ${furbaby}, adoptionDate: ${adoptionDate}`);
-    adoptionDate = adoptionDate !== null ? adoptionDate.slice(0, adoptionDate.indexOf('T')) : '';
-    console.log(`after: furbaby: ${furbaby}, adoptionDate: ${adoptionDate}`);
+    // console.log(`before: furbaby: ${furbaby}, adoptionDate: ${adoptionDate}`);
+    // adoptionDate = adoptionDate !== null ? adoptionDate.slice(0, adoptionDate.indexOf('T')) : '';
+    // console.log(`after: furbaby: ${furbaby}, adoptionDate: ${adoptionDate}`);
     return { furbaby, adoptionDate };
   }
 
@@ -86,7 +86,7 @@ class ParentModal extends React.Component {
   }
 
   parentOptionClick(option) {
-    this.clearState();
+    // this.clearState();
     let parentAdd = false;
     let parentSelect = false;
     if (option === 'parentAdd') {
@@ -198,6 +198,7 @@ class ParentModal extends React.Component {
 
   renderAdoptionDate() {
     const {furbaby, adoptionDate} = this.state;
+    console.log('renderAdoptionDate', adoptionDate)
     const today = new Date().toISOString().split('T')[0];
     return (
       <div className='adoptionDetail'>
@@ -220,6 +221,7 @@ class ParentModal extends React.Component {
     if(!this.props.show) {
       return null;
     }
+    console.log('render ', this.state)
     return (
       <div className='backdrop'>
         <button className='cancelbtn' onClick={()=>this.props.toggleModal(false, 'cancelled')}>Cancel</button>

@@ -8,7 +8,7 @@ router.get('/:id', (req, res, next) => {
     where: { id },
     include: [Parents]
   })
-  .then(furbaby => res.json(furbaby.dataValues))
+  .then(furbaby => res.json(furbaby.get()))
   .catch(next);
 })
 

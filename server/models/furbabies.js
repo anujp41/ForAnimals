@@ -133,26 +133,19 @@ const FurBabies = db.define('furbaby', {
     type: Sequelize.ARRAY(Sequelize.JSON),
     allowNull: true
   }
-}
-// {
-//   getterMethods: {
-//     age() {
-//       const currDate = new Date().getTime();
-//       const birthDate = this.birthDate;
-//       const ageMS = currDate - birthDate;
-//       const yearMS = 3.154e+10;
-//       const monthMS = 2.628e+9;
-//       const currYear = Math.floor(ageMS/yearMS);
-//       const currMonth = Math.max(0, Math.round((ageMS%yearMS)/monthMS));
-//       const result = currYear + ' year(s), ' + currMonth + ' month(s)';
-//       return result;
-//     },
-//     arrivedDate() {
-//       return new Date(this.arrived+'T00:00:00');
-//     }
-//   }
-// }
-, {
+}, {
+  getterMethods: {
+    intakeDateStr() {
+      const intakeDate = this.intakeDate.toISOString();
+      return intakeDate.slice(0, intakeDate.indexOf('T'));
+    },
+    adoptionDateStr() {
+      if (!this.adoptionDate) return; // if adoptionDate not included in GET request then adoptionDateStr is not included in store data
+      const adoptionDate = this.adoptionDate.toISOString();
+      return adoptionDate.slice(0, adoptionDate.indexOf('T'));
+    }
+  }
+}, {
   hooks: {
     afterUpdate: function(furbaby, option) {
       const id = furbaby.parentId;

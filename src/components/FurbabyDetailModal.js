@@ -72,8 +72,10 @@ class FurbabyDetailModal extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    console.log(nextProps.furbabyDetail)
     let {intakeDate, ...furbabyDetail} = nextProps.furbabyDetail;
-    intakeDate = intakeDate && intakeDate.slice(0, intakeDate.indexOf('T'));
+    intakeDate = intakeDate && intakeDate.indexOf('T') > -1 ? intakeDate.slice(0, intakeDate.indexOf('T')) : intakeDate;
+    // console.log('intakeDate', intakeDate)
     const {diffYear: ageYear, diffMonth: ageMonth} = nextProps.getAge(nextProps.furbabyDetail.birthDate, 'detailModal');
     return {
       ...furbabyDetail,
@@ -280,11 +282,14 @@ class FurbabyDetailModal extends Component {
       otherFiles,
       currentStatus,
       parent } = this.state;
+      // console.log('state ', this.state)
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
-    if (this.props.showDetail) {
-      return (
+    if (!this.props.showDetail || Number.isNaN(ageYear)) {
+      return null;
+    }
+    return (
         <div className='backdrop-detail'>
           <button className='cancelbtn' onClick={this.props.closeModal}>
             Cancel
@@ -535,9 +540,6 @@ class FurbabyDetailModal extends Component {
           </div>
         </div>
       )
-    } else {
-      return null;
-    }
   }
 }
 
