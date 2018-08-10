@@ -29,7 +29,7 @@ class FurbabiesList extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.returnParentAddress = this.returnParentAddress.bind(this);
     this.handleScrolling = debouce(this.handleScrolling.bind(this), 50);
-    this.getDate = this.getDate.bind(this);
+    // this.getDate = this.getDate.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
   }
 
@@ -60,10 +60,10 @@ class FurbabiesList extends Component {
     return `${parent.street}, ${parent.city}, ${parent.state} ${parent.zip}`;
   }
   
-  getDate(input) {
-    const date = new Date(input);
-    return `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`
-  }
+  // getDate(input) {
+  //   const date = new Date(input);
+  //   return `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`
+  // }
 
   renderDropdown() {
     const sortOptions = this.state.sortOptions;
@@ -140,7 +140,7 @@ class FurbabiesList extends Component {
                   <div><span className='label'>Breed: </span><span className='text'>{furbaby.breed}</span></div>
                   <div><span className='label'>Gender: </span><span className='text'>{furbaby.gender}</span></div>
                   <div><span className='label'>Color: </span><span className='text'>{furbaby.coatColor}</span></div>
-                  <div><span className='label'>Intake Date: </span><span className='text'>{this.getDate(furbaby.intakeDate)}</span></div>
+                  <div><span className='label'>Intake Date: </span><span className='text'>{furbaby.intakeDateStr}</span></div>
                   {Number.isInteger(furbaby.parentId) && <div><span className='label'>Parent Name: </span><span className='text'>{furbaby.parent.name}</span></div>}
                 </div>
                 <div className='furbabyClick'>Click for more details</div>

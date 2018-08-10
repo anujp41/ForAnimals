@@ -96,10 +96,10 @@ class FurbabyDetailModal extends Component {
       const updatedFiles = otherFilesURL.concat(fileURL);
       this.setState({ otherFilesURL: updatedFiles})//, otherFiles: [], filesUpdated: false});
     }
-    if (photoUpdated || filesUpdated) {
+    // if (photoUpdated || filesUpdated) {
       this.archiveToFB();
       this.updateDB();
-    }
+    // }
   }
 
   saveToFirebase(folder, file) {
