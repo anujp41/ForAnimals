@@ -7,6 +7,7 @@ import { deleteFurbabyThunk, clearCurrFurbaby, updateFurbabyThunk, createParentT
 import { ParentModal } from './index';
 import firebase from '../firebase';
 import { currentStatusVals } from '../assets';
+import { compObj } from '../utils';
 
 // reference firebase storage
 const storage = firebase.storage();
@@ -67,7 +68,8 @@ class FurbabyDetailModal extends Component {
       showFiles: false,
       showModal: false,
       photoUpdated: false,
-      filesUpdated: false
+      filesUpdated: false,
+      detailUpdated: false
     }
   }
 
@@ -83,7 +85,7 @@ class FurbabyDetailModal extends Component {
 
   async handleUpdate(event) {
     event.preventDefault();
-    const {photo, photoUpdated, photoUrl, filesUpdated, otherFiles, otherFilesURL} = this.state;
+    const {photo, photoUpdated, photoUrl, filesUpdated, otherFiles, otherFilesURL, detailUpdated} = this.state;
     const {path} = photoUrl;
     const folder = path.slice(path.indexOf('/'), path.lastIndexOf('/'));
     if (photoUpdated) {
@@ -96,10 +98,16 @@ class FurbabyDetailModal extends Component {
       const updatedFiles = otherFilesURL.concat(fileURL);
       this.setState({ otherFilesURL: updatedFiles})//, otherFiles: [], filesUpdated: false});
     }
-    // if (photoUpdated || filesUpdated) {
+    if (photoUpdated || filesUpdated) {
       this.archiveToFB();
       this.updateDB();
-    // }
+      return;
+    }
+    if (detailUpdated) {
+      this.archiveToFB();
+      this.updateDB();
+      return;
+    }
   }
 
   saveToFirebase(folder, file) {
@@ -115,10 +123,11 @@ class FurbabyDetailModal extends Component {
 
   archiveToFB() {
     const {furbabyDetail} = this.props;
+    const updates = compObj(furbabyDetail, this.state);
     const name = furbabyDetail.adoptedName || furbabyDetail.shelterName;
     const today = new Date();
     const [year, month, date, hour, min, sec] = [today.getFullYear(), today.getMonth()+1, today.getDate(), today.getHours(), today.getMinutes(), today.getSeconds()];
-    database.ref(`/${month}-${date}-${year}/${name}/${hour}h:${min}m:${sec}s`).set(furbabyDetail);
+    database.ref(`/${year}-${month}-${date}/${name}/${hour}h:${min}m:${sec}s`).set(updates);
   }
 
   updateDB() {
@@ -133,7 +142,7 @@ class FurbabyDetailModal extends Component {
     const target = event.target;
     const name = target.name;
     let value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState ({ [name] : value });
+    this.setState ({ [name] : value, detailUpdated: true });
   }
 
   handleStatus(event) {
@@ -241,7 +250,8 @@ class FurbabyDetailModal extends Component {
       showFiles: false,
       showModal: false,
       photoUpdated: false,
-      filesUpdated: false
+      filesUpdated: false,
+      detailUpdated: false
     })
   }
 
@@ -278,7 +288,7 @@ class FurbabyDetailModal extends Component {
       otherFiles,
       currentStatus,
       parent } = this.state;
-      console.log('state ', this.state)
+      // console.log('state ', this.state)
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
