@@ -1,3 +1,5 @@
+export default sort;
+
 const sort = function(array, sorting) {
   if (sorting === 'Available') {
     return array.filter(furbaby => !furbaby.fostered && !furbaby.adopted);
@@ -19,5 +21,3 @@ const sort = function(array, sorting) {
     return array.slice().sort((prev, furbaby) => prev.arrivedDate - furbaby.arrivedDate, {arrivedDate: 0});
   }
 };
-
-export default sort;
