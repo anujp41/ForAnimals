@@ -72,8 +72,13 @@ class FurbabyDetailModal extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log(nextProps.furbabyDetail)
-    return nextProps.furbabyDetail;
+    const furbabyDetail = nextProps.furbabyDetail;
+    if (Object.keys(furbabyDetail).length) {
+      const {ageYYMM: {ageYear, ageMonth}, ...furbabyDetail} = nextProps.furbabyDetail
+      return { ageYear, ageMonth, ...furbabyDetail };
+    } else {
+      return null;
+    }
   }
 
   async handleUpdate(event) {
@@ -245,10 +250,10 @@ class FurbabyDetailModal extends Component {
       id, 
       shelterName,
       adoptedName,
-      adoptionDate,
+      adoptionDateStr,
       ageYear,
       ageMonth, 
-      intakeDate,
+      intakeDateStr,
       size,
       coatColor,
       coatLength,
@@ -273,7 +278,7 @@ class FurbabyDetailModal extends Component {
       otherFiles,
       currentStatus,
       parent } = this.state;
-      // console.log('state ', this.state)
+      console.log('state ', this.state)
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
@@ -349,7 +354,7 @@ class FurbabyDetailModal extends Component {
             <div className='general'>
               <div className='formfield date-input'>
                 <div className='date-field'>Intake Date: </div>
-                <input required className='arrived' type='date' name='intakeDate' value={intakeDate} max={today} onChange={this.handleChange}/>
+                <input required className='arrived' type='date' name='intakeDate' value={intakeDateStr} max={today} onChange={this.handleChange}/>
               </div>
   
               <div className='formfield'>
@@ -527,7 +532,7 @@ class FurbabyDetailModal extends Component {
               <button className='button button-update' type='submit' value='submit'>Update</button>
             </form>
             <button className='button button-delete' type='button' onClick={()=>this.handleDelete(id, this.props.stateIdx)}>Delete</button>
-            {this.state.showModal && <ParentModal furbaby={adoptedName || shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent} adoptionDate={adoptionDate}/>}
+            {this.state.showModal && <ParentModal furbaby={adoptedName || shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent} adoptionDate={adoptionDateStr}/>}
           </div>
         </div>
       )
