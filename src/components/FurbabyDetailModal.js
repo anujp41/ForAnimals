@@ -108,6 +108,9 @@ class FurbabyDetailModal extends Component {
       this.updateDB();
       return;
     }
+    if (!filesUpdated || !photoUpdated || !detailUpdated) {
+      alert('You have not updated any detail. Please hit Cancel to close!');
+    }
   }
 
   saveToFirebase(folder, file) {
@@ -149,7 +152,7 @@ class FurbabyDetailModal extends Component {
     const noModalStatus = ['Adoptable', 'Available as Barn Cat', 'Deceased', 'Returned to Colony'];
     const target = event.target;
     const currentStatus = target.value;
-    this.setState ({ currentStatus });
+    this.setState ({ currentStatus, detailUpdated: true });
     if (noModalStatus.indexOf(currentStatus) === -1 && this.state.parent === null) {
       this.setState({ showModal: true });
       return;
@@ -287,8 +290,10 @@ class FurbabyDetailModal extends Component {
       microchipNum,
       otherFiles,
       currentStatus,
-      parent } = this.state;
-      // console.log('state ', this.state)
+      parent,
+      photoUpdated,
+      filesUpdated,
+      detailUpdated } = this.state;
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
@@ -538,8 +543,7 @@ class FurbabyDetailModal extends Component {
                 <div>{parent.street}, {parent.city}, {parent.state}, {parent.zip}</div>
               </div>
             }
-  
-              <button className='button button-update' type='submit' value='submit'>Update</button>
+            <button className='button button-update' type='submit' value='submit' disabled={!(photoUpdated || filesUpdated || detailUpdated)}>Update</button>
             </form>
             <button className='button button-delete' type='button' onClick={()=>this.handleDelete(id, this.props.stateIdx)}>Delete</button>
             {this.state.showModal && <ParentModal furbaby={adoptedName || shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent} adoptionDate={adoptionDateStr}/>}

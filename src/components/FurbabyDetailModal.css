@@ -35,6 +35,17 @@
   background-color: #49c1ed;
 }
 
+.button-update:disabled {
+  background-color: grey
+}
+
+.button-update:disabled:hover {
+  background-color: grey;
+  cursor: default;
+  font-size: 20px;
+  border: 2px solid white;
+}
+
 .button-update:hover {
   font-size: 25px;
   border: 2px solid #419ff2;
