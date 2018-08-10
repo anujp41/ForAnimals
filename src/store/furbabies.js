@@ -16,7 +16,9 @@ export const clearFurbabies = () => ({ type: CLEAR_FURBABIES });
 
 export const createFurbabyThunk = furbaby => dispatch => 
   axios.post('http://localhost:8080/api/furbabies', furbaby)
-  .then(newFurbaby => newFurbaby.data)
+  .then(newFurbaby => {
+    console.log('newFurbaby ', newFurbaby)
+    return newFurbaby.data})
   .then(newKitty => {
     newKitty.arrivedDate = new Date(newKitty.arrivedDate);
     return newKitty;
