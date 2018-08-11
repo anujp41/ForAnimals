@@ -19,7 +19,6 @@ class ParentModal extends React.Component {
       zip: '',
       parentAdd: false,
       parentSelect: false,
-      adoptedName: '',
       adoptionDate: ''
     }
     this.handleChange = this.handleChange.bind(this);
@@ -35,11 +34,8 @@ class ParentModal extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    let { furbaby, adoptionDate } = nextProps;
-    // console.log(`before: furbaby: ${furbaby}, adoptionDate: ${adoptionDate}`);
-    // adoptionDate = adoptionDate !== null ? adoptionDate.slice(0, adoptionDate.indexOf('T')) : '';
-    // console.log(`after: furbaby: ${furbaby}, adoptionDate: ${adoptionDate}`);
-    return { furbaby, adoptionDate };
+    let { furbabyName, adoptionDate, parentInfo } = nextProps;
+    return parentInfo ? { furbabyName, adoptionDate, ...parentInfo } : { furbabyName, adoptionDate };
   }
 
   handleChange(event) {
@@ -47,6 +43,10 @@ class ParentModal extends React.Component {
     const name = target.name;
     const value = target.value;
     this.setState({ [name] : value });
+    // remove id from parent if manually added; if parent select from table, then id has a value
+    if (!(name === 'furbabyName' || name === 'adoptionDate')) {
+      this.setState({ id: null })
+    }
   }
 
   clearState() {
@@ -59,7 +59,6 @@ class ParentModal extends React.Component {
       zip: '',
       parentAdd: null,
       parentSelect: null,
-      adoptedName: '',
       adoptionDate: ''
     };
     this.setState({ ...defaultState });
@@ -75,14 +74,14 @@ class ParentModal extends React.Component {
       alert('Please select state from the dropdown list');
       return;
     }
-    const {id, name, street, city, state, zip, adoptedName, adoptionDate} = this.state;
-    this.props.setParent({id, name, street, city, state, zip}, adoptedName, adoptionDate);
+    const {parentAdd, parentSelect, adoptionDate, furbabyName, ...parentInfo} = this.state;
+    this.props.setParent(parentInfo, furbabyName, adoptionDate);
     this.props.toggleModal(false);
   }
 
   setParentId(parent) {
-    const {id, name, street, city, state, zip } = parent;
-    this.setState({ id, name, street, city, state, zip })
+    const {createdAr, updatedAr, hasFoster, ...parentInfo} = parent;
+    this.setState({ ...parentInfo });
   }
 
   parentOptionClick(option) {
@@ -197,15 +196,14 @@ class ParentModal extends React.Component {
   }
 
   renderAdoptionDate() {
-    const {furbaby, adoptionDate} = this.state;
-    console.log('renderAdoptionDate', adoptionDate)
+    const {furbabyName, adoptionDate} = this.state;
     const today = new Date().toISOString().split('T')[0];
     return (
       <div className='adoptionDetail'>
         <div className='modal-text'>Adoption Details for Furbaby:</div>
           <div className='parentAddressItem'>
             <label className='input-label' htmlFor='address'>Adopted Name (if diff): </label>
-            <input className='input' type='text' name='adoptedName' value={furbaby} onChange={this.handleChange}/>
+            <input className='input' type='text' name='furbabyName' value={furbabyName} onChange={this.handleChange}/>
         </div>
 
         <div className='adoptionDate'>
@@ -217,20 +215,19 @@ class ParentModal extends React.Component {
   }
 
   render() {
-    const { furbaby } = this.props;
+    const { furbabyName } = this.props;
     if(!this.props.show) {
       return null;
     }
-    console.log('render ', this.state)
     return (
       <div className='backdrop'>
         <button className='cancelbtn' onClick={()=>this.props.toggleModal(false, 'cancelled')}>Cancel</button>
         <div className='containerModal'>
 
-          <div className='titleExisting'>To add a parent for {furbaby}, choose from below:</div>
+          <div className='titleExisting'>To add a parent for {furbabyName}, choose from below:</div>
 
           <div className='parentOptions'>
-            <div className='parentAdd' onClick={()=>this.parentOptionClick('parentAdd')}>Add Parent</div>
+            <div className='parentAdd' onClick={()=>this.parentOptionClick('parentAdd')}>{this.state.parentId ? 'Update Parent' : 'Add Parent'}</div>
             <div className='parentSelect' onClick={()=>this.parentOptionClick('parentSelect')}>Select Existing Parent</div>
           </div>
 
@@ -244,7 +241,11 @@ class ParentModal extends React.Component {
 }
 
 ParentModal.propTypes = {
-  furbaby: PropTypes.string
+  furbabyName: PropTypes.string.isRequired,
+  adoptionDate: PropTypes.string.isRequired,
+  parents: PropTypes.arrayOf(PropTypes.object),
+  show: PropTypes.bool.isRequired,
+  parentInfo: PropTypes.object
 }
 
 const mapState = state => {
