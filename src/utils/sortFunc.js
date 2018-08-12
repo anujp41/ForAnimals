@@ -1,6 +1,6 @@
 export default sort;
 
-const sort = function(array, sorting) {
+function sort(array, sorting) {
   if (sorting === 'Available') {
     return array.filter(furbaby => !furbaby.fostered && !furbaby.adopted);
   } else if (sorting === 'Fostered') {

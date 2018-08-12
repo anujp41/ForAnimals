@@ -36,8 +36,10 @@ class FurbabyDetailModal extends Component {
       ageMonth: '',
       adoptedName: '',
       adoptionDate: null,
+      adoptionDateStr: '',
       birthDate: '',
       intakeDate: '',
+      intakeDateStr: '',
       currentStatus: 'Choose from list:',
       size: '',
       coatColor: '',
@@ -174,7 +176,8 @@ class FurbabyDetailModal extends Component {
   }
 
   setParent(parent, adoptedName, adoptionDate) {
-    this.setState({ parent, adoptedName, adoptionDate });
+    const parentId = parent.id;
+    this.setState({ parentId, parent, adoptedName, adoptionDate, detailUpdated: true });
   }
 
   onImageDrop(file) {
@@ -291,9 +294,11 @@ class FurbabyDetailModal extends Component {
       otherFiles,
       currentStatus,
       parent,
+      parentId,
       photoUpdated,
       filesUpdated,
       detailUpdated } = this.state;
+    // console.log('this.state ', this.state);
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
@@ -546,7 +551,7 @@ class FurbabyDetailModal extends Component {
             <button className='button button-update' type='submit' value='submit' disabled={!(photoUpdated || filesUpdated || detailUpdated)}>Update</button>
             </form>
             <button className='button button-delete' type='button' onClick={()=>this.handleDelete(id, this.props.stateIdx)}>Delete</button>
-            {this.state.showModal && <ParentModal furbaby={adoptedName || shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent} adoptionDate={adoptionDateStr}/>}
+            {this.state.showModal && <ParentModal furbabyName={adoptedName || shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent} adoptionDate={adoptionDateStr} parentInfo={parentId ? parent : undefined}/>}
           </div>
         </div>
       )

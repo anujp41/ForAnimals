@@ -26,19 +26,23 @@ router.post('/', (req, res, next) => {
 //Update existing cats
 router.put('/', (req, res, next) => {
   const furbaby = req.body;
-  return FurBabies.update( furbaby, {
+  FurBabies.update( furbaby, {
     where: { id: furbaby.id },
+    returning: true,
     individualHooks: true
   })
-  .then(([updatedRow, [updatedFurbaby]]) => updatedFurbaby.get())
+  .then(([updatedRow, [updatedFurbaby]]) => {
+    const {adoptedName, ageYYMM, birthDate, breed, coatColor, currentStatus, gender, id, intakeDate, intakeDateStr, parentId, photoUrl, shelterName} = updatedFurbaby.get();
+    return {adoptedName, ageYYMM, birthDate, breed, coatColor, currentStatus, gender, id, intakeDate, intakeDateStr, parentId, photoUrl, shelterName};
+  })
   .then(furbaby => {
-    const {parentId, ...furbabyDetail} = furbaby;
+    const {parentId} = furbaby;
     if (parentId) {
       Parents.findById(parentId)
       .then(parent => parent.get())
-      .then(parent => res.json({...furbabyDetail, parent}))
+      .then(parent => res.json({...furbaby, parent }))
     } else {
-      res.json({...furbabyDetail})
+      res.json({...furbaby})
     }
   })
   .catch(next);

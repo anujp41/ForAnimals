@@ -19,20 +19,13 @@ export const createFurbabyThunk = furbaby => dispatch =>
   .then(newFurbaby => {
     console.log('newFurbaby ', newFurbaby)
     return newFurbaby.data})
-  .then(newKitty => {
-    newKitty.arrivedDate = new Date(newKitty.arrivedDate);
-    return newKitty;
-  })
+  .then(newKitty => newKitty)
   .then(newFurbaby => dispatch(createFurbaby(newFurbaby)))
   .catch(err => console.log(err));
 
 export const getFurbabiesThunk = (idx = 0) => dispatch => 
   axios.get(`http://localhost:8080/api/furbabies/${idx}`)
   .then(furbabies => furbabies.data)
-  .then(furbabiesArr => furbabiesArr.map(furbaby => {
-    furbaby.arrivedDate = new Date(furbaby.arrivedDate);
-    return furbaby;
-  }))
   .then(furbabies => dispatch(getFurbabies(furbabies)))
   .catch(err => console.log(err));
 
