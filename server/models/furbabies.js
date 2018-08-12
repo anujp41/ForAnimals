@@ -156,15 +156,9 @@ const FurBabies = db.define('furbaby', {
       }
       return {ageYear, ageMonth};
     }
-  }
-}, {
+  },
   hooks: {
-    afterUpdate: function(furbaby, option) {
-      const id = furbaby.parentId;
-      const hasFoster = id ? true : false;
-      this.associations.parent.target.update({hasFoster}, {where: {id}})
-    },
-    afterCreate: function(furbaby, option) {
+    afterValidate: function(furbaby) {
       const id = furbaby.parentId;
       const hasFoster = id ? true : false;
       this.associations.parent.target.update({hasFoster}, {where: {id}})
