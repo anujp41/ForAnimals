@@ -29,7 +29,7 @@ class FurbabyDetailModal extends Component {
     this.setParent = this.setParent.bind(this);
     this.saveToFirebase = this.saveToFirebase.bind(this);
     this.archiveToFB = this.archiveToFB.bind(this);
-    this.renderAdoptionDate = this.renderAdoptionDate.bind(this);
+    this.renderAdoptionDetail = this.renderAdoptionDetail.bind(this);
     this.state = {
       shelterName: '',
       ageYear: '',
@@ -186,9 +186,9 @@ class FurbabyDetailModal extends Component {
     this.setState({ showModal });
   }
 
-  setParent(parent, adoptedName, adoptionDate) {
+  setParent(parent) {
     const parentId = parent.id;
-    this.setState({ parentId, parent, adoptedName, adoptionDate, detailUpdated: true });
+    this.setState({ parentId, parent, detailUpdated: true });
   }
 
   onImageDrop(file) {
@@ -228,20 +228,19 @@ class FurbabyDetailModal extends Component {
     this.setState({ filesUpdated: true });
   }
 
-  renderAdoptionDate() {
-    const {furbabyName, adoptionDate} = this.state;
-    const today = new Date().toISOString().split('T')[0];
+  renderAdoptionDetail(today) {
+    const {furbabyName, adoptionDateStr, intakeDateStr} = this.state;
     return (
       <div className='adoptionDetail'>
         <div className='modal-text'>Adoption Details:</div>
-          <div className='parentAddressItem'>
+          <div className='adoptionName'>
             <label className='input-label' htmlFor='address'>Adopted Name (if diff): </label>
             <input className='input' type='text' name='furbabyName' value={furbabyName} onChange={this.handleChange}/>
         </div>
 
         <div className='adoptionDate'>
           <label className='input-label' htmlFor='adoptionDate'>Date of Adoption: </label>
-          <input required className='adoption-input' type='date' name='adoptionDate' value={adoptionDate} max={today} onChange={this.handleChange}/>
+          <input required className='adoption-input' type='date' name='adoptionDateStr' value={adoptionDateStr} min={intakeDateStr} max={today} onChange={this.handleChange}/>
         </div>
       </div>
     )
@@ -329,7 +328,7 @@ class FurbabyDetailModal extends Component {
       photoUpdated,
       filesUpdated,
       detailUpdated } = this.state;
-      console.log('intakeDate ', this.state.intakeDate, intakeDateStr)
+      console.log('state ', this.state)
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
@@ -576,14 +575,14 @@ class FurbabyDetailModal extends Component {
                 <button className='update-parent' type='button' onClick={()=>this.toggleModal(true)}>Update</button>
                 <div><b><ins>Selected Parent:</ins></b></div>
                 <div>{parent.name}</div>
-                <div>{parent.street}, {parent.city}, {parent.state}, {parent.zip}</div>
-                {this.renderAdoptionDate()}
+                <div>{parent.street}, {parent.city}, {parent.state} {parent.zip}</div>
+                {this.renderAdoptionDetail(today)}
               </div>
             }
             <button className='button button-update' type='submit' value='submit' disabled={!(photoUpdated || filesUpdated || detailUpdated)}>Update</button>
             </form>
             <button className='button button-delete' type='button' onClick={()=>this.handleDelete(id, this.props.stateIdx)}>Delete</button>
-            {this.state.showModal && <ParentModal furbabyName={adoptedName || shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent} adoptionDate={adoptionDateStr} parentInfo={parentId ? parent : undefined}/>}
+            {this.state.showModal && <ParentModal furbabyName={adoptedName || shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent} parentInfo={parentId ? parent : undefined}/>}
           </div>
         </div>
       )

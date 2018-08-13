@@ -18,14 +18,12 @@ class ParentModal extends React.Component {
       state: 'Select:',
       zip: '',
       parentAdd: false,
-      parentSelect: false,
-      adoptionDate: ''
+      parentSelect: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.submitParent = this.submitParent.bind(this);
     this.renderParentList = this.renderParentList.bind(this);
     this.renderParentAddForm = this.renderParentAddForm.bind(this);
-    // this.renderAdoptionDate = this.renderAdoptionDate.bind(this);
     this.setParentId = this.setParentId.bind(this);
     this.parentOptionClick = this.parentOptionClick.bind(this);
     this.handleDropdown = this.handleDropdown.bind(this);
@@ -34,19 +32,15 @@ class ParentModal extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    let { furbabyName, adoptionDate, parentInfo } = nextProps;
-    return parentInfo ? { furbabyName, adoptionDate, ...parentInfo } : { furbabyName, adoptionDate };
+    let { parentInfo } = nextProps;
+    return parentInfo ? { ...parentInfo } : null;
   }
 
   handleChange(event) {
     const target = event.target;
     const name = target.name;
     const value = target.value;
-    this.setState({ [name] : value });
-    // remove id from parent if manually added; if parent select from table, then id has a value
-    if (!(name === 'furbabyName' || name === 'adoptionDate')) {
-      this.setState({ id: null })
-    }
+    this.setState({ [name] : value, id: null });
   }
 
   clearState() {
@@ -58,8 +52,7 @@ class ParentModal extends React.Component {
       state: 'Select:',
       zip: '',
       parentAdd: null,
-      parentSelect: null,
-      adoptionDate: ''
+      parentSelect: null
     };
     this.setState({ ...defaultState });
   }
@@ -74,8 +67,8 @@ class ParentModal extends React.Component {
       alert('Please select state from the dropdown list');
       return;
     }
-    const {parentAdd, parentSelect, adoptionDate, furbabyName, ...parentInfo} = this.state;
-    this.props.setParent(parentInfo, furbabyName, adoptionDate);
+    const {parentAdd, parentSelect, furbabyName, ...parentInfo} = this.state;
+    this.props.setParent(parentInfo, furbabyName);
     this.props.toggleModal(false);
   }
 
@@ -137,7 +130,6 @@ class ParentModal extends React.Component {
                 }}
             }}
           />
-          {/* {this.renderAdoptionDate()} */}
           <button className='button button-parent'>Submit</button>
         </form>
       </div>
@@ -182,11 +174,8 @@ class ParentModal extends React.Component {
                   <label className='input-label' htmlFor='address'>Zipcode: </label>
                   <input required className='input' type='text' name='zip' value={zip} onChange={this.handleChange}/>
                 </div>
-
               </div>
           </div>
-
-          {/* {this.renderAdoptionDate()} */}
 
           <button className='button button-parent' type='submit' value='submit'>Submit</button>
 
@@ -194,25 +183,6 @@ class ParentModal extends React.Component {
       </div>
     )
   }
-
-  // renderAdoptionDate() {
-  //   const {furbabyName, adoptionDate} = this.state;
-  //   const today = new Date().toISOString().split('T')[0];
-  //   return (
-  //     <div className='adoptionDetail'>
-  //       <div className='modal-text'>Adoption Details for Furbaby:</div>
-  //         <div className='parentAddressItem'>
-  //           <label className='input-label' htmlFor='address'>Adopted Name (if diff): </label>
-  //           <input className='input' type='text' name='furbabyName' value={furbabyName} onChange={this.handleChange}/>
-  //       </div>
-
-  //       <div className='adoptionDate'>
-  //         <label className='input-label' htmlFor='adoptionDate'>Date of Adoption: </label>
-  //         <input required className='adoption-input' type='date' name='adoptionDate' value={adoptionDate} max={today} onChange={this.handleChange}/>
-  //       </div>
-  //     </div>
-  //   )
-  // }
 
   render() {
     const { furbabyName } = this.props;
@@ -242,7 +212,6 @@ class ParentModal extends React.Component {
 
 ParentModal.propTypes = {
   furbabyName: PropTypes.string.isRequired,
-  adoptionDate: PropTypes.string.isRequired,
   parents: PropTypes.arrayOf(PropTypes.object),
   show: PropTypes.bool.isRequired,
   parentInfo: PropTypes.object

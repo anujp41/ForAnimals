@@ -16,31 +16,31 @@ class Furbaby extends Component {
   constructor() {
     super();
     this.state = {
-      shelterName: 'Smokey',
-      ageYear: '2',
-      ageMonth: '2',
+      shelterName: '',
+      ageYear: '',
+      ageMonth: '',
       adoptedName: '',
       adoptionDate: '',
       birthDate: '',
       intakeDate: '',
       currentStatus: 'Choose from list:',
-      size: 'Large',
-      coatColor: 'Grey',
-      coatLength: 'Medium',
-      breed: 'Tabby',
-      gender: 'Male',
-      altered: true,
+      size: '',
+      coatColor: '',
+      coatLength: '',
+      breed: '',
+      gender: '',
+      altered: false,
       fivStatus: false,
       felvStatus: false,
       otherMedical: '',
       behavioralIssues: '',
       goodWithCats: 'Yes',
-      goodWithDogs: 'No',
-      goodWithChildren: 'No',
+      goodWithDogs: 'Yes',
+      goodWithChildren: 'Yes',
       specialNeeds: '',
-      bio: 'Found in Parksville',
+      bio: '',
       addlComments: '',
-      currentLocation: 'Home',
+      currentLocation: '',
       courtesyListing: false,
       courtesyListLoc: '',
       parent: null,
@@ -52,42 +52,6 @@ class Furbaby extends Component {
       otherFilesURL: [],
       showFiles: false,
       showModal: false
-      // shelterName: '',
-      // ageYear: '',
-      // ageMonth: '',
-      // adoptedName: '',
-      // adoptionDate: '',
-      // birthDate: '',
-      // intakeDate: '',
-      // currentStatus: 'Choose from list:',
-      // size: '',
-      // coatColor: '',
-      // coatLength: '',
-      // breed: '',
-      // gender: '',
-      // altered: false,
-      // fivStatus: false,
-      // felvStatus: false,
-      // otherMedical: '',
-      // behavioralIssues: '',
-      // goodWithCats: 'Yes',
-      // goodWithDogs: 'Yes',
-      // goodWithChildren: 'Yes',
-      // specialNeeds: '',
-      // bio: '',
-      // addlComments: '',
-      // currentLocation: '',
-      // courtesyListing: false,
-      // courtesyListLoc: '',
-      // parent: null,
-      // youtubeVid: null,
-      // photo: null,
-      // photoUrl: '',
-      // microchipNum: '',
-      // otherFiles: [],
-      // otherFilesURL: [],
-      // showFiles: false,
-      // showModal: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -100,6 +64,7 @@ class Furbaby extends Component {
     this.saveToFirebase = this.saveToFirebase.bind(this);
     this.showFileList = this.showFileList.bind(this);
     this.removeFile = this.removeFile.bind(this);
+    this.renderAdoptionDetail = this.renderAdoptionDetail.bind(this);
   }
 
   handleChange(event) {
@@ -207,7 +172,7 @@ class Furbaby extends Component {
       return;
     }
     if (noModalStatus.indexOf(currentStatus) >= 0) {
-      this.setState({ parent: null, adoptedName: '', adoptionDate: null, parentId: null });
+      this.setState({ parent: null, adoptedName: '', parentId: null });
       return;
     }
   }
@@ -219,8 +184,8 @@ class Furbaby extends Component {
     }
   }
 
-  setParent(parent, adoptedName, adoptionDate) {
-    this.setState({ parent, adoptedName, adoptionDate });
+  setParent(parent) {
+    this.setState({ parent });
   }
 
   showFileList() {
@@ -238,8 +203,26 @@ class Furbaby extends Component {
   }
 
   componentDidMount() {
-    const intakeDate = new Date().toISOString().split('T')[0];
-    this.setState({ intakeDate, today: intakeDate });
+    const today = new Date().toISOString().split('T')[0];
+    this.setState({ intakeDate: today, today, adoptionDate: today });
+  }
+
+  renderAdoptionDetail(today) {
+    const {furbabyName, adoptionDate, intakeDate} = this.state;
+    return (
+      <div className='adoptionDetail'>
+        <div className='modal-text'>Adoption Details:</div>
+          <div className='parentAddressItem'>
+            <label className='input-label' htmlFor='address'>Adopted Name (if diff): </label>
+            <input className='input' type='text' name='furbabyName' value={furbabyName} onChange={this.handleChange}/>
+        </div>
+
+        <div className='adoptionDate'>
+          <label className='input-label' htmlFor='adoptionDate'>Date of Adoption: </label>
+          <input required className='adoption-input' type='date' name='adoptionDate' value={adoptionDate} min={intakeDate} max={today} onChange={this.handleChange}/>
+        </div>
+      </div>
+    )
   }
 
   render() {
@@ -275,6 +258,7 @@ class Furbaby extends Component {
       parent } = this.state;
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
+    console.log('state', this.state)
     return (
       <div className='container'>
 
@@ -500,10 +484,11 @@ class Furbaby extends Component {
 
           {parent !== null &&
             <div className='chosen-parent'>
-              <button className='update-parent' onClick={()=>this.setState({showModal: true})}>Update</button>
+              <button className='update-parent' type='button' onClick={()=>this.setState({showModal: true})}>Update</button>
               <div><b><ins>Selected Parent:</ins></b></div>
               <div>{parent.name}</div>
               <div>{parent.street}, {parent.city}, {parent.state}, {parent.zip}</div>
+              {this.renderAdoptionDetail(today)}
             </div>
           }
 
