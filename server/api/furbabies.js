@@ -12,7 +12,7 @@ router.get('/:index', (req, res, next) => {
     limit: 25, // 25 furbabies pulled at given time
     order: [[sequelize.col('furbaby.createdAt'), 'DESC']] //order furbabies by createdDate
   })
-  .then(newBabies => res.json(newBabies))
+  .then(furbaby => res.json(furbaby))
   .catch(next);
 })
 
@@ -39,7 +39,7 @@ router.put('/', (req, res, next) => {
     const {parentId} = furbaby;
     if (parentId) {
       Parents.findById(parentId)
-      .then(parent => parent.get())
+      .then(parent => parent.checkFoster())
       .then(parent => res.json({...furbaby, parent }))
     } else {
       res.json({...furbaby})

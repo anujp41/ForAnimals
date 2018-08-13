@@ -9,37 +9,38 @@ import uuidv1 from 'uuid/v1';
 import FileDrop from 'react-file-drop';
 const storage = firebase.storage();
 const {currentStatusVals} = require('../assets');
+const { handleDate } = require('../utils');
 
 class Furbaby extends Component {
 
   constructor() {
     super();
     this.state = {
-      shelterName: '',
-      ageYear: '',
-      ageMonth: '',
+      shelterName: 'Smokey',
+      ageYear: '2',
+      ageMonth: '2',
       adoptedName: '',
       adoptionDate: '',
       birthDate: '',
       intakeDate: '',
       currentStatus: 'Choose from list:',
-      size: '',
-      coatColor: '',
-      coatLength: '',
-      breed: '',
-      gender: '',
-      altered: false,
+      size: 'Large',
+      coatColor: 'Grey',
+      coatLength: 'Medium',
+      breed: 'Tabby',
+      gender: 'Male',
+      altered: true,
       fivStatus: false,
       felvStatus: false,
       otherMedical: '',
       behavioralIssues: '',
       goodWithCats: 'Yes',
-      goodWithDogs: 'Yes',
-      goodWithChildren: 'Yes',
+      goodWithDogs: 'No',
+      goodWithChildren: 'No',
       specialNeeds: '',
-      bio: '',
+      bio: 'Found in Parksville',
       addlComments: '',
-      currentLocation: '',
+      currentLocation: 'Home',
       courtesyListing: false,
       courtesyListLoc: '',
       parent: null,
@@ -51,9 +52,44 @@ class Furbaby extends Component {
       otherFilesURL: [],
       showFiles: false,
       showModal: false
+      // shelterName: '',
+      // ageYear: '',
+      // ageMonth: '',
+      // adoptedName: '',
+      // adoptionDate: '',
+      // birthDate: '',
+      // intakeDate: '',
+      // currentStatus: 'Choose from list:',
+      // size: '',
+      // coatColor: '',
+      // coatLength: '',
+      // breed: '',
+      // gender: '',
+      // altered: false,
+      // fivStatus: false,
+      // felvStatus: false,
+      // otherMedical: '',
+      // behavioralIssues: '',
+      // goodWithCats: 'Yes',
+      // goodWithDogs: 'Yes',
+      // goodWithChildren: 'Yes',
+      // specialNeeds: '',
+      // bio: '',
+      // addlComments: '',
+      // currentLocation: '',
+      // courtesyListing: false,
+      // courtesyListLoc: '',
+      // parent: null,
+      // youtubeVid: null,
+      // photo: null,
+      // photoUrl: '',
+      // microchipNum: '',
+      // otherFiles: [],
+      // otherFilesURL: [],
+      // showFiles: false,
+      // showModal: false
     }
     this.handleChange = this.handleChange.bind(this);
-    this.handleDate = this.handleDate.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onImageDrop = this.onImageDrop.bind(this);
     this.saveToDB = this.saveToDB.bind(this);
@@ -80,7 +116,7 @@ class Furbaby extends Component {
       return;
     }
     const firebaseFolder = uuidv1();
-    await this.handleDate(this.state.ageYear, this.state.ageMonth);
+    const birthDate = await handleDate(this.state.ageYear, this.state.ageMonth);
     const photoUrl = this.state.photo !== null ? await this.saveToFirebase(firebaseFolder, this.state.photo) : null;
     let promiseArr = [];
     let otherFilesURL = [];
@@ -88,21 +124,8 @@ class Furbaby extends Component {
       promiseArr = this.state.otherFiles.map(async (file) => await this.saveToFirebase(firebaseFolder, file).then((value) => value));
       otherFilesURL = await Promise.all(promiseArr);
     }
-    this.setState({photoUrl, otherFilesURL});
+    this.setState({birthDate, photoUrl, otherFilesURL});
     this.saveToDB();
-  }
-
-  handleDate(ageYear, ageMonth) {
-    const today = new Date();
-    let [ year, month, date ]  = [ today.getFullYear(), today.getMonth()+1, today.getDate() ];
-    year -= ageYear;
-    month -= ageMonth;
-    if (month <= 0) {
-      year += Math.min(-1, Math.floor(month/12));
-      month += 12;
-    }
-    const birthDate = year+'-'+month+'-'+date;
-    this.setState({ birthDate });
   }
 
   saveToFirebase(folder, file) {
@@ -494,25 +517,23 @@ class Furbaby extends Component {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    submit(parent, furbaby) {
-      if (parent && parent.id.length === 0) {
-        const {id, ...parentInfo} = parent;
-        dispatch(createParentThunk(parentInfo))
-        .then(parent => {
-          furbaby.parentId = parent.parent.id;
-          dispatch(createFurbabyThunk(furbaby));
-        });
-      } else if (parent && parent.id > 0) {
-        furbaby.parentId = parent.id;
+const mapDispatch = dispatch => ({
+  submit(parent, furbaby) {
+    if (parent && parent.id) { //if existing parent submitted
+      furbaby.parentId = parent.id;
+      dispatch(createFurbabyThunk(furbaby));
+    } else if (parent) { //if new parent entered
+      const {id, ...parentInfo} = parent;
+      dispatch(createParentThunk(parentInfo))
+      .then(parent => {
+        furbaby.parentId = parent.parent.id;
         dispatch(createFurbabyThunk(furbaby));
-      } else {
-        dispatch(createFurbabyThunk(furbaby));
-      }
+      }); 
+    } else { //if no parent 
+      dispatch(createFurbabyThunk(furbaby));
     }
   }
-}
+})
 
 const FurbabyContainer = connect(null, mapDispatch)(Furbaby);
 export default FurbabyContainer;

@@ -7,9 +7,8 @@ import { deleteFurbabyThunk, clearCurrFurbaby, updateFurbabyThunk, createParentT
 import { ParentModal } from './index';
 import firebase from '../firebase';
 import { currentStatusVals } from '../assets';
-import { compObj } from '../utils';
+import { compObj, handleDate } from '../utils';
 
-// reference firebase storage
 const storage = firebase.storage();
 const database = firebase.database();
 
@@ -71,7 +70,8 @@ class FurbabyDetailModal extends Component {
       showModal: false,
       photoUpdated: false,
       filesUpdated: false,
-      detailUpdated: false
+      detailUpdated: false,
+      ageUpdated: false
     }
   }
 
@@ -87,7 +87,7 @@ class FurbabyDetailModal extends Component {
 
   async handleUpdate(event) {
     event.preventDefault();
-    const {photo, photoUpdated, photoUrl, filesUpdated, otherFiles, otherFilesURL, detailUpdated} = this.state;
+    const {photo, photoUpdated, photoUrl, filesUpdated, otherFiles, otherFilesURL, detailUpdated, ageUpdated, ageYear, ageMonth} = this.state;
     const {path} = photoUrl;
     const folder = path.slice(path.indexOf('/'), path.lastIndexOf('/'));
     if (photoUpdated) {
@@ -100,12 +100,17 @@ class FurbabyDetailModal extends Component {
       const updatedFiles = otherFilesURL.concat(fileURL);
       this.setState({ otherFilesURL: updatedFiles})//, otherFiles: [], filesUpdated: false});
     }
+    if (ageUpdated) {
+      const birthDate = await handleDate(this.state.ageYear, this.state.ageMonth);
+      this.setState({ birthDate });
+    }
     if (photoUpdated || filesUpdated) {
       this.archiveToFB();
       this.updateDB();
       return;
     }
     if (detailUpdated) {
+      console.log("doin' some updatin")
       this.archiveToFB();
       this.updateDB();
       return;
@@ -137,6 +142,7 @@ class FurbabyDetailModal extends Component {
 
   updateDB() {
     const { parent, ageYear, ageMonth, photo, otherFiles, showFiles, ...furbaby } = this.state;
+    console.log('furbaby is ', furbaby)
     this.props.updateFurbaby(parent, furbaby, this.props.stateIdx);
     alert('Furbaby information updated!');
     this.props.clearCurr();
@@ -148,6 +154,9 @@ class FurbabyDetailModal extends Component {
     const name = target.name;
     let value = target.type === 'checkbox' ? target.checked : target.value;
     this.setState ({ [name] : value, detailUpdated: true });
+    if (name === 'ageYear' || name === 'ageMonth') {
+      this.setState({ ageUpdated: true });
+    }
   }
 
   handleStatus(event) {
@@ -257,7 +266,8 @@ class FurbabyDetailModal extends Component {
       showModal: false,
       photoUpdated: false,
       filesUpdated: false,
-      detailUpdated: false
+      detailUpdated: false,
+      ageUpdated: false
     })
   }
 
@@ -298,7 +308,6 @@ class FurbabyDetailModal extends Component {
       photoUpdated,
       filesUpdated,
       detailUpdated } = this.state;
-    // console.log('this.state ', this.state);
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
