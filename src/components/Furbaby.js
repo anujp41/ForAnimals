@@ -258,7 +258,6 @@ class Furbaby extends Component {
       parent } = this.state;
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
-    console.log('state', this.state)
     return (
       <div className='container'>
 

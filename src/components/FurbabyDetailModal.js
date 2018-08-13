@@ -603,16 +603,16 @@ const mapDispatch = dispatch => ({
     dispatch(clearCurrFurbaby())
   },
   updateFurbaby(parent, furbaby, index) {
-    if (parent && parent.id !== furbaby.parentId) { //if new parent from db
-      furbaby.parentId = parent.id;
-      dispatch(updateFurbabyThunk(furbaby, index))
-    } else if (parent && parent.id.length === 0) { //if new parent entered in form not in db
+    if (parent && parent.id === null) {
       const { id, ...parentInfo} = parent;
       dispatch(createParentThunk(parentInfo))
       .then(parent => {
         furbaby.parentId = parent.parent.id;
         dispatch(updateFurbabyThunk(furbaby, index));
       })
+    } else if (parent) {
+      furbaby.parentId = parent.id;
+      dispatch(updateFurbabyThunk(furbaby, index))
     } else {
       dispatch(updateFurbabyThunk(furbaby, index));
     }

@@ -10,6 +10,9 @@ const gender = ['Male', 'Female'];
 const goodVars = ['Yes', 'No', 'Unsure'];
 
 const capitalize = string => string.replace(/\b\w/g, l => l.toUpperCase());
+const URL = chance.url({extensions: ['doc', 'docx', 'pdf']});
+const chanceUrl = () => ({downloadURL: URL, path: URL});
+// const chanceUrl = () => ({downloadURL: chance.url({extensions: ['doc', 'docx', 'pdf']})});
 
 const defaultJSON = () => {
   const birthDate = chance.birthday({type: 'child'});
@@ -45,9 +48,9 @@ const defaultJSON = () => {
     parentId: chance.integer({min: 1, max: 100}),
     adoptionDate: adoptionDate,
     youtubeVid: chance.url({domain: 'www.youtube.com'}),
-    photoUrl: imageURLArr[chance.integer({min: 0, max: 199})],
+    photoUrl: {downloadURL: imageURLArr[chance.integer({min: 0, max: 199})], path: imageURLArr[chance.integer({min: 0, max: 199})]},
     microchipNum: chance.hash({length: 15}),
-    otherFilesURL: chance.n(chance.url, chance.integer({ min: 0, max: 20 }), {extensions: ['doc', 'docx', 'pdf']})
+    otherFilesURL: chance.n(chanceUrl, chance.integer({ min: 0, max: 20 }))
 }};
 
 const createFurbabySeed = function() {
