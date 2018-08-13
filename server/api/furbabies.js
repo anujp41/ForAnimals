@@ -39,7 +39,7 @@ router.put('/', (req, res, next) => {
     const {parentId} = furbaby;
     if (parentId) {
       Parents.findById(parentId)
-      .then(parent => parent.checkFoster())
+      // .then(parent => parent.checkFoster()) // to write a function that checks if parent has foster and inc/dec counter accordingly
       .then(parent => res.json({...furbaby, parent }))
     } else {
       res.json({...furbaby})
