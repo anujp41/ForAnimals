@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
-import { Main, Input, Welcome, FurbabiesList, ParentsList, Furbaby, Parent } from './components';
+import { Main, Input, Login, Welcome, FurbabiesList, ParentsList, Furbaby, Parent } from './components';
 
 class Routes extends Component {
   
@@ -10,7 +10,8 @@ class Routes extends Component {
         <div>
           <Main />
           <Switch>
-            <Route exact path='/' component={Welcome} />
+            <Route exact path='/' component={Login} />
+            <Route path='/welcome' component={Welcome} />
             <Route path='/input' component={Input} />
             <Route path='/furbabies' component={FurbabiesList} />
             <Route path='/parents' component={ParentsList} />
