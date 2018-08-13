@@ -636,17 +636,6 @@ input[type=date]::-webkit-outer-spin-button {
   height: 35px;
 }
 
-.chosen-parent {
-  border: 1px dashed white;
-  margin: auto;
-  width: 50%;
-  height: 90px;
-  padding-top: 15px;
-  background-color: orange;
-  color: black;
-  position: relative;
-}
-
 .update-parent {
   position: absolute;
   right: 10px;

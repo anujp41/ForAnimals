@@ -29,7 +29,6 @@ class FurbabiesList extends Component {
     this.toggleModal = this.toggleModal.bind(this);
     this.returnParentAddress = this.returnParentAddress.bind(this);
     this.handleScrolling = debouce(this.handleScrolling.bind(this), 50);
-    // this.getDate = this.getDate.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
   }
 
@@ -59,11 +58,6 @@ class FurbabiesList extends Component {
     const { parent } = furbaby;
     return `${parent.street}, ${parent.city}, ${parent.state} ${parent.zip}`;
   }
-  
-  // getDate(input) {
-  //   const date = new Date(input);
-  //   return `${date.getMonth()+1}/${date.getDate()}/${date.getFullYear()}`
-  // }
 
   renderDropdown() {
     const sortOptions = this.state.sortOptions;

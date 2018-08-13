@@ -156,6 +156,11 @@ const FurBabies = db.define('furbaby', {
       }
       return {ageYear, ageMonth};
     }
+  }, 
+  setterMethods: {
+    setIntakeDate(value) {
+      console.log('value:  ', value)
+    }
   },
   hooks: {
     afterValidate: function(furbaby) {

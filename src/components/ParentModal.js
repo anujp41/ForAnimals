@@ -25,7 +25,7 @@ class ParentModal extends React.Component {
     this.submitParent = this.submitParent.bind(this);
     this.renderParentList = this.renderParentList.bind(this);
     this.renderParentAddForm = this.renderParentAddForm.bind(this);
-    this.renderAdoptionDate = this.renderAdoptionDate.bind(this);
+    // this.renderAdoptionDate = this.renderAdoptionDate.bind(this);
     this.setParentId = this.setParentId.bind(this);
     this.parentOptionClick = this.parentOptionClick.bind(this);
     this.handleDropdown = this.handleDropdown.bind(this);
@@ -137,7 +137,7 @@ class ParentModal extends React.Component {
                 }}
             }}
           />
-          {this.renderAdoptionDate()}
+          {/* {this.renderAdoptionDate()} */}
           <button className='button button-parent'>Submit</button>
         </form>
       </div>
@@ -186,7 +186,7 @@ class ParentModal extends React.Component {
               </div>
           </div>
 
-          {this.renderAdoptionDate()}
+          {/* {this.renderAdoptionDate()} */}
 
           <button className='button button-parent' type='submit' value='submit'>Submit</button>
 
@@ -195,24 +195,24 @@ class ParentModal extends React.Component {
     )
   }
 
-  renderAdoptionDate() {
-    const {furbabyName, adoptionDate} = this.state;
-    const today = new Date().toISOString().split('T')[0];
-    return (
-      <div className='adoptionDetail'>
-        <div className='modal-text'>Adoption Details for Furbaby:</div>
-          <div className='parentAddressItem'>
-            <label className='input-label' htmlFor='address'>Adopted Name (if diff): </label>
-            <input className='input' type='text' name='furbabyName' value={furbabyName} onChange={this.handleChange}/>
-        </div>
+  // renderAdoptionDate() {
+  //   const {furbabyName, adoptionDate} = this.state;
+  //   const today = new Date().toISOString().split('T')[0];
+  //   return (
+  //     <div className='adoptionDetail'>
+  //       <div className='modal-text'>Adoption Details for Furbaby:</div>
+  //         <div className='parentAddressItem'>
+  //           <label className='input-label' htmlFor='address'>Adopted Name (if diff): </label>
+  //           <input className='input' type='text' name='furbabyName' value={furbabyName} onChange={this.handleChange}/>
+  //       </div>
 
-        <div className='adoptionDate'>
-          <label className='input-label' htmlFor='adoptionDate'>Date of Adoption: </label>
-          <input required className='adoption-input' type='date' name='adoptionDate' value={adoptionDate} max={today} onChange={this.handleChange}/>
-        </div>
-      </div>
-    )
-  }
+  //       <div className='adoptionDate'>
+  //         <label className='input-label' htmlFor='adoptionDate'>Date of Adoption: </label>
+  //         <input required className='adoption-input' type='date' name='adoptionDate' value={adoptionDate} max={today} onChange={this.handleChange}/>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   render() {
     const { furbabyName } = this.props;

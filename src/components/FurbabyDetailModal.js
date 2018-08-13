@@ -29,6 +29,7 @@ class FurbabyDetailModal extends Component {
     this.setParent = this.setParent.bind(this);
     this.saveToFirebase = this.saveToFirebase.bind(this);
     this.archiveToFB = this.archiveToFB.bind(this);
+    this.renderAdoptionDate = this.renderAdoptionDate.bind(this);
     this.state = {
       shelterName: '',
       ageYear: '',
@@ -142,7 +143,8 @@ class FurbabyDetailModal extends Component {
 
   updateDB() {
     const { parent, ageYear, ageMonth, photo, otherFiles, showFiles, ...furbaby } = this.state;
-    console.log('furbaby is ', furbaby)
+    furbaby.intakeDate = this.state.intakeDateStr;
+    furbaby.adoptionDate = this.state.adoptionDateStr;
     this.props.updateFurbaby(parent, furbaby, this.props.stateIdx);
     alert('Furbaby information updated!');
     this.props.clearCurr();
@@ -224,6 +226,25 @@ class FurbabyDetailModal extends Component {
     }
     if ((otherFiles.length + otherFilesURL.length) === 0) this.setState({ showFiles: false });
     this.setState({ filesUpdated: true });
+  }
+
+  renderAdoptionDate() {
+    const {furbabyName, adoptionDate} = this.state;
+    const today = new Date().toISOString().split('T')[0];
+    return (
+      <div className='adoptionDetail'>
+        <div className='modal-text'>Adoption Details:</div>
+          <div className='parentAddressItem'>
+            <label className='input-label' htmlFor='address'>Adopted Name (if diff): </label>
+            <input className='input' type='text' name='furbabyName' value={furbabyName} onChange={this.handleChange}/>
+        </div>
+
+        <div className='adoptionDate'>
+          <label className='input-label' htmlFor='adoptionDate'>Date of Adoption: </label>
+          <input required className='adoption-input' type='date' name='adoptionDate' value={adoptionDate} max={today} onChange={this.handleChange}/>
+        </div>
+      </div>
+    )
   }
 
   componentWillUnmount() {
@@ -308,6 +329,7 @@ class FurbabyDetailModal extends Component {
       photoUpdated,
       filesUpdated,
       detailUpdated } = this.state;
+      console.log('intakeDate ', this.state.intakeDate, intakeDateStr)
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
@@ -383,7 +405,7 @@ class FurbabyDetailModal extends Component {
             <div className='general'>
               <div className='formfield date-input'>
                 <div className='date-field'>Intake Date: </div>
-                <input required className='arrived' type='date' name='intakeDate' value={intakeDateStr} max={today} onChange={this.handleChange}/>
+                <input required className='arrived' type='date' name='intakeDateStr' value={intakeDateStr} max={today} onChange={this.handleChange}/>
               </div>
   
               <div className='formfield'>
@@ -555,6 +577,7 @@ class FurbabyDetailModal extends Component {
                 <div><b><ins>Selected Parent:</ins></b></div>
                 <div>{parent.name}</div>
                 <div>{parent.street}, {parent.city}, {parent.state}, {parent.zip}</div>
+                {this.renderAdoptionDate()}
               </div>
             }
             <button className='button button-update' type='submit' value='submit' disabled={!(photoUpdated || filesUpdated || detailUpdated)}>Update</button>

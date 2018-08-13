@@ -74,14 +74,6 @@
   padding-bottom: 15px;
 } */
 
-.parentAddressItem {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 10px;
-  height: 35px;
-}
-
 .input-label {
   font-size: 15px;
   font-style: italic;
@@ -94,7 +86,7 @@
   margin-right: 45px;
 }
 
-.parentName .input, .parentAddress .input, .adoptionDetail .input {
+.parentName .input, .parentAddress .input {
   border-bottom: 2px solid white;
   position: static;
   width: 75%;
@@ -170,24 +162,8 @@ input[role="combobox"] {
   padding: 10px 0;
 }
 
-.adoptionDate {
-  margin: auto;
-  width: 60%;
-  background-color: rgb(77, 119, 155);
-}
-
 ul {
   list-style-type: none;
-}
-
-.adoption-input {
-  background-color: rgb(77,119,155);
-  width: 50%;
-  height: 25px;
-  color: white;
-  text-align: center;
-  font-family: 'Open sans';
-  font-size: 13px;
 }
 
 .button-parent:hover {
