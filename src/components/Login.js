@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { signUpAndGoToFurbaby } from '../store';
+import { signUpAndWelcome, logInAndWelcome } from '../store';
 import './Login.css';
 
 class Login extends Component {
@@ -29,13 +29,14 @@ class Login extends Component {
 
   handleLogin(event) {
     event.preventDefault();
-    console.log('to log the user in!');
+    const {email, password } = this.state;
+    this.props.logInAndWelcome({ email, password });
   }
 
   handleSignUp(event) {
     event.preventDefault();
     const {email, password, fullName} = this.state;
-    this.props.signUpAndGoToFurbaby({ email, password, fullName });
+    this.props.signUpAndWelcome({ email, password, fullName });
   }
 
   handleClick(event) {
@@ -113,6 +114,6 @@ class Login extends Component {
   }
 }
 
-const mapDispatch = { signUpAndGoToFurbaby };
+const mapDispatch = { signUpAndWelcome, logInAndWelcome };
 
 export default connect(null, mapDispatch)(Login);

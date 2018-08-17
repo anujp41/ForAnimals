@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path')
 const db = require('./models').db;
+// const flash = require('flash');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(session({
 }))
 
 app.use(require('./middleware/passport'));
+// app.use(flash());
 
 app.use('/api', require('./api'));
 
