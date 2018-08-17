@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { signUpAndGoToFurbaby } from '../store';
 import './Login.css';
 
 class Login extends Component {
@@ -7,6 +9,7 @@ class Login extends Component {
     super();
     this.handleChange = this.handleChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleSignUp = this.handleSignUp.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.renderLoginIn = this.renderLoginIn.bind(this);
     this.renderSignUp = this.renderSignUp.bind(this);
@@ -29,10 +32,15 @@ class Login extends Component {
     console.log('to log the user in!');
   }
 
+  handleSignUp(event) {
+    event.preventDefault();
+    const {email, password, fullName} = this.state;
+    this.props.signUpAndGoToFurbaby({ email, password, fullName });
+  }
+
   handleClick(event) {
     event.preventDefault();
     const {loginButton: prevLogIn, signupButton: prevSignUp} = this.state;
-    console.log('prevSignUp ', prevSignUp)
     const name = event.target.name;
     if (name === 'login') {
       this.setState({ loginButton: true, signupButton: false })
@@ -69,7 +77,7 @@ class Login extends Component {
   renderSignUp() {
     const {email, password, fullName} = this.state;
     return (
-      <form onSubmit={this.handleLogin}>
+      <form onSubmit={this.handleSignUp} autoComplete='off'>
         <div className='formfield'>
           <input required className='input' type='email' name='email' value={email} onChange={this.handleChange}/>
           <label className='label-text'>Email:</label>
@@ -92,7 +100,6 @@ class Login extends Component {
 
   render() {
     const { loginButton, signupButton} = this.state;
-    console.log(this.state)
     return (
       <div className='login-container'>
         <div className='log-sign'>
@@ -106,4 +113,6 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatch = { signUpAndGoToFurbaby };
+
+export default connect(null, mapDispatch)(Login);

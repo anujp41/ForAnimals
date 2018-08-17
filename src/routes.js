@@ -1,12 +1,13 @@
-import React, { Component } from "react";
-import { Route, Switch, BrowserRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import { Route, Switch, Router } from 'react-router-dom';
 import { Main, Input, Login, Welcome, FurbabiesList, ParentsList, Furbaby, Parent } from './components';
+import history from './history';
 
 class Routes extends Component {
   
   render() {
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <div>
           <Main />
           <Switch>
@@ -19,7 +20,7 @@ class Routes extends Component {
             <Route path='/parent' component={Parent} />
           </Switch>
         </div>
-      </BrowserRouter>
+      </Router>
     )
   }
 }

@@ -1,8 +1,10 @@
+require('dotenv').config();
 const express = require('express');
+const session = require('express-session');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path')
-const db = require("./models").db;
+const db = require('./models').db;
 
 const app = express();
 
@@ -17,6 +19,14 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+app.use(session({
+  secret: 'falling strAnglers',
+  resave: false,
+  saveUninitialized: false
+}))
+
+app.use(require('./middleware/passport'));
 
 app.use('/api', require('./api'));
 

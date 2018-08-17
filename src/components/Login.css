@@ -10,6 +10,10 @@
 }
 
 .login-container .formfield {
+  height: 50px;
+}
+
+.login-container .formfield {
   width: 100%;
 }
 
@@ -26,10 +30,11 @@
   background-color: rgb(98, 226, 43);
   border: none;
   box-shadow: 0 9px #999;
+  opacity: 0.65;
 }
 
 .login:hover, .signup:hover {
-  background-color: rgb(168, 226, 43);
+  background-color: rgb(116, 238, 29);
   color: white;
 }
 
@@ -39,7 +44,7 @@
 
 .active {
   border: none;
-  opacity: 0.65;
+  opacity: 1;
   color: white;
   box-shadow: 0 5px #999;
   transform: translateY(4px);
