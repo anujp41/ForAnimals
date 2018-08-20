@@ -10,21 +10,17 @@ const resGet = res => res.get();
 router.post('/logIn', function(req, res, next) {
   const {email, password, firstName, lastName} = req.body;
   const inputPW = password;
-  console.log('inputPW ', inputPW)
   delete req.body.password; //delete password
   User.findOne({
     where: { email },
-    attributes: ['id', 'password']
+    // attributes: ['id', 'password']
   })
   // .then(resGet)
   .then(user => {
     const passwordDB = user.password; //hashed pw in database
-    const attemptHash = user.hashPassword(inputPW); //hash of user input pw
-    console.log('DB password: ', passwordDB)
-    console.log('calculated password: ', attemptHash)
-    bcrypt.compare(inputPW, passwordDB, function(err, res) {
-      console.log('bcrypt error ', err)
-      console.log('bcrypt response ', res)
+    bcrypt.compare(inputPW, passwordDB, function(err, check) {
+      if (err) return next(err);
+      res.json(user);
     })
   })
 })
