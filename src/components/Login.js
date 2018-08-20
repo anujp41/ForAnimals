@@ -16,7 +16,8 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      fullName: '',
+      firstName: '',
+      lastName: '',
       loginButton: true,
       signupButton: false
     }
@@ -35,8 +36,8 @@ class Login extends Component {
 
   handleSignUp(event) {
     event.preventDefault();
-    const {email, password, fullName} = this.state;
-    this.props.signUpAndWelcome({ email, password, fullName });
+    const {email, password, firstName, lastName} = this.state;
+    this.props.signUpAndWelcome({ email, password, firstName, lastName });
   }
 
   handleClick(event) {
@@ -46,7 +47,7 @@ class Login extends Component {
     if (name === 'login') {
       this.setState({ loginButton: true, signupButton: false })
       if (prevSignUp) {
-        this.setState({ email: '', password: '', fullName: ''});
+        this.setState({ email: '', password: '', firstName: '', lastName: ''});
       }
     } else if (name === 'signup') {
       this.setState({ loginButton: false, signupButton: true });
@@ -76,7 +77,7 @@ class Login extends Component {
   }
 
   renderSignUp() {
-    const {email, password, fullName} = this.state;
+    const {email, password, firstName, lastName} = this.state;
     return (
       <form onSubmit={this.handleSignUp} autoComplete='off'>
         <div className='formfield'>
@@ -90,8 +91,13 @@ class Login extends Component {
         </div>
 
         <div className='formfield'>
-          <input required className='input' type='text' name='fullName' value={fullName} onChange={this.handleChange}/>
-          <label className='label-text'>Full Name:</label>
+          <input required className='input' type='text' name='firstName' value={firstName} onChange={this.handleChange}/>
+          <label className='label-text'>First Name:</label>
+        </div>
+
+        <div className='formfield'>
+          <input required className='input' type='text' name='lastName' value={lastName} onChange={this.handleChange}/>
+          <label className='label-text'>Last Name:</label>
         </div>
 
         <button className='button' type='submit'>Sign Up</button>

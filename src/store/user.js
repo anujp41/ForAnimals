@@ -7,9 +7,11 @@ const REMOVE = 'REMOVE_CURRENT_USER';
 const setUser = user => ({ type: SET, user });
 const removeUser = () => ({ type: REMOVE });
 
+const resToData = res => res.data;
+
 const signUp = user => dispatch =>
-  axios.post('http://localhost:8080/api/auth', user)
-  .then(res => res.data)
+  axios.post('http://localhost:8080/api/auth/signUp', user)
+  .then(resToData)
   .then(user => {
     dispatch(setUser(user));
     return user;
@@ -29,8 +31,8 @@ export const removeUserThunk = () => dispatch =>
   .catch(err => console.error('Error removing user', err));
 
 const logIn = user => dispatch =>
-  axios.put('http://localhost:8080/api/auth', user)
-  .then(res => res.data)
+  axios.post('http://localhost:8080/api/auth/logIn', user)
+  .then(resToData)
   .then(user => {
     dispatch(setUser(user));
     return user;
@@ -38,7 +40,7 @@ const logIn = user => dispatch =>
 
 export const logInAndWelcome = user => dispatch =>
   dispatch(logIn(user))
-  .then(() => history.push('./welcome'))
+  .then(() => history.push('/welcome'))
   .catch((err) => console.log('Error loging in', err));
 
 

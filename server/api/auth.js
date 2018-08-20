@@ -1,71 +1,58 @@
-// const sequelize = require('sequelize');
-// const router = require('express').Router();
-// const { User } = require('../models');
-
-// //handleSignUp
-// router.post('/', function (req, res, next) {
-//   // delete req.body.isAdmin; //commented out for no
-
-//   User.findOrCreate({
-//     where: {
-//       email: req.body.email
-//     }
-//   })
-//   .spread((user, created) => {
-//     console.log('created ', created)
-//     if (created) { // if created is true, then user was created
-//       req.logIn(user, function (err) {
-//         if (err) return next(err);
-//         res.json(user);
-//       });
-//     } else {
-//       // console.log('user exists')
-//       // req.flash('info', 'Already have an account. Please log-in!')
-//       res.sendStatus(401); //meaning user is in the system & cannot sign-up
-//     }
-//   });
-// });
-
-// router.delete('/', function (req, res, next) {
-//   req.logOut();
-//   res.sendStatus(204);
-// });
-
-// module.exports = router;
-
 const router = require('express').Router();
 const { User } = require('../models');
+const bcrypt = require('bcrypt-nodejs');
 const passport_local = require('../auth/local');
 
-// passport.authenticate('local', (err, user, info) => {
-//   if (err) { handleResponse(res, 500, 'error'); }
-//   if (!user) { handleResponse(res, 404, 'User not found'); }
-//   if (user) {
-//     req.logIn(user, function (err) {
-//       if (err) { handleResponse(res, 500, 'error'); }
-//       handleResponse(res, 200, 'success');
-//     });
-//   }
-// })(req, res, next);
+const resToData = res => res === null ? null : res.data;
+const resGet = res => res.get();
+
+//handleLogIn
+router.post('/logIn', function(req, res, next) {
+  const {email, password, firstName, lastName} = req.body;
+  const inputPW = password;
+  console.log('inputPW ', inputPW)
+  delete req.body.password; //delete password
+  User.findOne({
+    where: { email },
+    attributes: ['id', 'password']
+  })
+  // .then(resGet)
+  .then(user => {
+    const passwordDB = user.password; //hashed pw in database
+    const attemptHash = user.hashPassword(inputPW); //hash of user input pw
+    console.log('DB password: ', passwordDB)
+    console.log('calculated password: ', attemptHash)
+    bcrypt.compare(inputPW, passwordDB, function(err, res) {
+      console.log('bcrypt error ', err)
+      console.log('bcrypt response ', res)
+    })
+  })
+})
 
 //handleSignUp
-router.post('/', function (req, res, next) {
-  console.log(req.body)
-  passport_local.authenticate('local', {session: false}, (err, user) => {
-    console.log('authenticating')
-    console.log('user', user);
-    if(err) {
-      console.log("Error1");
-      return next(err)}
-    if(!user){
-      console.log("Error2");
-      return res.json(401, {error: 'Auth Error!'});
+router.post('/signUp', function (req, res, next) {
+  // delete req.body.isAdmin; //commented out for no
+
+  const {email, password, firstName, lastName} = req.body;
+  User.findOne({where: { email }})
+  .then(resToData)
+  .then(user => {
+    if (user === null) {
+      User.create(req.body)
+      .then(user => {
+        req.logIn(user, function(err) {
+          if (err) return next(err);
+          res.json(user);
+        })
+      })
+    } else {
+      //send flash msg that user already created
+      console.log('you already have an account with this email!')
     }
-    console.log("Error3");
-  })(req, res, next);
+  })
 });
 
-router.delete('/', function (req, res, next) {``
+router.delete('/', function (req, res, next) {
   req.logOut();
   res.sendStatus(204);
 });

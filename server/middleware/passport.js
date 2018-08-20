@@ -6,6 +6,7 @@ router.use(passport.initialize());
 router.use(passport.session());
 
 passport.serializeUser(function (user, done) {
+  console.log('serializeUser', user)
   done(null, user.id);
 });
 

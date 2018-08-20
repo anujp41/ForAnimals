@@ -3,11 +3,18 @@ const bcrypt = require('bcrypt-nodejs');
 const db = require('../db');
 
 const User = db.define('user', {
-  fullName: Sequelize.STRING,
-  email: {
+  firstName: {
     type: Sequelize.STRING,
     allowNull: false
-    // unique: true
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true
   },
   password: {
     type: Sequelize.STRING,
