@@ -12,15 +12,14 @@ router.post('/logIn', function(req, res, next) {
   const inputPW = password;
   delete req.body.password; //delete password
   User.findOne({
-    where: { email },
-    // attributes: ['id', 'password']
-  })
-  // .then(resGet)
+    where: { email }
+  }) //add statement when user not found
   .then(user => {
     const passwordDB = user.password; //hashed pw in database
     bcrypt.compare(inputPW, passwordDB, function(err, check) {
       if (err) return next(err);
-      res.json(user);
+      if (check) return res.json(user);
+      console.log('wrong password!'); //add flash
     })
   })
 })
@@ -43,7 +42,10 @@ router.post('/signUp', function (req, res, next) {
       })
     } else {
       //send flash msg that user already created
-      console.log('you already have an account with this email!')
+      req.flash('info', 'more info')
+      res.json(req.flash('info'))
+      console.log('here ', req.flash('info'))
+      // console.log('you already have an account with this email!', req.flash('info'))
     }
   })
 });

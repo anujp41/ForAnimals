@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path')
 const db = require('./models').db;
-// const flash = require('flash');
+const flash = require('connect-flash');
 
 const app = express();
 
@@ -30,7 +30,7 @@ app.use(session({
 }))
 
 app.use(require('./middleware/passport'));
-// app.use(flash());
+app.use(flash());
 
 app.use('/api', require('./api'));
 
