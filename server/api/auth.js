@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { User } = require('../models');
 const bcrypt = require('bcrypt-nodejs');
-const passport_local = require('../auth/local');
+const createError = require('../createError');
 
 const resToData = res => res === null ? null : res.data;
 const resGet = res => {
@@ -48,7 +48,8 @@ router.post('/signUp', function (req, res, next) {
       })
     } else {
       req.flash('email-exists', 'Account exists under this email. Please log in instead!')
-      next(req.flash('email-exists'));
+      const error = createError(req.flash('email-exists'), 400);
+      next(error)
     }
   })
   .catch(err => next(err));

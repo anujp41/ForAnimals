@@ -13,7 +13,7 @@ class FlashMsg extends Component {
     if (flashMsg.length === 0) return null;
     return (
       <div className='flash-msg'>
-        {flashMsg[0]}
+        {flashMsg}
       </div>
     )
   }

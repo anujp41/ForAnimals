@@ -42,7 +42,7 @@ app.use('*', (req, res) => {
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
-  res.send(err);
+  res.send(err.message);
 });
 
 const port = 8080;

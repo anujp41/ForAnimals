@@ -24,7 +24,7 @@ const signUp = user => dispatch =>
 
 export const signUpAndWelcome = user => dispatch =>
   dispatch(signUp(user))
-  // .then(() => history.push('/welcome'))
+  .then(() => history.push('/welcome'))
   .catch(err => console.error('Creating user unsuccessful', err));
 
 export const removeUserThunk = () => dispatch =>
