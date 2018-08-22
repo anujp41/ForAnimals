@@ -41,9 +41,8 @@ app.use('*', (req, res) => {
 })
 
 app.use((err, req, res, next) => {
-  console.error(err, err.stack);
   res.status(err.status || 500);
-  res.send("error: " + err);
+  res.send(err);
 });
 
 const port = 8080;

@@ -48,7 +48,7 @@ router.post('/signUp', function (req, res, next) {
       })
     } else {
       req.flash('email-exists', 'Account exists under this email. Please log in instead!')
-      res.status(404).json(req.flash('email-exists'));
+      next(req.flash('email-exists'));
     }
   })
   .catch(err => next(err));
@@ -57,7 +57,6 @@ router.post('/signUp', function (req, res, next) {
 router.delete('/', function (req, res, next) {
   req.logOut();
   res.sendStatus(204);
-  console.log('after delete ', req.user)
 });
 
 module.exports = router;
