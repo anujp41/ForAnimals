@@ -4,7 +4,11 @@ const bcrypt = require('bcrypt-nodejs');
 const passport_local = require('../auth/local');
 
 const resToData = res => res === null ? null : res.data;
-const resGet = res => res.get();
+const resGet = res => {
+  const response = res.get();
+  const {id, email, firstName, lastName} = response;
+  return {id, email, firstName, lastName};
+}
 
 //handleLogIn
 router.post('/logIn', function(req, res, next) {
@@ -28,31 +32,32 @@ router.post('/logIn', function(req, res, next) {
 router.post('/signUp', function (req, res, next) {
   // delete req.body.isAdmin; //commented out for no
 
-  const {email, password, firstName, lastName} = req.body;
+  const {email} = req.body;
   User.findOne({where: { email }})
   .then(resToData)
   .then(user => {
     if (user === null) {
       User.create(req.body)
+      .then(resGet)
       .then(user => {
         req.logIn(user, function(err) {
           if (err) return next(err);
-          res.json(user);
+          console.log('user ', req.user)
+          res.json(user); //only send id & email to front end
         })
       })
     } else {
-      //send flash msg that user already created
-      req.flash('info', 'more info')
-      res.json(req.flash('info'))
-      console.log('here ', req.flash('info'))
-      // console.log('you already have an account with this email!', req.flash('info'))
+      req.flash('email-exists', 'Account exists under this email. Please log in instead!')
+      res.status(404).json(req.flash('email-exists'));
     }
   })
+  .catch(err => next(err));
 });
 
 router.delete('/', function (req, res, next) {
   req.logOut();
   res.sendStatus(204);
+  console.log('after delete ', req.user)
 });
 
 module.exports = router;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import FlashMsg from './FlashMsg';
 import { signUpAndWelcome, logInAndWelcome } from '../store';
 import './Login.css';
 
@@ -108,13 +109,16 @@ class Login extends Component {
   render() {
     const { loginButton, signupButton} = this.state;
     return (
-      <div className='login-container'>
-        <div className='log-sign'>
+      <div>
+        <div className='login-container'>
+         <div className='log-sign'>
           <button type='button' name='login' className={this.state.loginButton ? 'login active' : 'login'} onClick={this.handleClick}>Login</button>
           <button type='button' name='signup' className={this.state.signupButton ? 'signup active' : 'signup'} onClick={this.handleClick}>Sign Up</button>
         </div>
         {loginButton && this.renderLoginIn()}
         {signupButton && this.renderSignUp()}
+        </div>
+      <FlashMsg/>
       </div>
     )
   }

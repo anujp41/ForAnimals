@@ -1,5 +1,6 @@
 import axios from 'axios';
 import history from '../history';
+import { callActions } from './flashMsg';
 
 const SET = 'SET_CURRENT_USER';
 const REMOVE = 'REMOVE_CURRENT_USER';
@@ -16,10 +17,13 @@ const signUp = user => dispatch =>
     dispatch(setUser(user));
     return user;
   })
+  .catch(err => {
+    const {data} = err.response;
+    dispatch(callActions(data));
+  });
 
 export const signUpAndWelcome = user => dispatch =>
   dispatch(signUp(user))
-  .then(val => console.log('got back ', typeof val))
   // .then(() => history.push('/welcome'))
   .catch(err => console.error('Creating user unsuccessful', err));
 
