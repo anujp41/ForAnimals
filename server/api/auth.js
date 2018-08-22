@@ -22,8 +22,17 @@ router.post('/logIn', function(req, res, next) {
     const passwordDB = user.password; //hashed pw in database
     bcrypt.compare(inputPW, passwordDB, function(err, check) {
       if (err) return next(err);
-      if (check) return res.json(user);
-      console.log('wrong password!'); //add flash
+      if (check) {
+        const userToSave = resGet(user);
+        req.logIn(user, function(err) {
+          if (err) return next(err);
+          res.json(user);
+        })
+      } else {
+        req.flash('pw-wrong', 'Wrong password entered!')
+        const error = createError(req.flash('pw-wrong'), 400);
+        next(error);
+      }
     })
   })
   .catch(err => {
@@ -47,8 +56,7 @@ router.post('/signUp', function (req, res, next) {
       .then(user => {
         req.logIn(user, function(err) {
           if (err) return next(err);
-          console.log('user ', req.user)
-          res.json(user); //only send id & email to front end
+          res.json(user);
         })
       })
     } else {

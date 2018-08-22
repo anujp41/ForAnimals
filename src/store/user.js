@@ -19,6 +19,7 @@ const signIn = (user, method) => dispatch =>
     return user;
   })
   .catch(err => {
+    console.log('wrong pw ', err.response)
     const {data} = err.response;
     dispatch(callActions(data));
   });
