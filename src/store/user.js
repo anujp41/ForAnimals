@@ -8,10 +8,11 @@ const REMOVE = 'REMOVE_CURRENT_USER';
 const setUser = user => ({ type: SET, user });
 const removeUser = () => ({ type: REMOVE });
 
+//helper function
 const resToData = res => res.data;
 
-const signUp = user => dispatch =>
-  axios.post('http://localhost:8080/api/auth/signUp', user)
+const signIn = (user, method) => dispatch =>
+  axios.post(`http://localhost:8080/api/auth/${method}`, user)
   .then(resToData)
   .then(user => {
     dispatch(setUser(user));
@@ -23,9 +24,8 @@ const signUp = user => dispatch =>
   });
 
 export const signUpAndWelcome = user => dispatch =>
-  dispatch(signUp(user))
-  .then(() => history.push('/welcome'))
-  .catch(err => console.error('Creating user unsuccessful', err));
+  dispatch(signIn(user, 'signUp'))
+  .then(user => user ? history.push('/welcome') : null)  //only redirect if user return by signUp
 
 export const removeUserThunk = () => dispatch =>
   axios.delete('http://localhost:8080/api/auth')
@@ -35,18 +35,9 @@ export const removeUserThunk = () => dispatch =>
   })
   .catch(err => console.error('Error removing user', err));
 
-const logIn = user => dispatch =>
-  axios.post('http://localhost:8080/api/auth/logIn', user)
-  .then(resToData)
-  .then(user => {
-    dispatch(setUser(user));
-    return user;
-  })
-
 export const logInAndWelcome = user => dispatch =>
-  dispatch(logIn(user))
-  .then(() => history.push('/welcome'))
-  .catch((err) => console.log('Error loging in', err));
+  dispatch(signIn(user, 'logIn'))
+  .then(user => user ? history.push('/welcome') : null) //only redirect if user return by logIn
 
 
 export default function(state = {}, action) {

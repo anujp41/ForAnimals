@@ -4,7 +4,6 @@ import { Main, Input, Login, Welcome, FurbabiesList, ParentsList, Furbaby, Paren
 import history from './history';
 
 class Routes extends Component {
-  
   render() {
     return (
       <Router history={history}>

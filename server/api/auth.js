@@ -12,7 +12,7 @@ const resGet = res => {
 
 //handleLogIn
 router.post('/logIn', function(req, res, next) {
-  const {email, password, firstName, lastName} = req.body;
+  const {email, password} = req.body;
   const inputPW = password;
   delete req.body.password; //delete password
   User.findOne({
@@ -25,6 +25,11 @@ router.post('/logIn', function(req, res, next) {
       if (check) return res.json(user);
       console.log('wrong password!'); //add flash
     })
+  })
+  .catch(err => {
+    req.flash('email-not-found', 'Cannot find email address. Are you sure you have an account with us?')
+    const error = createError(req.flash('email-not-found'), 400);
+    next(error);
   })
 })
 
