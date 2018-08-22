@@ -15,11 +15,11 @@ const signIn = (user, method) => dispatch =>
   axios.post(`http://localhost:8080/api/auth/${method}`, user)
   .then(resToData)
   .then(user => {
+    localStorage.setItem('current-user', JSON.stringify(user));
     dispatch(setUser(user));
     return user;
   })
   .catch(err => {
-    console.log('wrong pw ', err.response)
     const {data} = err.response;
     dispatch(callActions(data));
   });
@@ -31,6 +31,7 @@ export const signUpAndWelcome = user => dispatch =>
 export const removeUserThunk = () => dispatch =>
   axios.delete('http://localhost:8080/api/auth')
   .then(() => {
+    localStorage.removeItem('current-user');
     dispatch(removeUser())
     history.push('/')
   })

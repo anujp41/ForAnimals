@@ -24,9 +24,9 @@ router.post('/logIn', function(req, res, next) {
       if (err) return next(err);
       if (check) {
         const userToSave = resGet(user);
-        req.logIn(user, function(err) {
+        req.logIn(userToSave, function(err) {
           if (err) return next(err);
-          res.json(user);
+          res.json(userToSave);
         })
       } else {
         req.flash('pw-wrong', 'Wrong password entered!')
