@@ -18,6 +18,7 @@ class Main extends Component {
   }
 
   render() {
+    const {user} = this.props;
     return (
       <div className="main">
         <header className="main-header">
@@ -25,7 +26,8 @@ class Main extends Component {
           <h1 className="main-title">Welcome to For Animals Inc Database</h1>
         </header>
         <div className="main-intro">
-        <button className='button' onClick={this.handleLogOut}>Log Out@</button>
+        {user.hasOwnProperty('id') ? <button className='logout-btn' onClick={this.handleLogOut}>Log Out</button> : null}
+        
         <Link to='/'>Go Home</Link>
         </div>
       </div>
@@ -33,6 +35,12 @@ class Main extends Component {
   }
 }
 
+const mapState = state => {
+  return {
+    user: state.user
+  }
+}
+
 const mapDispatch = {removeUserThunk};
 
-export default connect(null, mapDispatch)(Main);
+export default connect(mapState, mapDispatch)(Main);

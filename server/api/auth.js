@@ -17,7 +17,7 @@ router.post('/logIn', function(req, res, next) {
   delete req.body.password; //delete password
   User.findOne({
     where: { email }
-  }) //add statement when user not found
+  })
   .then(user => {
     const passwordDB = user.password; //hashed pw in database
     bcrypt.compare(inputPW, passwordDB, function(err, check) {
