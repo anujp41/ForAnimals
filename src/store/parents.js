@@ -4,7 +4,7 @@ const CREATE_PARENT = 'CREATE_PARENT';
 const GET_PARENTS = 'GET_PARENTS';
 const CLEAR_PARENTS = 'CLEAR_PARENTS';
 
-const initialState = {};
+const initialState = [];
 
 const createParent = parent => ({ type: CREATE_PARENT, parent });
 const getParents = parents => ({ type: GET_PARENTS, parents });
