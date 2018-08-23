@@ -35,11 +35,7 @@ class Main extends Component {
   }
 }
 
-const mapState = state => {
-  return {
-    user: state.user
-  }
-}
+const mapState = state => ({user: state.user})
 
 const mapDispatch = {removeUserThunk};
 

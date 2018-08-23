@@ -29,13 +29,21 @@
 }
 
 .logout-btn {
-  width: 100px;
+  width: 120px;
   height: 35px;
+  line-height: 20px;
   position: absolute;
   right: 10%;
   bottom: 35px;
-  font-family: 'Markazi', serif;
-  font-size: 15px;
+  font-family: 'Eczar', serif;
+  font-size: 20px;
+  background-color: rgb(107, 233, 35);
+  cursor: pointer;
+}
+
+.logout-btn:active {
+  background-color: rgb(49, 100, 19);
+  color: white;
 }
 
 @media only screen and (max-width: 980px) {
