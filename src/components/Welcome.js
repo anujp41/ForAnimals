@@ -11,8 +11,16 @@ class Welcome extends Component {
   }
 
   handleClick(action=null) {
-    this.props.getParentsThunk();
-    if (action==='furbabies') this.props.getFurbabiesThunk();
+    console.log('action is ', action)
+    if (action) {
+      console.log('here')
+      if (action==='furbabies') this.props.getFurbabiesThunk();
+    } else {
+      console.log('there')
+      this.props.getParentsThunk();
+    }
+    // this.props.getParentsThunk();
+    // if (action==='furbabies') this.props.getFurbabiesThunk();
   }
 
   render() {
@@ -22,7 +30,7 @@ class Welcome extends Component {
           <h1>Let's visit this site!</h1>
         </Link> */}
 
-        <Link to={'/furbaby'} onClick={this.handleClick}>
+        <Link to={'/furbaby'} onClick={()=>this.handleClick()}>
           <h1>Add furbabies!</h1>
         </Link>
 

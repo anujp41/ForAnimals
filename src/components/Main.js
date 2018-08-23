@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { removeUserThunk } from '../store';
 import './Main.css';
-import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
 class Main extends Component {
@@ -28,7 +27,6 @@ class Main extends Component {
         <div className="main-intro">
         {user.hasOwnProperty('id') ? <button className='logout-btn' onClick={this.handleLogOut}>Log Out</button> : null}
         
-        <Link to='/'>Go Home</Link>
         </div>
       </div>
     );

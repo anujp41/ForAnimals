@@ -15,8 +15,8 @@ class Login extends Component {
     this.renderLoginIn = this.renderLoginIn.bind(this);
     this.renderSignUp = this.renderSignUp.bind(this);
     this.state = {
-      email: '',
-      password: '',
+      email: 'myemail@email.com',
+      password: '1',
       firstName: '',
       lastName: '',
       loginButton: true,

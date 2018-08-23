@@ -49,6 +49,6 @@ export default function(state = {}, action) {
     case REMOVE:
       return {};
     default:
-      return {};
+      return state;
   }
 }
