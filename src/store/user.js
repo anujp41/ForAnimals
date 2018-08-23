@@ -1,6 +1,7 @@
 import axios from 'axios';
 import history from '../history';
 import { callActions } from './flashMsg';
+import { clearFurbabies, clearParents} from './index';
 
 const SET = 'SET_CURRENT_USER';
 const REMOVE = 'REMOVE_CURRENT_USER';
@@ -35,7 +36,9 @@ export const removeUserThunk = () => dispatch =>
   axios.delete('http://localhost:8080/api/auth')
   .then(() => {
     localStorage.removeItem('current-user');
-    dispatch(removeUser())
+    dispatch(removeUser());
+    dispatch(clearFurbabies());
+    dispatch(clearParents());
     history.push('/')
   })
   .catch(err => console.error('Error removing user', err));

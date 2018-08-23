@@ -20,9 +20,10 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    const currUser = JSON.parse(localStorage.getItem('current-user'));
-    if (currUser !== null && !this.props.user.hasOwnProperty('id')) {
+    const currUser = JSON.parse(localStorage.getItem('current-user')); //converts string from local storage into object
+    if (currUser !== null && !this.props.user.hasOwnProperty('id')) { //if local storage has user, then current user is set to 
       this.props.setUser(currUser);
+      history.push('/welcome');
       return;
     }
     if (currUser === null) history.push('/');
@@ -30,7 +31,6 @@ class Main extends Component {
 
   render() {
     const {user} = this.props;
-    // const {userLoggedIn} = this.state;
     return (
       <div className="main">
         <header className="main-header">
