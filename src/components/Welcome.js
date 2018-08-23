@@ -11,14 +11,6 @@ class Welcome extends Component {
   }
 
   handleClick(action=null) {
-    console.log('action is ', action)
-    if (action) {
-      console.log('here')
-      if (action==='furbabies') this.props.getFurbabiesThunk();
-    } else {
-      console.log('there')
-      this.props.getParentsThunk();
-    }
     // this.props.getParentsThunk();
     // if (action==='furbabies') this.props.getFurbabiesThunk();
   }

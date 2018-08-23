@@ -2,19 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path')
 const db = require('./models').db;
 const flash = require('connect-flash');
 
 const app = express();
-
-app.use(morgan('dev'));
-
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -23,8 +16,13 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(morgan('dev'));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.use(session({
-  secret: 'falling strAnglers',
+  secret: 'falling_strAnglers',
   resave: false,
   saveUninitialized: false
 }))

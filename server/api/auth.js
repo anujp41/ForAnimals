@@ -10,6 +10,11 @@ const resGet = res => {
   return {id, email, firstName, lastName};
 }
 
+//handle requests for check for logged in user
+router.get('/', function(req, res, next) {
+  res.send(req.user);
+})
+
 //handleLogIn
 router.post('/logIn', function(req, res, next) {
   const {email, password} = req.body;

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { removeUserThunk } from '../store';
+import { removeUserThunk, retrieveLoggedInUser } from '../store';
+import { Link } from 'react-router-dom';
 import './Main.css';
 import logo from '../assets/logo.png';
+import history from '../history';
+import { setUser } from '../store';
 
 class Main extends Component {
 
@@ -16,8 +19,18 @@ class Main extends Component {
     this.props.removeUserThunk();
   }
 
+  componentDidMount() {
+    const currUser = JSON.parse(localStorage.getItem('current-user'));
+    if (currUser !== null && !this.props.user.hasOwnProperty('id')) {
+      this.props.setUser(currUser);
+      return;
+    }
+    if (currUser === null) history.push('/');
+  }
+
   render() {
     const {user} = this.props;
+    // const {userLoggedIn} = this.state;
     return (
       <div className="main">
         <header className="main-header">
@@ -26,7 +39,7 @@ class Main extends Component {
         </header>
         <div className="main-intro">
         {user.hasOwnProperty('id') ? <button className='logout-btn' onClick={this.handleLogOut}>Log Out</button> : null}
-        
+        {user.hasOwnProperty('id') ? <Link to='/Welcome'>Go Home</Link> : null}
         </div>
       </div>
     );
@@ -35,6 +48,6 @@ class Main extends Component {
 
 const mapState = state => ({user: state.user})
 
-const mapDispatch = {removeUserThunk};
+const mapDispatch = { removeUserThunk, retrieveLoggedInUser, setUser };
 
 export default connect(mapState, mapDispatch)(Main);

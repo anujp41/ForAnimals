@@ -5,11 +5,14 @@ import { callActions } from './flashMsg';
 const SET = 'SET_CURRENT_USER';
 const REMOVE = 'REMOVE_CURRENT_USER';
 
-const setUser = user => ({ type: SET, user });
+export const setUser = user => ({ type: SET, user });
 const removeUser = () => ({ type: REMOVE });
 
 //helper function
 const resToData = res => res.data;
+
+export const retrieveLoggedInUser = () => dispatch => 
+  axios.get('http://localhost:8080/api/auth') //req.user not persisted
 
 const signIn = (user, method) => dispatch =>
   axios.post(`http://localhost:8080/api/auth/${method}`, user)
