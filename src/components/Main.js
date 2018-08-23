@@ -39,7 +39,7 @@ class Main extends Component {
         </header>
         <div className="main-intro">
         {user.hasOwnProperty('id') ? <button className='logout-btn' onClick={this.handleLogOut}>Log Out</button> : null}
-        {user.hasOwnProperty('id') ? <Link to='/Welcome'>Go Home</Link> : null}
+        {user.hasOwnProperty('id') ? <Link to='/welcome'>Go Home</Link> : null}
         </div>
       </div>
     );

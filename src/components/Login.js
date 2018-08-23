@@ -14,6 +14,8 @@ class Login extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.renderLoginIn = this.renderLoginIn.bind(this);
     this.renderSignUp = this.renderSignUp.bind(this);
+    this.renderGoogle = this.renderGoogle.bind(this);
+    this.mouseEvent = this.mouseEvent.bind(this);
     this.state = {
       email: 'myemail@email.com',
       password: '1',
@@ -106,6 +108,29 @@ class Login extends Component {
     )
   }
 
+  mouseEvent(event, action) {
+    const {target} = event;
+    if (action === 'leave') {
+      target.src = require('../assets/btn_google_signin_dark_normal_web@2x.png');
+    } else if (action === 'hover') {
+      target.src = require('../assets/btn_google_signin_dark_focus_web@2x.png');
+    } else if (action === 'click') {
+      target.src = require('../assets/btn_google_signin_dark_pressed_web@2x.png');
+    }
+  }
+
+  renderGoogle() {
+    return (
+      <img 
+        className='google'
+        onMouseOver={event=>this.mouseEvent(event, 'hover')}
+        onMouseOut={event=>this.mouseEvent(event, 'leave')}
+        onMouseDown={event=>this.mouseEvent(event, 'click')}
+        src={require('../assets/btn_google_signin_dark_normal_web@2x.png')}
+      />
+    )
+  }
+
   render() {
     const { loginButton, signupButton} = this.state;
     return (
@@ -118,6 +143,7 @@ class Login extends Component {
         {loginButton && this.renderLoginIn()}
         {signupButton && this.renderSignUp()}
         </div>
+      {this.renderGoogle()}
       <FlashMsg/>
       </div>
     )
