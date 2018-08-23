@@ -1,4 +1,5 @@
 export { default as Main } from './Main';
+export { default as Login } from './Login';
 export { default as Furbaby } from './Furbaby';
 export { default as Input } from './Input';
 export { default as Match } from './Match';

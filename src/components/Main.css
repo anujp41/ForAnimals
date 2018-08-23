@@ -1,6 +1,7 @@
 .main {
   text-align: center;
   font-family: 'Eczar', serif;
+  position: relative;
 }
 
 .main-header {
@@ -25,6 +26,24 @@
 
 .main-intro {
   font-size: large;
+}
+
+.logout-btn {
+  width: 120px;
+  height: 35px;
+  line-height: 20px;
+  position: absolute;
+  right: 10%;
+  bottom: 35px;
+  font-family: 'Eczar', serif;
+  font-size: 20px;
+  background-color: rgb(107, 233, 35);
+  cursor: pointer;
+}
+
+.logout-btn:active {
+  background-color: rgb(49, 100, 19);
+  color: white;
 }
 
 @media only screen and (max-width: 980px) {

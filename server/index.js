@@ -1,15 +1,13 @@
+require('dotenv').config();
 const express = require('express');
+const session = require('express-session');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const path = require('path')
-const db = require("./models").db;
+const db = require('./models').db;
+const flash = require('connect-flash');
 
 const app = express();
-
-app.use(morgan('dev'));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -17,6 +15,20 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+app.use(morgan('dev'));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+app.use(session({
+  secret: 'falling_strAnglers',
+  resave: false,
+  saveUninitialized: false
+}))
+
+app.use(require('./middleware/passport'));
+app.use(flash());
 
 app.use('/api', require('./api'));
 
@@ -27,9 +39,8 @@ app.use('*', (req, res) => {
 })
 
 app.use((err, req, res, next) => {
-  console.error(err, err.stack);
   res.status(err.status || 500);
-  res.send("error: " + err);
+  res.send(err.message);
 });
 
 const port = 8080;

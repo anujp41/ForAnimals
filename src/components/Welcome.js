@@ -22,7 +22,7 @@ class Welcome extends Component {
           <h1>Let's visit this site!</h1>
         </Link> */}
 
-        <Link to={'/furbaby'} onClick={this.handleClick}>
+        <Link to={'/furbaby'} onClick={()=>this.handleClick()}>
           <h1>Add furbabies!</h1>
         </Link>
 
