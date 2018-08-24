@@ -11,19 +11,21 @@ passport.use(
     callbackURL: '/api/google/verify'
   },
   function (token, refreshToken, profile, done) {
-    var info = {
-      name: profile.displayName,
-      email: profile.emails[0].value,
-      photo: profile.photos ? profile.photos[0].value : undefined
-    };
-    User.findOrCreate({
-      where: {googleId: profile.id},
-      defaults: info
-    })
-    .spread(function (user) {
-      return done(null, user);
-    })
-    .catch(done);
+    // console.log('profile is ', profile)
+    return done(null, profile);
+    // var info = {
+    //   name: profile.displayName,
+    //   email: profile.emails[0].value,
+    //   photo: profile.photos ? profile.photos[0].value : undefined
+    // };
+    // User.findOrCreate({
+    //   where: {googleId: profile.id},
+    //   defaults: info
+    // })
+    // .spread(function (user) {
+    //   return done(null, user);
+    // })
+    // .catch(done);
   })
 );
 
@@ -32,8 +34,8 @@ router.get('/', passport.authenticate('google', {scope: 'email'}));
 router.get('/verify',
   passport.authenticate('google', { failureRedirect: 'http://localhost:3000/' }),
   function (req, res) {
-    console.log('request is ', req);
-    res.redirect(`/welcome`);
+    console.log('request is ', req.user);
+    res.redirect(`http://localhost:3000/welcome`);
   }
 )
 

@@ -30,6 +30,7 @@ class Routes extends Component {
             <Route exact path='/' component={Login} />
             <PrivateRoute path='/welcome' component={Welcome} user={user}/>
             <PrivateRoute path='/input' component={Input} user={user}/>
+            {/* <Route path='/input' component={Input} user={user}/> */}
             <PrivateRoute path='/furbabies' component={FurbabiesList} user={user}/>
             <PrivateRoute path='/parents' component={ParentsList} user={user}/>
             <PrivateRoute path='/furbaby' component={Furbaby} user={user}/>
