@@ -11,21 +11,22 @@ passport.use(
     callbackURL: '/api/google/verify'
   },
   function (token, refreshToken, profile, done) {
-    // console.log('profile is ', profile)
-    return done(null, profile);
-    // var info = {
-    //   name: profile.displayName,
-    //   email: profile.emails[0].value,
-    //   photo: profile.photos ? profile.photos[0].value : undefined
-    // };
-    // User.findOrCreate({
-    //   where: {googleId: profile.id},
-    //   defaults: info
-    // })
-    // .spread(function (user) {
-    //   return done(null, user);
-    // })
-    // .catch(done);
+
+    const info = {
+      firstName: profile.name.givenName,
+      lastName: profile.name.familyName,
+      email: profile.emails[0].value,
+      photoURL: profile.photos && profile.photos[0].value,
+      googleId: profile.id
+    };
+    User.findOrCreate({
+      where: {googleId: profile.id},
+      defaults: info
+    })
+    .spread(function (user) {
+      return done(null, user);
+    })
+    .catch(done);
   })
 );
 

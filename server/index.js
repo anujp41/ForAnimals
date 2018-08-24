@@ -44,7 +44,6 @@ app.use((err, req, res, next) => {
 });
 
 const port = 8080;
-// const port = 3000;
 app.listen(port, () => {
   console.log(`Starting the db at in port ${port}!`);
   db.sync()

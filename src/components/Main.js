@@ -20,15 +20,9 @@ class Main extends Component {
     this.props.removeUserThunk();
   }
 
-  static getDerivedStateFromProps(props, state) {
-    // console.log('here ', props)
-    return null;
-  }
-
   componentDidMount() {
     this.props.retrieveLoggedInUser();
     const currUser = JSON.parse(localStorage.getItem('current-user')); //converts string from local storage into object
-    console.log(currUser, 'currUser')
     if (currUser !== null && !this.props.user.hasOwnProperty('id')) { //if local storage has user, then current user is set to 
       this.props.setUser(currUser);
       history.push('/welcome');
