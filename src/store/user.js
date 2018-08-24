@@ -28,9 +28,17 @@ const signIn = (user, method) => dispatch =>
     dispatch(callActions(data));
   });
 
+export const googleAndWelcome = () => dispatch => 
+  axios.get('http://localhost:8080/api/auth/google')
+  .then(res => console.log('i fought the law and i got ', res))
+
 export const signUpAndWelcome = user => dispatch =>
   dispatch(signIn(user, 'signUp'))
   .then(user => user ? history.push('/welcome') : null)  //only redirect if user return by signUp
+
+export const logInAndWelcome = user => dispatch =>
+  dispatch(signIn(user, 'logIn'))
+  .then(user => user ? history.push('/welcome') : null) //only redirect if user return by logIn
 
 export const removeUserThunk = () => dispatch =>
   axios.delete('http://localhost:8080/api/auth')
@@ -42,10 +50,6 @@ export const removeUserThunk = () => dispatch =>
     history.push('/')
   })
   .catch(err => console.error('Error removing user', err));
-
-export const logInAndWelcome = user => dispatch =>
-  dispatch(signIn(user, 'logIn'))
-  .then(user => user ? history.push('/welcome') : null) //only redirect if user return by logIn
 
 
 export default function(state = {}, action) {

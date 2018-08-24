@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FlashMsg from './FlashMsg';
-import { signUpAndWelcome, logInAndWelcome } from '../store';
+import { signUpAndWelcome, logInAndWelcome, googleAndWelcome } from '../store';
 import './Login.css';
 
 class Login extends Component {
@@ -116,18 +116,26 @@ class Login extends Component {
       target.src = require('../assets/btn_google_signin_dark_focus_web@2x.png');
     } else if (action === 'click') {
       target.src = require('../assets/btn_google_signin_dark_pressed_web@2x.png');
+      // this.props.googleAndWelcome();
     }
   }
 
   renderGoogle() {
     return (
-      <img 
-        className='google'
-        onMouseOver={event=>this.mouseEvent(event, 'hover')}
-        onMouseOut={event=>this.mouseEvent(event, 'leave')}
-        onMouseDown={event=>this.mouseEvent(event, 'click')}
-        src={require('../assets/btn_google_signin_dark_normal_web@2x.png')}
-      />
+      <a
+        target = '_self'
+        href = 'http://localhost:8080/api/google'>
+        <span>Login with Google</span>
+      </a>
+      // <a self='_self' href='/api/google'>
+      //   <img 
+      //     className='google'
+      //     onMouseOver={event=>this.mouseEvent(event, 'hover')}
+      //     onMouseOut={event=>this.mouseEvent(event, 'leave')}
+      //     onMouseDown={event=>this.mouseEvent(event, 'click')}
+      //     src={require('../assets/btn_google_signin_dark_normal_web@2x.png')}
+      //   />
+      // </a>
     )
   }
 
@@ -150,6 +158,6 @@ class Login extends Component {
   }
 }
 
-const mapDispatch = { signUpAndWelcome, logInAndWelcome };
+const mapDispatch = { signUpAndWelcome, logInAndWelcome, googleAndWelcome };
 
 export default connect(null, mapDispatch)(Login);

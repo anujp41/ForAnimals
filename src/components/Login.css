@@ -56,4 +56,5 @@
   margin-right: auto;
   width: 250px;
   cursor: pointer;
+  z-index: -1;
 }

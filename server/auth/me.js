@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { User } = require('../models');
 const bcrypt = require('bcrypt-nodejs');
 const createError = require('../createError');
+const passport = require('./google');
 
 const resToData = res => res === null ? null : res.data;
 const resGet = res => {
@@ -17,6 +18,8 @@ router.get('/', function(req, res, next) {
 
 //handleLogIn
 router.post('/logIn', function(req, res, next) {
+  // console.log('here');
+  // console.log(req.protocol + '://' + req.get('host') + req.originalUrl);
   const {email, password} = req.body;
   const inputPW = password;
   delete req.body.password; //delete password
@@ -73,6 +76,21 @@ router.post('/signUp', function (req, res, next) {
   .catch(err => next(err));
 });
 
+//handle Google SignIn
+// router.get('/google', function(req, res, next) {
+//   passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/plus.login'});
+// })
+
+// router.get('/google/callback', function(req, res, next) {
+//   passport.authenticate('google', { failureRedirect: '/login' }),
+//   function (req, res) {
+//     console.log('request is ', req);
+//     res.redirect(`/welcome`);
+//   }
+// })
+
+
+// handle LogOut
 router.delete('/', function (req, res, next) {
   req.logOut();
   res.sendStatus(204);
