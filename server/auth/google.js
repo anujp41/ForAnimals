@@ -48,7 +48,7 @@ router.get('/', passport.authenticate('google', {scope: 'email'}));
 router.get('/verify',
   passport.authenticate('google', { failureRedirect: 'http://localhost:3000/' }),
   function (req, res) {
-    res.redirect(`http://localhost:3000/welcome`);
+    res.redirect(`http://localhost:3000/`);
   }
 )
 

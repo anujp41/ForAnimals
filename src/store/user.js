@@ -17,7 +17,6 @@ const removeUser = () => ({ type: REMOVE });
 const resToData = res => res.data;
 
 export const retrieveLoggedInUser = () => dispatch => {
-  console.log('fetching');
   return axios.get('http://localhost:8080/api/auth', {withCredentials: true}) //req.user not persisted
   .then(resToData)
   .then(user => {
@@ -51,7 +50,7 @@ export const logInAndWelcome = user => dispatch =>
   .then(user => user ? history.push('/welcome') : null) //only redirect if user return by logIn
 
 export const removeUserThunk = () => dispatch =>
-  axios.delete('http://localhost:8080/api/auth')
+  axios.delete('http://localhost:8080/api/auth', {withCredentials: true})
   .then(() => {
     localStorage.removeItem('current-user');
     dispatch(removeUser());
