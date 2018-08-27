@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { User } = require('../models');
 const bcrypt = require('bcrypt-nodejs');
 const createError = require('../createError');
-const passport = require('./google');
+const passport = require('../auth/passport');
 
 const resToData = res => res === null ? null : res.data;
 const resGet = res => {
@@ -20,6 +20,22 @@ router.get('/', function(req, res, next) {
   res.send(req.user);
 })
 
+router.post('/logIn', function(req, res, next) {
+  passport.authenticate('local', { failureFlash: true }, function(err, user, info) {
+    if (err) {
+      req.flash('pw-wrong', 'Wrong password entered!');
+      const error = createError(req.flash('pw-wrong'), 400);
+      return next(error);
+    }
+    if (!user) {
+      req.flash('user-err', info.message);
+      const error = createError(req.flash('user-err'), 400);
+      return next(error);
+    }
+  })(req, res);
+})
+
+/*
 //handleLogIn
 router.post('/logIn', function(req, res, next) {
   const {email, password} = req.body;
@@ -36,6 +52,10 @@ router.post('/logIn', function(req, res, next) {
         const userToSave = resGet(user);
         req.logIn(userToSave, function(err) {
           if (err) return next(err);
+          console.log('*******************************************');
+  console.log('user ', req.user)
+  console.log('saved ', req.isAuthenticated())
+  console.log('*******************************************');
           res.json(userToSave);
         })
       } else {
@@ -51,6 +71,7 @@ router.post('/logIn', function(req, res, next) {
     next(error);
   })
 })
+*/
 
 //handleSignUp
 router.post('/signUp', function (req, res, next) {
