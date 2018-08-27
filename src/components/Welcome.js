@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getFurbabiesThunk, getParentsThunk } from '../store';
+import { getFurbabiesThunk, getParentsThunk, retrieveLoggedInUser } from '../store';
 
 class Welcome extends Component {
 
@@ -37,12 +37,14 @@ class Welcome extends Component {
         {/* <Link to={'/parents'}>
           <h1>Let's go see the parents!</h1>
         </Link> */}
+
+        <button onClick={this.props.retrieveLoggedInUser}>Fetch Curr User!</button>
       </div>
     );
   }
 }
 
-const mapDispatch = { getFurbabiesThunk, getParentsThunk };
+const mapDispatch = { getFurbabiesThunk, getParentsThunk, retrieveLoggedInUser };
 
 export default connect(null, mapDispatch)(Welcome);
 

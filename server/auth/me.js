@@ -13,14 +13,16 @@ const resGet = res => {
 
 //handle requests for check for logged in user
 router.get('/', function(req, res, next) {
-  // console.log('curr user ', req.user)
+  console.log('*******************************************');
+  console.log('fetching', req.user)
+  console.log('saved ', req.isAuthenticated());
+  console.log('*******************************************')
   res.send(req.user);
 })
 
 //handleLogIn
 router.post('/logIn', function(req, res, next) {
-  // console.log('here');
-  // console.log(req.protocol + '://' + req.get('host') + req.originalUrl);
+  // console.log('user ', req.body)
   const {email, password} = req.body;
   const inputPW = password;
   delete req.body.password; //delete password
@@ -35,6 +37,10 @@ router.post('/logIn', function(req, res, next) {
         const userToSave = resGet(user);
         req.logIn(userToSave, function(err) {
           if (err) return next(err);
+          // console.log('*******************************************');
+          // console.log('user ', req.user)
+          // console.log('saved ', req.isAuthenticated())
+          // console.log('*******************************************');
           res.json(userToSave);
         })
       } else {

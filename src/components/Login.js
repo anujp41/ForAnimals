@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FlashMsg from './FlashMsg';
-import { signUpAndWelcome, logInAndWelcome, googleAndWelcome } from '../store';
+import { signUpAndWelcome, logInAndWelcome, retrieveLoggedInUser } from '../store';
 import './Login.css';
 
 class Login extends Component {
@@ -152,11 +152,12 @@ class Login extends Component {
         </div>
       {this.renderGoogle()}
       <FlashMsg/>
+      <button onClick={this.props.retrieveLoggedInUser}>Fetch Curr User!</button>
       </div>
     )
   }
 }
 
-const mapDispatch = { signUpAndWelcome, logInAndWelcome, googleAndWelcome };
+const mapDispatch = { signUpAndWelcome, logInAndWelcome, retrieveLoggedInUser };
 
 export default connect(null, mapDispatch)(Login);

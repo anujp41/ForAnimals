@@ -3,6 +3,20 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const { User } = require('../models');
 
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+  User.findById(id)
+  .then(user => {
+    const userVal = user.get();
+    const {id, email, firstName, lastName} = userVal;
+    return done(null, {id, email, firstName, lastName})
+  })
+  .catch(done);
+});
+
 // configuring the strategy (credentials + verification callback)
 passport.use(
   new GoogleStrategy({
@@ -11,7 +25,6 @@ passport.use(
     callbackURL: '/api/google/verify'
   },
   function (token, refreshToken, profile, done) {
-
     const info = {
       firstName: profile.name.givenName,
       lastName: profile.name.familyName,
@@ -35,7 +48,6 @@ router.get('/', passport.authenticate('google', {scope: 'email'}));
 router.get('/verify',
   passport.authenticate('google', { failureRedirect: 'http://localhost:3000/' }),
   function (req, res) {
-    console.log('request is ', req.user);
     res.redirect(`http://localhost:3000/welcome`);
   }
 )

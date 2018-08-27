@@ -22,13 +22,13 @@ class Main extends Component {
 
   componentDidMount() {
     this.props.retrieveLoggedInUser();
-    const currUser = JSON.parse(localStorage.getItem('current-user')); //converts string from local storage into object
-    if (currUser !== null && !this.props.user.hasOwnProperty('id')) { //if local storage has user, then current user is set to 
-      this.props.setUser(currUser);
-      history.push('/welcome');
-      return;
-    }
-    if (currUser === null) history.push('/');
+    // const currUser = JSON.parse(localStorage.getItem('current-user')); //converts string from local storage into object
+    // if (currUser !== null && !this.props.user.hasOwnProperty('id')) { //if local storage has user, then current user is set to 
+    //   this.props.setUser(currUser);
+    //   history.push('/welcome');
+    //   return;
+    // }
+    // if (currUser === null) history.push('/');
   }
 
   render() {

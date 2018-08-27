@@ -6,6 +6,7 @@ import history from './history';
 
 const PrivateRoute = ({component: Component, path: Path, user: User}) => {
   const currUser = JSON.parse(localStorage.getItem('current-user'));
+  console.log('just checking')
   return (
     <Route
       path={Path}
@@ -30,7 +31,6 @@ class Routes extends Component {
             <Route exact path='/' component={Login} />
             <PrivateRoute path='/welcome' component={Welcome} user={user}/>
             <PrivateRoute path='/input' component={Input} user={user}/>
-            {/* <Route path='/input' component={Input} user={user}/> */}
             <PrivateRoute path='/furbabies' component={FurbabiesList} user={user}/>
             <PrivateRoute path='/parents' component={ParentsList} user={user}/>
             <PrivateRoute path='/furbaby' component={Furbaby} user={user}/>

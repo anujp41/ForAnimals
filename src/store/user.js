@@ -6,16 +6,30 @@ import { clearFurbabies, clearParents} from './index';
 const SET = 'SET_CURRENT_USER';
 const REMOVE = 'REMOVE_CURRENT_USER';
 
+const config = {
+  withCredentials: true
+};
+
 export const setUser = user => ({ type: SET, user });
 const removeUser = () => ({ type: REMOVE });
 
 //helper function
 const resToData = res => res.data;
 
-export const retrieveLoggedInUser = () => dispatch => 
-  axios.get('http://localhost:8080/api/auth') //req.user not persisted
+export const retrieveLoggedInUser = () => dispatch => {
+  console.log('fetching');
+  return axios.get('http://localhost:8080/api/auth', {withCredentials: true}) //req.user not persisted
+  .then(resToData)
+  .then(user => {
+    if (user.hasOwnProperty('id')) {
+      localStorage.setItem('current-user', JSON.stringify(user));
+      dispatch(setUser(user));
+      history.push('/welcome');
+    }
+  })
+}
 
-const signIn = (user, method) => dispatch =>
+const signIn = (user, method) => dispatch => 
   axios.post(`http://localhost:8080/api/auth/${method}`, user)
   .then(resToData)
   .then(user => {
@@ -27,10 +41,6 @@ const signIn = (user, method) => dispatch =>
     const {data} = err.response;
     dispatch(callActions(data));
   });
-
-export const googleAndWelcome = () => dispatch => 
-  axios.get('http://localhost:8080/api/auth/google')
-  .then(res => console.log('i fought the law and i got ', res))
 
 export const signUpAndWelcome = user => dispatch =>
   dispatch(signIn(user, 'signUp'))
