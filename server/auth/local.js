@@ -1,3 +1,5 @@
+//to use for local strategy later
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const { User } = require('../models');

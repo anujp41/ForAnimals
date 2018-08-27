@@ -6,16 +6,30 @@ import { clearFurbabies, clearParents} from './index';
 const SET = 'SET_CURRENT_USER';
 const REMOVE = 'REMOVE_CURRENT_USER';
 
+const config = {
+  withCredentials: true
+};
+
 export const setUser = user => ({ type: SET, user });
 const removeUser = () => ({ type: REMOVE });
 
 //helper function
 const resToData = res => res.data;
 
-export const retrieveLoggedInUser = () => dispatch => 
-  axios.get('http://localhost:8080/api/auth') //req.user not persisted
+export const retrieveLoggedInUser = () => dispatch => {
+  console.log('fetching');
+  return axios.get('http://localhost:8080/api/auth', {withCredentials: true}) //req.user not persisted
+  .then(resToData)
+  .then(user => {
+    if (user.hasOwnProperty('id')) {
+      localStorage.setItem('current-user', JSON.stringify(user));
+      dispatch(setUser(user));
+      history.push('/welcome');
+    }
+  })
+}
 
-const signIn = (user, method) => dispatch =>
+const signIn = (user, method) => dispatch => 
   axios.post(`http://localhost:8080/api/auth/${method}`, user)
   .then(resToData)
   .then(user => {
@@ -32,6 +46,10 @@ export const signUpAndWelcome = user => dispatch =>
   dispatch(signIn(user, 'signUp'))
   .then(user => user ? history.push('/welcome') : null)  //only redirect if user return by signUp
 
+export const logInAndWelcome = user => dispatch =>
+  dispatch(signIn(user, 'logIn'))
+  .then(user => user ? history.push('/welcome') : null) //only redirect if user return by logIn
+
 export const removeUserThunk = () => dispatch =>
   axios.delete('http://localhost:8080/api/auth')
   .then(() => {
@@ -42,10 +60,6 @@ export const removeUserThunk = () => dispatch =>
     history.push('/')
   })
   .catch(err => console.error('Error removing user', err));
-
-export const logInAndWelcome = user => dispatch =>
-  dispatch(signIn(user, 'logIn'))
-  .then(user => user ? history.push('/welcome') : null) //only redirect if user return by logIn
 
 
 export default function(state = {}, action) {

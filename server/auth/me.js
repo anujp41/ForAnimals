@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { User } = require('../models');
 const bcrypt = require('bcrypt-nodejs');
 const createError = require('../createError');
+const passport = require('./google');
 
 const resToData = res => res === null ? null : res.data;
 const resGet = res => {
@@ -12,11 +13,16 @@ const resGet = res => {
 
 //handle requests for check for logged in user
 router.get('/', function(req, res, next) {
+  console.log('*******************************************');
+  console.log('fetching', req.user)
+  console.log('saved ', req.isAuthenticated());
+  console.log('*******************************************')
   res.send(req.user);
 })
 
 //handleLogIn
 router.post('/logIn', function(req, res, next) {
+  // console.log('user ', req.body)
   const {email, password} = req.body;
   const inputPW = password;
   delete req.body.password; //delete password
@@ -31,6 +37,10 @@ router.post('/logIn', function(req, res, next) {
         const userToSave = resGet(user);
         req.logIn(userToSave, function(err) {
           if (err) return next(err);
+          // console.log('*******************************************');
+          // console.log('user ', req.user)
+          // console.log('saved ', req.isAuthenticated())
+          // console.log('*******************************************');
           res.json(userToSave);
         })
       } else {
@@ -73,6 +83,21 @@ router.post('/signUp', function (req, res, next) {
   .catch(err => next(err));
 });
 
+//handle Google SignIn
+// router.get('/google', function(req, res, next) {
+//   passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/plus.login'});
+// })
+
+// router.get('/google/callback', function(req, res, next) {
+//   passport.authenticate('google', { failureRedirect: '/login' }),
+//   function (req, res) {
+//     console.log('request is ', req);
+//     res.redirect(`/welcome`);
+//   }
+// })
+
+
+// handle LogOut
 router.delete('/', function (req, res, next) {
   req.logOut();
   res.sendStatus(204);

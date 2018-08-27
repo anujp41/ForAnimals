@@ -6,6 +6,7 @@ import './Main.css';
 import logo from '../assets/logo.png';
 import history from '../history';
 import { setUser } from '../store';
+import { checkUser } from '../utils';
 
 class Main extends Component {
 
@@ -19,14 +20,15 @@ class Main extends Component {
     this.props.removeUserThunk();
   }
 
-  componentWillMount() {
-    const currUser = JSON.parse(localStorage.getItem('current-user')); //converts string from local storage into object
-    if (currUser !== null && !this.props.user.hasOwnProperty('id')) { //if local storage has user, then current user is set to 
-      this.props.setUser(currUser);
-      history.push('/welcome');
-      return;
-    }
-    if (currUser === null) history.push('/');
+  componentDidMount() {
+    this.props.retrieveLoggedInUser();
+    // const currUser = JSON.parse(localStorage.getItem('current-user')); //converts string from local storage into object
+    // if (currUser !== null && !this.props.user.hasOwnProperty('id')) { //if local storage has user, then current user is set to 
+    //   this.props.setUser(currUser);
+    //   history.push('/welcome');
+    //   return;
+    // }
+    // if (currUser === null) history.push('/');
   }
 
   render() {
@@ -39,7 +41,7 @@ class Main extends Component {
         </header>
         <div className="main-intro">
         {user.hasOwnProperty('id') ? <button className='logout-btn' onClick={this.handleLogOut}>Log Out</button> : null}
-        {user.hasOwnProperty('id') ? <Link to='/Welcome'>Go Home</Link> : null}
+        {user.hasOwnProperty('id') ? <Link to='/welcome'>Go Home</Link> : null}
         </div>
       </div>
     );

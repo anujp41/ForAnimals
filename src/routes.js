@@ -6,6 +6,7 @@ import history from './history';
 
 const PrivateRoute = ({component: Component, path: Path, user: User}) => {
   const currUser = JSON.parse(localStorage.getItem('current-user'));
+  console.log('just checking')
   return (
     <Route
       path={Path}
