@@ -14,15 +14,14 @@ const resGet = res => {
 //handle requests for check for logged in user
 router.get('/', function(req, res, next) {
   console.log('*******************************************');
-  console.log('fetching', req.user)
-  console.log('saved ', req.isAuthenticated());
-  console.log('*******************************************')
+  console.log('user ', req.user)
+  console.log('saved ', req.isAuthenticated())
+  console.log('*******************************************');
   res.send(req.user);
 })
 
 //handleLogIn
 router.post('/logIn', function(req, res, next) {
-  // console.log('user ', req.body)
   const {email, password} = req.body;
   const inputPW = password;
   delete req.body.password; //delete password
@@ -37,10 +36,6 @@ router.post('/logIn', function(req, res, next) {
         const userToSave = resGet(user);
         req.logIn(userToSave, function(err) {
           if (err) return next(err);
-          // console.log('*******************************************');
-          // console.log('user ', req.user)
-          // console.log('saved ', req.isAuthenticated())
-          // console.log('*******************************************');
           res.json(userToSave);
         })
       } else {
@@ -100,6 +95,7 @@ router.post('/signUp', function (req, res, next) {
 // handle LogOut
 router.delete('/', function (req, res, next) {
   req.logOut();
+  console.log('user ', req.user)
   res.sendStatus(204);
 });
 

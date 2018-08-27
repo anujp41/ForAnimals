@@ -6,13 +6,10 @@ const bodyParser = require('body-parser');
 const path = require('path')
 const db = require('./models').db;
 const flash = require('connect-flash');
-const passport = require('passport');
-
 const app = express();
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);
-  // res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Origin', req.headers.origin);
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
@@ -36,18 +33,14 @@ app.use(session({
   saveUninitialized: false
 }))
 
-// app.use(passport.initialize());
-// app.use(passport.session());
-
 app.use(require('./middleware/passport')); //commented out
 app.use(flash());
 
 app.use('/api', require('./api'));
 
-// app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+  res.sendFile(path.join(__dirname, '..', 'public/index.html'));
 })
 
 app.use((err, req, res, next) => {

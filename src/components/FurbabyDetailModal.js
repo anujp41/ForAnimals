@@ -111,7 +111,6 @@ class FurbabyDetailModal extends Component {
       return;
     }
     if (detailUpdated) {
-      console.log("doin' some updatin")
       this.archiveToFB();
       this.updateDB();
       return;
@@ -328,7 +327,6 @@ class FurbabyDetailModal extends Component {
       photoUpdated,
       filesUpdated,
       detailUpdated } = this.state;
-      console.log('state ', this.state)
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
