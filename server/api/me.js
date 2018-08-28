@@ -12,21 +12,12 @@ const resGet = res => {
 }
 
 //handle requests for check for logged in user
-router.post('/', function(req, res, next) {
-  console.log('********************************************************');
-  console.log('req.sessionId ', req.sessionID)
-  // console.log('saved ', req.isAuthenticated())
-  console.log('********************************************************');
+router.get('/', function(req, res, next) {
   res.send(req.user);
 })
 
 router.post('/logIn', function(req, res, next) {
   passport.authenticate('local-login', { failureFlash: true }, function(err, user, info) {
-      // console.log('*******************************************');
-      // console.log('error ', err)
-      // console.log('user ', user);
-      // console.log('info ', info)
-      // console.log('*******************************************');
     if (err) {
       req.flash('srvr-err', 'Server Error. Please try again!');
       const error = createError(req.flash('srvr-err'), 400);
@@ -41,54 +32,10 @@ router.post('/logIn', function(req, res, next) {
       if (err) {
         return next(err);
       }
-      console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-      console.log('user session created')
-      console.log('req.sessionId ', req.sessionID)
-      // console.log('user ', req.user)
-      // console.log('saved ', req.isAuthenticated())
-      console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
       res.json(user);
     })
   })(req, res);
 })
-
-/*
-//handleLogIn
-router.post('/logIn', function(req, res, next) {
-  const {email, password} = req.body;
-  const inputPW = password;
-  delete req.body.password; //delete password
-  User.findOne({
-    where: { email }
-  })
-  .then(user => {
-    const passwordDB = user.password; //hashed pw in database
-    bcrypt.compare(inputPW, passwordDB, function(err, check) {
-      if (err) return next(err);
-      if (check) {
-        const userToSave = resGet(user);
-        req.logIn(userToSave, function(err) {
-          if (err) return next(err);
-  //         console.log('*******************************************');
-  // console.log('user ', req.user)
-  // console.log('saved ', req.isAuthenticated())
-  // console.log('*******************************************');
-          res.json(userToSave);
-        })
-      } else {
-        req.flash('pw-wrong', 'Wrong password entered!')
-        const error = createError(req.flash('pw-wrong'), 400);
-        next(error);
-      }
-    })
-  })
-  .catch(err => {
-    req.flash('email-not-found', 'Cannot find email address. Are you sure you have an account with us?')
-    const error = createError(req.flash('email-not-found'), 400);
-    next(error);
-  })
-})
-*/
 
 //handleSignUp
 router.post('/signUp', function (req, res, next) {
@@ -115,20 +62,6 @@ router.post('/signUp', function (req, res, next) {
   })
   .catch(err => next(err));
 });
-
-//handle Google SignIn
-// router.get('/google', function(req, res, next) {
-//   passport.authenticate('google', {scope: 'https://www.googleapis.com/auth/plus.login'});
-// })
-
-// router.get('/google/callback', function(req, res, next) {
-//   passport.authenticate('google', { failureRedirect: '/login' }),
-//   function (req, res) {
-//     console.log('request is ', req);
-//     res.redirect(`/welcome`);
-//   }
-// })
-
 
 // handle LogOut
 router.delete('/', function (req, res, next) {
