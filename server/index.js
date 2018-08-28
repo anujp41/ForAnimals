@@ -7,7 +7,6 @@ const path = require('path')
 const db = require('./models').db;
 const flash = require('connect-flash');
 const app = express();
-const passport = require('passport');
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);
@@ -34,7 +33,7 @@ app.use(session({
   saveUninitialized: false
 }))
 
-app.use(require('./middleware/passport')); //commented out
+app.use(require('./middleware/passport'));
 app.use(flash());
 
 app.use('/api', require('./api'));

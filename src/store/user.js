@@ -17,7 +17,7 @@ const removeUser = () => ({ type: REMOVE });
 const resToData = res => res.data;
 
 export const retrieveLoggedInUser = () => dispatch => 
-  axios.get('http://localhost:8080/api/auth', {withCredentials: true}) //req.user not persisted
+  axios.post('http://localhost:8080/api/auth/', {withCredentials: true}) //req.user not persisted
   .then(resToData)
   .then(user => {
     if (user.hasOwnProperty('id')) {
@@ -29,10 +29,10 @@ export const retrieveLoggedInUser = () => dispatch =>
 
 const signIn = (user, method) => dispatch => 
   axios.post(`http://localhost:8080/api/auth/${method}`, user)
-  // .then(user => console.log('received ', user))
   .then(resToData)
   .then(user => {
     localStorage.setItem('current-user', JSON.stringify(user));
+    // dispatch(retrieveLoggedInUser());
     dispatch(setUser(user));
     return user;
   })

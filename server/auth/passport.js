@@ -45,24 +45,25 @@ passport.use('google',
 );
 
 //used for local strategy
-passport.use('local', new LocalStrategy({usernameField: 'email'},
+passport.use('local-login', new LocalStrategy({usernameField: 'email'},
   function(username, password, done) {
-    const inputPW = password;
     User.findOne({
-      where: {email: username},
-      onNullError: true
+      where: {email: username}
     })
     .then(user => {
       if (user === null) {
-        return done(null, false, {message: 'Cannot find email address. Are you sure you have an account with us?'})
+        return done(null, false, { flash: 'Cannot find email address. Are you sure you have an account with us?' })
       }
-      const passwordDB = user.password;
-      bcrypt.compareSync(passwordDB, inputPW, function(err, check) {
-        console.log('compare error: ', err)
-        console.log('compare: ', check)
-      })
+      const userVal = user.get();
+      const passwordDB = userVal.password;
+      if (!bcrypt.compareSync(password, passwordDB)) {
+        return done(null, false, { flash: 'Wrong password entered!' })
+      }
+      // return done(null, user);
+      const {id, email, firstName, lastName} = userVal;
+      return done(null, {id, email, firstName, lastName});
     })
-    .catch(err => done(err))
+    .catch(done)
   })
 )
 

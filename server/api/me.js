@@ -12,26 +12,43 @@ const resGet = res => {
 }
 
 //handle requests for check for logged in user
-router.get('/', function(req, res, next) {
-  console.log('*******************************************');
-  console.log('user ', req.user)
-  console.log('saved ', req.isAuthenticated())
-  console.log('*******************************************');
+router.post('/', function(req, res, next) {
+  console.log('********************************************************');
+  console.log('req.sessionId ', req.sessionID)
+  // console.log('saved ', req.isAuthenticated())
+  console.log('********************************************************');
   res.send(req.user);
 })
 
 router.post('/logIn', function(req, res, next) {
-  passport.authenticate('local', { failureFlash: true }, function(err, user, info) {
+  passport.authenticate('local-login', { failureFlash: true }, function(err, user, info) {
+      // console.log('*******************************************');
+      // console.log('error ', err)
+      // console.log('user ', user);
+      // console.log('info ', info)
+      // console.log('*******************************************');
     if (err) {
-      req.flash('pw-wrong', 'Wrong password entered!');
-      const error = createError(req.flash('pw-wrong'), 400);
+      req.flash('srvr-err', 'Server Error. Please try again!');
+      const error = createError(req.flash('srvr-err'), 400);
       return next(error);
     }
     if (!user) {
-      req.flash('user-err', info.message);
+      req.flash('user-err', info.flash);
       const error = createError(req.flash('user-err'), 400);
       return next(error);
     }
+    req.logIn(user, function(err) {
+      if (err) {
+        return next(err);
+      }
+      console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+      console.log('user session created')
+      console.log('req.sessionId ', req.sessionID)
+      // console.log('user ', req.user)
+      // console.log('saved ', req.isAuthenticated())
+      console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+      res.json(user);
+    })
   })(req, res);
 })
 
@@ -52,10 +69,10 @@ router.post('/logIn', function(req, res, next) {
         const userToSave = resGet(user);
         req.logIn(userToSave, function(err) {
           if (err) return next(err);
-          console.log('*******************************************');
-  console.log('user ', req.user)
-  console.log('saved ', req.isAuthenticated())
-  console.log('*******************************************');
+  //         console.log('*******************************************');
+  // console.log('user ', req.user)
+  // console.log('saved ', req.isAuthenticated())
+  // console.log('*******************************************');
           res.json(userToSave);
         })
       } else {
@@ -116,8 +133,9 @@ router.post('/signUp', function (req, res, next) {
 // handle LogOut
 router.delete('/', function (req, res, next) {
   req.logOut();
-  console.log('user ', req.user)
-  res.sendStatus(204);
+  req.session.destroy(function(err) {
+    res.sendStatus(204);
+  })
 });
 
 module.exports = router;
