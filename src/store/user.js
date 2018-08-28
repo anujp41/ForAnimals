@@ -16,8 +16,10 @@ const removeUser = () => ({ type: REMOVE });
 //helper function
 const resToData = res => res.data;
 
-export const retrieveLoggedInUser = () => dispatch => {
-  return axios.get('http://localhost:8080/api/auth', {withCredentials: true}) //req.user not persisted
+axios.defaults.withCredentials = true;
+
+export const retrieveLoggedInUser = () => dispatch => 
+  axios.get('http://localhost:8080/api/auth/') //req.user not persisted
   .then(resToData)
   .then(user => {
     if (user.hasOwnProperty('id')) {
@@ -26,13 +28,13 @@ export const retrieveLoggedInUser = () => dispatch => {
       history.push('/welcome');
     }
   })
-}
 
 const signIn = (user, method) => dispatch => 
   axios.post(`http://localhost:8080/api/auth/${method}`, user)
   .then(resToData)
   .then(user => {
     localStorage.setItem('current-user', JSON.stringify(user));
+    // dispatch(retrieveLoggedInUser());
     dispatch(setUser(user));
     return user;
   })
@@ -50,7 +52,7 @@ export const logInAndWelcome = user => dispatch =>
   .then(user => user ? history.push('/welcome') : null) //only redirect if user return by logIn
 
 export const removeUserThunk = () => dispatch =>
-  axios.delete('http://localhost:8080/api/auth', {withCredentials: true})
+  axios.delete('http://localhost:8080/api/auth')
   .then(() => {
     localStorage.removeItem('current-user');
     dispatch(removeUser());

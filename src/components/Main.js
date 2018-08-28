@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { removeUserThunk, retrieveLoggedInUser } from '../store';
+import { removeUserThunk, retrieveLoggedInUser, setUser } from '../store';
 import { Link } from 'react-router-dom';
 import './Main.css';
 import logo from '../assets/logo.png';
-import history from '../history';
-import { setUser } from '../store';
 import { checkUser } from '../utils';
 
 class Main extends Component {

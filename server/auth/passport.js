@@ -1,7 +1,8 @@
-const router = require('express').Router();
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const LocalStrategy = require('passport-local').Strategy;
 const { User } = require('../models');
+const bcrypt = require('bcrypt-nodejs');
 
 passport.serializeUser(function (user, done) {
   done(null, user.id);
@@ -12,13 +13,13 @@ passport.deserializeUser(function (id, done) {
   .then(user => {
     const userVal = user.get();
     const {id, email, firstName, lastName} = userVal;
-    return done(null, {id, email, firstName, lastName})
+    done(null, {id, email, firstName, lastName});
   })
   .catch(done);
 });
 
-// configuring the strategy (credentials + verification callback)
-passport.use(
+// used for google strategy
+passport.use('google',
   new GoogleStrategy({
     clientID: '38981289948-15f8a8ir6scsbi31if0aqehg28adu0dd.apps.googleusercontent.com',
     clientSecret: 'Pez-NK_dtXle9d1XWq6U2XjP',
@@ -43,13 +44,27 @@ passport.use(
   })
 );
 
-router.get('/', passport.authenticate('google', {scope: 'email'}));
-
-router.get('/verify',
-  passport.authenticate('google', { failureRedirect: 'http://localhost:3000/' }),
-  function (req, res) {
-    res.redirect(`http://localhost:3000/`);
-  }
+//used for local strategy
+passport.use('local-login', new LocalStrategy({usernameField: 'email'},
+  function(username, password, done) {
+    User.findOne({
+      where: {email: username}
+    })
+    .then(user => {
+      if (user === null) {
+        return done(null, false, { flash: 'Cannot find email address. Are you sure you have an account with us?' })
+      }
+      const userVal = user.get();
+      const passwordDB = userVal.password;
+      if (!bcrypt.compareSync(password, passwordDB)) {
+        return done(null, false, { flash: 'Wrong password entered!' })
+      }
+      // return done(null, user);
+      const {id, email, firstName, lastName} = userVal;
+      return done(null, {id, email, firstName, lastName});
+    })
+    .catch(done)
+  })
 )
 
-module.exports = router;
+module.exports = passport;
