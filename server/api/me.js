@@ -13,9 +13,11 @@ const resGet = res => {
 
 //handle requests for check for logged in user
 router.get('/', function(req, res, next) {
+  console.log('req ', req.isAuthenticated())
   res.send(req.user);
 })
 
+//local login using passport authenticate with custom callback
 router.post('/logIn', function(req, res, next) {
   passport.authenticate('local-login', { failureFlash: true }, function(err, user, info) {
     if (err) {
@@ -37,7 +39,7 @@ router.post('/logIn', function(req, res, next) {
   })(req, res);
 })
 
-//handleSignUp
+//handleSignUp -> using req.logIn
 router.post('/signUp', function (req, res, next) {
   // delete req.body.isAdmin; //commented out for no
 
