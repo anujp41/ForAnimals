@@ -72,17 +72,23 @@ class FurbabyDetailModal extends Component {
       photoUpdated: false,
       filesUpdated: false,
       detailUpdated: false,
-      ageUpdated: false
+      ageUpdated: false,
+      detailSet: false,
     }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const furbabyDetail = nextProps.furbabyDetail;
-    if (Object.keys(furbabyDetail).length) {
-      const {ageYYMM: {ageYear, ageMonth}, ...furbabyDetail} = nextProps.furbabyDetail
-      return { ageYear, ageMonth, ...furbabyDetail };
+    const { detailSet } = prevState;
+    if (!detailSet) {
+      if (Object.keys(nextProps.furbabyDetail).length) {
+        const {ageYYMM: {ageYear, ageMonth}, ...furbabyDetail} = nextProps.furbabyDetail
+
+        return { ageYear, ageMonth, ...furbabyDetail, detailSet: true };
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      return { ...prevState };
     }
   }
 
@@ -154,7 +160,7 @@ class FurbabyDetailModal extends Component {
     const target = event.target;
     const name = target.name;
     let value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState ({ [name] : value, detailUpdated: true });
+    this.setState({ [name] : value, detailUpdated: true });
     if (name === 'ageYear' || name === 'ageMonth') {
       this.setState({ ageUpdated: true });
     }
@@ -295,7 +301,6 @@ class FurbabyDetailModal extends Component {
       id, 
       shelterName,
       adoptedName,
-      adoptionDateStr,
       ageYear,
       ageMonth, 
       intakeDateStr,
@@ -341,7 +346,7 @@ class FurbabyDetailModal extends Component {
           <div className='detail-container'>
             <form autoComplete='off' onSubmit={this.handleUpdate}>
   
-            <div className='title-detail'>See details for {adoptedName || shelterName}</div>
+            <div className='title-detail'>See details for {this.props.furbabyDetail.adoptedName || this.props.furbabyDetail.shelterName}</div>
             <div className='sub-title-detail'>View or edit any info for furbaby</div>
   
             <div className='general'>

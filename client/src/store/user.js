@@ -6,10 +6,6 @@ import { clearFurbabies, clearParents} from './index';
 const SET = 'SET_CURRENT_USER';
 const REMOVE = 'REMOVE_CURRENT_USER';
 
-const config = {
-  withCredentials: true
-};
-
 export const setUser = user => ({ type: SET, user });
 const removeUser = () => ({ type: REMOVE });
 
@@ -19,7 +15,7 @@ const resToData = res => res.data;
 axios.defaults.withCredentials = true;
 
 export const retrieveLoggedInUser = () => dispatch => 
-  axios.get('http://localhost:8080/api/auth/') //req.user not persisted
+  axios.get('/api/auth/') //req.user not persisted
   .then(resToData)
   .then(user => {
     if (user.hasOwnProperty('id')) {
@@ -30,7 +26,7 @@ export const retrieveLoggedInUser = () => dispatch =>
   })
 
 const signIn = (user, method) => dispatch => 
-  axios.post(`http://localhost:8080/api/auth/${method}`, user)
+  axios.post(`/api/auth/${method}`, user)
   .then(resToData)
   .then(user => {
     localStorage.setItem('current-user', JSON.stringify(user));
@@ -52,7 +48,7 @@ export const logInAndWelcome = user => dispatch =>
   .then(user => user ? history.push('/welcome') : null) //only redirect if user return by logIn
 
 export const removeUserThunk = () => dispatch =>
-  axios.delete('http://localhost:8080/api/auth')
+  axios.delete('/api/auth')
   .then(() => {
     localStorage.removeItem('current-user');
     dispatch(removeUser());
