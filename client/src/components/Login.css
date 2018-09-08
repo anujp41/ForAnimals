@@ -1,0 +1,60 @@
+.login-container {
+  width: 350px;
+  margin: auto;
+  background-color: #6d6969;
+  margin-top: 35px;
+}
+
+.login-container > form {
+  margin: 25px 5px;
+}
+
+.login-container .formfield {
+  height: 50px;
+}
+
+.login-container .formfield {
+  width: 100%;
+}
+
+.log-sign {
+  display: flex;
+  width: 100%;
+}
+
+.login, .signup {
+  width: 50%;
+  height: 50px;
+  font-size: 25px;
+  cursor: pointer;
+  background-color: rgb(98, 226, 43);
+  border: none;
+  box-shadow: 0 9px #999;
+  opacity: 0.65;
+}
+
+.login:hover, .signup:hover {
+  background-color: rgb(116, 238, 29);
+  color: white;
+}
+
+.login:focus, .signup:focus {
+  outline: 0
+}
+
+.active {
+  border: none;
+  opacity: 1;
+  color: white;
+  box-shadow: 0 5px #999;
+  transform: translateY(4px);
+}
+
+.google {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+  cursor: pointer;
+  z-index: -1;
+}

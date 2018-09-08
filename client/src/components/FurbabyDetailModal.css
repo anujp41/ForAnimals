@@ -1,0 +1,111 @@
+.backdrop-detail {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: rgba(84, 80, 80, 0.9);
+  padding: 50px;
+  color: #6a2fffb3;
+  overflow: scroll
+}
+
+.detail-container {
+  margin: auto;
+  text-align: center;
+  background-color: #6d6969;
+  font-family: 'Open Sans', sans-serif;
+  width: 85vw;
+  color: white;
+  margin-bottom: 15px
+}
+
+.title-detail {
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.sub-title-detail {
+  font-size: 0.9em;
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.button-update {
+  background-color: #49c1ed;
+}
+
+.button-update:disabled {
+  background-color: grey
+}
+
+.button-update:disabled:hover {
+  background-color: grey;
+  cursor: default;
+  font-size: 20px;
+  border: 2px solid white;
+}
+
+.button-update:hover {
+  font-size: 25px;
+  border: 2px solid #419ff2;
+  background-color: #419ff2;
+  color: white;
+}
+
+.button-delete {
+  background-color: #e84435;
+}
+
+.button-delete:hover {
+  font-size: 25px;
+  border: 2px solid #c61909;
+  background-color: #c61909;
+  color: white;
+}
+
+.chosen-parent {
+  border: 1px dashed white;
+  margin: auto;
+  width: 50%;
+  padding: 15px 0;
+  background-color: orange;
+  color: black;
+  position: relative;
+}
+
+.adoptionDetail {
+  background-color: rgb(112,179,237);
+  margin: auto;
+  margin-top: 10px;
+  padding: 5px 0;
+}
+
+.adoptionDetail .input {
+  border-bottom: 2px solid white;
+  position: static;
+  width: 50%;
+  transform: translateY(-5px);
+  text-align: center;
+}
+
+.adoptionDetail > .modal-text {
+  cursor: text;
+  font-size: 18px;
+  color: white;
+  padding: 10px 0;
+}
+
+.parentAddressItem {
+  margin-bottom: 10px;
+}
+
+.adoption-input {
+  background-color: rgb(112,179,237);
+  width: 50%;
+  height: 25px;
+  color: white;
+  text-align: center;
+  font-family: 'Open sans';
+  font-size: 13px;
+}

@@ -1,0 +1,656 @@
+.container {
+  margin: auto;
+  text-align: center;
+  background-color: #6d6969;
+  font-family: 'Open Sans', sans-serif;
+  width: 70vw;
+  color: white;
+  margin-bottom: 15px
+}
+
+.title {
+  font-size: 2.5em;
+  padding-top: 15px;
+  text-align: center;
+}
+
+.general {
+  display: flex;
+  flex-wrap: wrap
+}
+
+.formfield {
+  margin: 5px auto;
+  width: 30%;
+  height: 30px;
+  border-bottom: 3px inset white;
+  /* border-style: inset; */
+  padding: 5px 0;
+  position: relative;
+  cursor: text;
+} 
+
+.input {
+  position: absolute;
+  left: 15px;
+  bottom: 0;
+  background-color: transparent;
+  color: white;
+  font-size: 15px;
+  height: 25px;
+  width: 90%;
+  font-family: 'Open Sans', sans-serif;
+  outline: none;
+  border: none;
+}
+
+input[type=date]::-webkit-inner-spin-button,
+input[type=date]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.label-text {
+  font-family: 'Eczar', serif;
+  position: absolute;
+  font-size: 20px;
+  transition: all 0.5s;
+  color: orange;
+  left: 15px;
+}
+
+.input:focus + .label-text {
+  transform: translateY(-5px);
+  font-size: 11px;
+}
+
+.input:valid + .label-text {
+  transform: translateY(-5px);
+  font-size: 11px;
+}
+
+.ageEntry {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-left: 13%
+}
+
+.ageEntry {
+  margin-bottom: 0.6vh;
+}
+
+.years, .months {
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  font-family: 'Open Sans', serif;
+  font-weight: 900;
+  font-size: 90%;
+  margin: 0 5px;
+}
+
+.years:out-of-range, .months:out-of-range {
+  background-color: #ff0000
+}
+
+.genderEntry {
+  position: absolute;
+  margin: 0;
+  bottom: 7px;
+  background-color: #6d6969;
+  font-size: 15px;
+  color: white;
+  height: 25px;
+}
+
+.coatfield {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  position: relative
+}
+
+.coat-left, .coat-right {
+  width: 48%;
+  position: absolute;
+  height: 100%;
+  top: -0.1vh;
+}
+
+.coat-left > .input, .coat-right > .input {
+  left: 5px;
+}
+
+.coat-left {
+  left: 0;
+  border-width: 6px;
+  border-right-style: dotted;
+}
+
+.coat-right {
+  right: 0;
+}
+
+.coat-left > .label-text, .coat-right > .label-text {
+  position: absolute;
+  font-size: 15px;
+  color: orange;
+  left: 5px;
+  transition: all 0.5s;
+  margin-top: 1vh;
+}
+
+.comment {
+  width: 100%;
+  height: 90px;
+  margin-bottom: 30px;
+}
+
+.commentInput {
+  background-color: transparent;
+  border: 2px solid;
+  color: white;
+  padding: 5px 5px;
+  text-align: center;
+  width: 90%;
+  height: 65px;
+  margin-top: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  outline: none;
+  resize: none;
+}
+
+.commentInput::-webkit-input-placeholder {
+  color: #89d63b;
+}
+
+.commentInput:focus::-webkit-input-placeholder {
+  color: #6d6969;
+}
+
+.charactersLeft {
+  font-size: 10px;
+  margin-left: 72%
+}
+
+.date-input {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.date-field {
+  font-family: 'Eczar', serif;
+  padding: 5px 0;
+  color: orange;
+  width: 55%;
+}
+
+.arrived {
+  position: absolute;
+  right: 0;
+  background-color: #6d6969;
+  width: 50%;
+  height: 25px;
+  color: white;
+  text-align: center;
+  font-family: 'Open sans';
+  font-size: 13px;
+}
+
+.arrived:out-of-range {
+  background-color: #ff0000
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.health {
+  background-color: orange;
+  padding-bottom: 15px;
+}
+
+.healthTitle {
+  font-size: x-large;
+  font-weight: bolder;
+}
+
+.healthContainer {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 85%
+}
+
+.healthItem {
+  width: 215px;
+  height: 65px;
+  /* border: #aa33dd;
+  border-style: dotted;
+  border-width: 2px; */
+}
+
+.healthQ {
+  display: block;
+  margin-bottom: -15px;
+}
+
+.health-dropdown {
+  margin-top: 20px;
+  width: 90px;
+  height: 34px;
+  background-color: #33aa2a;
+  font-size: 100%;
+  color: white;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 34px;
+}
+
+.switch .input {
+  display:none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #33aa2a;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider[type=gender] {
+  background-color: #646bef;
+  border-radius: 0px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.slider[type=gender]:before {
+  border-radius: 0%;
+}
+
+.input:checked + .slider {
+  background-color: #ff7b25;
+}
+
+.input:checked + .slider[type=gender] {
+  background-color: #ef7cdc;
+}
+
+.input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(55px);
+}
+
+.slider:after {
+ content:'No';
+ color: white;
+ display: block;
+ position: absolute;
+ transform: translate(-50%,-50%);
+ top: 50%;
+ left: 50%;
+ font-size: 15px;
+ font-family: 'Roboto', sans-serif;
+}
+
+.slider[type=gender]:after {
+  content:'M';
+  font-size: 20px
+ }
+
+.input:checked + .slider:after {  
+  content:'Yes';
+}
+
+.input:checked + .slider[type=gender]:after {  
+  content:'F';
+}
+
+.otherComment {
+  width: 45%;
+  height: 90px;
+  padding: 0 2.5%;
+  margin: 5px 0;
+}
+
+.otherComment > .charactersLeft {
+  margin-left: 65%;
+  text-align: left
+}
+
+.otherComment:nth-last-child(3) {
+  margin-top: -10px;
+}
+
+/* .input {
+  position: absolute;
+  left: 15px;
+  bottom: 0;
+  background-color: transparent;
+  color: white;
+  font-size: 15px;
+  height: 25px;
+  width: 90%;
+  font-family: 'Open Sans', sans-serif;
+  outline: none;
+  border: none;
+}
+
+input[type=date]::-webkit-inner-spin-button,
+input[type=date]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.label-text {
+  position: absolute;
+  font-size: 20px;
+  transition: all 0.5s;
+  color: orange;
+  left: 15px;
+}
+
+.input:focus + .label-text {
+  transform: translateY(-5px);
+  font-size: 11px;
+}
+
+.input:valid + .label-text {
+  transform: translateY(-5px);
+  font-size: 11px;
+} */
+
+.otherComment:nth-last-of-type(1) {
+  margin-top: -10px;
+}
+
+.otherComment > .formfield {
+  margin: 0;
+  width: 100%
+}
+
+.otherComment .label-text {
+  position: absolute;
+  font-size: 20px;
+  transition: all 0.5s;
+  color: #89d63b;
+  left: 15px;
+}
+
+/* .input[name="youtube"], .input[name="microchip"] { */
+  /* background-color: red */
+/* } */
+
+/* .otherComment .input {
+  width: 150%
+} */
+
+.otherCommentInput {
+  background-color: transparent;
+  border: 2px solid;
+  color: white;
+  padding: 5px 5px;
+  text-align: center;
+  width: 95%;
+  height: 45px;
+  margin-top: 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  outline: none;
+  resize: none;
+}
+
+.otherCommentInput::-webkit-input-placeholder {
+  color: #89d63b;
+}
+
+.otherCommentInput:focus::-webkit-input-placeholder {
+  color: #6d6969;
+}
+
+.dropzone {
+  margin: 20px auto;
+  text-align: center;
+  background-color: orange;
+  height: 150px;
+  width: 150px;
+  border: 1px solid black;
+}
+
+.dropzone p {
+  font-size: 12px;
+  margin: 0;
+}
+
+.furbaby-photo, .file-drop {
+  min-height: 100px;
+  min-width: 100px;
+  height: 100px;
+  width: 100px;
+  margin: 5px auto;
+  border: 1px solid white;
+}
+
+.dropzone p:nth-child(1) {
+  margin-top: 2px
+}
+
+.file-drop h6 {
+  margin: 0;
+  /* margin: 40% 0; */
+}
+
+.courtesyList {
+  /* display: flex;
+  flex-direction: column; */
+  margin: auto;
+  border: 2px dashed darkblue;
+  width: 80%;
+  height: 100px;
+}
+
+.courtesyList-Bool {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 5px;
+  /* align-items: center */
+}
+
+.courtesyList-Bool>.healthQ {
+  margin: 5px 20px 0 0;
+}
+
+.courtesyList-Q {
+  margin-top: -5px
+}
+
+.courtesyList-Q>.formfield {
+  margin-top: 15px;
+  width: 70%;
+}
+
+.courtesyList-Q .label-text {
+  color: white;
+  margin-left: -30px;
+}
+
+.courtesyList-Q .input {
+  font-size: 12px;
+}
+
+.button {
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 27px;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 20px;
+  padding: 15px 30px;
+  text-transform: uppercase;
+  transition: all 200ms;
+  margin-bottom: 15px
+}
+
+.button:hover {
+  background-color: white;
+  color: #61e887;
+  outline: none
+}
+
+.foster, .adopt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center
+}
+
+.fosterdiv, .adoptdiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 35px 20px 0;
+}
+
+.fostercheck, .adoptcheck {
+  margin: 0;
+  width: 0px;
+  height: 25px;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 135px;
+  height: 15px;
+  background-color: grey;
+  text-align: center;
+  border-radius: 10px;
+  padding: 5px 0;
+  font-size: 10px;
+  position: absolute;
+  left: 80px;
+  bottom: 5px;
+  z-index: 1;
+}
+
+.tooltipLabel:hover + .tooltiptext {
+  visibility: visible;
+}
+
+.fileList {
+  position: absolute;
+  top: 25px;
+  width: 150px;
+  margin: 0;
+  padding: 2px 0 2px 5px ;
+  background-color: antiquewhite;
+  color: black;
+}
+
+.fileListBox {
+  position: absolute;
+  z-index: 100;
+  background-color: red;
+  top: 30px;
+  right: 100px;
+}
+
+.fileItem {
+  display: flex;
+  margin-bottom: 3px;
+}
+
+.fileListItem {
+  text-align: left;
+  width: 90%;
+  height: 15px;
+  font-size: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+.btnRemoveFile {
+  position: absolute;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  width: 25px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.btnRemoveFile:hover {
+  color: white;
+  background-color: #ff0000;
+}
+
+.status {
+  margin-top: 15px;
+}
+
+.currentStatus {
+  background-color: #6d6969;
+  font-size: 15px;
+  color: white;
+  height: 35px;
+}
+
+.update-parent {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  background-color: #d9534f;
+  border-radius: 27px;
+  color: white;
+  cursor: pointer;
+  padding: 5px 10px;
+  text-transform: uppercase;
+  transition: all 200ms;
+}
+
+.update-parent:hover {
+  background-color: white;
+  color: #d9534f;
+  outline: none
+}
