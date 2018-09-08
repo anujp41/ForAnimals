@@ -21,7 +21,7 @@ export const archiveFurbabyThunk = furbaby => dispatch => {
   .then(() => dispatch(clearCurrFurbaby()));
 }
 
-export const clearCurrFurbaby = () => ({ type: CLEAR_CURR_FURBABY });
+export const clearCurrFurbaby = () => ({ type: CLEAR_CURR_FURBABY })
 
 export default function (state = initialState, action) {
   switch (action.type) {
