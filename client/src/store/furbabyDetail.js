@@ -1,5 +1,6 @@
 import axios from 'axios';
 import firebase from '../firebase';
+console.log('here ', firebase)
 const database = firebase.database();
 
 const GET_FURBABY = 'GET_FURBABY';
