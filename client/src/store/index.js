@@ -8,7 +8,9 @@ import filterFurbaby from './filterFurbaby';
 import user from './user';
 import flashMsg from './flashMsg';
 
-const store = createStore(combineReducers({ furbabies, parents, furbabyDetail, filterFurbaby, user, flashMsg }));
+const reducer = combineReducers({ furbabies, parents, furbabyDetail, filterFurbaby, user, flashMsg });
+const middleware = applyMiddleware(thunkMiddleware, createLogger({collapsed: true}));
+const store = createStore(reducer, middleware);
 
 export default store;
 export * from './furbabies';
