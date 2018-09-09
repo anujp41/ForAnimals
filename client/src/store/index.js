@@ -10,7 +10,7 @@ import flashMsg from './flashMsg';
 
 let store = null;
 
-if (process.env.NODE_ENVIRONMENT === 'production') {
+if (process.env.NODE_ENV === 'production') {
   store = combineReducers({ furbabies, parents, furbabyDetail, filterFurbaby, user, flashMsg });
 } else {
   const reducer = combineReducers({ furbabies, parents, furbabyDetail, filterFurbaby, user, flashMsg });
