@@ -8,14 +8,7 @@ import filterFurbaby from './filterFurbaby';
 import user from './user';
 import flashMsg from './flashMsg';
 
-// if (process.env.STORE_NO_REDUCER) {
 const store = combineReducers({ furbabies, parents, furbabyDetail, filterFurbaby, user, flashMsg });
-// } else {
-//   const reducer = combineReducers({ furbabies, parents, furbabyDetail, filterFurbaby, user, flashMsg });
-//   const middleware = process.env.NODE_ENVIRONMENT === 'production' ? applyMiddleware(thunkMiddleware) : applyMiddleware(thunkMiddleware, createLogger({collapsed: true}));
-//   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
-//   store = createStore(reducer, composeEnhancers(middleware));
-// }
 
 export default store;
 export * from './furbabies';
