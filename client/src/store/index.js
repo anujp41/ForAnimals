@@ -8,7 +8,7 @@ import filterFurbaby from './filterFurbaby';
 import user from './user';
 import flashMsg from './flashMsg';
 
-const store = combineReducers({ furbabies, parents, furbabyDetail, filterFurbaby, user, flashMsg });
+const store = createStore(combineReducers({ furbabies, parents, furbabyDetail, filterFurbaby, user, flashMsg }));
 
 export default store;
 export * from './furbabies';
