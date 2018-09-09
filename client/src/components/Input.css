@@ -211,7 +211,7 @@ input[type=number]::-webkit-inner-spin-button {
 }
 
 .health {
-  background-color: orange;
+  background-color: #eda246;
   padding-bottom: 15px;
 }
 
@@ -441,7 +441,7 @@ input[type=date]::-webkit-outer-spin-button {
 .dropzone {
   margin: 20px auto;
   text-align: center;
-  background-color: orange;
+  background-color: #eda246;
   height: 150px;
   width: 150px;
   border: 1px solid black;
