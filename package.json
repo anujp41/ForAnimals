@@ -1,6 +1,9 @@
 {
   "name": "for_animals_inc",
   "version": "0.1.0",
+  "engines": {
+    "node": "8.11.1"
+  },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
