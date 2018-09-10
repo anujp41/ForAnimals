@@ -119,7 +119,7 @@ class Login extends Component {
     }
   }
 
-  renderGoogle() {
+  renderGoogle(method) {
     return (
       <a self='_self' href={`${process.env.REACT_APP_PROCESS_URL}api/google`}>
         <img 
