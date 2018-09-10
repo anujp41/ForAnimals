@@ -38,7 +38,6 @@ app.use(flash());
 
 app.use('/api', require('./api'));
 
-
 app.use('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build'));
 })
