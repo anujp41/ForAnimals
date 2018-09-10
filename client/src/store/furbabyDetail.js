@@ -10,7 +10,7 @@ const initialState = {};
 const getFurbaby = furbaby => ({type: GET_FURBABY, furbaby});
 
 export const getFurbabyThunk = id => dispatch =>
-  axios.get(`http://localhost:8080/api/furbabyDetail/${id}`)
+  axios.get(`/api/furbabyDetail/${id}`)
   .then(furbaby => dispatch(getFurbaby(furbaby.data)))
   .catch(err => console.warn(err));
 

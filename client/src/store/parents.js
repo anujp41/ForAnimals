@@ -11,12 +11,12 @@ const getParents = parents => ({ type: GET_PARENTS, parents });
 export const clearParents = () => ({ type: CLEAR_PARENTS })
 
 export const createParentThunk = parent => dispatch => 
-  axios.post('http://localhost:8080/api/parents', parent)
+  axios.post('/api/parents', parent)
   .then(parent => dispatch(createParent(parent.data)))
   .catch(err => console.log(err));
 
 export const getParentsThunk = () => dispatch =>
-  axios.get('http://localhost:8080/api/parents')
+  axios.get('/api/parents')
   .then(parents => dispatch(getParents(parents.data)))
   .catch(err => console.log(err));
 

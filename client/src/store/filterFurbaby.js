@@ -9,7 +9,7 @@ const getFilter = furbabies => ({ type: GET_FILTER, furbabies });
 export const removeFilter = furbaby => ({ type: REMOVE_FILTER });
 
 export const getFilterThunk = filterOption => dispatch => 
-  axios.get(`http://localhost:8080/api/filter/${filterOption}`)
+  axios.get(`/api/filter/${filterOption}`)
   .then(result => result.data)
   .then(filterResults => dispatch(getFilter(filterResults)))
   .catch(err => console.log(err));

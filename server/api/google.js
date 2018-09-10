@@ -4,9 +4,9 @@ const passport = require('../auth/passport');
 router.get('/', passport.authenticate('google', {scope: 'email'}));
 
 router.get('/verify',
-  passport.authenticate('google', { failureRedirect: 'http://localhost:3000/' }),
+  passport.authenticate('google', { failureRedirect: `${process.env.PROCESS_URL}` }),
   function (req, res) {
-    res.redirect('http://localhost:3000/welcome');
+    res.redirect(`${process.env.PROCESS_URL}`);
   }
 )
 

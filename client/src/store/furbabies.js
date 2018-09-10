@@ -15,7 +15,7 @@ const deleteFurbaby = index => ({ type: DELETE_FURBABY, index})
 export const clearFurbabies = () => ({ type: CLEAR_FURBABIES });
 
 export const createFurbabyThunk = furbaby => dispatch => 
-  axios.post('http://localhost:8080/api/furbabies', furbaby)
+  axios.post('/api/furbabies', furbaby)
   .then(newFurbaby => {
     return newFurbaby.data})
   .then(newKitty => newKitty)
@@ -23,18 +23,18 @@ export const createFurbabyThunk = furbaby => dispatch =>
   .catch(err => console.log(err));
 
 export const getFurbabiesThunk = (idx = 0) => dispatch => 
-  axios.get(`http://localhost:8080/api/furbabies/${idx}`)
+  axios.get(`/api/furbabies/${idx}`)
   .then(furbabies => furbabies.data)
   .then(furbabies => dispatch(getFurbabies(furbabies)))
   .catch(err => console.log(err));
 
 export const updateFurbabyThunk = (furbaby, index) => dispatch => 
-  axios.put('http://localhost:8080/api/furbabies', furbaby)
+  axios.put('/api/furbabies', furbaby)
   .then(updatedFurbaby => dispatch(updateFurbaby(updatedFurbaby.data, index)))
   .catch(err => console.log(err));
 
 export const deleteFurbabyThunk = (id, arrIndex) => dispatch =>
-  axios.delete(`http://localhost:8080/api/furbabies/${id}`)
+  axios.delete(`/api/furbabies/${id}`)
   .then(() => dispatch(deleteFurbaby(arrIndex)))
   .catch(err => console.log(err));
 

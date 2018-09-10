@@ -10,8 +10,7 @@ import flashMsg from './flashMsg';
 
 const reducer = combineReducers({ furbabies, parents, furbabyDetail, filterFurbaby, user, flashMsg });
 const middleware = applyMiddleware(thunkMiddleware, createLogger({collapsed: true}));
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
-const store = createStore(reducer, composeEnhancers(middleware));
+const store = createStore(reducer, middleware);
 
 export default store;
 export * from './furbabies';

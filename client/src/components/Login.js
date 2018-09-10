@@ -119,14 +119,9 @@ class Login extends Component {
     }
   }
 
-  renderGoogle() {
+  renderGoogle(method) {
     return (
-      // <a
-      //   target = '_self'
-      //   href = 'http://localhost:8080/api/google'>
-      //   <span>Login with Google</span>
-      // </a>
-      <a self='_self' href='http://localhost:8080/api/google'>
+      <a self='_self' href={`${process.env.REACT_APP_PROCESS_URL}api/google`}>
         <img 
           className='google'
           onMouseOver={event=>this.mouseEvent(event, 'hover')}

@@ -13,7 +13,6 @@ const resGet = res => {
 
 //handle requests for check for logged in user
 router.get('/', function(req, res, next) {
-  console.log('req ', req.isAuthenticated())
   res.send(req.user);
 })
 

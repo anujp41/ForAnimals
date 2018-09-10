@@ -22,7 +22,7 @@ app.use(function(req, res, next) {
 
 app.use(morgan('dev'));
 
-app.use(express.static(path.join(__dirname, '..', 'public'))); //moved statuc stuff here
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -38,9 +38,8 @@ app.use(flash());
 
 app.use('/api', require('./api'));
 
-
 app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'public/index.html'));
+  res.sendFile(path.join(__dirname, '../client/build'));
 })
 
 app.use((err, req, res, next) => {
@@ -48,7 +47,7 @@ app.use((err, req, res, next) => {
   res.send(err.message);
 });
 
-const port = 8080;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Starting the db at in port ${port}!`);
   db.sync()
