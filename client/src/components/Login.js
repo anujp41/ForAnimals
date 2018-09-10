@@ -120,6 +120,7 @@ class Login extends Component {
   }
 
   renderGoogle() {
+    console.log('my environment ', process.env.PROCESS_URL)
     return (
       <a self='_self' href='http://localhost:5000/api/google'>
         <img 
