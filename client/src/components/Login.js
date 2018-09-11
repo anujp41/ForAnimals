@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import FlashMsg from './FlashMsg';
 import { signUpAndWelcome, logInAndWelcome } from '../store';
 import './Login.css';
+import ForgotPW from './ForgotPW';
 
 class Login extends Component {
 
@@ -132,6 +133,7 @@ class Login extends Component {
         </div>
       {this.renderGoogle()}
       <FlashMsg/>
+      <ForgotPW/>
       </div>
     )
   }
