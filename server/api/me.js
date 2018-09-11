@@ -7,8 +7,8 @@ const resToData = res => res === null ? null : res.data;
 const resGet = res => {
   if (res !== null) {
     const response = res.get();
-    const {id, email, firstName, lastName} = response;
-    return {id, email, firstName, lastName};
+    const {id, email, firstName, lastName, googleId} = response;
+    return {id, email, firstName, lastName, googleId};
   } else {
     return null;
   }
@@ -54,7 +54,8 @@ router.post('/signUp', function (req, res, next) {
       .then(user => {
         req.logIn(user, function(err) {
           if (err) return next(err);
-          res.json(user);
+          const {id, email, firstName, lastName} = user;
+          res.json({id, email, firstName, lastName});
         })
       })
     } else {
@@ -77,7 +78,12 @@ router.post('/forgotPW', function(req, res, next) {
       const error = createError(req.flash('email-not-found'), 400);
       next(error);
       return;
+    } else if (resEmail.googleId !== null) {
+      req.flash('google-login', `You have signed in with Google using ${resEmail.email}. Please try singing in with google again!`);
+      const error = createError(req.flash('google-login'), 400);
+      next(error);
     } else {
+      console.log('response ', resEmail)
       const {email} = resEmail;
       res.json(email);
     }
