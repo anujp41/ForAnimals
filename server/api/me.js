@@ -1,14 +1,17 @@
 const router = require('express').Router();
 const { User } = require('../models');
-const bcrypt = require('bcrypt-nodejs');
 const createError = require('../createError');
 const passport = require('../auth/passport');
 
 const resToData = res => res === null ? null : res.data;
 const resGet = res => {
-  const response = res.get();
-  const {id, email, firstName, lastName} = response;
-  return {id, email, firstName, lastName};
+  if (res !== null) {
+    const response = res.get();
+    const {id, email, firstName, lastName} = response;
+    return {id, email, firstName, lastName};
+  } else {
+    return null;
+  }
 }
 
 //handle requests for check for logged in user
@@ -40,7 +43,6 @@ router.post('/logIn', function(req, res, next) {
 
 //handleSignUp -> using req.logIn
 router.post('/signUp', function (req, res, next) {
-  // delete req.body.isAdmin; //commented out for no
 
   const {email} = req.body;
   User.findOne({where: { email }})
@@ -63,6 +65,25 @@ router.post('/signUp', function (req, res, next) {
   })
   .catch(err => next(err));
 });
+
+router.post('/forgotPW', function(req, res, next) {
+
+  const {email} = req.body;
+  User.findOne({ where: { email }})
+  .then(resGet)
+  .then(resEmail => {
+    if (resEmail === null) {
+      req.flash('email-not-found', `Cannot locate ${email}. Please try again!`)
+      const error = createError(req.flash('email-not-found'), 400);
+      next(error);
+      return;
+    } else {
+      const {email} = resEmail;
+      res.json(email);
+    }
+  })
+  .catch(next)
+})
 
 // handle LogOut
 router.delete('/', function (req, res, next) {

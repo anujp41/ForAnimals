@@ -1,8 +1,24 @@
 .pw-container {
   position: absolute;
+  width: 350px;
   top: 25%;
-  right: 10%;
-  width: 250px;
+  left: 35%;
+}
+
+.pw-modal-cancel {
+  position: absolute;
+  z-index: 1;
+  right: -10px;;
+  padding: 5px;
+  background-color: white;
+  border-radius: 40%;
+  color: black;
+  cursor: pointer;
+}
+
+.pw-modal-cancel:hover {
+  color: white;
+  background-color: red;
 }
 
 .pw-bubble {
@@ -29,9 +45,23 @@
 	margin-bottom: -42px;
 }
 
-.pw-bubble > text {
+.pw-bubble > h5 {
   color: white;
   font-family: Eczar;
+  font-size: 15px;
+  margin: 0;
+  text-align: center;
+}
+
+.pw-bubble > input {
+  width: 75%;
+}
+
+.pw-bubble > button {
+  min-width: 50px;
+  width: 20%;
+  margin-left: 10px;
+  cursor: pointer;
 }
 
 .pw-cat {

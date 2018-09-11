@@ -30,7 +30,6 @@ const signIn = (user, method) => dispatch =>
   .then(resToData)
   .then(user => {
     localStorage.setItem('current-user', JSON.stringify(user));
-    // dispatch(retrieveLoggedInUser());
     dispatch(setUser(user));
     return user;
   })
@@ -38,6 +37,17 @@ const signIn = (user, method) => dispatch =>
     const {data} = err.response;
     dispatch(callActions(data));
   });
+
+export const forgotPW = email => dispatch =>
+  axios.post('/api/auth/forgotPW', email)
+  .then(resToData)
+  .then(email => {
+    dispatch(callActions(`Please check your inbox at ${email} for email from ForAnimals!`))
+  })
+  .catch(err => {
+    const {data} = err.response;
+    dispatch(callActions(data));
+  })
 
 export const signUpAndWelcome = user => dispatch =>
   dispatch(signIn(user, 'signUp'))

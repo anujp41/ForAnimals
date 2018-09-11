@@ -59,7 +59,7 @@
   height: 50px;
   background-color: #0091ea;
   cursor: pointer;
-  z-index: 1;
+  /* z-index: 1; */
   position: relative;
   border: 5px solid transparent;
 }
@@ -87,4 +87,17 @@
   left: 55%;
   margin-right: -50%;
   transform: translate(-50%, -50%)
+}
+
+.pw-forget {
+  text-align: center;
+  font-family: Roboto;
+  margin: 5px;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.pw-forget:hover {
+  color: royalblue;
 }
