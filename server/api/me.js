@@ -2,6 +2,7 @@ const router = require('express').Router();
 const { User } = require('../models');
 const createError = require('../createError');
 const passport = require('../auth/passport');
+const createEmail = require('../createEmail');
 
 const resToData = res => res === null ? null : res.data;
 const resGet = res => {
@@ -74,7 +75,7 @@ router.post('/forgotPW', function(req, res, next) {
   .then(resGet)
   .then(resEmail => {
     if (resEmail === null) {
-      req.flash('email-not-found', `Cannot locate ${email}. Please try again!`)
+      req.flash('email-not-found', `Cannot locate ${email}. Please try entering email again!`)
       const error = createError(req.flash('email-not-found'), 400);
       next(error);
       return;
@@ -83,8 +84,8 @@ router.post('/forgotPW', function(req, res, next) {
       const error = createError(req.flash('google-login'), 400);
       next(error);
     } else {
-      console.log('response ', resEmail)
       const {email} = resEmail;
+      createEmail(email);
       res.json(email);
     }
   })
