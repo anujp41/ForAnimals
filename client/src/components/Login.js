@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import FlashMsg from './FlashMsg';
 import { signUpAndWelcome, logInAndWelcome } from '../store';
 import './Login.css';
+import ForgotPW from './ForgotPW';
 
 class Login extends Component {
 
@@ -15,14 +16,20 @@ class Login extends Component {
     this.renderLoginIn = this.renderLoginIn.bind(this);
     this.renderSignUp = this.renderSignUp.bind(this);
     this.renderGoogle = this.renderGoogle.bind(this);
+    this.showModal = this.showModal.bind(this);
     this.state = {
       email: 'myemail@email.com',
-      password: '1',
+      password: 'a',
       firstName: '',
       lastName: '',
       loginButton: true,
-      signupButton: false
+      signupButton: false,
+      pwModal: false
     }
+  }
+
+  showModal(show) {
+    this.setState({pwModal: show})
   }
 
   handleChange(event) {
@@ -119,19 +126,21 @@ class Login extends Component {
   }
 
   render() {
-    const { loginButton, signupButton} = this.state;
+    const { loginButton, signupButton, pwModal} = this.state;
     return (
       <div>
         <div className='login-container'>
-         <div className='log-sign'>
-          <button type='button' name='login' className={this.state.loginButton ? 'login active' : 'login'} onClick={this.handleClick}>Login</button>
-          <button type='button' name='signup' className={this.state.signupButton ? 'signup active' : 'signup'} onClick={this.handleClick}>Sign Up</button>
+          <div className='log-sign'>
+            <button type='button' name='login' className={this.state.loginButton ? 'login active' : 'login'} onClick={this.handleClick}>Login</button>
+            <button type='button' name='signup' className={this.state.signupButton ? 'signup active' : 'signup'} onClick={this.handleClick}>Sign Up</button>
+          </div>
+          {loginButton && this.renderLoginIn()}
+          {signupButton && this.renderSignUp()}
         </div>
-        {loginButton && this.renderLoginIn()}
-        {signupButton && this.renderSignUp()}
-        </div>
-      {this.renderGoogle()}
-      <FlashMsg/>
+        <h5 className='pw-forget' onClick={()=>this.showModal(true)}>Forgot Password</h5>
+        {this.renderGoogle()}
+        <FlashMsg/>
+        {pwModal && <ForgotPW showModal={this.showModal}/>}
       </div>
     )
   }

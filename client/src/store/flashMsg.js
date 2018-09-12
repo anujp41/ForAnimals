@@ -17,5 +17,5 @@ export default function(state = [], action) {
 
 export const callActions = msg => dispatch => {
   dispatch(setMsg(msg));
-  setTimeout(() => dispatch(removeMsg()), 2500);
+  setTimeout(() => dispatch(removeMsg()), 1500);
 }

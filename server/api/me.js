@@ -1,14 +1,18 @@
 const router = require('express').Router();
 const { User } = require('../models');
-const bcrypt = require('bcrypt-nodejs');
 const createError = require('../createError');
 const passport = require('../auth/passport');
+const createEmail = require('../createEmail');
 
 const resToData = res => res === null ? null : res.data;
 const resGet = res => {
-  const response = res.get();
-  const {id, email, firstName, lastName} = response;
-  return {id, email, firstName, lastName};
+  if (res !== null) {
+    const response = res.get();
+    const {id, email, firstName, lastName, googleId} = response;
+    return {id, email, firstName, lastName, googleId};
+  } else {
+    return null;
+  }
 }
 
 //handle requests for check for logged in user
@@ -40,7 +44,6 @@ router.post('/logIn', function(req, res, next) {
 
 //handleSignUp -> using req.logIn
 router.post('/signUp', function (req, res, next) {
-  // delete req.body.isAdmin; //commented out for no
 
   const {email} = req.body;
   User.findOne({where: { email }})
@@ -52,7 +55,8 @@ router.post('/signUp', function (req, res, next) {
       .then(user => {
         req.logIn(user, function(err) {
           if (err) return next(err);
-          res.json(user);
+          const {id, email, firstName, lastName} = user;
+          res.json({id, email, firstName, lastName});
         })
       })
     } else {
@@ -63,6 +67,30 @@ router.post('/signUp', function (req, res, next) {
   })
   .catch(err => next(err));
 });
+
+router.post('/forgotPW', function(req, res, next) {
+
+  const {email} = req.body;
+  User.findOne({ where: { email }})
+  .then(resGet)
+  .then(resEmail => {
+    if (resEmail === null) {
+      req.flash('email-not-found', `Cannot locate ${email}. Please try entering email again!`)
+      const error = createError(req.flash('email-not-found'), 400);
+      next(error);
+      return;
+    } else if (resEmail.googleId !== null) {
+      req.flash('google-login', `You have signed in with Google using ${resEmail.email}. Please try singing in with google again!`);
+      const error = createError(req.flash('google-login'), 400);
+      next(error);
+    } else {
+      const {email} = resEmail;
+      createEmail(email);
+      res.json(email);
+    }
+  })
+  .catch(next)
+})
 
 // handle LogOut
 router.delete('/', function (req, res, next) {
