@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const { User } = require('../models');
+const { User, ResetPWLog } = require('../models');
 const createError = require('../createError');
 const passport = require('../auth/passport');
-const createEmail = require('../createEmail');
+const createEmail = require('../resetEmail/createEmail');
 
 const resToData = res => res === null ? null : res.data;
 const resGet = res => {
@@ -84,9 +84,13 @@ router.post('/forgotPW', function(req, res, next) {
       const error = createError(req.flash('google-login'), 400);
       next(error);
     } else {
-      const {email} = resEmail;
-      createEmail(email);
-      res.json(email);
+      const {email, firstName} = resEmail;
+      createEmail(email, firstName)
+      .then(emailSent => {
+        console.log('emailSent ', emailSent)
+        res.json(email);
+      })
+      .catch(next);
     }
   })
   .catch(next)

@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-const ResetPW = () => {
-  return (
-    <div>Here you can reset your PW!</div>
-  )
+class ResetPW extends Component {
+
+  componentWillMount() {
+    const token = window.location.pathname.split('/').pop();
+    console.log(token)
+  }
+
+  render() {
+    return (
+      <div>Here you can reset your PW!</div>
+    )
+  }
 }
 
 export default ResetPW;

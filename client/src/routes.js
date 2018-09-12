@@ -28,7 +28,7 @@ class Routes extends Component {
           <Main />
           <Switch>
             <Route exact path='/' component={Login} />
-            <Route exact path='/resetpassword' component={ResetPW} />
+            <Route path='/resetpassword' component={ResetPW} />
             <PrivateRoute path='/welcome' component={Welcome} user={user}/>
             <PrivateRoute path='/input' component={Input} user={user}/>
             <PrivateRoute path='/furbabies' component={FurbabiesList} user={user}/>

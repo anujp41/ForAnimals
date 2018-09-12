@@ -10,7 +10,7 @@ class ForgotPW extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      email: 'satchlespaul@yahoo.com'
+      email: 'satchlespaul@gmail.com'
     }
   }
 
