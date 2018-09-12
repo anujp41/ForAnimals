@@ -85,7 +85,7 @@ router.post('/forgotPW', function(req, res, next) {
       const {email, firstName} = resEmail;
       createEmail(email, firstName)
       .then(emailSent => {
-        emailSent.expiresOn = new Date().getTime()+(1000*60);
+        emailSent.expiresOn = new Date().getTime()+(1000 * 60 * 60 * 24); //token expires in 24 hours
         ResetPWLog.create(emailSent)
         .then(() => res.json(email))
       })
