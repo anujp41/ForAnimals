@@ -44,7 +44,6 @@ router.post('/logIn', function(req, res, next) {
 
 //handleSignUp -> using req.logIn
 router.post('/signUp', function (req, res, next) {
-
   const {email} = req.body;
   User.findOne({where: { email }})
   .then(resToData)
@@ -69,7 +68,6 @@ router.post('/signUp', function (req, res, next) {
 });
 
 router.post('/forgotPW', function(req, res, next) {
-
   const {email} = req.body;
   User.findOne({ where: { email }})
   .then(resGet)
@@ -87,14 +85,27 @@ router.post('/forgotPW', function(req, res, next) {
       const {email, firstName} = resEmail;
       createEmail(email, firstName)
       .then(emailSent => {
-        emailSent.expiresOn = new Date();
+        emailSent.expiresOn = new Date().getTime()+(1000*60);
         ResetPWLog.create(emailSent)
         .then(() => res.json(email))
       })
       .catch(next);
-    }
+    } 
   })
   .catch(next)
+})
+
+router.post('/checkToken', function(req, res, next) {
+  const {resetToken} = req.body;
+  ResetPWLog.findOne({
+    where: {resetToken}
+  })
+  .then(found => {
+    const {expiresOn} = found.get();
+    const nowTime = new Date();
+    const tokenExpired = nowTime.getTime() < expiresOn.getTime();
+    res.send(tokenExpired);
+  })
 })
 
 // handle LogOut

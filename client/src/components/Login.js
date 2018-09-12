@@ -139,7 +139,7 @@ class Login extends Component {
         </div>
         <h5 className='pw-forget' onClick={()=>this.showModal(true)}>Forgot Password</h5>
         {this.renderGoogle()}
-        <FlashMsg/>
+        {!pwModal && <FlashMsg/>}
         {pwModal && <ForgotPW showModal={this.showModal}/>}
       </div>
     )

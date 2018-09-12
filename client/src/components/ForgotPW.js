@@ -32,7 +32,7 @@ class ForgotPW extends Component {
         <div className='container-modal pw-container'>
           <div className='pw-modal-cancel' onClick={()=>showModal(false)}>X</div>
           <div className='pw-bubble'>
-            <h5>Enter your email and press send to get an email from Dtc. Kitty!</h5>
+            <h5>Enter your email and press send to get an email from Detective Kitty!</h5>
             <input type='text' name='email' placeholder='Your email....' value={email} onChange={this.handleChange}></input>
             <button onClick={this.handleSubmit}>Submit</button>
           </div>

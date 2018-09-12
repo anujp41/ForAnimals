@@ -49,6 +49,10 @@ export const forgotPW = email => dispatch =>
     dispatch(callActions(data));
   })
 
+export const checkResetLink = token => dispatch =>
+  axios.post('/api/auth/checkToken', token)
+  .then(res => console.log('found ', res.data))
+
 export const signUpAndWelcome = user => dispatch =>
   dispatch(signIn(user, 'signUp'))
   .then(user => user ? history.push('/welcome') : null)  //only redirect if user return by signUp

@@ -13,7 +13,7 @@ const createEmail = (emailAddress, firstName) => new Promise((resolve, reject) =
     html: emailBody
   }
 
-  return transporter.sendMail(mailOptions, (error, info) => {
+  transporter.sendMail(mailOptions, (error, info) => {
     if (error) reject(error);
     resolve({resetToken, messageID: info.messageId, email: emailAddress});
   });
