@@ -15,7 +15,7 @@ const createEmail = (emailAddress, firstName) => new Promise((resolve, reject) =
 
   return transporter.sendMail(mailOptions, (error, info) => {
     if (error) reject(error);
-    resolve({resetToken, messageId: info.messageId, email: emailAddress});
+    resolve({resetToken, messageID: info.messageId, email: emailAddress});
   });
 })
 

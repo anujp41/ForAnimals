@@ -20,7 +20,7 @@ const ResetPWLog = db.define('resetPWLog', {
   },
   usedOn: {
     type: Sequelize.DATE,
-    allowNull: true,
+    allowNull: true
   }
 })
 

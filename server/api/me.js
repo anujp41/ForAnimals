@@ -87,8 +87,9 @@ router.post('/forgotPW', function(req, res, next) {
       const {email, firstName} = resEmail;
       createEmail(email, firstName)
       .then(emailSent => {
-        console.log('emailSent ', emailSent)
-        res.json(email);
+        emailSent.expiresOn = new Date();
+        ResetPWLog.create(emailSent)
+        .then(() => res.json(email))
       })
       .catch(next);
     }

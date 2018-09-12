@@ -1,4 +1,3 @@
-// const Mailgen = require('mailgen');
 const { mailGenerator } = require('./emailUtils');
 
 const genEmailTemplate = (firstName, resetToken) => {  
