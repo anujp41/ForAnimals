@@ -17,10 +17,12 @@ class Login extends Component {
     this.renderSignUp = this.renderSignUp.bind(this);
     this.renderGoogle = this.renderGoogle.bind(this);
     this.showModal = this.showModal.bind(this);
+    this.pwMismatch = this.pwMismatch.bind(this);
     this.state = {
       email: 'myemail@email.com',
       password: 'a',
       firstName: '',
+      confirmPassword: '',
       lastName: '',
       loginButton: true,
       signupButton: false,
@@ -72,12 +74,12 @@ class Login extends Component {
       <form onSubmit={this.handleLogin}>
         <div className='formfield'>
           <input required className='input' type='email' name='email' value={email} onChange={this.handleChange}/>
-          <label className='label-text'>Email:</label>
+          <label id='no-transform' className='label-text'>Email:</label>
         </div>
 
         <div className='formfield'>
           <input required className='input' type='password' name='password' value={password} onChange={this.handleChange}/>
-          <label className='label-text'>Password:</label>
+          <label id='no-transform' className='label-text'>Password:</label>
         </div>
 
         <button className='button' type='submit'>Log In</button>
@@ -85,28 +87,38 @@ class Login extends Component {
     )
   }
 
+  pwMismatch() {
+    return <div className='pw-match'>Password Do Not Match!</div>;
+  }
+
   renderSignUp() {
-    const {email, password, firstName, lastName} = this.state;
+    const {email, password, firstName, lastName, confirmPassword} = this.state;
     return (
       <form onSubmit={this.handleSignUp} autoComplete='off'>
         <div className='formfield'>
           <input required className='input' type='email' name='email' value={email} onChange={this.handleChange}/>
-          <label className='label-text'>Email:</label>
+          <label id='no-transform' className='label-text'>Email:</label>
         </div>
 
         <div className='formfield'>
           <input required className='input' type='password' name='password' value={password} onChange={this.handleChange}/>
-          <label className='label-text'>Password:</label>
+          <label id='no-transform' className='label-text'>Password:</label>
+        </div>
+
+        <div className='formfield'>
+          <input required className='input' type='password' name='confirmPassword' value={confirmPassword} onChange={this.handleChange}/>
+          <label id='no-transform' className='label-text'>Confirm Password:</label>
+          {this.pwMismatch()}
         </div>
 
         <div className='formfield'>
           <input required className='input' type='text' name='firstName' value={firstName} onChange={this.handleChange}/>
-          <label className='label-text'>First Name:</label>
+          <label id='no-transform' className='label-text'>First Name:</label>
         </div>
 
         <div className='formfield'>
           <input required className='input' type='text' name='lastName' value={lastName} onChange={this.handleChange}/>
-          <label className='label-text'>Last Name:</label>
+          <label id='no-transform' className='label-text'>Last Name:</label>
         </div>
 
         <button className='button' type='submit'>Sign Up</button>
@@ -137,7 +149,7 @@ class Login extends Component {
           {loginButton && this.renderLoginIn()}
           {signupButton && this.renderSignUp()}
         </div>
-        <h5 className='pw-forget' onClick={()=>this.showModal(true)}>Forgot Password</h5>
+        {loginButton && <h5 className='pw-forget' onClick={()=>this.showModal(true)}>Forgot Password</h5>}
         {this.renderGoogle()}
         {!pwModal && <FlashMsg/>}
         {pwModal && <ForgotPW showModal={this.showModal}/>}

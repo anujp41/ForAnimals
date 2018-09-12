@@ -42,7 +42,7 @@ export const forgotPW = email => dispatch =>
   axios.post('/api/auth/forgotPW', email)
   .then(resToData)
   .then(email => {
-    dispatch(callActions(`Please check your inbox at ${email} for email from ForAnimals!`))
+    dispatch(callActions(`Please check your inbox at ${email} for email from ForAnimals. Remember to change your password within 24 hours!`))
   })
   .catch(err => {
     const {data} = err.response;
