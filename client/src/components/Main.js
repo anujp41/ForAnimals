@@ -4,7 +4,6 @@ import { removeUserThunk, retrieveLoggedInUser, setUser } from '../store';
 import { Link } from 'react-router-dom';
 import './Main.css';
 import logo from '../assets/logo.png';
-import { checkUser } from '../utils';
 
 class Main extends Component {
 

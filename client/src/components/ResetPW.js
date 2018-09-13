@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Loader from './Loader';
 import { connect } from 'react-redux';
 import {checkToken, resetPW} from '../utils';
 import {setUser} from '../store';
@@ -40,9 +41,11 @@ class ResetPW extends Component {
     resetPW(resetToken, password)
     .then(user => {
       this.setState({tokenStatus: 'Updated PW'});
-      this.props.setUser(user);
-      localStorage.setItem('current-user', JSON.stringify(user));
-      setTimeout(() => history.push('/welcome'), 2500)
+      setTimeout(() => {
+        this.props.setUser(user);
+        localStorage.setItem('current-user', JSON.stringify(user));
+        history.push('/welcome')
+      }, 2500)
     })
   }
 
@@ -98,7 +101,7 @@ class ResetPW extends Component {
       case 'Expired': return this.renderPWForm();
       case 'Not Expired': return <div className='token-expire'>Your link has expired. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
       case 'Updated PW': return <div className='token-expire'>Successfully updated your password. Taking to the website</div>
-      default: return <div className='loader'></div>
+      default: return <Loader/>
     }
   }
 }

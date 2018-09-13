@@ -10,7 +10,8 @@ class ForgotPW extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
-      email: 'satchlespaul@gmail.com'
+      email: 'satchlespaul@gmail.com',
+      loader: false
     }
   }
 
@@ -21,11 +22,12 @@ class ForgotPW extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({loader: true})
     this.props.forgotPW(this.state);
   }
 
   render() {
-    const {email} = this.state;
+    const {email, loader} = this.state;
     const {showModal} = this.props;
     return (
       <div className='backdrop'>
