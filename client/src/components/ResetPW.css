@@ -21,3 +21,9 @@
   background-color: #6d6969;
   color: whitesmoke;
 }
+
+.take-to-reset {
+  color: #1d53e5;
+  text-decoration: #1d53e5 underline;
+  cursor: pointer;
+}

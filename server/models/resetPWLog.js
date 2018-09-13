@@ -18,6 +18,10 @@ const ResetPWLog = db.define('resetPWLog', {
     type: Sequelize.DATE,
     allowNull: false
   },
+  user: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   usedOn: {
     type: Sequelize.DATE,
     allowNull: true

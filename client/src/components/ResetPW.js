@@ -1,10 +1,7 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
-import { checkResetLink } from '../store';
 import {checkToken} from '../utils';
 import './ResetPW.css';
 import history from '../history';
-import { Redirect } from 'react-router-dom';
 
 class ResetPW extends Component {
 
@@ -14,8 +11,9 @@ class ResetPW extends Component {
     this.pwMismatch = this.pwMismatch.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.takeToPWReset = this.takeToPWReset.bind(this);
     this.state = {
-      tokenExpired: null,
+      tokenExpired: 'loading',
       password: '',
       confirmPassword: '',
       showMismatch: null
@@ -70,29 +68,36 @@ class ResetPW extends Component {
     checkToken({resetToken: token})
     .then(tokenExpired => {
       this.setState({tokenExpired})
-      if (tokenExpired === false) {
-        setTimeout(() => {
-          history.push({
-            pathname: '/',
-            pwModal: true
-          })
-        }, 2000);
-      }
+      // if (tokenExpired === false) {
+      //   setTimeout(() => {
+      //     // history.push({
+      //     //   pathname: '/',
+      //     //   pwModal: true
+      //     // })
+      //   }, 2000);
+      // }
+    })
+  }
+
+  takeToPWReset() {
+    history.push({
+      pathname: '/',
+      pwModal: true
     })
   }
 
   render() {
     const {tokenExpired} = this.state;
-    if (tokenExpired === null) {
+    if (tokenExpired === 'loading') {
       return <div className='loader'></div>
+    } else if (tokenExpired === 'Not Found') {
+      return <div className='token-expire'>Something went wrong. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
     } else if (tokenExpired === true) {
       return this.renderPWForm();
     } else {
-      return <div className='token-expire'>Your link has expired. Taking you to reset page again!</div>
+      return <div className='token-expire'>Your link has expired. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
     }
   }
 }
 
-const mapDispatch = ({checkResetLink});
-
-export default connect(null, mapDispatch)(ResetPW);
+export default ResetPW;
