@@ -13,7 +13,7 @@ class ResetPW extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.takeToPWReset = this.takeToPWReset.bind(this);
     this.state = {
-      tokenExpired: 'loading',
+      tokenStatus: 'loading',
       password: '',
       confirmPassword: '',
       showMismatch: null
@@ -33,6 +33,7 @@ class ResetPW extends Component {
       setTimeout(() => this.setState({showMismatch: false}), 1250);
       return;
     }
+
   }
 
   pwMismatch() {
@@ -66,9 +67,10 @@ class ResetPW extends Component {
   componentWillMount() {
     const token = this.props.location.pathname.split('/').pop();
     checkToken({resetToken: token})
-    .then(tokenExpired => {
-      this.setState({tokenExpired})
+    .then(tokenStatus => {
+      this.setState({tokenStatus})
     })
+    .catch(err => console.error(err));
   }
 
   takeToPWReset() {
@@ -79,17 +81,12 @@ class ResetPW extends Component {
   }
 
   render() {
-    const {tokenExpired} = this.state;
-    if (tokenExpired === 'loading') {
-      return <div className='loader'></div>
-    } else if (tokenExpired === 'Not Found') {
-      return <div className='token-expire'>Something went wrong. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
-    } else if (tokenExpired === 'Token Used') {
-      return <div className='token-expire'>This link was previously used to reset password. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
-    } else if (tokenExpired === true) {
-      return this.renderPWForm();
-    } else {
-      return <div className='token-expire'>Your link has expired. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
+    switch(this.state.tokenStatus) {
+      case 'Not Found': return <div className='token-expire'>Something went wrong. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
+      case 'Token Used': return <div className='token-expire'>This link was previously used to reset password. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
+      case 'Expired': return this.renderPWForm();
+      case 'Not Expired': return <div className='token-expire'>Your link has expired. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
+      default: return <div className='loader'></div>
     }
   }
 }
