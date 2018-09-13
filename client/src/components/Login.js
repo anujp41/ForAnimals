@@ -19,8 +19,8 @@ class Login extends Component {
     this.showModal = this.showModal.bind(this);
     this.pwMismatch = this.pwMismatch.bind(this);
     this.state = {
-      email: 'myemail@email.com',
-      password: 'a',
+      email: '',
+      password: '',
       firstName: '',
       confirmPassword: '',
       lastName: '',
