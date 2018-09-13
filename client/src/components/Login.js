@@ -74,6 +74,12 @@ class Login extends Component {
     }
   }
 
+  componentWillMount() {
+    if (this.props.location.pwModal) {
+      this.setState({ pwModal: true });
+    }
+  }
+
   renderLoginIn() {
     const {email, password} = this.state;
     return (

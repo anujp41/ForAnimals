@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { checkResetLink } from '../store';
 import {checkToken} from '../utils';
 import './ResetPW.css';
+import history from '../history';
+import { Redirect } from 'react-router-dom';
 
 class ResetPW extends Component {
 
@@ -66,7 +68,17 @@ class ResetPW extends Component {
   componentWillMount() {
     const token = this.props.location.pathname.split('/').pop();
     checkToken({resetToken: token})
-    .then(tokenExpired => this.setState({tokenExpired}))
+    .then(tokenExpired => {
+      this.setState({tokenExpired})
+      if (tokenExpired === false) {
+        setTimeout(() => {
+          history.push({
+            pathname: '/',
+            pwModal: true
+          })
+        }, 2000);
+      }
+    })
   }
 
   render() {
@@ -76,7 +88,7 @@ class ResetPW extends Component {
     } else if (tokenExpired === true) {
       return this.renderPWForm();
     } else {
-      return <div>Your link has expired. Please try again!</div>
+      return <div className='token-expire'>Your link has expired. Taking you to reset page again!</div>
     }
   }
 }
