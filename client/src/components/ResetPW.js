@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import {checkToken, resetPW} from '../utils';
+import {setUser} from '../store';
 import './ResetPW.css';
 import history from '../history';
 
@@ -34,8 +36,14 @@ class ResetPW extends Component {
       setTimeout(() => this.setState({showMismatch: false}), 1250);
       return;
     }
-    this.setState({tokenStatus: null})
+    this.setState({tokenStatus: null});
     resetPW(resetToken, password)
+    .then(user => {
+      this.setState({tokenStatus: 'Updated PW'});
+      this.props.setUser(user);
+      localStorage.setItem('current-user', JSON.stringify(user));
+      setTimeout(() => history.push('/welcome'), 2500)
+    })
   }
 
   pwMismatch() {
@@ -89,9 +97,12 @@ class ResetPW extends Component {
       case 'Token Used': return <div className='token-expire'>This link was previously used to reset password. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
       case 'Expired': return this.renderPWForm();
       case 'Not Expired': return <div className='token-expire'>Your link has expired. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
+      case 'Updated PW': return <div className='token-expire'>Successfully updated your password. Taking to the website</div>
       default: return <div className='loader'></div>
     }
   }
 }
 
-export default ResetPW;
+const mapDispatch = {setUser};
+
+export default connect(null, mapDispatch)(ResetPW);

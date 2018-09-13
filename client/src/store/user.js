@@ -15,7 +15,7 @@ const resToData = res => res.data;
 axios.defaults.withCredentials = true;
 
 export const retrieveLoggedInUser = () => dispatch => 
-  axios.get('/api/auth/') //req.user not persisted
+  axios.get('/api/auth/')
   .then(resToData)
   .then(user => {
     if (user.hasOwnProperty('id')) {

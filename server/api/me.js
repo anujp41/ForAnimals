@@ -43,7 +43,6 @@ router.post('/logIn', function(req, res, next) {
   })(req, res);
 })
 
-//handleSignUp -> using req.logIn
 router.post('/signUp', function (req, res, next) {
   const {email} = req.body;
   User.findOne({where: { email }})
@@ -113,10 +112,14 @@ router.post('/checkToken', function(req, res, next) {
 
 router.post('/resetPW', function(req, res, next) {
   const { resetToken, password } = req.body;
-  ResetPWLog.findOne({where: {resetToken}})
-  .then(res => res.get())
-  .then(tokenDetail => {
-    const {email} = tokenDetail;
+  ResetPWLog.update({
+    tokenUsed: true,
+    tokenUsedOn: Date.now()
+  },{
+    where: {resetToken},
+    returning: true
+  }).then(([row, [updatedToken]]) => {
+    const {email} = updatedToken.get();
     User.update({
       password
     },{
@@ -124,13 +127,18 @@ router.post('/resetPW', function(req, res, next) {
           email: {
             [Op.eq]: email
           }
-        }
+        },
+        returning: true
       })
-      .then(res => console.log('updated ', res))
-  })
-  .catch(next);
-
-  res.send('Ding Dong')
+      .then(([rowUpdated, [updatedUserDetail]]) => {
+        const user = resGet(updatedUserDetail);
+        req.logIn(user, function(err) {
+          if (err) return next(err);
+          const {id, email, firstName, lastName} = user;
+          res.json({id, email, firstName, lastName});
+        })
+      })
+  }).catch(next);
 })
 
 // handle LogOut

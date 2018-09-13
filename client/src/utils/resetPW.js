@@ -7,6 +7,6 @@ import axios from 'axios';
 export default resetPW;
 
 function resetPW(resetToken, password) {
-  axios.post('/api/auth/resetPW', { resetToken, password })
-  .then(res => console.log('reset ', res.data))
+  return axios.post('/api/auth/resetPW', { resetToken, password })
+  .then(res => res.data)
 }
