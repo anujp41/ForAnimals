@@ -13,7 +13,8 @@ class ResetPW extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.takeToPWReset = this.takeToPWReset.bind(this);
     this.state = {
-      tokenStatus: 'loading',
+      token: null,
+      tokenStatus: null,
       password: '',
       confirmPassword: '',
       showMismatch: null
@@ -27,19 +28,37 @@ class ResetPW extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const {password, confirmPassword} = this.state;
+    const {password, confirmPassword, token} = this.state;
     if (password !== confirmPassword) {
       this.setState({showMismatch: true});
       setTimeout(() => this.setState({showMismatch: false}), 1250);
       return;
     }
-
+    this.setState({tokenStatus: null})
+    console.log('i will submit ', token, password)
   }
 
   pwMismatch() {
     const {showMismatch} = this.state;
     if (showMismatch) return <div className='pw-match'>Password Do Not Match!</div>
     else return null
+  }
+
+  componentWillMount() {
+    const token = this.props.location.pathname.split('/').pop();
+    this.setState({token});
+    checkToken({resetToken: token})
+    .then(tokenStatus => {
+      this.setState({tokenStatus})
+    })
+    .catch(err => console.error(err));
+  }
+
+  takeToPWReset() {
+    history.push({
+      pathname: '/',
+      pwModal: true
+    })
   }
 
   renderPWForm() {
@@ -62,22 +81,6 @@ class ResetPW extends Component {
         </form>
       </div>
     )
-  }
-
-  componentWillMount() {
-    const token = this.props.location.pathname.split('/').pop();
-    checkToken({resetToken: token})
-    .then(tokenStatus => {
-      this.setState({tokenStatus})
-    })
-    .catch(err => console.error(err));
-  }
-
-  takeToPWReset() {
-    history.push({
-      pathname: '/',
-      pwModal: true
-    })
   }
 
   render() {
