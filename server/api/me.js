@@ -1,8 +1,9 @@
 const router = require('express').Router();
-const { User } = require('../models');
+const { User, ResetPWLog } = require('../models');
 const createError = require('../createError');
 const passport = require('../auth/passport');
-const createEmail = require('../createEmail');
+const createEmail = require('../resetEmail/createEmail');
+const {Op} = require('sequelize');
 
 const resToData = res => res === null ? null : res.data;
 const resGet = res => {
@@ -42,9 +43,7 @@ router.post('/logIn', function(req, res, next) {
   })(req, res);
 })
 
-//handleSignUp -> using req.logIn
 router.post('/signUp', function (req, res, next) {
-
   const {email} = req.body;
   User.findOne({where: { email }})
   .then(resToData)
@@ -69,7 +68,6 @@ router.post('/signUp', function (req, res, next) {
 });
 
 router.post('/forgotPW', function(req, res, next) {
-
   const {email} = req.body;
   User.findOne({ where: { email }})
   .then(resGet)
@@ -84,12 +82,63 @@ router.post('/forgotPW', function(req, res, next) {
       const error = createError(req.flash('google-login'), 400);
       next(error);
     } else {
-      const {email} = resEmail;
-      createEmail(email);
-      res.json(email);
-    }
+      const {email, firstName} = resEmail;
+      createEmail(email, firstName)
+      .then(emailSent => {
+        emailSent.expiresOn = new Date().getTime()+(1000 * 60 * 60 * 24); //token expires in 24 hours
+        ResetPWLog.create(emailSent)
+        .then(() => res.json(email))
+      })
+      .catch(next);
+    } 
   })
   .catch(next)
+})
+
+router.post('/checkToken', function(req, res, next) {
+  const {resetToken} = req.body;
+  ResetPWLog.findOne({
+    where: {resetToken}
+  })
+  .then(found => {
+    if (found === null) return res.send('Not Found');
+    const {expiresOn, tokenUsed} = found.get();
+    if (tokenUsed) return res.send('Token Used')
+    const nowTime = new Date();
+    const tokenExpired = nowTime.getTime() < expiresOn.getTime();
+    res.send(tokenExpired ? 'Expired' : 'Not Expired');
+  })
+})
+
+router.post('/resetPW', function(req, res, next) {
+  const { resetToken, password } = req.body;
+  ResetPWLog.update({
+    tokenUsed: true,
+    tokenUsedOn: Date.now()
+  },{
+    where: {resetToken},
+    returning: true
+  }).then(([row, [updatedToken]]) => {
+    const {email} = updatedToken.get();
+    User.update({
+      password
+    },{
+        where: {
+          email: {
+            [Op.eq]: email
+          }
+        },
+        returning: true
+      })
+      .then(([rowUpdated, [updatedUserDetail]]) => {
+        const user = resGet(updatedUserDetail);
+        req.logIn(user, function(err) {
+          if (err) return next(err);
+          const {id, email, firstName, lastName} = user;
+          res.json({id, email, firstName, lastName});
+        })
+      })
+  }).catch(next);
 })
 
 // handle LogOut

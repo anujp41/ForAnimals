@@ -101,3 +101,19 @@
 .pw-forget:hover {
   color: royalblue;
 }
+
+#no-transform {
+  transition: none;
+  font-size: 20px;
+  transform: none;
+}
+
+#no-transform + .pw-match {
+  color: white;
+  background-color: #ef4747;
+  position: absolute;
+  font-size: 15px;
+  padding: 10px;
+  margin: auto;
+  top: -25px;
+}

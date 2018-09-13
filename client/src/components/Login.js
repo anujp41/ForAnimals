@@ -17,14 +17,17 @@ class Login extends Component {
     this.renderSignUp = this.renderSignUp.bind(this);
     this.renderGoogle = this.renderGoogle.bind(this);
     this.showModal = this.showModal.bind(this);
+    this.pwMismatch = this.pwMismatch.bind(this);
     this.state = {
-      email: 'myemail@email.com',
-      password: 'a',
+      email: '',
+      password: '',
       firstName: '',
+      confirmPassword: '',
       lastName: '',
       loginButton: true,
       signupButton: false,
-      pwModal: false
+      pwModal: false,
+      showMismatch: false
     }
   }
 
@@ -45,7 +48,12 @@ class Login extends Component {
 
   handleSignUp(event) {
     event.preventDefault();
-    const {email, password, firstName, lastName} = this.state;
+    const {email, password, confirmPassword, firstName, lastName} = this.state;
+    if (password !== confirmPassword) {
+      this.setState({showMismatch: true});
+      setTimeout(() => this.setState({showMismatch: false}), 1250);
+      return;
+    }
     this.props.signUpAndWelcome({ email, password, firstName, lastName });
   }
 
@@ -66,18 +74,25 @@ class Login extends Component {
     }
   }
 
+  componentWillMount() {
+    //location will have pwModal key only if redirecred from ResetPW component on token expiration
+    if (this.props.location.pwModal) {
+      this.setState({ pwModal: true });
+    }
+  }
+
   renderLoginIn() {
     const {email, password} = this.state;
     return (
       <form onSubmit={this.handleLogin}>
         <div className='formfield'>
           <input required className='input' type='email' name='email' value={email} onChange={this.handleChange}/>
-          <label className='label-text'>Email:</label>
+          <label id='no-transform' className='label-text'>Email:</label>
         </div>
 
         <div className='formfield'>
           <input required className='input' type='password' name='password' value={password} onChange={this.handleChange}/>
-          <label className='label-text'>Password:</label>
+          <label id='no-transform' className='label-text'>Password:</label>
         </div>
 
         <button className='button' type='submit'>Log In</button>
@@ -85,28 +100,40 @@ class Login extends Component {
     )
   }
 
+  pwMismatch() {
+    const {showMismatch} = this.state;
+    if (showMismatch) return <div className='pw-match'>Password Do Not Match!</div>
+    else return null
+  }
+
   renderSignUp() {
-    const {email, password, firstName, lastName} = this.state;
+    const {email, password, firstName, lastName, confirmPassword} = this.state;
     return (
       <form onSubmit={this.handleSignUp} autoComplete='off'>
         <div className='formfield'>
           <input required className='input' type='email' name='email' value={email} onChange={this.handleChange}/>
-          <label className='label-text'>Email:</label>
+          <label id='no-transform' className='label-text'>Email:</label>
         </div>
 
         <div className='formfield'>
           <input required className='input' type='password' name='password' value={password} onChange={this.handleChange}/>
-          <label className='label-text'>Password:</label>
+          <label id='no-transform' className='label-text'>Password:</label>
+        </div>
+
+        <div className='formfield'>
+          <input required className='input' type='password' name='confirmPassword' value={confirmPassword} onChange={this.handleChange}/>
+          <label id='no-transform' className='label-text'>Confirm Password:</label>
+          {this.pwMismatch()}
         </div>
 
         <div className='formfield'>
           <input required className='input' type='text' name='firstName' value={firstName} onChange={this.handleChange}/>
-          <label className='label-text'>First Name:</label>
+          <label id='no-transform' className='label-text'>First Name:</label>
         </div>
 
         <div className='formfield'>
           <input required className='input' type='text' name='lastName' value={lastName} onChange={this.handleChange}/>
-          <label className='label-text'>Last Name:</label>
+          <label id='no-transform' className='label-text'>Last Name:</label>
         </div>
 
         <button className='button' type='submit'>Sign Up</button>
@@ -137,9 +164,9 @@ class Login extends Component {
           {loginButton && this.renderLoginIn()}
           {signupButton && this.renderSignUp()}
         </div>
-        <h5 className='pw-forget' onClick={()=>this.showModal(true)}>Forgot Password</h5>
+        {loginButton && <h5 className='pw-forget' onClick={()=>this.showModal(true)}>Forgot Password</h5>}
         {this.renderGoogle()}
-        <FlashMsg/>
+        {!pwModal && <FlashMsg/>}
         {pwModal && <ForgotPW showModal={this.showModal}/>}
       </div>
     )
