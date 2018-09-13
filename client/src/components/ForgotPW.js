@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import FlashMsg from './FlashMsg';
+import Loader from './Loader';
 import { forgotPW } from '../store';
 import './ForgotPW.css';
 
@@ -26,9 +27,15 @@ class ForgotPW extends Component {
     this.props.forgotPW(this.state);
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.loader && nextProps.flashMsg.length > 0) return {...prevState, loader: false}
+    else return {...prevState};
+  }
+
   render() {
     const {email, loader} = this.state;
     const {showModal} = this.props;
+    // console.log('state is', this.state)
     return (
       <div className='backdrop'>
         <div className='container-modal pw-container'>
@@ -41,11 +48,14 @@ class ForgotPW extends Component {
           <img className='pw-cat' src={require('../assets/cat-pw.png')}/>
         </div>
         <FlashMsg/>
+        {loader && <Loader/>}
       </div>
     )
   }
 }
 
+const mapState = state => ({flashMsg: state.flashMsg})
+
 const mapDispatch = { forgotPW };
 
-export default connect(null, mapDispatch)(ForgotPW);
+export default connect(mapState, mapDispatch)(ForgotPW);
