@@ -75,6 +75,7 @@ class Login extends Component {
   }
 
   componentWillMount() {
+    //location will have pwModal key only if redirecred from ResetPW component on token expiration
     if (this.props.location.pwModal) {
       this.setState({ pwModal: true });
     }
