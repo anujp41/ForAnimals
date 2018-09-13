@@ -26,7 +26,8 @@ class Login extends Component {
       lastName: '',
       loginButton: true,
       signupButton: false,
-      pwModal: false
+      pwModal: false,
+      showMismatch: false
     }
   }
 
@@ -47,7 +48,12 @@ class Login extends Component {
 
   handleSignUp(event) {
     event.preventDefault();
-    const {email, password, firstName, lastName} = this.state;
+    const {email, password, confirmPassword, firstName, lastName} = this.state;
+    if (password !== confirmPassword) {
+      this.setState({showMismatch: true});
+      setTimeout(() => this.setState({showMismatch: false}), 1250);
+      return;
+    }
     this.props.signUpAndWelcome({ email, password, firstName, lastName });
   }
 
@@ -88,7 +94,9 @@ class Login extends Component {
   }
 
   pwMismatch() {
-    return <div className='pw-match'>Password Do Not Match!</div>;
+    const {showMismatch} = this.state;
+    if (showMismatch) return <div className='pw-match'>Password Do Not Match!</div>
+    else return null
   }
 
   renderSignUp() {
