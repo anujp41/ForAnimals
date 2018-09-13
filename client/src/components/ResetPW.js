@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {checkToken} from '../utils';
+import {checkToken, resetPW} from '../utils';
 import './ResetPW.css';
 import history from '../history';
 
@@ -13,7 +13,7 @@ class ResetPW extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.takeToPWReset = this.takeToPWReset.bind(this);
     this.state = {
-      token: null,
+      resetToken: null,
       tokenStatus: null,
       password: '',
       confirmPassword: '',
@@ -28,14 +28,14 @@ class ResetPW extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const {password, confirmPassword, token} = this.state;
+    const {password, confirmPassword, resetToken} = this.state;
     if (password !== confirmPassword) {
       this.setState({showMismatch: true});
       setTimeout(() => this.setState({showMismatch: false}), 1250);
       return;
     }
     this.setState({tokenStatus: null})
-    console.log('i will submit ', token, password)
+    resetPW(resetToken, password)
   }
 
   pwMismatch() {
@@ -45,9 +45,9 @@ class ResetPW extends Component {
   }
 
   componentWillMount() {
-    const token = this.props.location.pathname.split('/').pop();
-    this.setState({token});
-    checkToken({resetToken: token})
+    const resetToken = this.props.location.pathname.split('/').pop();
+    this.setState({resetToken});
+    checkToken({resetToken})
     .then(tokenStatus => {
       this.setState({tokenStatus})
     })

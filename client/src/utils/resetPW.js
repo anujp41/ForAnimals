@@ -1,12 +1,12 @@
-// import axios from 'axios';
+import axios from 'axios';
 
-// /**
-//  * @param string password - takes new pw entered by user and save to db; not done thru store as this info is not ingested by store
-//  */
+/**
+ * @param string password - takes new pw entered by user and save to db; not done thru store as this info is not ingested by store
+ */
 
-// export default resetPW;
+export default resetPW;
 
-// function resetPW(password) {
-//   axios.post('/api/auth/resetPW', {password})
-//   .then(res =>)
-// }
+function resetPW(resetToken, password) {
+  axios.post('/api/auth/resetPW', { resetToken, password })
+  .then(res => console.log('reset ', res.data))
+}

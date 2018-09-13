@@ -3,6 +3,7 @@ const { User, ResetPWLog } = require('../models');
 const createError = require('../createError');
 const passport = require('../auth/passport');
 const createEmail = require('../resetEmail/createEmail');
+const {Op} = require('sequelize');
 
 const resToData = res => res === null ? null : res.data;
 const resGet = res => {
@@ -108,6 +109,28 @@ router.post('/checkToken', function(req, res, next) {
     const tokenExpired = nowTime.getTime() < expiresOn.getTime();
     res.send(tokenExpired ? 'Expired' : 'Not Expired');
   })
+})
+
+router.post('/resetPW', function(req, res, next) {
+  const { resetToken, password } = req.body;
+  ResetPWLog.findOne({where: {resetToken}})
+  .then(res => res.get())
+  .then(tokenDetail => {
+    const {email} = tokenDetail;
+    User.update({
+      password
+    },{
+        where: {
+          email: {
+            [Op.eq]: email
+          }
+        }
+      })
+      .then(res => console.log('updated ', res))
+  })
+  .catch(next);
+
+  res.send('Ding Dong')
 })
 
 // handle LogOut
