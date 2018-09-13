@@ -68,14 +68,6 @@ class ResetPW extends Component {
     checkToken({resetToken: token})
     .then(tokenExpired => {
       this.setState({tokenExpired})
-      // if (tokenExpired === false) {
-      //   setTimeout(() => {
-      //     // history.push({
-      //     //   pathname: '/',
-      //     //   pwModal: true
-      //     // })
-      //   }, 2000);
-      // }
     })
   }
 
