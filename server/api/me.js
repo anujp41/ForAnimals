@@ -102,7 +102,8 @@ router.post('/checkToken', function(req, res, next) {
   })
   .then(found => {
     if (found === null) return res.send('Not Found');
-    const {expiresOn} = found.get();
+    const {expiresOn, tokenUsed} = found.get();
+    if (tokenUsed) return res.send('Token Used')
     const nowTime = new Date();
     const tokenExpired = nowTime.getTime() < expiresOn.getTime();
     res.send(tokenExpired);

@@ -84,6 +84,8 @@ class ResetPW extends Component {
       return <div className='loader'></div>
     } else if (tokenExpired === 'Not Found') {
       return <div className='token-expire'>Something went wrong. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
+    } else if (tokenExpired === 'Token Used') {
+      return <div className='token-expire'>This link was previously used to reset password. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
     } else if (tokenExpired === true) {
       return this.renderPWForm();
     } else {
