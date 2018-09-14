@@ -27,6 +27,14 @@ const User = db.define('user', {
     }
   },
   googleId: Sequelize.STRING,
+  hasApproval: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+  approvedOn: {
+    type: Sequelize.DATE,
+    allowNull: true
+  }
 });
 
 User.prototype.hashPassword = function(passwordString) {
