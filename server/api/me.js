@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { User, ResetPWLog } = require('../models');
 const createError = require('../createError');
 const passport = require('../auth/passport');
-const createEmail = require('../resetEmail/createEmail');
+const createEmail = require('../utils/createEmail');
 const {Op} = require('sequelize');
 
 const resToData = res => res === null ? null : res.data;

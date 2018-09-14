@@ -164,7 +164,7 @@ class Login extends Component {
           {loginButton && this.renderLoginIn()}
           {signupButton && this.renderSignUp()}
         </div>
-        {loginButton && <h5 className='pw-forget' onClick={()=>this.showModal(true)}>Forgot Password</h5>}
+        {loginButton && <div className='pw-forget'><a onClick={()=>this.showModal(true)}>Forgot Password</a></div>}
         {this.renderGoogle()}
         {!pwModal && <FlashMsg/>}
         {pwModal && <ForgotPW showModal={this.showModal}/>}
