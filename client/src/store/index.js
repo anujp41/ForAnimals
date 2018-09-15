@@ -18,3 +18,4 @@ export * from './parents';
 export * from './furbabyDetail';
 export * from './filterFurbaby';
 export * from './user';
+export * from './flashMsg';

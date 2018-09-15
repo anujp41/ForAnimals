@@ -34,6 +34,7 @@ const signIn = (user, method) => dispatch =>
     return user;
   })
   .catch(err => {
+    console.log('hit error ', err)
     const {data} = err.response;
     dispatch(callActions(data));
   });

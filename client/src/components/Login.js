@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FlashMsg from './FlashMsg';
-import { signUpAndWelcome, logInAndWelcome } from '../store';
+import { signUpAndWelcome, logInAndWelcome, callActions } from '../store';
 import './Login.css';
 import ForgotPW from './ForgotPW';
 
@@ -173,6 +173,6 @@ class Login extends Component {
   }
 }
 
-const mapDispatch = { signUpAndWelcome, logInAndWelcome };
+const mapDispatch = { signUpAndWelcome, logInAndWelcome, callActions };
 
 export default connect(null, mapDispatch)(Login);
