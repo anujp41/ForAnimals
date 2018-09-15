@@ -50,14 +50,10 @@ router.post('/signUp', function (req, res, next) {
       User.create(req.body)
       .then(resGet)
       .then(user => {
-        req.logIn(user, function(err) {
-          if (err) return next(err);
-          const {id, email, firstName, lastName} = user;
-          res.json({id, email, firstName, lastName});
-        })
+        const email = user.email;
+        res.json(email);
       })
     } else {
-      // console.log('user ', user)
       const googleId = user.googleId;
       const email = user.email;
       if (googleId) {

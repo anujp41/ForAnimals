@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FlashMsg from './FlashMsg';
-import { signUpAndWelcome, logInAndWelcome, callActions } from '../store';
+import { signUp, logInAndWelcome, callActions } from '../store';
 import './Login.css';
 import ForgotPW from './ForgotPW';
 
@@ -19,15 +19,24 @@ class Login extends Component {
     this.showModal = this.showModal.bind(this);
     this.pwMismatch = this.pwMismatch.bind(this);
     this.state = {
-      email: '',
-      password: '',
-      firstName: '',
-      confirmPassword: '',
-      lastName: '',
-      loginButton: true,
-      signupButton: false,
+      email: 'anuj.pant41@gmail.com',
+      password: '1',
+      firstName: 'Smokey',
+      confirmPassword: '1',
+      lastName: 'Grey',
+      loginButton: false,
+      signupButton: true,
       pwModal: false,
       showMismatch: false
+      // email: '',
+      // password: '',
+      // firstName: '',
+      // confirmPassword: '',
+      // lastName: '',
+      // loginButton: true,
+      // signupButton: false,
+      // pwModal: false,
+      // showMismatch: false
     }
   }
 
@@ -54,7 +63,7 @@ class Login extends Component {
       setTimeout(() => this.setState({showMismatch: false}), 1250);
       return;
     }
-    this.props.signUpAndWelcome({ email, password, firstName, lastName });
+    this.props.signUp({ email, password, firstName, lastName });
   }
 
   handleClick(event) {
@@ -173,6 +182,6 @@ class Login extends Component {
   }
 }
 
-const mapDispatch = { signUpAndWelcome, logInAndWelcome, callActions };
+const mapDispatch = { signUp, logInAndWelcome, callActions };
 
 export default connect(null, mapDispatch)(Login);
