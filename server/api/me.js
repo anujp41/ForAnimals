@@ -5,11 +5,9 @@ const passport = require('../auth/passport');
 const createEmail = require('../utils/createEmail');
 const {Op} = require('sequelize');
 
-const resToData = res => res === null ? null : res.data;
 const resGet = res => {
   if (res !== null) {
-    const response = res.get();
-    const {id, email, firstName, lastName, googleId} = response;
+    const {id, email, firstName, lastName, googleId} = res.get();
     return {id, email, firstName, lastName, googleId};
   } else {
     return null;
@@ -46,7 +44,7 @@ router.post('/logIn', function(req, res, next) {
 router.post('/signUp', function (req, res, next) {
   const {email} = req.body;
   User.findOne({where: { email }})
-  .then(resToData)
+  .then(resGet)
   .then(user => {
     if (user === null) {
       User.create(req.body)
@@ -59,9 +57,18 @@ router.post('/signUp', function (req, res, next) {
         })
       })
     } else {
-      req.flash('email-exists', 'Account exists under this email. Please log in instead!')
-      const error = createError(req.flash('email-exists'), 400);
-      next(error)
+      // console.log('user ', user)
+      const googleId = user.googleId;
+      const email = user.email;
+      if (googleId) {
+        req.flash('google-signUp', `${email} was previously used to sign up via Google. Please log in with google again!`)
+        const error = createError(req.flash('google-signUp'), 400);
+        return next(error);
+      } else {
+        req.flash('email-exists', `There is an existing account under ${email}. Please login or change your password if forgotten!`)
+        const error = createError(req.flash('email-exists'), 400);
+        return next(error);
+      }
     }
   })
   .catch(err => next(err));
