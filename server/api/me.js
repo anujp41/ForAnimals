@@ -2,8 +2,8 @@ const router = require('express').Router();
 const { User, ResetPWLog } = require('../models');
 const createError = require('../createError');
 const passport = require('../auth/passport');
-const createEmail = require('../utils/createEmail');
-const {Op} = require('sequelize');
+const { sendPWEmail, sendAccessEmail } = require('../utils/sendEmail');
+const { Op } = require('sequelize');
 
 const resGet = res => {
   if (res !== null) {
@@ -50,8 +50,9 @@ router.post('/signUp', function (req, res, next) {
       User.create(req.body)
       .then(resGet)
       .then(user => {
-        const email = user.email;
-        res.json(email);
+        const {id, email, firstName, lastName} = user;
+        sendAccessEmail(id, email, firstName, lastName)
+        .then(email => res.json(email))
       })
     } else {
       const googleId = user.googleId;
@@ -86,7 +87,7 @@ router.post('/forgotPW', function(req, res, next) {
       next(error);
     } else {
       const {email, firstName} = resEmail;
-      createEmail(email, firstName)
+      sendPWEmail(email, firstName)
       .then(emailSent => {
         emailSent.expiresOn = new Date().getTime()+(1000 * 60 * 60 * 24); //token expires in 24 hours
         ResetPWLog.create(emailSent)
