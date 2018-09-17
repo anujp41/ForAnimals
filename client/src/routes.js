@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch, Router, Redirect } from 'react-router-dom';
-import { Main, Input, Login, Welcome, FurbabiesList, ParentsList, Furbaby, Parent, ResetPW } from './components';
+import { Main, Input, Login, Welcome, FurbabiesList, ParentsList, Furbaby, Parent, ResetPW, UserAccess } from './components';
 import { connect } from 'react-redux'
 import history from './history';
 
@@ -29,13 +29,13 @@ class Routes extends Component {
           <Switch>
             <Route exact path='/' component={Login} />
             <Route path='/resetpassword' component={ResetPW} />
+            <Route path='/userAccess' component={UserAccess} />
             <PrivateRoute path='/welcome' component={Welcome} user={user}/>
             <PrivateRoute path='/input' component={Input} user={user}/>
             <PrivateRoute path='/furbabies' component={FurbabiesList} user={user}/>
             <PrivateRoute path='/parents' component={ParentsList} user={user}/>
             <PrivateRoute path='/furbaby' component={Furbaby} user={user}/>
             <PrivateRoute path='/parent' component={Parent} user={user}/>
-            <Route component={Login} />
           </Switch>
         </div>
       </Router>

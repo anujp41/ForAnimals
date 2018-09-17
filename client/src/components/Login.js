@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import FlashMsg from './FlashMsg';
-import { signUpAndWelcome, logInAndWelcome } from '../store';
+import { signUp, logInAndWelcome, callActions } from '../store';
 import './Login.css';
 import ForgotPW from './ForgotPW';
 
@@ -54,7 +54,7 @@ class Login extends Component {
       setTimeout(() => this.setState({showMismatch: false}), 1250);
       return;
     }
-    this.props.signUpAndWelcome({ email, password, firstName, lastName });
+    this.props.signUp({ email, password, firstName, lastName });
   }
 
   handleClick(event) {
@@ -75,9 +75,14 @@ class Login extends Component {
   }
 
   componentWillMount() {
-    //location will have pwModal key only if redirecred from ResetPW component on token expiration
     if (this.props.location.pwModal) {
       this.setState({ pwModal: true });
+      return;
+    }
+    if(this.props.location.search.length > 0) {
+      const {search} = this.props.location;
+      const email = search.slice(search.indexOf('=')+1);
+      this.setState({email});
     }
   }
 
@@ -164,7 +169,7 @@ class Login extends Component {
           {loginButton && this.renderLoginIn()}
           {signupButton && this.renderSignUp()}
         </div>
-        {loginButton && <h5 className='pw-forget' onClick={()=>this.showModal(true)}>Forgot Password</h5>}
+        {loginButton && <div className='pw-forget'><a onClick={()=>this.showModal(true)}>Forgot Password</a></div>}
         {this.renderGoogle()}
         {!pwModal && <FlashMsg/>}
         {pwModal && <ForgotPW showModal={this.showModal}/>}
@@ -173,6 +178,6 @@ class Login extends Component {
   }
 }
 
-const mapDispatch = { signUpAndWelcome, logInAndWelcome };
+const mapDispatch = { signUp, logInAndWelcome, callActions };
 
 export default connect(null, mapDispatch)(Login);

@@ -16,6 +16,7 @@ export default function(state = [], action) {
 }
 
 export const callActions = msg => dispatch => {
+  const numWords = msg.match(/([\s]+)/g).length+1;
   dispatch(setMsg(msg));
-  setTimeout(() => dispatch(removeMsg()), 1500);
+  setTimeout(() => dispatch(removeMsg()), (numWords*(60/250)*1000));
 }

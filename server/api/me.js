@@ -2,14 +2,13 @@ const router = require('express').Router();
 const { User, ResetPWLog } = require('../models');
 const createError = require('../createError');
 const passport = require('../auth/passport');
-const createEmail = require('../resetEmail/createEmail');
-const {Op} = require('sequelize');
+const { sendPWEmail, sendAccessEmail, sendPermissionEmail, sendDenyEmail } = require('../utils/sendEmail');
+const checkCurrAccess = require('../utils/checkCurrAccess');
+const { Op } = require('sequelize');
 
-const resToData = res => res === null ? null : res.data;
 const resGet = res => {
   if (res !== null) {
-    const response = res.get();
-    const {id, email, firstName, lastName, googleId} = response;
+    const {id, email, firstName, lastName, googleId} = res.get();
     return {id, email, firstName, lastName, googleId};
   } else {
     return null;
@@ -46,22 +45,27 @@ router.post('/logIn', function(req, res, next) {
 router.post('/signUp', function (req, res, next) {
   const {email} = req.body;
   User.findOne({where: { email }})
-  .then(resToData)
+  .then(resGet)
   .then(user => {
     if (user === null) {
       User.create(req.body)
       .then(resGet)
       .then(user => {
-        req.logIn(user, function(err) {
-          if (err) return next(err);
-          const {id, email, firstName, lastName} = user;
-          res.json({id, email, firstName, lastName});
-        })
+        const {id, email, firstName, lastName} = user;
+        sendAccessEmail(id, email, firstName, lastName)
+        .then(email => res.json(email))
       })
     } else {
-      req.flash('email-exists', 'Account exists under this email. Please log in instead!')
-      const error = createError(req.flash('email-exists'), 400);
-      next(error)
+      const googleId = user.googleId;
+      if (googleId) {
+        req.flash('google-signUp', `${email} was previously used to sign up via Google. Please log in with google again!`)
+        const error = createError(req.flash('google-signUp'), 400);
+        return next(error);
+      } else {
+        req.flash('email-exists', `There is an existing account under ${email}. Please login or change your password if forgotten!`)
+        const error = createError(req.flash('email-exists'), 400);
+        return next(error);
+      }
     }
   })
   .catch(err => next(err));
@@ -83,7 +87,7 @@ router.post('/forgotPW', function(req, res, next) {
       next(error);
     } else {
       const {email, firstName} = resEmail;
-      createEmail(email, firstName)
+      sendPWEmail(email, firstName)
       .then(emailSent => {
         emailSent.expiresOn = new Date().getTime()+(1000 * 60 * 60 * 24); //token expires in 24 hours
         ResetPWLog.create(emailSent)
@@ -139,6 +143,28 @@ router.post('/resetPW', function(req, res, next) {
         })
       })
   }).catch(next);
+})
+
+router.get(`/userAccess/:id`, checkCurrAccess, function(req, res, next) {
+  const { id } = req.params;
+  const access = req.query.access === 'true';
+  const {firstName, lastName, email} = res.locals;
+
+  User.update({
+    hasAccess: access,
+    accessActionDate: new Date()
+    }, {
+      where: {id}
+    }).then(() => {
+      if (access) {
+        sendPermissionEmail(email, firstName);
+        return res.json(`${firstName} ${lastName} (${email}) was successfully granted access. Thank you for your prompt response!`)
+      } else if (!access){
+        sendDenyEmail(email, firstName);
+        return res.json(`${firstName} ${lastName} (${email}) was successfully denied access. Thank you for your prompt response!`)
+      }
+    })
+    .catch(next);
 })
 
 // handle LogOut

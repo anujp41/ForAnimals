@@ -25,7 +25,7 @@ export const retrieveLoggedInUser = () => dispatch =>
     }
   })
 
-const signIn = (user, method) => dispatch => 
+const logIn = (user, method) => dispatch => 
   axios.post(`/api/auth/${method}`, user)
   .then(resToData)
   .then(user => {
@@ -49,12 +49,13 @@ export const forgotPW = email => dispatch =>
     dispatch(callActions(data));
   })
 
-export const signUpAndWelcome = user => dispatch =>
-  dispatch(signIn(user, 'signUp'))
-  .then(user => user ? history.push('/welcome') : null)  //only redirect if user return by signUp
+export const signUp = user => dispatch =>
+  axios.post(`/api/auth/signUp`, user)
+  .then(email => dispatch(callActions(`Congratualtion, you have created an account with For Animals under ${email.data}. Watch for an email from us that gives you access!`)))
+  .catch(err => dispatch(callActions(err.response.data)));
 
 export const logInAndWelcome = user => dispatch =>
-  dispatch(signIn(user, 'logIn'))
+  dispatch(logIn(user, 'logIn'))
   .then(user => user ? history.push('/welcome') : null) //only redirect if user return by logIn
 
 export const removeUserThunk = () => dispatch =>

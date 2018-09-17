@@ -90,16 +90,20 @@
 }
 
 .pw-forget {
-  text-align: center;
   font-family: Roboto;
-  margin: 5px;
+  width: 120px;
+  margin: 0 auto 10px auto;
+  font-size: 12px;
+}
+
+.pw-forget > a {
   color: blue;
   text-decoration: underline;
   cursor: pointer;
 }
 
-.pw-forget:hover {
-  color: royalblue;
+.pw-forget > a:hover {
+  color: #e87b3c;
 }
 
 #no-transform {

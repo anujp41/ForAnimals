@@ -26,7 +26,18 @@ const User = db.define('user', {
       return this.setDataValue('password', this.hashPassword(plainString));
     }
   },
-  googleId: Sequelize.STRING,
+  googleId: {
+    type: Sequelize.STRING,
+    allowNull: true
+  },
+  hasAccess: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true
+  },
+  accessActionDate: {
+    type: Sequelize.DATE,
+    allowNull: true
+  }
 });
 
 User.prototype.hashPassword = function(passwordString) {
