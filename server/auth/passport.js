@@ -19,7 +19,6 @@ passport.deserializeUser(function (id, done) {
 });
 
 // used for google strategy
-//fix google strategy so that validation error doesn't happen when email (previously used for local login) is used for google login
 passport.use('google',
   new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
@@ -38,11 +37,15 @@ passport.use('google',
     .then(res => {
       if (res === null) {
         User.create(info)
-        .then(user => done(null, user))
+        .then(user => done(null, user)) //send email asking for permission here
       } else {
         const user = res.get();
         if (user.googleId === null) {
           return done(null, false, {flash: `You have previously used ${info.email} to log in to the website with password. Please log in the same way again!`})
+        } else if (user.hasAccess === null) {
+          return done(null, false, {flash: `You are yet to get access to the website!`})
+        } else if (!user.hasAccess) {
+          return done(null, false, {flash: `You were previously denied access`});
         } else {
           return done(null, user);
         }

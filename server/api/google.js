@@ -1,16 +1,12 @@
 const router = require('express').Router();
 const passport = require('../auth/passport');
 const createError = require('../createError');
+const checkCurrAccess = require('../utils/checkCurrAccess');
 
 router.get('/', passport.authenticate('google', {scope: 'email'}));
 
-// router.get('/verify',
-//   passport.authenticate('google', {failureRedirect: `${process.env.PROCESS_URL}`, successRedirect: `${process.env.PROCESS_URL}welcome`,  failWithError: true, failureFlash: 'Invalid' }),
-// )
-
 router.get('/verify', function (req, res, next) {
   passport.authenticate('google', {failureFlash: true}, function (err, user, info) {
-    console.log('i have info ', info);
     if (err) return next(err);
     if (user) {
       req.logIn(user, function(err) {
@@ -18,6 +14,7 @@ router.get('/verify', function (req, res, next) {
         return res.redirect(`${process.env.PROCESS_URL}welcome`);
       })
     } else if (!user) {
+      // return res.redirect('/')
       req.flash('user-err', info.flash);
       const error = createError(req.flash('user-err'), 400);
       return next(error);

@@ -149,7 +149,6 @@ router.get(`/userAccess/:id`, checkCurrAccess, function(req, res, next) {
   const { id } = req.params;
   const access = req.query.access === 'true';
   const {firstName, lastName, email} = res.locals;
-
   User.update({
     hasAccess: access,
     accessActionDate: new Date()
