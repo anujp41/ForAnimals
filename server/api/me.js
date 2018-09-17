@@ -2,7 +2,8 @@ const router = require('express').Router();
 const { User, ResetPWLog } = require('../models');
 const createError = require('../createError');
 const passport = require('../auth/passport');
-const { sendPWEmail, sendAccessEmail } = require('../utils/sendEmail');
+const { sendPWEmail, sendAccessEmail, sendPermissionEmail, sendDenyEmail } = require('../utils/sendEmail');
+const checkCurrAccess = require('../utils/checkCurrAccess');
 const { Op } = require('sequelize');
 
 const resGet = res => {
@@ -56,7 +57,6 @@ router.post('/signUp', function (req, res, next) {
       })
     } else {
       const googleId = user.googleId;
-      const email = user.email;
       if (googleId) {
         req.flash('google-signUp', `${email} was previously used to sign up via Google. Please log in with google again!`)
         const error = createError(req.flash('google-signUp'), 400);
@@ -143,6 +143,28 @@ router.post('/resetPW', function(req, res, next) {
         })
       })
   }).catch(next);
+})
+
+router.get(`/userAccess/:id`, checkCurrAccess, function(req, res, next) {
+  const { id } = req.params;
+  const access = req.query.access === 'true';
+  const {firstName, lastName, email} = res.locals;
+
+  User.update({
+    hasAccess: access,
+    accessActionDate: new Date()
+    }, {
+      where: {id}
+    }).then(() => {
+      if (access) {
+        sendPermissionEmail(email, firstName);
+        return res.json(`${firstName} ${lastName} (${email}) was successfully granted access. Thank you for your prompt response!`)
+      } else if (!access){
+        sendDenyEmail(email, firstName);
+        return res.json(`${firstName} ${lastName} (${email}) was successfully denied access. Thank you for your prompt response!`)
+      }
+    })
+    .catch(next);
 })
 
 // handle LogOut

@@ -63,7 +63,8 @@ passport.use('local-login', new LocalStrategy({usernameField: 'email'},
         return done(null, false, { flash: 'Cannot find email address. Are you sure you have an account with us?' })
       }
       const userVal = user.get();
-      if (userVal.hasApproval === false) return done(null, false, { flash: 'It seems that you don\'t have permission to access the website. Please wait for an email from ForAnimals!'});
+      if (userVal.hasAccess === null) return done(null, false, { flash: 'It seems that you don\'t have permission to access the website. Please wait for an email from ForAnimals!'});
+      if (userVal.hasAccess === false) return done(null, false, { flash: 'Sorry, you were denied accesss to the website.'});
       if (userVal.googleId !== null) return done(null, false, { flash: `You have previously used ${userVal.email} to log in with google. Please login with google!`});
       const passwordDB = userVal.password;
       if (!bcrypt.compareSync(password, passwordDB)) {

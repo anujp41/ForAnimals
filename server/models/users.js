@@ -26,12 +26,15 @@ const User = db.define('user', {
       return this.setDataValue('password', this.hashPassword(plainString));
     }
   },
-  googleId: Sequelize.STRING,
-  hasApproval: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
+  googleId: {
+    type: Sequelize.STRING,
+    allowNull: true
   },
-  approvedOn: {
+  hasAccess: {
+    type: Sequelize.BOOLEAN,
+    allowNull: true
+  },
+  accessActionDate: {
     type: Sequelize.DATE,
     allowNull: true
   }

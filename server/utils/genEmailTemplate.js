@@ -30,14 +30,14 @@ const genAccessEmailTemplate = (id, email, firstName, lastName) => {
         button: {
           color: '#22BC66',
           text: 'Click to grant access',
-          link: `${process.env.PROCESS_URL}api/auth/userAccess/${id}?=true`
+          link: `${process.env.PROCESS_URL}userAccess/${id}?access=true`
         }
       }, {
         instructions: `If you do not recognize ${firstName}, click button below:`,
         button: {
           color: '#485148',
           text: 'Click to deny access',
-          link: `${process.env.PROCESS_URL}api/auth/userAccess/${id}?=false`
+          link: `${process.env.PROCESS_URL}userAccess/${id}?access=false`
         }
       }]
     },
@@ -47,4 +47,36 @@ const genAccessEmailTemplate = (id, email, firstName, lastName) => {
   return emailBody;
 };
 
-module.exports = { genPWEmailTemplate, genAccessEmailTemplate };
+const genPermissionEmailTemplate = (email, firstName) => {
+  const permissionEmail = {
+    body: {
+      name: `${firstName}`,
+      intro: [`Congratulations ${firstName}, you have been granted permission to the For Animals database website.`, `Click on the button below to log in:`],
+      action: {
+        instructions: 'Please click below:',
+        button: {
+          color: '#22BC66',
+          text: 'Click to login',
+          link: `${process.env.PROCESS_URL}?email=${email}`
+        }
+      }
+    },
+    outro: 'Thank you for volunteering with For Animals Inc!'
+  };
+  const emailBody = mailGenerator.generate(permissionEmail);
+  return emailBody;
+}
+
+const genDenyEmailTemplate = (email, firstName) => {
+  const denyEmail = {
+    body: {
+      name: `${firstName}`,
+      intro: [`Sorry ${firstName}, you were denied permission to the For Animals database.`, `If you feel this was in error, please reply to this email!`]
+    },
+    outro: 'Thank you for volunteering with For Animals Inc!'
+  };
+  const emailBody = mailGenerator.generate(denyEmail);
+  return emailBody;
+}
+
+module.exports = { genPWEmailTemplate, genAccessEmailTemplate, genPermissionEmailTemplate, genDenyEmailTemplate };

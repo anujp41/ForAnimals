@@ -19,24 +19,15 @@ class Login extends Component {
     this.showModal = this.showModal.bind(this);
     this.pwMismatch = this.pwMismatch.bind(this);
     this.state = {
-      email: 'anuj.pant41@gmail.com',
-      password: '1',
-      firstName: 'Smokey',
-      confirmPassword: '1',
-      lastName: 'Grey',
-      loginButton: false,
-      signupButton: true,
+      email: '',
+      password: '',
+      firstName: '',
+      confirmPassword: '',
+      lastName: '',
+      loginButton: true,
+      signupButton: false,
       pwModal: false,
       showMismatch: false
-      // email: '',
-      // password: '',
-      // firstName: '',
-      // confirmPassword: '',
-      // lastName: '',
-      // loginButton: true,
-      // signupButton: false,
-      // pwModal: false,
-      // showMismatch: false
     }
   }
 
@@ -84,9 +75,14 @@ class Login extends Component {
   }
 
   componentWillMount() {
-    //location will have pwModal key only if redirecred from ResetPW component on token expiration
     if (this.props.location.pwModal) {
       this.setState({ pwModal: true });
+      return;
+    }
+    if(this.props.location.search.length > 0) {
+      const {search} = this.props.location;
+      const email = search.slice(search.indexOf('=')+1);
+      this.setState({email});
     }
   }
 

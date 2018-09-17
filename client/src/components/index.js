@@ -9,3 +9,4 @@ export { default as FurbabiesList } from './FurbabiesList';
 export { default as ParentsList } from './ParentsList';
 export { default as ParentModal } from './ParentModal';
 export { default as ResetPW } from './ResetPW';
+export { default as UserAccess } from './UserAccess';
