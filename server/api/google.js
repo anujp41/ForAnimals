@@ -10,6 +10,7 @@ router.get('/', passport.authenticate('google', {scope: 'email'}));
 
 router.get('/verify', function (req, res, next) {
   passport.authenticate('google', {failureFlash: true}, function (err, user, info) {
+    console.log('i have info ', info);
     if (err) return next(err);
     if (user) {
       req.logIn(user, function(err) {
