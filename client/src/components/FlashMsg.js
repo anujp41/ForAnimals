@@ -17,6 +17,7 @@ class FlashMsg extends Component {
   }
 
   render() {
+    console.log(this.props)
     const flashMsg = this.props.flashMsg;
     if (flashMsg.length === 0) return null;
     return (
@@ -29,13 +30,9 @@ class FlashMsg extends Component {
   }
 }
 
-const mapState = state => {
-  return {
-    flashMsg: state.flashMsg
-  }
-}
+const mapState = state => ({ flashMsg: state.flashMsg });
 
-const mapDispatch = {removeMsg};
+const mapDispatch = { removeMsg };
 
 const FlashMsgContainer = connect(mapState, mapDispatch)(FlashMsg);
 export default FlashMsgContainer;

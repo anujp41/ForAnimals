@@ -4,7 +4,7 @@ const REMOVE_MESSAGE = 'REMOVE_MESSAGE';
 export const removeMsg = () => ({ type: REMOVE_MESSAGE });
 const setMsg = msg => ({ type: SET_MESSAGE, msg });
 
-export default function(state = 'hello', action) {
+export default function(state = '', action) {
   switch (action.type) {
     case SET_MESSAGE:
       return action.msg;
