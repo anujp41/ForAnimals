@@ -28,7 +28,8 @@ class ForgotPW extends Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (prevState.loader && nextProps.flashMsg.length > 0) return {...prevState, loader: false}
+    // if (prevState.loader && nextProps.flashMsg.length > 0) return {...prevState, loader: false}
+    if (prevState.loader && Object.keys(nextProps.flashMsg).length > 0) return {...prevState, loader: false}
     else return {...prevState};
   }
 

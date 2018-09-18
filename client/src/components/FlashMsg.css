@@ -1,9 +1,27 @@
 .flash-msg {
-  font-family: 'Ezcar', serif;
-  background-color: #9d9c97;
-  color: white;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
   padding: 10px;
-  margin: 20px auto;
   width: 45%;
+  margin: auto;
   text-align: center;
+  position: fixed;
+  top: 45%;
+  left: 27.5%;
+  z-index: 1;
+}
+
+.success {
+  background-color: #a3e792;
+  color: #1cb63d;
+}
+
+.error {
+  background-color: #f69c90;
+  color: #a01f0e;
+}
+
+.info {
+  background-color: #70cfec;
+  color: #202de9;
 }

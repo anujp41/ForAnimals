@@ -29,17 +29,19 @@ router.post('/logIn', function(req, res, next) {
       return next(error);
     }
     if (!user) {
-      req.flash('user-err', info.flash);
-      const error = createError(req.flash('user-err'), 400);
+      const {flash: {code, flashMsg}} = info;
+      req.flash('user-err', flashMsg);
+      const error = createError(req.flash('user-err'), code);
       return next(error);
+    } else {
+      req.logIn(user, function(err) {
+        if (err) {
+          return next(err);
+        }
+        res.json(user);
+      })
     }
-    req.logIn(user, function(err) {
-      if (err) {
-        return next(err);
-      }
-      res.json(user);
-    })
-  })(req, res);
+  })(req, res, next);
 })
 
 router.post('/signUp', function (req, res, next) {
@@ -58,7 +60,7 @@ router.post('/signUp', function (req, res, next) {
     } else {
       const googleId = user.googleId;
       if (googleId) {
-        req.flash('google-signUp', `${email} was previously used to sign up via Google. Please log in with google again!`)
+        req.flash('google-signUp', `${email} was previously used to sign up via Google. Please log in with Google again!`)
         const error = createError(req.flash('google-signUp'), 400);
         return next(error);
       } else {
@@ -91,7 +93,10 @@ router.post('/forgotPW', function(req, res, next) {
       .then(emailSent => {
         emailSent.expiresOn = new Date().getTime()+(1000 * 60 * 60 * 24); //token expires in 24 hours
         ResetPWLog.create(emailSent)
-        .then(() => res.json(email))
+        .then(() => {
+          res.status(401);
+          return res.json(email);
+        })
       })
       .catch(next);
     } 
@@ -110,7 +115,7 @@ router.post('/checkToken', function(req, res, next) {
     if (tokenUsed) return res.send('Token Used')
     const nowTime = new Date();
     const tokenExpired = nowTime.getTime() < expiresOn.getTime();
-    res.send(tokenExpired ? 'Expired' : 'Not Expired');
+    res.send(tokenExpired ? 'Not Expired' : 'Expired');
   })
 })
 
@@ -149,7 +154,6 @@ router.get(`/userAccess/:id`, checkCurrAccess, function(req, res, next) {
   const { id } = req.params;
   const access = req.query.access === 'true';
   const {firstName, lastName, email} = res.locals;
-
   User.update({
     hasAccess: access,
     accessActionDate: new Date()
@@ -165,12 +169,13 @@ router.get(`/userAccess/:id`, checkCurrAccess, function(req, res, next) {
       }
     })
     .catch(next);
-})
+});
 
 // handle LogOut
 router.delete('/', function (req, res, next) {
   req.logOut();
   req.session.destroy(function(err) {
+    res.statusMessage = 'Successfully logged out!';
     res.sendStatus(204);
   })
 });

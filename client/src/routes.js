@@ -36,6 +36,7 @@ class Routes extends Component {
             <PrivateRoute path='/parents' component={ParentsList} user={user}/>
             <PrivateRoute path='/furbaby' component={Furbaby} user={user}/>
             <PrivateRoute path='/parent' component={Parent} user={user}/>
+            <Route component={Login} />
           </Switch>
         </div>
       </Router>

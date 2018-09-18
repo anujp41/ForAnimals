@@ -7,5 +7,5 @@ export default provideAccess;
  */
 
 function provideAccess(params, query) {
-  return axios.get(`/api/auth/${params}/${query}`)
+  return axios.get(`/api/auth${params}${query}`)
 }

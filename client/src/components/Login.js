@@ -4,6 +4,7 @@ import FlashMsg from './FlashMsg';
 import { signUp, logInAndWelcome, callActions } from '../store';
 import './Login.css';
 import ForgotPW from './ForgotPW';
+import history from '../history';
 
 class Login extends Component {
 
@@ -81,8 +82,10 @@ class Login extends Component {
     }
     if(this.props.location.search.length > 0) {
       const {search} = this.props.location;
-      const email = search.slice(search.indexOf('=')+1);
-      this.setState({email});
+      const code = search.slice(search.indexOf('code')+5, search.lastIndexOf('&'));
+      const flashMsg = search.slice(search.lastIndexOf('=')+1);
+      this.props.callActions([parseInt(code), decodeURIComponent(flashMsg)]);
+      history.push('/')
     }
   }
 
