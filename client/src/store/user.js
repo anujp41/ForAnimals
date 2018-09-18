@@ -29,6 +29,7 @@ const logIn = (user, method) => dispatch =>
   axios.post(`/api/auth/${method}`, user)
   .then(resToData)
   .then(user => {
+    console.log('i got  ', user)
     localStorage.setItem('current-user', JSON.stringify(user));
     dispatch(setUser(user));
     return user;
@@ -37,14 +38,8 @@ const logIn = (user, method) => dispatch =>
 
 export const forgotPW = email => dispatch =>
   axios.post('/api/auth/forgotPW', email)
-  .then(resToData)
-  .then(email => {
-    dispatch(callActions(`Please check your inbox at ${email} for email from ForAnimals. Remember to change your password within 24 hours!`))
-  })
-  .catch(err => {
-    const {data} = err.response;
-    dispatch(callActions(data));
-  })
+  .then(email => dispatch(callActions([email.status, `Please check your inbox at ${email.data} for email from ForAnimals. Remember to change your password within 24 hours!`])))
+  .catch(err => dispatch(callActions([err.response.status, err.response.data])))
 
 export const signUp = user => dispatch =>
   axios.post(`/api/auth/signUp`, user)

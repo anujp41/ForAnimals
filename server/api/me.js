@@ -29,17 +29,19 @@ router.post('/logIn', function(req, res, next) {
       return next(error);
     }
     if (!user) {
-      req.flash('user-err', info.flash);
-      const error = createError(req.flash('user-err'), 400);
+      const {flash: {code, flashMsg}} = info;
+      req.flash('user-err', flashMsg);
+      const error = createError(req.flash('user-err'), code);
       return next(error);
+    } else {
+      req.logIn(user, function(err) {
+        if (err) {
+          return next(err);
+        }
+        res.json(user);
+      })
     }
-    req.logIn(user, function(err) {
-      if (err) {
-        return next(err);
-      }
-      res.json(user);
-    })
-  })(req, res);
+  })(req, res, next);
 })
 
 router.post('/signUp', function (req, res, next) {
@@ -91,7 +93,10 @@ router.post('/forgotPW', function(req, res, next) {
       .then(emailSent => {
         emailSent.expiresOn = new Date().getTime()+(1000 * 60 * 60 * 24); //token expires in 24 hours
         ResetPWLog.create(emailSent)
-        .then(() => res.json(email))
+        .then(() => {
+          res.status(401);
+          return res.json(email);
+        })
       })
       .catch(next);
     } 
@@ -110,7 +115,7 @@ router.post('/checkToken', function(req, res, next) {
     if (tokenUsed) return res.send('Token Used')
     const nowTime = new Date();
     const tokenExpired = nowTime.getTime() < expiresOn.getTime();
-    res.send(tokenExpired ? 'Expired' : 'Not Expired');
+    res.send(tokenExpired ? 'Not Expired' : 'Expired');
   })
 })
 

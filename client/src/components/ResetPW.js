@@ -98,8 +98,8 @@ class ResetPW extends Component {
     switch(this.state.tokenStatus) {
       case 'Not Found': return <div className='token-expire'>Something went wrong. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
       case 'Token Used': return <div className='token-expire'>This link was previously used to reset password. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
-      case 'Expired': return this.renderPWForm();
-      case 'Not Expired': return <div className='token-expire'>Your link has expired. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
+      case 'Not Expired': return this.renderPWForm();
+      case 'Expired': return <div className='token-expire'>Your link has expired. <b className='take-to-reset' onClick={this.takeToPWReset}>Click here</b> request another password reset email!</div>
       case 'Updated PW': return <div className='token-expire'>Successfully updated your password. Taking to the website</div>
       default: return <Loader/>
     }
