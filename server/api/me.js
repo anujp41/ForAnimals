@@ -175,6 +175,7 @@ router.get(`/userAccess/:id`, checkCurrAccess, function(req, res, next) {
 router.delete('/', function (req, res, next) {
   req.logOut();
   req.session.destroy(function(err) {
+    res.statusMessage = 'Successfully logged out!';
     res.sendStatus(204);
   })
 });

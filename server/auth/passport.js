@@ -14,7 +14,6 @@ passport.deserializeUser(function (id, done) {
   .then(user => {
     const userVal = user.get();
     const {id, email, firstName, lastName} = userVal;
-    sendAccessEmail(id, email, firstName, lastName);
     done(null, {id, email, firstName, lastName});
   })
   .catch(done);

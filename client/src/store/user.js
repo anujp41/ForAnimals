@@ -52,11 +52,12 @@ export const logInAndWelcome = user => dispatch =>
 
 export const removeUserThunk = () => dispatch =>
   axios.delete('/api/auth')
-  .then(() => {
+  .then(response => {
     localStorage.removeItem('current-user');
     dispatch(removeUser());
     dispatch(clearFurbabies());
     dispatch(clearParents());
+    dispatch(callActions([response.status, response.statusText]));
     history.push('/')
   })
   .catch(err => console.error('Error removing user', err));
