@@ -1,7 +1,5 @@
 const router = require('express').Router();
 const passport = require('../auth/passport');
-const createError = require('../createError');
-const checkCurrAccess = require('../utils/checkCurrAccess');
 
 router.get('/', passport.authenticate('google', {scope: 'email'}));
 
@@ -16,9 +14,6 @@ router.get('/verify', function (req, res, next) {
     } else if (!user) {
       const search = encodeURIComponent(info.flash);
       return res.redirect(`${process.env.PROCESS_URL}?search=${search}`)
-      // req.flash('user-err', info.flash);
-      // const error = createError(req.flash('user-err'), 400);
-      // return next(error);
     }
   })(req, res, next)
 })

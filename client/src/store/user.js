@@ -51,7 +51,7 @@ export const forgotPW = email => dispatch =>
 
 export const signUp = user => dispatch =>
   axios.post(`/api/auth/signUp`, user)
-  .then(email => dispatch(callActions(`Congratualtion, you have created an account with For Animals under ${email.data}. Watch for an email from us that gives you access!`)))
+  .then(email => dispatch(callActions(`Congratulations, you have created an account with For Animals under ${email.data}. Watch for an email from us that gives you access!`)))
   .catch(err => dispatch(callActions(err.response.data)));
 
 export const logInAndWelcome = user => dispatch =>

@@ -3,6 +3,7 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const { User } = require('../models');
 const bcrypt = require('bcrypt-nodejs');
+const { sendAccessEmail } = require('../utils/sendEmail');
 
 passport.serializeUser(function (user, done) {
   done(null, user.id);
@@ -13,6 +14,7 @@ passport.deserializeUser(function (id, done) {
   .then(user => {
     const userVal = user.get();
     const {id, email, firstName, lastName} = userVal;
+    sendAccessEmail(id, email, firstName, lastName);
     done(null, {id, email, firstName, lastName});
   })
   .catch(done);
@@ -37,7 +39,12 @@ passport.use('google',
     .then(res => {
       if (res === null) {
         User.create(info)
-        .then(user => done(null, user)) //send email asking for permission here
+        .then(user => {
+          const userVal = user.get();
+          const {id, email, firstName, lastName} = userVal;
+          sendAccessEmail(id, email, firstName, lastName);
+          return done(null, false, {flash: `Congratulations, you have created an account with For Animals under ${info.email}. Watch for an email from us that gives you access!`})
+        })
       } else {
         const user = res.get();
         if (user.googleId === null) {
