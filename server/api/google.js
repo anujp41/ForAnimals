@@ -14,10 +14,11 @@ router.get('/verify', function (req, res, next) {
         return res.redirect(`${process.env.PROCESS_URL}welcome`);
       })
     } else if (!user) {
-      // return res.redirect('/')
-      req.flash('user-err', info.flash);
-      const error = createError(req.flash('user-err'), 400);
-      return next(error);
+      const search = encodeURIComponent(info.flash);
+      return res.redirect(`${process.env.PROCESS_URL}?search=${search}`)
+      // req.flash('user-err', info.flash);
+      // const error = createError(req.flash('user-err'), 400);
+      // return next(error);
     }
   })(req, res, next)
 })
