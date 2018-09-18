@@ -1,7 +1,6 @@
 const { User } = require('../models');
 
 const checkCurrAccess  = (req, res, next) => {
-  console.log('called')
   const { id } = req.params;
   User.findById(id)
   .then(res => res.get())

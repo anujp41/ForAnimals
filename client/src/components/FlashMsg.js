@@ -12,7 +12,7 @@ class FlashMsg extends Component {
     const flashMsg = this.props.flashMsg;
     if (flashMsg.length === 0) return null;
     return (
-      <div className='flash-msg'>
+      <div className='flash-msg error'>
         {flashMsg}
       </div>
     )
