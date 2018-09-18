@@ -43,16 +43,16 @@ passport.use('google',
           const userVal = user.get();
           const {id, email, firstName, lastName} = userVal;
           sendAccessEmail(id, email, firstName, lastName);
-          return done(null, false, {flash: `Congratulations, you have created an account with For Animals under ${info.email}. Watch for an email from us that gives you access!`})
+          return done(null, false, {flash: {code: 200, flashMsg: `Congratulations, you have created an account with For Animals under ${info.email}. Watch for an email from us that gives you access!`}})
         })
       } else {
         const user = res.get();
         if (user.googleId === null) {
-          return done(null, false, {flash: `You have previously used ${info.email} to log in to the website with password. Please log in the same way again!`})
+          return done(null, false, {flash: {code: 401, flashMsg: `You have previously used ${info.email} to log in to the website with password. Please log in the same way again!`}})
         } else if (user.hasAccess === null) {
-          return done(null, false, {flash: `It seems that you don\'t have permission to access the website yet. Please wait for an email from ForAnimals!`})
+          return done(null, false, {flash: {code: 401, flashMsg: `It seems that you don\'t have permission to access the website yet. Please wait for an email from ForAnimals!`}})
         } else if (!user.hasAccess) {
-          return done(null, false, {flash: `Sorry, you were denied accesss to the website.`});
+          return done(null, false, {flash: {code: 400, flashMsg: `Sorry, you were denied access to the website.`}});
         } else {
           return done(null, user);
         }

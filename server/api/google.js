@@ -12,8 +12,8 @@ router.get('/verify', function (req, res, next) {
         return res.redirect(`${process.env.PROCESS_URL}welcome`);
       })
     } else if (!user) {
-      const search = encodeURIComponent(info.flash);
-      return res.redirect(`${process.env.PROCESS_URL}?search=${search}`)
+      const {flash: {code, flashMsg}} = info;
+      return res.redirect(`${process.env.PROCESS_URL}?code=${code}&flashMsg=${flashMsg}`)
     }
   })(req, res, next)
 })
