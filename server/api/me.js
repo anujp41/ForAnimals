@@ -164,7 +164,7 @@ router.get(`/userAccess/:id`, checkCurrAccess, function(req, res, next) {
       }
     })
     .catch(next);
-})
+});
 
 // handle LogOut
 router.delete('/', function (req, res, next) {

@@ -43,9 +43,9 @@ passport.use('google',
         if (user.googleId === null) {
           return done(null, false, {flash: `You have previously used ${info.email} to log in to the website with password. Please log in the same way again!`})
         } else if (user.hasAccess === null) {
-          return done(null, false, {flash: `You are yet to get access to the website!`})
+          return done(null, false, {flash: `It seems that you don\'t have permission to access the website yet. Please wait for an email from ForAnimals!`})
         } else if (!user.hasAccess) {
-          return done(null, false, {flash: `You were previously denied access`});
+          return done(null, false, {flash: `Sorry, you were denied accesss to the website.`});
         } else {
           return done(null, user);
         }
@@ -67,7 +67,7 @@ passport.use('local-login', new LocalStrategy({usernameField: 'email'},
       }
       const userVal = user.get();
       if (userVal.googleId !== null) return done(null, false, { flash: `You have previously used ${userVal.email} to log in with google. Please login with google!`});
-      if (userVal.hasAccess === null) return done(null, false, { flash: 'It seems that you don\'t have permission to access the website. Please wait for an email from ForAnimals!'});
+      if (userVal.hasAccess === null) return done(null, false, { flash: 'It seems that you don\'t have permission to access the website yet. Please wait for an email from ForAnimals!'});
       if (userVal.hasAccess === false) return done(null, false, { flash: 'Sorry, you were denied accesss to the website.'});
       const passwordDB = userVal.password;
       if (!bcrypt.compareSync(password, passwordDB)) {
