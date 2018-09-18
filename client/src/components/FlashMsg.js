@@ -11,19 +11,17 @@ class FlashMsg extends Component {
   }
 
   handleClick(event) {
-    const target = event.target;
-    const currentTarget = event.currentTarget;
-    if (target.className === currentTarget.className) this.props.removeMsg();
+    if (event.target.className === event.currentTarget.className) this.props.removeMsg();
   }
 
   render() {
-    console.log(this.props)
     const flashMsg = this.props.flashMsg;
-    if (flashMsg.length === 0) return null;
+    const {code, msgStmt} = flashMsg;
+    if (msgStmt.length === 0) return null;
     return (
       <div className='backdrop' name='backdrop' onClick={this.handleClick}>
-        <div className='flash-msg error'>
-          {flashMsg}
+        <div className={`flash-msg ${code}`}>
+          {msgStmt}
         </div>
       </div>
     )

@@ -58,7 +58,7 @@ router.post('/signUp', function (req, res, next) {
     } else {
       const googleId = user.googleId;
       if (googleId) {
-        req.flash('google-signUp', `${email} was previously used to sign up via Google. Please log in with google again!`)
+        req.flash('google-signUp', `${email} was previously used to sign up via Google. Please log in with Google again!`)
         const error = createError(req.flash('google-signUp'), 400);
         return next(error);
       } else {

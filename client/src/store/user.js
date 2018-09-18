@@ -33,10 +33,7 @@ const logIn = (user, method) => dispatch =>
     dispatch(setUser(user));
     return user;
   })
-  .catch(err => {
-    const {data} = err.response;
-    dispatch(callActions(data));
-  });
+  .catch(err => dispatch(callActions([err.response.status, err.response.data])));
 
 export const forgotPW = email => dispatch =>
   axios.post('/api/auth/forgotPW', email)
@@ -51,8 +48,8 @@ export const forgotPW = email => dispatch =>
 
 export const signUp = user => dispatch =>
   axios.post(`/api/auth/signUp`, user)
-  .then(email => dispatch(callActions(`Congratulations, you have created an account with For Animals under ${email.data}. Watch for an email from us that gives you access!`)))
-  .catch(err => dispatch(callActions(err.response.data)));
+  .then(email => dispatch(callActions([email.status, `Congratulations, you have created an account with For Animals under ${email.data}. Watch for an email from us that gives you access!`])))
+  .catch(err => dispatch(callActions([err.response.status, err.response.data])));
 
 export const logInAndWelcome = user => dispatch =>
   dispatch(logIn(user, 'logIn'))
