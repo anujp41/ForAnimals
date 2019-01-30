@@ -744,7 +744,7 @@ class Furbaby extends Component {
             >
               {status.map(currItem => (
                 <option
-                  disabled={currItem === 'Choose from list:'}
+                  disabled={currItem.title === 'Choose from list:'}
                   key={currItem.title}
                 >
                   {currItem.title}

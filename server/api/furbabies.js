@@ -38,10 +38,16 @@ router.post('/', (req, res, next) => {
 //Update existing cats
 router.put('/', (req, res, next) => {
   const furbaby = req.body;
+  furbaby.adoptionDate =
+    furbaby.adoptionDate.length === 0 ? null : furbaby.adoptionDate;
+  furbaby.birthDate = furbaby.birthDate.length === 0 ? null : furbaby.birthDate;
+  furbaby.intakeDate =
+    furbaby.intakeDate.length === 0 ? null : furbaby.intakeDate;
+  console.log('hermanu ', furbaby);
   FurBabies.update(furbaby, {
     where: { id: furbaby.id },
-    returning: true,
-    individualHooks: true
+    returning: true
+    // individualHooks: true
   })
     .then(([updatedRow, [updatedFurbaby]]) => {
       const {
