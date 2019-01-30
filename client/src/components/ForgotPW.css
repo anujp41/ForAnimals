@@ -1,0 +1,71 @@
+.pw-container {
+  position: absolute;
+  width: 350px;
+  top: 25%;
+  left: 35%;
+}
+
+.pw-modal-cancel {
+  position: absolute;
+  z-index: 1;
+  right: -10px;;
+  padding: 5px;
+  background-color: white;
+  border-radius: 40%;
+  color: black;
+  cursor: pointer;
+}
+
+.pw-modal-cancel:hover {
+  color: white;
+  background-color: red;
+}
+
+.pw-bubble {
+  position: relative;
+	background: #f3961c;
+  border-radius: .4em;
+  padding: 10px 15px;
+  margin: 1em 0 3em;
+}
+
+.pw-bubble:after {
+	content: '';
+  position: absolute;
+  display: block;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 42px solid transparent;
+	border-top-color: #f3961c;
+	border-bottom: 0;
+	border-left: 0;
+	margin-left: -21px;
+	margin-bottom: -42px;
+}
+
+.pw-bubble > h5 {
+  color: white;
+  font-family: Eczar;
+  font-size: 15px;
+  margin: 0;
+  text-align: center;
+}
+
+.pw-bubble > input {
+  width: 75%;
+}
+
+.pw-bubble > button {
+  min-width: 50px;
+  width: 20%;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.pw-cat {
+  max-height: 250px;
+  position: relative;
+  left: 10%;
+}

@@ -1,0 +1,183 @@
+.dropdown {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 190px;
+  right: 50px;
+}
+
+.clear-btn {
+  background-color: #ffc107;
+  width: 50px;
+  cursor: pointer;
+  position: fixed;
+  left: 10px;
+  top: 24%;
+  text-align: center;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.clear-btn:hover {
+  background-color: black;
+  color: #ffc107;
+}
+
+.menu-title {
+  display: inline-block;
+  width: 150px;
+  height: 40px;
+  padding: 12px 0 0;
+  background: #9dc852;
+  text-align: center;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.menu-dropdown {
+  display: block;
+  position: absolute;
+  top: 52px;
+  background: #ebebeb;
+  z-index: 1;
+  transition: all 0.65s;
+  width: 150px;
+  visibility: hidden;
+  opacity: 0;
+  color: darkslategray;
+  text-transform: none;
+  cursor: default;
+}
+
+.menu-title:hover .menu-dropdown {
+  visibility: visible;
+  opacity: 1;
+}
+
+.sortItem {
+  padding: 5px 0 0 0;
+  font-size: small;
+  cursor: pointer;
+}
+
+.sortItem:hover {
+  background: rgba(17, 71, 234, 0.3);
+}
+
+.mainContainer {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  margin: 50px auto 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.furbabyCard {
+  float: left;
+  width: 30%;
+  height: 575px;
+  margin: 10px; 
+  padding: 0 0 10px 0; 
+}
+
+.wrapper {
+  background-color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.wrapper:hover {
+  box-shadow: 20px 20px 50px 15px grey;
+}
+
+.currentStatus-List {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: white;
+  padding: 10px;
+}
+
+.currentStatus-List[name='Adoptable'] {
+  background-color: #52ea57
+}
+
+.currentStatus-List[name='Available as Barn Cat'] {
+  background-color: #eab952
+}
+
+.currentStatus-List[name='Adoption Pending'] {
+  background-color: #52ead0
+}
+
+.currentStatus-List[name='Return Pending'] {
+  background-color: #e8b14d
+}
+
+.currentStatus-List[name='Adopted'] {
+  background-color: #23b0f1
+}
+
+.currentStatus-List[name='Fostered'] {
+  background-color: #e86fd9
+}
+
+.currentStatus-List[name='Deceased'] {
+  background-color: #e84e4e
+}
+
+.currentStatus-List[name='Returned to Colony'] {
+  background-color: #8b4de8
+}
+
+.furbabyPhoto {
+  min-height: 300px;
+  min-width: 300px;
+  height: 300px;
+  width: 300px;
+  cursor: pointer;
+}
+
+.furbabyClick {
+  text-align: center;
+  font-size: 12px;
+  background-color: #52ea57;
+  padding: 5px 25px;
+  border-radius: 25px;
+  position: absolute;
+  top: 45%;
+  left: 25%;
+  z-index: 100;
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.furbabyPhoto:hover ~ .furbabyClick, .furbabyInfo:hover + .furbabyClick {
+  visibility: visible;
+}
+
+.furbabyInfo {
+  background-color: white;
+  height: 250px;
+  padding: 0 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.furbabyInfo .label {
+  font-family: 'Roboto', sans-serif;
+  font-size: 10px;
+  margin-right: 10px;
+}
+
+.furbabyInfo .text-name {
+  font-family: 'Markazi Text', serif;
+  font-size: 45px;
+}
+
+.furbabyInfo .text {
+  font-family: 'Markazi Text', serif;
+  font-size: 25px;
+}

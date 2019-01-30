@@ -1,0 +1,103 @@
+.main {
+  text-align: center;
+  font-family: 'Eczar', serif;
+  position: relative;
+}
+
+.main-header {
+  display: flex;
+  flex-direction: row;
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+
+.main-logo {
+  width: 20%;
+  height: 100%;
+}
+
+.main-title {
+  margin-left: 25px;
+  font-size: 3.0em;
+}
+
+.main-intro {
+  font-size: large;
+}
+
+.logout-btn {
+  width: 120px;
+  height: 35px;
+  line-height: 20px;
+  position: absolute;
+  right: 10%;
+  bottom: 35px;
+  font-family: 'Eczar', serif;
+  font-size: 20px;
+  background-color: rgb(107, 233, 35);
+  cursor: pointer;
+}
+
+.logout-btn:active {
+  background-color: rgb(49, 100, 19);
+  color: white;
+}
+
+@media only screen and (max-width: 980px) {
+  .main-header {
+    display: flex;
+    flex-direction: row;
+    height: 100px;
+    padding: 10px;
+  }
+
+  .main-title {
+    margin-left: 25px;
+    font-size: 1.25em;
+  }
+
+  .main-logo {
+    height: 50%;
+  }
+}
+
+@media only screen and (max-width: 760px) {
+  .main-header {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    padding: 10px;
+  }
+
+  .main-title {
+    margin-left: 25px;
+    font-size: 1.25em;
+  }
+
+  .main-logo {
+    height: 50%;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+
+  .main-header {
+    display: flex;
+    flex-direction: row;
+    height: 25px;
+    padding: 1px;
+  }
+
+  .main-title {
+    margin-left:25px;
+    font-size: 0.8em;
+  }
+
+  .main-logo {
+    width: 10%;
+    height: 50%;
+  }
+}

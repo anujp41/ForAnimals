@@ -1,0 +1,180 @@
+.backdrop {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: rgba(84, 80, 80, 0.95);
+  padding: 50px;
+  color: #6a2fffb3;
+  overflow: scroll
+}
+
+.cancelbtn {
+  position: absolute;
+  padding: 5px 10px;
+  color: white;
+  background-color: #d9534f;
+  right: 10%;
+  /* top: 30px;
+  margin-left: 64%; */
+  border-radius: 15px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.cancelbtn:hover {
+  color: #d9534f;
+  background-color: white;
+  border-style: outset;
+}
+
+.containerModal {
+  margin: auto;
+  text-align: center;
+  background-color: rgb(112, 179, 237);
+  font-family: 'Open Sans', sans-serif;
+  width: 65vw;
+  color: white;
+  padding-bottom: 35px
+}
+
+.titleModal, .titleExisting {
+  font-size: 2em;
+  padding-top: 15px;
+}
+
+.titleExisting {
+  margin-bottom: 20px
+}
+
+.parentOptions {
+  display: flex;
+}
+
+.parentAdd, .parentSelect {
+  width: 50%;
+  background-color: #efa959;
+  height: 30px;
+  cursor: pointer;
+  padding-top: 10px;
+  border: 1px solid hsl(28, 55%, 15%);
+  box-shadow: 0 9px #999;
+}
+
+.parentAdd:active, .parentSelect:active {
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+/* .parentName, .parentAddress, .adoptionDetail {
+  margin: 20px 50px 0 50px;
+  border-bottom: 0;
+  background-color: rgb(77, 119, 155);
+  padding-bottom: 15px;
+} */
+
+.input-label {
+  font-size: 15px;
+  font-style: italic;
+  color: orange;
+  font-weight: bolder;
+  margin-right: 25px;
+}
+
+.input-label-state {
+  margin-right: 45px;
+}
+
+.parentName .input, .parentAddress .input {
+  border-bottom: 2px solid white;
+  position: static;
+  width: 75%;
+  transform: translateY(-5px);
+  text-align: center;
+}
+
+.parentAddressItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 10px;
+  height: 35px;
+}
+
+.state, .zip {
+  display: flex;
+  width: 45%;
+  position: relative;
+}
+
+.stateList {
+  background-color: rgb(77, 119, 155);
+  font-size: 15px;
+  color: white;
+  width: 150px;
+  height: 25px;
+  margin: 0;
+}
+
+.stateOption {
+  text-align: center;
+}
+
+.-header {
+  margin-top: 25px;
+  height: 30px;
+}
+
+.parentItem {
+  color: black;
+  font-size: 110%;
+  font-weight: 800;
+  cursor: pointer;
+  margin-bottom: 25px;
+}
+
+.input-state {
+  border-bottom: 0 !important
+}
+
+input[role="combobox"] {
+  position: absolute;
+  width: 70%;
+  text-align: center;
+  top: 0px;
+}
+
+.rt-tr-group:hover {
+  transform: translate(3px, 3px);
+  opacity: 0.5;
+}
+
+.-pagination {
+  height: 40px
+}
+
+.-center {
+  display: none !important;
+}
+
+.rt-th {
+  padding: 0 !important;
+  margin: 0 !important
+}
+
+.modal-text {
+  cursor: text;
+  font-size: 25px;
+  color: white;
+  padding: 10px 0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.button-parent:hover {
+  background-color: white;
+  color: rgb(112,179,237);
+}

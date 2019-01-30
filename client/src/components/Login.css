@@ -1,0 +1,123 @@
+.login-container {
+  width: 350px;
+  margin: auto;
+  background-color: #6d6969;
+  margin-top: 35px;
+}
+
+.login-container > form {
+  margin: 25px 5px;
+}
+
+.login-container .formfield {
+  height: 50px;
+}
+
+.login-container .formfield {
+  width: 100%;
+}
+
+.log-sign {
+  display: flex;
+  width: 100%;
+}
+
+.login, .signup {
+  width: 50%;
+  height: 50px;
+  font-size: 25px;
+  cursor: pointer;
+  background-color: rgb(188, 235, 168);
+  border: none;
+  box-shadow: 0 9px #999;
+  opacity: 0.65;
+}
+
+.login:hover, .signup:hover {
+  background-color: rgb(116, 238, 29);
+  color: white;
+}
+
+.login:focus, .signup:focus {
+  outline: 0
+}
+
+.active {
+  border: none;
+  opacity: 1;
+  color: white;
+  box-shadow: 0 5px #999;
+  transform: translateY(4px);
+}
+
+.google {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  height: 50px;
+  background-color: #0091ea;
+  cursor: pointer;
+  /* z-index: 1; */
+  position: relative;
+  border: 5px solid transparent;
+}
+
+.google:hover {
+  border: 5px solid #007cea;
+}
+
+.google:active {
+  background-color: #007cea;
+}
+
+.google-logo {
+  height: 100%;
+  background-color: white;
+}
+
+.google-text {
+  text-transform: uppercase;
+  color: white;
+  font-family: 'Markazi Text', serif;
+  font-size: 25px;
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
+}
+
+.pw-forget {
+  font-family: Roboto;
+  width: 120px;
+  margin: 0 auto 10px auto;
+  font-size: 12px;
+}
+
+.pw-forget > a {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.pw-forget > a:hover {
+  color: #e87b3c;
+}
+
+#no-transform {
+  transition: none;
+  font-size: 20px;
+  transform: none;
+}
+
+#no-transform + .pw-match {
+  color: white;
+  background-color: #ef4747;
+  position: absolute;
+  font-size: 15px;
+  padding: 10px;
+  margin: auto;
+  top: -25px;
+}
