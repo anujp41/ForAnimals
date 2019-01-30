@@ -26,6 +26,6 @@ const ResetPWLog = db.define('resetPWLog', {
     type: Sequelize.DATE,
     allowNull: true
   }
-})
+});
 
 module.exports = ResetPWLog;

@@ -19,10 +19,16 @@ const sendPWEmail = (emailAddress, firstName) =>
       html: emailBody
     };
 
+    // transporter.sendMail(mailOptions, (error, info) => {
+    //   console.log('informazione ', info);
+    //   if (error) reject(error);
+    //   resolve({ resetToken, messageID: info.messageId, email: emailAddress });
+    // });
     transporter.sendMail(mailOptions, (error, info) => {
       console.log('informazione ', info);
       if (error) reject(error);
-      resolve({ resetToken, messageID: info.messageId, email: emailAddress });
+      //info not returned for heroku environment so resetToken being used to messageID as well
+      resolve({ resetToken, messageID: resetToken, email: emailAddress });
     });
   });
 
