@@ -6,9 +6,10 @@ const mailGenerator = new Mailgen({
   product: {
     name: 'For Animals',
     link: 'https://for-animals.herokuapp.com/',
-    logo: 'https://firebasestorage.googleapis.com/v0/b/foranimalsinc-2b9a6.appspot.com/o/website_assets%2Flogo.png?alt=media&token=c82d6008-4190-4651-80e0-b271c509e467'
+    logo:
+      'https://firebasestorage.googleapis.com/v0/b/foranimalsinc-2b9a6.appspot.com/o/website_assets%2Flogo.png?alt=media&token=c82d6008-4190-4651-80e0-b271c509e467'
   }
-})
+});
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
