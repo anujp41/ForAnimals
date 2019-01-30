@@ -20,6 +20,7 @@ const sendPWEmail = (emailAddress, firstName) =>
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
+      console.log('informazione ', info);
       if (error) reject(error);
       resolve({ resetToken, messageID: info.messageId, email: emailAddress });
     });
