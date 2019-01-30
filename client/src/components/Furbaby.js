@@ -8,11 +8,10 @@ import { ParentModal } from './index';
 import uuidv1 from 'uuid/v1';
 import FileDrop from 'react-file-drop';
 const storage = firebase.storage();
-const {currentStatusVals} = require('../assets');
+const { currentStatusVals } = require('../assets');
 const { handleDate } = require('../utils');
 
 class Furbaby extends Component {
-
   constructor() {
     super();
     this.state = {
@@ -52,7 +51,7 @@ class Furbaby extends Component {
       otherFilesURL: [],
       showFiles: false,
       showModal: false
-    }
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onImageDrop = this.onImageDrop.bind(this);
@@ -71,8 +70,8 @@ class Furbaby extends Component {
     const target = event.target;
     const name = target.name;
     let value = target.type === 'checkbox' ? target.checked : target.value;
-    this.setState ({ [name] : value });
-  };
+    this.setState({ [name]: value });
+  }
 
   async handleSubmit(event) {
     event.preventDefault();
@@ -82,14 +81,20 @@ class Furbaby extends Component {
     }
     const firebaseFolder = uuidv1();
     const birthDate = await handleDate(this.state.ageYear, this.state.ageMonth);
-    const photoUrl = this.state.photo !== null ? await this.saveToFirebase(firebaseFolder, this.state.photo) : null;
+    const photoUrl =
+      this.state.photo !== null
+        ? await this.saveToFirebase(firebaseFolder, this.state.photo)
+        : null;
     let promiseArr = [];
     let otherFilesURL = [];
     if (this.state.otherFiles.length) {
-      promiseArr = this.state.otherFiles.map(async (file) => await this.saveToFirebase(firebaseFolder, file).then((value) => value));
+      promiseArr = this.state.otherFiles.map(
+        async file =>
+          await this.saveToFirebase(firebaseFolder, file).then(value => value)
+      );
       otherFilesURL = await Promise.all(promiseArr);
     }
-    this.setState({birthDate, photoUrl, otherFilesURL});
+    this.setState({ birthDate, photoUrl, otherFilesURL });
     this.saveToDB();
   }
 
@@ -97,10 +102,13 @@ class Furbaby extends Component {
     return new Promise(resolve => {
       const name = file.name;
       const storageRef = storage.ref('furbabies').child(`${folder}/${name}`);
-      storageRef.put(file)
-      .then(result => {
+      storageRef.put(file).then(result => {
         const { metadata } = result;
-        return resolve({path: metadata.fullPath, downloadURL: result.downloadURL})})
+        return resolve({
+          path: metadata.fullPath,
+          downloadURL: result.downloadURL
+        });
+      });
     });
   }
 
@@ -143,31 +151,50 @@ class Furbaby extends Component {
       showFiles: false,
       showModal: false
     };
-    const { parent, ageYear, ageMonth, photo, otherFiles, showFiles, ...furbaby } = this.state;
+    const {
+      parent,
+      ageYear,
+      ageMonth,
+      photo,
+      otherFiles,
+      showFiles,
+      ...furbaby
+    } = this.state;
     this.props.submit(parent, furbaby);
-    this.setState({...defaultState});
+    this.setState({ ...defaultState });
     alert('Furbaby saved to database!');
   }
 
   onImageDrop(files) {
-    const response = this.state.photo === null ? true : window.confirm('Do you want to replace the current photo?');
+    const response =
+      this.state.photo === null
+        ? true
+        : window.confirm('Do you want to replace the current photo?');
     if (response) {
       const photo = files[0];
       this.setState({ photo });
     }
   }
 
-  handleDrop (inputFiles) {
+  handleDrop(inputFiles) {
     const otherFiles = [...this.state.otherFiles, ...inputFiles];
     this.setState({ otherFiles });
   }
 
   handleStatus(event) {
-    const noModalStatus = ['Adoptable', 'Available as Barn Cat', 'Deceased', 'Returned to Colony'];
+    const noModalStatus = [
+      'Adoptable',
+      'Available as Barn Cat',
+      'Deceased',
+      'Returned to Colony'
+    ];
     const target = event.target;
     const currentStatus = target.value;
-    this.setState ({ currentStatus });
-    if (noModalStatus.indexOf(currentStatus) === -1 && this.state.parent === null) {
+    this.setState({ currentStatus });
+    if (
+      noModalStatus.indexOf(currentStatus) === -1 &&
+      this.state.parent === null
+    ) {
       this.setState({ showModal: true });
       return;
     }
@@ -177,10 +204,10 @@ class Furbaby extends Component {
     }
   }
 
-  toggleModal(showModal, method=null) {
+  toggleModal(showModal, method = null) {
     this.setState({ showModal });
     if (method === 'cancelled') {
-      this.setState({ currentStatus: 'Choose from list:'})
+      this.setState({ currentStatus: 'Choose from list:' });
     }
   }
 
@@ -190,7 +217,7 @@ class Furbaby extends Component {
 
   showFileList() {
     const showFiles = this.state.showFiles;
-    this.setState({ showFiles: !showFiles});
+    this.setState({ showFiles: !showFiles });
   }
 
   removeFile(event) {
@@ -198,7 +225,7 @@ class Furbaby extends Component {
     const targetFileName = event.target.name;
     let otherFiles = this.state.otherFiles;
     otherFiles = otherFiles.filter(file => file.name !== targetFileName);
-    this.setState({otherFiles});
+    this.setState({ otherFiles });
     if (otherFiles.length === 0) this.setState({ showFiles: false });
   }
 
@@ -208,28 +235,47 @@ class Furbaby extends Component {
   }
 
   renderAdoptionDetail(today) {
-    const {furbabyName, adoptionDate, intakeDate} = this.state;
+    const { furbabyName, adoptionDate, intakeDate } = this.state;
     return (
-      <div className='adoptionDetail'>
-        <div className='modal-text'>Adoption Details:</div>
-          <div className='parentAddressItem'>
-            <label className='input-label' htmlFor='address'>Adopted Name (if diff): </label>
-            <input className='input' type='text' name='furbabyName' value={furbabyName} onChange={this.handleChange}/>
+      <div className="adoptionDetail">
+        <div className="modal-text">Adoption Details:</div>
+        <div className="parentAddressItem">
+          <label className="input-label" htmlFor="address">
+            Adopted Name (if diff):{' '}
+          </label>
+          <input
+            className="input"
+            type="text"
+            name="furbabyName"
+            value={furbabyName}
+            onChange={this.handleChange}
+          />
         </div>
 
-        <div className='adoptionDate'>
-          <label className='input-label' htmlFor='adoptionDate'>Date of Adoption: </label>
-          <input required className='adoption-input' type='date' name='adoptionDate' value={adoptionDate} min={intakeDate} max={today} onChange={this.handleChange}/>
+        <div className="adoptionDate">
+          <label className="input-label" htmlFor="adoptionDate">
+            Date of Adoption:{' '}
+          </label>
+          <input
+            required
+            className="adoption-input"
+            type="date"
+            name="adoptionDate"
+            value={adoptionDate}
+            min={intakeDate}
+            max={today}
+            onChange={this.handleChange}
+          />
         </div>
       </div>
-    )
+    );
   }
 
   render() {
-    const { 
+    const {
       shelterName,
       ageYear,
-      ageMonth, 
+      ageMonth,
       intakeDate,
       size,
       coatColor,
@@ -255,269 +301,519 @@ class Furbaby extends Component {
       otherFiles,
       currentStatus,
       today,
-      parent } = this.state;
+      parent
+    } = this.state;
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
     return (
-      <div className='container'>
-
-        <form autoComplete='off' onSubmit={this.handleSubmit}>
-
-          <div className='title'>Enter details for our new furbaby:</div>,
-          <div className='general'>
-
-            <div className='formfield'>
-              <input required className='input' type='text' name='shelterName' value={shelterName} onChange={this.handleChange}/>
-              <label className='label-text'>Name</label>
+      <div className="container">
+        <form autoComplete="off" onSubmit={this.handleSubmit}>
+          <div className="title">Enter details for our new furbaby:</div>,
+          <div className="general">
+            <div className="formfield">
+              <input
+                required
+                className="input"
+                type="text"
+                name="shelterName"
+                value={shelterName}
+                onChange={this.handleChange}
+              />
+              <label className="label-text">Name</label>
             </div>
 
-            <div className='formfield'>
-              <div className='input ageEntry'>
-                <input required type='number' min='0' max='20' className='years' name='ageYear' value={ageYear} onChange={this.handleChange}/>
+            <div className="formfield">
+              <div className="input ageEntry">
+                <input
+                  required
+                  type="number"
+                  min="0"
+                  max="20"
+                  className="years"
+                  name="ageYear"
+                  value={ageYear}
+                  onChange={this.handleChange}
+                />
                 <span>Years</span>
-                <input required type='number' min='0' max='12' className='months' name='ageMonth' value={ageMonth} onChange={this.handleChange}/>
+                <input
+                  required
+                  type="number"
+                  min="0"
+                  max="12"
+                  className="months"
+                  name="ageMonth"
+                  value={ageMonth}
+                  onChange={this.handleChange}
+                />
                 <span>Months</span>
               </div>
-              <label className='label-text' type='age'>Age</label>
+              <label className="label-text" type="age">
+                Age
+              </label>
             </div>
 
-            <div className='formfield'>
-              <input required className='input' type='text' name='breed' value={breed} onChange={this.handleChange}/>
-              <label className='label-text'>Breed</label>
+            <div className="formfield">
+              <input
+                required
+                className="input"
+                type="text"
+                name="breed"
+                value={breed}
+                onChange={this.handleChange}
+              />
+              <label className="label-text">Breed</label>
             </div>
 
-            <div className='formfield'>
-              <label className='label-text'>Gender</label>
-              <select required name='gender' className='genderEntry' value={gender} onChange={this.handleChange}>
-                <option disabled value=''>Select:</option>
-                <option value='Male'>Male</option>
-                <option value='Female'>Female</option>
+            <div className="formfield">
+              <label className="label-text">Gender</label>
+              <select
+                required
+                name="gender"
+                className="genderEntry"
+                value={gender}
+                onChange={this.handleChange}
+              >
+                <option disabled value="">
+                  Select:
+                </option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
             </div>
 
-            <div className='formfield'>
-              <input required className='input' type='text' name='size' value={size} onChange={this.handleChange}/>
-              <label className='label-text'>Size</label>
+            <div className="formfield">
+              <input
+                required
+                className="input"
+                type="text"
+                name="size"
+                value={size}
+                onChange={this.handleChange}
+              />
+              <label className="label-text">Size</label>
             </div>
 
-            <div className='formfield coatfield'>
-              <div className='coat-left'>
-                <input required className='input' type='text' name='coatColor' value={coatColor} onChange={this.handleChange}/>
-                <label className='label-text'>Coat Color</label>
+            <div className="formfield coatfield">
+              <div className="coat-left">
+                <input
+                  required
+                  className="input"
+                  type="text"
+                  name="coatColor"
+                  value={coatColor}
+                  onChange={this.handleChange}
+                />
+                <label className="label-text">Coat Color</label>
               </div>
-              <div className='coat-right'>
-                <input required className='input' type='text' name='coatLength' value={coatLength} onChange={this.handleChange}/>
-                <label className='label-text'>Coat Length</label>
+              <div className="coat-right">
+                <input
+                  required
+                  className="input"
+                  type="text"
+                  name="coatLength"
+                  value={coatLength}
+                  onChange={this.handleChange}
+                />
+                <label className="label-text">Coat Length</label>
               </div>
             </div>
-
           </div>
-
-          <div className='comment bio'>
-            <textarea className='commentInput' maxLength='250' type='text' row='3' name='bio' value={bio} placeholder='History / Biography of Furbaby' onChange={this.handleChange}/>
-            <div className='charactersLeft'>{250-bio.length} character(s) remaining</div>
+          <div className="comment bio">
+            <textarea
+              className="commentInput"
+              maxLength="250"
+              type="text"
+              row="3"
+              name="bio"
+              value={bio}
+              placeholder="History / Biography of Furbaby"
+              onChange={this.handleChange}
+            />
+            <div className="charactersLeft">
+              {250 - bio.length} character(s) remaining
+            </div>
           </div>
-
-
-          <div className='general'>
-            <div className='formfield date-input'>
-              <div className='date-field'>Intake Date: </div>
-              <input required className='arrived' type='date' name='intakeDate' value={intakeDate} max={today} onChange={this.handleChange}/>
+          <div className="general">
+            <div className="formfield date-input">
+              <div className="date-field">Intake Date: </div>
+              <input
+                required
+                className="arrived"
+                type="date"
+                name="intakeDate"
+                value={intakeDate}
+                max={today}
+                onChange={this.handleChange}
+              />
             </div>
 
-            <div className='formfield'>
-              <input required className='input' type='text' name='currentLocation' value={currentLocation} maxLength='30' onChange={this.handleChange}/>
-              <label className='label-text'>Current Location</label>
+            <div className="formfield">
+              <input
+                required
+                className="input"
+                type="text"
+                name="currentLocation"
+                value={currentLocation}
+                maxLength="30"
+                onChange={this.handleChange}
+              />
+              <label className="label-text">Current Location</label>
             </div>
-
           </div>
-
-          <div className='comment'>
-            <textarea className='commentInput' maxLength='200' type='text' row='3' name='addlComments' value={addlComments} placeholder='Additional comments on health/appearance etc.' onChange={this.handleChange}/>
-            <div className='charactersLeft'>{200-addlComments.length} character(s) remaining</div>
+          <div className="comment">
+            <textarea
+              className="commentInput"
+              maxLength="200"
+              type="text"
+              row="3"
+              name="addlComments"
+              value={addlComments}
+              placeholder="Additional comments on health/appearance etc."
+              onChange={this.handleChange}
+            />
+            <div className="charactersLeft">
+              {200 - addlComments.length} character(s) remaining
+            </div>
           </div>
+          <div className="health">
+            <div className="healthTitle">Health Info for furbaby</div>
 
-          <div className='health'>
-            <div className='healthTitle'>Health Info for furbaby</div>
-
-            <div className='healthContainer'>
-
-              <div className='healthItem'>
-                <div className='healthQ'>Good w/ cats?</div>
-                <select className='health-dropdown' name='goodWithCats' value={goodWithCats} onChange={this.handleChange}>
-                  {selectOption.map((item, idx) => <option key={idx}>{item}</option>)}
+            <div className="healthContainer">
+              <div className="healthItem">
+                <div className="healthQ">Good w/ cats?</div>
+                <select
+                  className="health-dropdown"
+                  name="goodWithCats"
+                  value={goodWithCats}
+                  onChange={this.handleChange}
+                >
+                  {selectOption.map((item, idx) => (
+                    <option key={idx}>{item}</option>
+                  ))}
                 </select>
               </div>
 
-              <div className='healthItem'>
-                <div className='healthQ'>Good w/ dogs?</div>
-                <select className='health-dropdown' name='goodWithDogs' value={goodWithDogs} onChange={this.handleChange}>
-                  {selectOption.map((item, idx) => <option key={idx}>{item}</option>)}
+              <div className="healthItem">
+                <div className="healthQ">Good w/ dogs?</div>
+                <select
+                  className="health-dropdown"
+                  name="goodWithDogs"
+                  value={goodWithDogs}
+                  onChange={this.handleChange}
+                >
+                  {selectOption.map((item, idx) => (
+                    <option key={idx}>{item}</option>
+                  ))}
                 </select>
               </div>
 
-              <div className='healthItem'>
-                <div className='healthQ'>Good w/ children?</div>
-                <select className='health-dropdown' name='goodWithChildren' value={goodWithChildren} onChange={this.handleChange}>
-                  {selectOption.map((item, idx) => <option key={idx}>{item}</option>)}
+              <div className="healthItem">
+                <div className="healthQ">Good w/ children?</div>
+                <select
+                  className="health-dropdown"
+                  name="goodWithChildren"
+                  value={goodWithChildren}
+                  onChange={this.handleChange}
+                >
+                  {selectOption.map((item, idx) => (
+                    <option key={idx}>{item}</option>
+                  ))}
                 </select>
               </div>
 
-              <div className='healthItem'>
-                <div className='healthQ'>Has FIV?</div><br/>
-                <label className='switch'>
-                  <input className='input' type='checkbox' checked={fivStatus} name='fivStatus' onChange={this.handleChange}/>
-                  <div className='slider'></div>
+              <div className="healthItem">
+                <div className="healthQ">Has FIV?</div>
+                <br />
+                <label className="switch">
+                  <input
+                    className="input"
+                    type="checkbox"
+                    checked={fivStatus}
+                    name="fivStatus"
+                    onChange={this.handleChange}
+                  />
+                  <div className="slider" />
                 </label>
               </div>
 
-              <div className='healthItem'>
-                <div className='healthQ'>Has FeLV?</div><br/>
-                <label className='switch'>
-                  <input className='input' type='checkbox' checked={felvStatus} name='felvStatus' onChange={this.handleChange}/>
-                  <div className='slider'/>
+              <div className="healthItem">
+                <div className="healthQ">Has FeLV?</div>
+                <br />
+                <label className="switch">
+                  <input
+                    className="input"
+                    type="checkbox"
+                    checked={felvStatus}
+                    name="felvStatus"
+                    onChange={this.handleChange}
+                  />
+                  <div className="slider" />
                 </label>
               </div>
 
-              <div className='healthItem'>
-                <div className='healthQ'>Is Altered?</div><br/>
-                <label className='switch'>
-                  <input className='input' type='checkbox' checked={altered} name='altered' onChange={this.handleChange}/>
-                  <div className='slider'/>
+              <div className="healthItem">
+                <div className="healthQ">Is Altered?</div>
+                <br />
+                <label className="switch">
+                  <input
+                    className="input"
+                    type="checkbox"
+                    checked={altered}
+                    name="altered"
+                    onChange={this.handleChange}
+                  />
+                  <div className="slider" />
                 </label>
               </div>
-              
             </div>
           </div>
-
-          <div className='general'>
-
-            <div className='otherComment'>
-              <textarea className='otherCommentInput' maxLength='75' type='text' row='3' name='behavioralIssues' value={behavioralIssues} placeholder='Behavioral Issues:' onChange={this.handleChange}/>
-              <div className='charactersLeft'>{75-behavioralIssues.length} character(s) remaining</div>
-            </div>
-
-            <div className='otherComment'>
-              <textarea className='otherCommentInput' maxLength='75' type='text' row='3' name='otherMedical' value={otherMedical} placeholder='Other Medical Issues:' onChange={this.handleChange}/>
-              <div className='charactersLeft'>{75-otherMedical.length} character(s) remaining</div>
-            </div>
-
-            <div className='otherComment'>
-              <textarea className='otherCommentInput' maxLength='75' type='text' row='3' name='specialNeeds' value={specialNeeds} placeholder='Special Needs, if any:' onChange={this.handleChange}/>
-              <div className='charactersLeft'>{75-specialNeeds.length} character(s) remaining</div>
-            </div>
-
-            <div className='otherComment'>
-              <div className='formfield'>
-                <input className='input otherDetail' type='text' name='youtubeVid' value={youtubeVid || ''} onChange={this.handleChange}/>
-                <label className='label-text otherDetail'>YouTube Link:</label>
-              </div>
-              <div className='formfield'>
-                <input className='input otherDetail' type='text' name='microchipNum' value={microchipNum} onChange={this.handleChange}/>
-                <label className='label-text otherDetail'>Microchip ID:</label>
+          <div className="general">
+            <div className="otherComment">
+              <textarea
+                className="otherCommentInput"
+                maxLength="75"
+                type="text"
+                row="3"
+                name="behavioralIssues"
+                value={behavioralIssues}
+                placeholder="Behavioral Issues:"
+                onChange={this.handleChange}
+              />
+              <div className="charactersLeft">
+                {75 - behavioralIssues.length} character(s) remaining
               </div>
             </div>
 
-            <div className='dropzone'>
+            <div className="otherComment">
+              <textarea
+                className="otherCommentInput"
+                maxLength="75"
+                type="text"
+                row="3"
+                name="otherMedical"
+                value={otherMedical}
+                placeholder="Other Medical Issues:"
+                onChange={this.handleChange}
+              />
+              <div className="charactersLeft">
+                {75 - otherMedical.length} character(s) remaining
+              </div>
+            </div>
+
+            <div className="otherComment">
+              <textarea
+                className="otherCommentInput"
+                maxLength="75"
+                type="text"
+                row="3"
+                name="specialNeeds"
+                value={specialNeeds}
+                placeholder="Special Needs, if any:"
+                onChange={this.handleChange}
+              />
+              <div className="charactersLeft">
+                {75 - specialNeeds.length} character(s) remaining
+              </div>
+            </div>
+
+            <div className="otherComment">
+              <div className="formfield">
+                <input
+                  className="input otherDetail"
+                  type="text"
+                  name="youtubeVid"
+                  value={youtubeVid || ''}
+                  onChange={this.handleChange}
+                />
+                <label className="label-text otherDetail">YouTube Link:</label>
+              </div>
+              <div className="formfield">
+                <input
+                  className="input otherDetail"
+                  type="text"
+                  name="microchipNum"
+                  value={microchipNum}
+                  onChange={this.handleChange}
+                />
+                <label className="label-text otherDetail">Microchip ID:</label>
+              </div>
+            </div>
+
+            <div className="dropzone">
               <Dropzone
-                className='drop-zone'
+                className="drop-zone"
                 multiple={false}
-                accept='image/*'
-                onDrop={this.onImageDrop}>
+                accept="image/*"
+                onDrop={this.onImageDrop}
+              >
                 <p>Upload pictures</p>
                 <p>(Limit One):</p>
-                <img className='furbaby-photo' alt='' src={this.state.photo && this.state.photo.preview}/>
+                <img
+                  className="furbaby-photo"
+                  alt=""
+                  src={this.state.photo && this.state.photo.preview}
+                />
               </Dropzone>
             </div>
 
-            <div className='dropzone'>
+            <div className="dropzone">
               <p>Upload Medical Forms</p>
               <p>(Drop files in the box):</p>
               <FileDrop onDrop={this.handleDrop}>
-                {otherFiles.length> 0 && 
-                  <div className='tooltip'>
-                    <h6 className='tooltipLabel' onClick={this.showFileList} >{otherFiles.length} file(s) added!</h6>
-                    <span className='tooltiptext'>Click to see list of files!</span>
-                    {this.state.showFiles && 
-                      <div className='fileListBox'>
-                        <button className='cancelbtn' onClick={this.showFileList}>Close</button>
-                        <ul className='fileList'>
+                {otherFiles.length > 0 && (
+                  <div className="tooltip">
+                    <h6 className="tooltipLabel" onClick={this.showFileList}>
+                      {otherFiles.length} file(s) added!
+                    </h6>
+                    <span className="tooltiptext">
+                      Click to see list of files!
+                    </span>
+                    {this.state.showFiles && (
+                      <div className="fileListBox">
+                        <button
+                          className="cancelbtn"
+                          onClick={this.showFileList}
+                        >
+                          Close
+                        </button>
+                        <ul className="fileList">
                           {otherFiles.map((file, idx) => (
-                            <li className='fileItem' key={idx}>
-                              <div className='fileListItem'>{file.name}
-                                <button className='btnRemoveFile' name={file.name} onClick={this.removeFile} >X</button>
+                            <li className="fileItem" key={idx}>
+                              <div className="fileListItem">
+                                {file.name}
+                                <button
+                                  className="btnRemoveFile"
+                                  name={file.name}
+                                  onClick={this.removeFile}
+                                >
+                                  X
+                                </button>
                               </div>
                             </li>
                           ))}
                         </ul>
-                      </div>}
-                  </div>}
+                      </div>
+                    )}
+                  </div>
+                )}
               </FileDrop>
             </div>
-
           </div>
-
-          <div className='courtesyList'>
-            <div className='courtesyList-Bool'>
-              <div className='healthQ'>Is this a courtesy listing?</div>
-              <label className='switch'>
-                <input className='input' type='checkbox' checked={courtesyListing} name='courtesyListing' onChange={this.handleChange}/>
-                <div className='slider'/>
+          <div className="courtesyList">
+            <div className="courtesyList-Bool">
+              <div className="healthQ">Is this a courtesy listing?</div>
+              <label className="switch">
+                <input
+                  className="input"
+                  type="checkbox"
+                  checked={courtesyListing}
+                  name="courtesyListing"
+                  onChange={this.handleChange}
+                />
+                <div className="slider" />
               </label>
             </div>
-            {courtesyListing && 
-              <div className='courtesyList-Q'>
-                <div className='formfield'>
-                  <input className='input otherDetail' type='text' name='courtesyListLoc' value={courtesyListLoc} onChange={this.handleChange}/>
-                  <label className='label-text otherDetail'>Provide detail of the person or rescue for whom we are cross listing:</label>
+            {courtesyListing && (
+              <div className="courtesyList-Q">
+                <div className="formfield">
+                  <input
+                    className="input otherDetail"
+                    type="text"
+                    name="courtesyListLoc"
+                    value={courtesyListLoc}
+                    onChange={this.handleChange}
+                  />
+                  <label className="label-text otherDetail">
+                    Provide detail of the person or rescue for whom we are cross
+                    listing:
+                  </label>
                 </div>
-              </div>}
+              </div>
+            )}
           </div>
-
-          <div className='status'>
-            <div><ins>Current Status of furbaby:</ins></div>
-              <select required name='currentStatus' className='currentStatus' value={currentStatus} onChange={this.handleStatus}>
-                {status.map((curr, idx) => <option disabled={curr==='Choose from list:'} key={idx}>{curr}</option>)}
-              </select>              
+          <div className="status">
+            <div>
+              <ins>Current Status of furbaby:</ins>
+            </div>
+            <select
+              required
+              name="currentStatus"
+              className="currentStatus"
+              value={currentStatus}
+              onChange={this.handleStatus}
+            >
+              {status.map(currItem => (
+                <option
+                  disabled={currItem === 'Choose from list:'}
+                  key={currItem.title}
+                >
+                  {currItem.title}
+                </option>
+              ))}
+            </select>
           </div>
-
-          {parent !== null &&
-            <div className='chosen-parent'>
-              <button className='update-parent' type='button' onClick={()=>this.setState({showModal: true})}>Update</button>
-              <div><b><ins>Selected Parent:</ins></b></div>
+          {parent !== null && (
+            <div className="chosen-parent">
+              <button
+                className="update-parent"
+                type="button"
+                onClick={() => this.setState({ showModal: true })}
+              >
+                Update
+              </button>
+              <div>
+                <b>
+                  <ins>Selected Parent:</ins>
+                </b>
+              </div>
               <div>{parent.name}</div>
-              <div>{parent.street}, {parent.city}, {parent.state}, {parent.zip}</div>
+              <div>
+                {parent.street}, {parent.city}, {parent.state}, {parent.zip}
+              </div>
               {this.renderAdoptionDetail(today)}
             </div>
-          }
-
-          <button className='button' type='submit' value='submit'>Submit</button>
-            
+          )}
+          <button className="button" type="submit" value="submit">
+            Submit
+          </button>
         </form>
 
-        {this.state.showModal && <ParentModal furbabyName={shelterName} show={this.state.showModal} toggleModal={this.toggleModal} setParent={this.setParent} adoptionDate={intakeDate}/>}
+        {this.state.showModal && (
+          <ParentModal
+            furbabyName={shelterName}
+            show={this.state.showModal}
+            toggleModal={this.toggleModal}
+            setParent={this.setParent}
+            adoptionDate={intakeDate}
+          />
+        )}
       </div>
-    )
+    );
   }
 }
 
 const mapDispatch = dispatch => ({
   submit(parent, furbaby) {
-    if (parent && parent.id) { //if existing parent submitted
+    if (parent && parent.id) {
+      //if existing parent submitted
       furbaby.parentId = parent.id;
       dispatch(createFurbabyThunk(furbaby));
-    } else if (parent) { //if new parent entered
-      const {id, ...parentInfo} = parent;
-      dispatch(createParentThunk(parentInfo))
-      .then(parent => {
+    } else if (parent) {
+      //if new parent entered
+      const { id, ...parentInfo } = parent;
+      dispatch(createParentThunk(parentInfo)).then(parent => {
         furbaby.parentId = parent.parent.id;
         dispatch(createFurbabyThunk(furbaby));
-      }); 
-    } else { //if no parent 
+      });
+    } else {
+      //if no parent
       dispatch(createFurbabyThunk(furbaby));
     }
   }
-})
+});
 
-const FurbabyContainer = connect(null, mapDispatch)(Furbaby);
+const FurbabyContainer = connect(
+  null,
+  mapDispatch
+)(Furbaby);
 export default FurbabyContainer;
