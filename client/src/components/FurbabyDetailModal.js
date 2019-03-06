@@ -77,7 +77,8 @@ class FurbabyDetailModal extends Component {
       filesUpdated: false,
       detailUpdated: false,
       ageUpdated: false,
-      detailSet: false
+      detailSet: false,
+      defaultPhoto: '../assets/noImg.png'
     };
   }
 
@@ -413,6 +414,7 @@ class FurbabyDetailModal extends Component {
       filesUpdated,
       detailUpdated
     } = this.state;
+    console.log('state is ', otherFiles);
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
@@ -787,8 +789,10 @@ class FurbabyDetailModal extends Component {
                     className="furbaby-photo"
                     alt=""
                     src={
-                      (this.state.photo && this.state.photo.preview) ||
-                      this.state.photoUrl.downloadURL
+                      this.state.photo
+                        ? (this.state.photo && this.state.photo.preview) ||
+                          this.state.photoUrl.downloadURL
+                        : require('../assets/noImg.png')
                     }
                   />
                 </Dropzone>
@@ -798,8 +802,7 @@ class FurbabyDetailModal extends Component {
                 <p>Upload Medical Forms</p>
                 <p>(Drop files in the box):</p>
                 <FileDrop onDrop={this.handleDrop}>
-                  {(otherFiles.length > 0 ||
-                    this.state.otherFilesURL.length) && (
+                  {otherFiles.length > 0 && (
                     <div className="tooltip">
                       <h6 className="tooltipLabel" onClick={this.showFileList}>
                         {(otherFiles.length ||

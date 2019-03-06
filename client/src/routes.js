@@ -1,49 +1,88 @@
 import React, { Component } from 'react';
 import { Route, Switch, Router, Redirect } from 'react-router-dom';
-import { Main, Input, Login, Welcome, FurbabiesList, ParentsList, Furbaby, Parent, ResetPW, UserAccess } from './components';
-import { connect } from 'react-redux'
+import {
+  Main,
+  Input,
+  Login,
+  Welcome,
+  FurbabiesList,
+  ParentsList,
+  Furbaby,
+  Parent,
+  ResetPW,
+  UserAccess
+} from './components';
+import { connect } from 'react-redux';
 import history from './history';
 
-const PrivateRoute = ({component: Component, path: Path, user: User}) => {
+const PrivateRoute = ({ component: Component, path: Path, user: User }) => {
   const currUser = JSON.parse(localStorage.getItem('current-user'));
   return (
     <Route
       path={Path}
-      render={() => 
+      render={() =>
         currUser && currUser.hasOwnProperty('id') ? (
-        <Component/>
-      ) : (
-        <Redirect to ={{pathname: '/'}} />
-      )}
+          <Component />
+        ) : (
+          <Redirect to={{ pathname: '/' }} />
+        )
+      }
     />
-  )
-}
+  );
+};
 
 class Routes extends Component {
   render() {
-    const {user} = this.props;
+    const { user } = this.props;
+    /*
     return (
       <Router history={history}>
         <div>
           <Main />
           <Switch>
-            <Route exact path='/' component={Login} />
-            <Route path='/resetpassword' component={ResetPW} />
-            <Route path='/userAccess' component={UserAccess} />
-            <PrivateRoute path='/welcome' component={Welcome} user={user}/>
-            <PrivateRoute path='/input' component={Input} user={user}/>
-            <PrivateRoute path='/furbabies' component={FurbabiesList} user={user}/>
-            <PrivateRoute path='/parents' component={ParentsList} user={user}/>
-            <PrivateRoute path='/furbaby' component={Furbaby} user={user}/>
-            <PrivateRoute path='/parent' component={Parent} user={user}/>
+            <Route path="/welcome" component={Welcome} user={user} />
+            <Route path="/input" component={Input} user={user} />
+            <Route path="/furbabies" component={FurbabiesList} user={user} />
+            <Route path="/parents" component={ParentsList} user={user} />
+            <Route path="/furbaby" component={Furbaby} user={user} />
+            <Route path="/parent" component={Parent} user={user} />
             <Route component={Login} />
           </Switch>
         </div>
       </Router>
-    )
+    );
+    */
+    // /*
+    return (
+      <Router history={history}>
+        <div>
+          <Main />
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route path="/resetpassword" component={ResetPW} />
+            <Route path="/userAccess" component={UserAccess} />
+            <PrivateRoute path="/welcome" component={Welcome} user={user} />
+            <PrivateRoute path="/input" component={Input} user={user} />
+            <PrivateRoute
+              path="/furbabies"
+              component={FurbabiesList}
+              user={user}
+            />
+            <PrivateRoute path="/parents" component={ParentsList} user={user} />
+            <PrivateRoute path="/furbaby" component={Furbaby} user={user} />
+            <PrivateRoute path="/parent" component={Parent} user={user} />
+            <Route component={Login} />
+          </Switch>
+        </div>
+      </Router>
+    );
+    // */
   }
 }
 
 const mapState = state => ({ user: state.user });
 
-export default connect(mapState, null)(Routes);
+export default connect(
+  mapState,
+  null
+)(Routes);
