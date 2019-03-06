@@ -19,7 +19,7 @@ const db = new Sequelize('postgres://localhost:5432/forAnimals', {
 //     dialect: 'postgres'
 //   }
 // );
-const db = new Sequelize(process.env.HEROKU_POSTGRESQL_GREEN_URL, {
+const db = new Sequelize(process.env.DATABASE_URL, {
   dialectOptions: {
     ssl: true
   },
