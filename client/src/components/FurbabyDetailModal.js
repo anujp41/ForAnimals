@@ -420,6 +420,9 @@ class FurbabyDetailModal extends Component {
     if (!this.props.showDetail || Number.isNaN(ageYear)) {
       return null;
     }
+    console.log('shelterName', shelterName);
+    console.log('adoptedName', adoptedName);
+    console.log(adoptedName.length > 1 ? 'adoptedName' : 'shelterName');
     return (
       <div className="backdrop-detail">
         <button className="cancelbtn" onClick={this.props.closeModal}>
@@ -443,7 +446,7 @@ class FurbabyDetailModal extends Component {
                   className="input"
                   type="text"
                   name={adoptedName.length > 1 ? 'adoptedName' : 'shelterName'}
-                  value={adoptedName || shelterName}
+                  value={adoptedName.length > 1 ? adoptedName : shelterName}
                   onChange={this.handleChange}
                 />
                 <label className="label-text">Name</label>

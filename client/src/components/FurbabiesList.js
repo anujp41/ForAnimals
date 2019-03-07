@@ -195,7 +195,9 @@ class FurbabiesList extends Component {
                   <div>
                     <span className="label">Name: </span>
                     <span className="text-name">
-                      {furbaby.adoptedName || furbaby.shelterName}
+                      {furbaby.adoptedName.length > 1
+                        ? furbaby.adoptedName
+                        : furbaby.shelterName}
                     </span>
                   </div>
                   <div>
