@@ -114,7 +114,7 @@ class FurbabyDetailModal extends Component {
       ageYear,
       ageMonth
     } = this.state;
-    const { path } = photoUrl;
+    const path = photoUrl ? photoUrl.path : '';
     const folder = path.slice(path.indexOf('/'), path.lastIndexOf('/'));
     if (photoUpdated) {
       const updatePhotoUrl = await this.saveToFirebase(folder, photo);
@@ -414,7 +414,7 @@ class FurbabyDetailModal extends Component {
       filesUpdated,
       detailUpdated
     } = this.state;
-    console.log('state is ', otherFiles);
+    console.log('state is ', this.state);
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
@@ -443,7 +443,7 @@ class FurbabyDetailModal extends Component {
                   required
                   className="input"
                   type="text"
-                  name="shelterName"
+                  name={adoptedName.length > 1 ? 'adoptedName' : 'shelterName'}
                   value={adoptedName || shelterName}
                   onChange={this.handleChange}
                 />

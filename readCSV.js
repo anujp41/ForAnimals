@@ -97,6 +97,7 @@ function generateJSON(fileName) {
       }
     }
     contentObj.birthDate = '01/01/1970'; //as birthday is missing from all cats; adding a default date for seed cats
+    contentObj.youtubeVid = 'www.youtube.com';
     fileContentJSON.push(contentObj);
   }
 

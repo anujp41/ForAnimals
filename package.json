@@ -27,6 +27,7 @@
   "scripts": {
     "seed": "node server/db/seed.js",
     "start": "nodemon server/index.js",
+    "start-app": "cl client && npm start",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "devDependencies": {
