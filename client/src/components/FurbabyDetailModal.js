@@ -414,7 +414,6 @@ class FurbabyDetailModal extends Component {
       filesUpdated,
       detailUpdated
     } = this.state;
-    console.log('state is ', this.state);
     const today = new Date().toISOString().split('T')[0];
     const selectOption = ['Yes', 'No', 'Unsure'];
     const status = currentStatusVals;
